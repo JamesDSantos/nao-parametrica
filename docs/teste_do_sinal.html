@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>3&nbsp; O teste do sinal e suas variações – Métodos não paramétricos</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./references.html" rel="next">
+<link href="./fde.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-d9ea66fcd6c317012447f26e9c021348.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./teste_do_sinal.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">O teste do sinal e suas variações</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Métodos não paramétricos</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Prefácio</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Métodos não paramétricos</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./fde.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">A função de distribuição empírica</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./teste_do_sinal.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">O teste do sinal e suas variações</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#o-teste-do-sinal" id="toc-o-teste-do-sinal" class="nav-link active" data-scroll-target="#o-teste-do-sinal"><span class="header-section-number">3.1</span> O teste do sinal</a></li>
+  <li><a href="#o-teste-do-sinal-para-mediana" id="toc-o-teste-do-sinal-para-mediana" class="nav-link" data-scroll-target="#o-teste-do-sinal-para-mediana"><span class="header-section-number">3.2</span> O teste do sinal para mediana</a></li>
+  <li><a href="#o-teste-de-mcnemar" id="toc-o-teste-de-mcnemar" class="nav-link" data-scroll-target="#o-teste-de-mcnemar"><span class="header-section-number">3.3</span> O teste de McNemar</a></li>
+  <li><a href="#o-teste-de-cox-e-stuart-para-tendência-monótona" id="toc-o-teste-de-cox-e-stuart-para-tendência-monótona" class="nav-link" data-scroll-target="#o-teste-de-cox-e-stuart-para-tendência-monótona"><span class="header-section-number">3.4</span> O teste de Cox e Stuart para tendência monótona*</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">O teste do sinal e suas variações</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="o-teste-do-sinal" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="o-teste-do-sinal"><span class="header-section-number">3.1</span> O teste do sinal</h2>
+<p>Os dados consistem de observações de uma amostra aleatória bivariada <span class="math inline">\((X_1,Y_1),\ldots,(X_m,Y_m)\)</span>. Em princípio, o teste foi concebido para variáveis aleatórias contínuas, mas pode ser aplicado para variáveis discretas ou ordinais com algumas restrições.</p>
+<p>Cada par <span class="math inline">\((X_i,Y_i)\)</span> será classificado como + ou - se <span class="math inline">\(X_i&lt;Y_i\)</span> ou se <span class="math inline">\(X_i&gt;Y_i\)</span> e como 0 (ou empate) se <span class="math inline">\(X_i=Y_i\)</span>. No teste original, os empates são considerados uma inconveniência técnica devido ao instrumento de medida, uma vez que <span class="math inline">\(P(X_i=Y_i)=0\)</span> para variáveis contínuas.</p>
+<p>Sejam <span class="math inline">\(p_+\)</span> e <span class="math inline">\(p_-\)</span> a probabilidade de ocorrer um par com sinal <span class="math inline">\(+\)</span> e <span class="math inline">\(p_-\)</span> respectivamente. As hipóteses do teste do sinal comparam <span class="math inline">\(p_+\)</span> com <span class="math inline">\(p_-\)</span>. Note que <span class="math inline">\(p_+\)</span> pode ser estimada por <span class="math inline">\(T/n\)</span>, onde <span class="math inline">\(T\)</span> é o número de sinais positivos. Deste modo, <span class="math inline">\(T\)</span> pode ser utilizada como estatística de teste. Abaixo, apresentamos as principais hipóteses e as respectivas regiões de rejeição.</p>
+<p>Como os empates ocorrem apenas como erro de medida, eles são descartados nesse momento, fazendo com que o tamanho da amostra passe de <span class="math inline">\(n\)</span> para <span class="math inline">\(n'=n-n_0\)</span>, onde <span class="math inline">\(n_0\)</span> é o número de empates. Como <span class="math inline">\(p_+\)</span> e <span class="math inline">\(p_-\)</span> são as únicas possibilidades, basta comparar <span class="math inline">\(p_+\)</span> com o valor <span class="math inline">\(1/2\)</span>. Temos então as seguintes hipóteses</p>
+<div id="tbl-distribuicao" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-distribuicao-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;3.1: Hipóteses comuns para o teste do sinal com suas respectivas regiões de rejeição. A região de rejeição da hipótese nula simples é discutida mais abaixo.
+</figcaption>
+<div aria-describedby="tbl-distribuicao-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<p><span class="math display">\[\begin{array}{c|c}\hline
+\hbox{Hipótese} &amp; \hbox{Região de rejeição} \\ \hline
+        H_0: p_+\leq \frac{1}{2} &amp; T\geq t_1\\
+        H_1:p_+&gt; \frac{1}{2} &amp; \\ \hline
+H_0: p_+\geq \frac{1}{2} &amp; T\leq t_0\\
+        H_1:p_+&lt; \frac{1}{2} &amp; \\ \hline
+        H_0: p_+=\frac{1}{2} &amp; T\leq t_0 \hbox{ ou } T\geq n'-t_0\\
+        H_1:p_+\neq \frac{1}{2} &amp; \\ \hline
+\end{array}\]</span></p>
+</div>
+</figure>
+</div>
+<p>Considere inicialmente a hipótese nula simples <span class="math inline">\(H_0: p_+=1/2\)</span>. Como <span class="math inline">\(T\)</span> é o número de sinais positivos em uma amostra de tamanho <span class="math inline">\(n'\)</span>, temos que, sob <span class="math inline">\(H_0\)</span></p>
+<p><span class="math display">\[T\sim\hbox{Binomial}\left(n',\frac{1}{2}\right).\]</span> Como a distribuição acima é simétrica em torno de <span class="math inline">\(n'/2\)</span>, teremos que <span class="math display">\[P\left(T\leq t_0|p_+=\frac{1}{2}\right)=P\left(T\geq n'-t_0|p_+=\frac{1}{2}\right)\]</span> e, portanto, para obter um teste de nível <span class="math inline">\(\alpha\)</span> basta encontrar o maior valor de <span class="math inline">\(t_0\)</span> que satisfaz</p>
+<p><span class="math display">\[P\left(T\leq t_0|p_+=\frac{1}{2}\right)\leq \frac{\alpha}{2}.\]</span></p>
+<p>Para as hipóteses nulas compostas, é fato que, se <span class="math inline">\(X\sim\hbox{Binomial}(m,\theta)\)</span>, então</p>
+<p><span class="math display">\[g(\theta)=F(x|\theta)=(m-x){ m\choose x} \int_0^{1-\theta} u^{m-x-1} (1-u)^x du\]</span> de modo que <span class="math inline">\(g(\theta)=F(x|\theta)\)</span> é uma função monótona decrescente em <span class="math inline">\(\theta\)</span>. Portanto, para <span class="math inline">\(H_0:p_+\geq 1/2\)</span></p>
+<p><span class="math display">\[\sup_{p_+\geq 1/2}P(T\leq t_0|p_+)=P\left(T\leq t_0|p_+=\frac{1}{2}\right)\]</span> e o teste de nível <span class="math inline">\(\alpha\)</span> é dado pelo maior valor de <span class="math inline">\(t_0\)</span> tal que</p>
+<p><span class="math display">\[P\left(T\leq t_0|p_+=\frac{1}{2}\right)\leq \alpha\]</span></p>
+<p>E, para <span class="math inline">\(H_0:p_+\leq 1/2\)</span></p>
+<p><span class="math display">\[\begin{align}\sup_{p_+\leq  1/2}P(T\geq t_1|p_+)&amp;=\sup_{p_+\leq  1/2}\left(1-P(T&lt; t_1|p_+)\right)\\&amp;=P\left(T\geq t_1|p_+=\frac{1}{2}\right)\end{align}\]</span></p>
+<p>e o teste de nível <span class="math inline">\(\alpha\)</span> é dado <strong>pelo menor</strong> valor de <span class="math inline">\(t_1\)</span> tal que</p>
+<p><span class="math display">\[P\left(T\geq t_1|p_+=\frac{1}{2}\right)\leq \alpha\]</span></p>
+<div id="exm-" class="theorem example">
+<p><span class="theorem-title"><strong>Example 3.1</strong></span> O item <span class="math inline">\(A\)</span> é produzido usando certo processo. O item <span class="math inline">\(B\)</span> serve para a mesma função, mas é produzido a partir de um novo processo. Uma empresa fabricante deseja determinar se <span class="math inline">\(B\)</span> é preferível a <span class="math inline">\(A\)</span> pelo consumidor. Para este fim, uma amostra de 10 consumidores é selecionada e cada um deles deve utilizar os produtos por um certo período de tempo e em seguida emitir a sua preferência.</p>
+<p>Vamos assumir que o sinal + é atribuído quando <span class="math inline">\(B\)</span> é preferível em relação a <span class="math inline">\(A\)</span>. Então, podemos formular as seguintes hipóteses:</p>
+<p><span class="math display">\[\begin{align*}
+    H_0&amp;: p_+\leq 1/2\\
+    H_1&amp;: p_+&gt; 1/2
+\end{align*}\]</span></p>
+<p>Os seguintes dados foram obtidos:</p>
+<p><span class="math display">\[\begin{array}{|l|c|}\hline
+     \hbox{Número de pessoas que preferem } B (+)&amp; 8  \\
+     \hbox{Número de pessoas que preferem } A (-)&amp; 1 \\
+     \hbox{Empates} &amp; 1 \\ \hline
+     n' &amp; 8+1=9 \\
+     t_{obs}&amp;8 \\ \hline
+\end{array}\]</span></p>
+<p>Logo, sob <span class="math inline">\(H_0\)</span>, <span class="math inline">\(T\sim \hbox{Binomial}(9,1/2)\)</span>. O <span class="math inline">\(p\)</span>-valor do teste é <span class="math display">\[P(T\geq 8|p_+=1/2)=P(T&gt;7|p_+=1/2),\]</span> e no <code>R</code> ele é calculado por</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pbinom</span>(<span class="dv">7</span>, <span class="dv">9</span>, .<span class="dv">5</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.01953125</code></pre>
+</div>
+</div>
+<p>logo, ao nível de significância de 5%, há evidências de que <span class="math inline">\(B\)</span> é preferível a <span class="math inline">\(A\)</span>.</p>
+<p>Alternativamente, você pode utilizar o comando, tomando apenas o cuidado de utilizar <span class="math inline">\(n_+=8\)</span> no primeiro argumento.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">binom.test</span>(<span class="dv">8</span>,<span class="dv">9</span>, <span class="at">p =</span> .<span class="dv">5</span>, <span class="at">alternative =</span> <span class="st">'greater'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Exact binomial test
+
+data:  8 and 9
+number of successes = 8, number of trials = 9, p-value = 0.01953
+alternative hypothesis: true probability of success is greater than 0.5
+95 percent confidence interval:
+ 0.5708645 1.0000000
+sample estimates:
+probability of success 
+             0.8888889 </code></pre>
+</div>
+</div>
+</div>
+<div class="alert alert-success">
+<p><strong>Distribuição de <span class="math inline">\(T\)</span> para grandes amostras</strong> Para cada par <span class="math inline">\((X_1,Y_1),\ldots,(X_n,Y_n)\)</span> da amostra sem empates, considere que <span class="math inline">\(Z_i=1\)</span> se <span class="math inline">\((X_i,Y_i)\)</span> gerou um sinal + e <span class="math inline">\(Z_i=0\)</span> em caso contrário. Então,</p>
+<p><span class="math display">\[T=\sum_{i=1}^{n'}Z_i\]</span> com <span class="math inline">\(E[T]=n'/2\)</span> e <span class="math inline">\(Var[T]=n'/4\)</span>. Logo, pelo Teorema Central do Limite, teremos que <span class="math display">\[W_n=\frac{2T-n'}{\sqrt{n'}}\stackrel{D}{\to}N(0,1).\]</span> e o teste pode ser realizado utilizando a estatística <span class="math inline">\(W_n\)</span>.</p>
+</div>
+<div id="exr-" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 3.1</strong></span> Arbuthnott (1710) examinou os dados de batismos em Londres durante 82 anos consecutivos, registrando o número de meninos e meninas. Para cada ano, ele denotou por <span class="math inline">\(+\)</span> o evento “mais meninos que meninas” e por <span class="math inline">\(-\)</span> o oposto. Ele observou que em todos os 82 anos nasceram mais meninos que meninas (<span class="math inline">\(t_{obs} = 82\)</span>).Assumindo que a probabilidade de nascerem mais meninos que meninas é <span class="math inline">\(p_+ = 1/2\)</span> (sob a hipótese nula de equilíbrio entre os sexos), teste a hipótese <span class="math inline">\(H_0: p_+ = 1/2\)</span> contra <span class="math inline">\(H_1: p_+ \neq 1/2\)</span>.</p>
+</div>
+<div id="exr-" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 3.2</strong></span> Dez pombos-correio foram levados a 25 km a oeste de seu pombal. Após serem soltos, desejava-se saber se eles se dispersariam em direções aleatórias ou se tenderiam a voar para leste, em direção ao pombal. Binóculos foram usados para observar as aves, e o ângulo de revoada no momento em que sumiram de vista foi registrado:</p>
+<p><span class="math display">\[\begin{array}{ccccc}20 &amp; 35  &amp; 350 &amp; 120 &amp; 85  \\345 &amp; 80 &amp; 320  &amp; 280 &amp; 85 \end{array}\]</span></p>
+<p>A hipótese científica é que os pombos conseguem se orientar e, portanto, devem tender ao leste. A figura abaixo mostra os ângulos observados e a direção do pombal.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Figuras/pigeons.png" class="img-fluid figure-img"></p>
+<figcaption>Ângulo no momento em que os pombos sumiram de vista</figcaption>
+</figure>
+</div>
+<p>Os ângulos situados mais a leste do que a oeste (no intervalo <span class="math inline">\([0^\circ, 90^\circ]\)</span> ou <span class="math inline">\([270^\circ, 360^\circ]\)</span>) serão classificados como <span class="math inline">\(+\)</span> (sucesso), enquanto os demais serão classificados como <span class="math inline">\(-\)</span>. Teste a hipótese de que os pombos conseguem se orientar em direção ao seu pombal ao nível de significância de 5%.</p>
+</div>
+<div id="exr-darwin" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 3.3</strong></span> Charles Darwin realizou um experimento para comparar o crescimento de plantas da mesma espécie (<span class="math inline">\(Zea \ mays\)</span>), porém com origens distintas: uma semente era fruto de fertilização cruzada e a outra de autofecundação. Para controlar fatores ambientais (como luz e nutrientes), Darwin plantou os pares de sementes em lados opostos do mesmo vaso. Os dados abaixo referem-se às alturas (em polegadas) de 15 pares de plantas após um período determinado de crescimento:</p>
+<p><span class="math display">\[\begin{array}{c|c|c}
+\hline
+\text{Par} &amp; \text{Cruzada } (C) &amp; \text{Autofecundada } (A)  \\ \hline
+1  &amp; 23,5 &amp; 17,4  \\
+2  &amp; 12,0 &amp; 20,4  \\
+3  &amp; 21,0 &amp; 20,0 \\
+4  &amp; 22,0 &amp; 20,0  \\
+5  &amp; 18,0 &amp; 18,4  \\
+6  &amp; 21,5 &amp; 18,6  \\
+7  &amp; 23,3 &amp; 18,6  \\
+8  &amp; 21,0 &amp; 15,3  \\
+9  &amp; 22,1 &amp; 16,5  \\
+10 &amp; 23,0 &amp; 18,0  \\
+11 &amp; 12,0 &amp; 16,3  \\
+12 &amp; 23,0 &amp; 18,0  \\
+13 &amp; 23,1 &amp; 12,8  \\
+14 &amp; 17,1 &amp; 15,5  \\
+15 &amp; 21,5 &amp; 18,0  \\ \hline
+\end{array}\]</span> Deseja-se testar se a fertilização cruzada produz plantas com maior crescimento mediano do que a autofecundação. Formule as hipóteses e realize o teste do sinal ao nível de 5%.</p>
+</div>
+<div id="exr-primatas" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 3.4</strong></span> Em seus estudos sobre inteligência de primatas, Wolfgang Köhler testou se chimpanzés demonstravam preferência por ferramentas que facilitassem a obtenção de comida. Em um experimento, 12 chimpanzés foram apresentados a dois tipos de varetas para alcançar uma fruta fora da jaula: uma vareta sólida (mais eficiente) e uma vareta flexível (menos eficiente). Cada chimpanzé foi testado uma única vez. Os resultados foram:</p>
+<p><span class="math display">\[\begin{array}{l|c}\hline
+\hbox{Escolha} &amp; \hbox{Frequência} \\ \hline
+\hbox{Vareta Sólida} &amp; 10 \\
+\hbox{Vareta Flexível} &amp; 2 \\ \hline \end{array}\]</span></p>
+<p>Teste a hipótese de que os chimpanzés possuem preferência pela ferramenta mais eficiente ao nível de 5%.</p>
+</div>
+<div id="exr-sono" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 3.5</strong></span> Um estudo clínico investigou a eficácia de duas drogas (A e B) para prolongar o sono em 10 pacientes. Cada paciente usou ambas as drogas em noites diferentes. O dado registrado foi o ganho de horas de sono em relação à noite de controle (sem droga).</p>
+<p><span class="math display">\[\begin{array}{ccc}\hline
+\text{Paciente} &amp; \text{Droga A} &amp; \text{Droga B} \\ \hline
+1  &amp; +0,7 &amp; +1,9  \\
+2  &amp; -1,6 &amp; +0,8 \\
+3  &amp; -0,2 &amp; +1,1 \\
+4  &amp; -1,2 &amp; +0,1 \\
+5  &amp; -0,1 &amp; -0,1\\
+6  &amp; +3,4 &amp; +4,4\\
+7  &amp; +3,7 &amp; +5,5\\
+8  &amp; +0,8 &amp; +1,6\\
+9  &amp; 0,0  &amp; +4,6\\
+10 &amp; +2,0 &amp; +3,4\\
+\hline
+\end{array}\]</span></p>
+<p>Deseja-se testar se a Droga B é superior à Droga A. Realize o teste com nível de significância de 5%.</p>
+</div>
+<div id="exr-poluicao" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 3.6</strong></span> Para verificar se uma usina hidrelétrica está alterando a concentração de oxigênio dissolvido (OD) em um rio, biólogos coletaram amostras em 12 locais diferentes. Em cada local, uma amostra foi coletada 100 metros acima (montante) da usina e outra 100 metros abaixo (jusante).</p>
+<p><span class="math display">\[\begin{array}{lcccc}\hline\text{Local} &amp; \text{Acima } (A) &amp; \text{Abaixo } \\ \hline
+1  &amp; 6,5 &amp; 6,2 \\
+2  &amp; 7,0 &amp; 6,8 \\
+3  &amp; 6,8 &amp; 6,9 \\
+4  &amp; 7,2 &amp; 6,5 \\
+5  &amp; 6,1 &amp; 6,1 \\
+6  &amp; 6,9 &amp; 6,4 \\
+7  &amp; 7,4 &amp; 7,0 \\
+8  &amp; 6,6 &amp; 6,3 \\
+9  &amp; 7,1 &amp; 7,1 \\
+10 &amp; 6,7 &amp; 6,2 \\
+11 &amp; 7,3 &amp; 6,9 \\
+12 &amp; 6,4 &amp; 6,0 \\ \hline\end{array}\]</span></p>
+<p>Teste a hipótese de que a passagem pela usina reduz a concentração de oxigênio dissolvido ao nível de 5%.</p>
+</div>
+<div id="exr-stroop" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 3.7</strong></span> O efeito Stroop demonstra a dificuldade que o cérebro tem em processar informações conflitantes. Em um experimento, 10 indivíduos tiveram seus tempos de reação medidos em duas tarefas:</p>
+<ol type="1">
+<li><p><strong>Tarefa Neutra</strong>: Ler o nome de uma cor escrito em tinta preta.</p></li>
+<li><p><strong>Tarefa de Interferência</strong>: Ler o nome de uma cor escrito em uma tinta de cor diferente (ex: a palavra “AZUL” escrita em vermelho).</p></li>
+</ol>
+<p>Espera-se que o tempo de reação na tarefa de interferência (<span class="math inline">\(T_I\)</span>) seja maior que na tarefa neutra (<span class="math inline">\(T_N\)</span>).</p>
+<p><span class="math display">\[\begin{array}{ccc}\hline
+\text{Indivíduo} &amp; T_N \text{ (seg)} &amp; T_I \text{ (seg)} \\ \hline
+1  &amp; 0,85 &amp; 1,20 \\
+2  &amp; 0,92 &amp; 1,10 \\
+3  &amp; 0,78 &amp; 0,75 \\
+4  &amp; 1,05 &amp; 1,50 \\
+5  &amp; 0,88 &amp; 1,30 \\
+6  &amp; 0,95 &amp; 1,45 \\
+7  &amp; 1,12 &amp; 1,25 \\
+8  &amp; 0,80 &amp; 1,10 \\
+9  &amp; 0,98 &amp; 1,40 \\
+10 &amp; 0,90 &amp; 1,15 \\ \hline\end{array}\]</span></p>
+<p>Deseja-se testar se o tempo de reação na tarefa de interferência é significativamente maior ao nível de 5%.</p>
+</div>
+</section>
+<section id="o-teste-do-sinal-para-mediana" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="o-teste-do-sinal-para-mediana"><span class="header-section-number">3.2</span> O teste do sinal para mediana</h2>
+<p>Seja <span class="math inline">\(X_1,\ldots,X_n\)</span> uma amostra aleatória do modelo <span class="math inline">\(F\)</span> e seja <span class="math inline">\(\theta\)</span> a sua mediana. Sabemos que <span class="math display">\[\theta=F^{-1}(0,5)\Rightarrow F(\theta)=0,5.\]</span> Considere a hipótese <span class="math inline">\(H_0:\theta=\theta_0\)</span> contra <span class="math inline">\(H_1:\theta\neq\theta_0\)</span>. Seja <span class="math inline">\(Z_i=I_{(\theta_0,\infty)}(X_i)\)</span>. Então a estatística <span class="math inline">\(N_+=\sum_{i=1}^n Z_i\)</span> pode ser utilizada para testar <span class="math inline">\(H_0\)</span>.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Exemplo</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Resolução</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div id="exm-" class="theorem example">
+<p><span class="theorem-title"><strong>Example 3.2</strong></span> Um modelo de forno de micro-ondas foi projetado para emitir um nível de radiação de no máximo 0,15. Deseja-se testar se um lote desses micro-ondas apresenta um excesso de radiação prejudicial, definido como uma mediana maior que o limite de segurança de 0,15. a mediana da radiação emitida por esses fornos é condizente com esse valor. Foram realizadas as seguintes medidas:</p>
+<p><span class="math display">\[\begin{array}{cccccccccc}
+0,09&amp; 0,18&amp; 0,10&amp; 0,05&amp; 0,12&amp; 0,40&amp; 0,10&amp; 0,05&amp; 0,03&amp; 0,20\\
+0,08&amp; 0,10&amp; 0,30&amp; 0,20&amp; 0,02&amp; 0,01&amp; 0,10&amp; 0,08&amp; 0,16&amp; 0,11\end{array}\]</span></p>
+<p>Utilize o teste do sinal para testar a hipótese de que o lote apresenta excesso de radiação.</p>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<p>Seja <span class="math inline">\(\theta\)</span> a mediana da radiação emitida. Desejamos testar <span class="math inline">\(H_0:\theta\leq 0,15\)</span> contra <span class="math inline">\(H_1:\theta&gt;0,15\)</span>.</p>
+<p>Temos que verificar quais valores são maiores/menores que 0,15. Os sinais de cada valor são dados abaixo</p>
+<p><span class="math display">\[\begin{array}{c|c|c|c|c|c|c|c|c|c}
+0,09(-)&amp; 0,18(+)&amp; 0,10(-)&amp; 0,05(-)&amp; 0,12(-)&amp; 0,40(+)&amp; 0,10(-)&amp; 0,05(-)&amp; 0,03(-)&amp; 0,20(+)\\
+0,08(-)&amp; 0,10(-)&amp; 0,30(+)&amp; 0,20(+)&amp; 0,02(-)&amp; 0,01(-)&amp; 0,10(-)&amp; 0,08(-)&amp; 0,16(+)&amp; 0,11(-)\end{array}\]</span> logo <span class="math inline">\(n_+=6\)</span>. O p-valor deste teste é</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pbinom</span>(<span class="dv">5</span>,<span class="dv">20</span>,.<span class="dv">5</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.9793053</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="exr-" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 3.8</strong></span> Foram coletadas 15 amostras de papel para medir sua densidade em gramas por centímetro cúbico (g/cm³). Espera-se que a amostra seja proveniente de uma distribuição com mediana iguaç a 0,8. Teste a hipótese de que o lote de papéis é mais denso do que o padrão.</p>
+<p><span class="math display">\[\begin{array}{ccccc}
+0,816&amp; 0,836&amp; 0,815&amp; 0,822&amp; 0,822\\
+0,843&amp; 0,824&amp; 0,788&amp; 0,782&amp; 0,795\\
+0,805&amp; 0,836&amp; 0,738&amp; 0,772&amp; 0,776\\
+\end{array}\]</span></p>
+</div>
+</section>
+<section id="o-teste-de-mcnemar" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="o-teste-de-mcnemar"><span class="header-section-number">3.3</span> O teste de McNemar</h2>
+<p>Considere uma amostra aleatória bivariada dos vetores <span class="math inline">\((X_1,Y_1),\ldots,(X_m,Y_m)\)</span>, onde as variáveis são binárias. Assim, os valores possíveis para <span class="math inline">\((X_i,Y_i)\)</span> são (0,0), (0,1), (1,0) e (1,1). Os dados são sumarizados em uma tabela de contigência <span class="math inline">\(2\times 2\)</span>, como esta abaixo:</p>
+<p><span class="math display">\[\begin{array}{c|cc}\hline
+            &amp; Y_i=0&amp; Y_i=1 \\ \hline
+    X_i=0 &amp; a  &amp; b  \\
+    X_i=1 &amp; c  &amp; d  \\ \hline
+    \end{array}
+\]</span> onde <span class="math inline">\(a,b,c,d\)</span> são as frequências de cada combinação de <span class="math inline">\((X,Y)\)</span>. O objetivo do teste de McNemar é testar se as marginais de <span class="math inline">\(X\)</span> e <span class="math inline">\(Y\)</span> são iguais. Para tanto, consideramos as seguintes hipóteses:</p>
+<p><span class="math display">\[\begin{align*}
+    H_0&amp;: P(X=0,Y=1)=P(X=1,Y=0)\\
+    H_1&amp;:P(X=1,Y=0)\neq P(X=0,Y=1)
+\end{align*}\]</span></p>
+<p>Note que isto é equivalente a testar</p>
+<p><span class="math display">\[\begin{align*}
+&amp;H_0: P(X=0,Y=1)=P(X=1,Y=0) \\ &amp;\Rightarrow    H_0: P(X=0,Y=1)+P(X=0,Y=0)=P(X=1,Y=0)+P(X=0,Y=0)\\
+&amp;\Rightarrow H_0:P(X=0)=P(Y=0)
+\end{align*}\]</span> e, portanto, o primeiro conjunto de hipóteses implica em marginais iguais.</p>
+<p>O teste de McNemar pode ser visto como uma variação do teste do sinal. Considere as classificações abaixo:</p>
+<ol type="1">
+<li><p>Se <span class="math inline">\((X_i,Y_i)=(0,1)\)</span> atribuímos +</p></li>
+<li><p>Se <span class="math inline">\((X_i,Y_i)=(1,0))\)</span> atribuímos -</p></li>
+<li><p>Se <span class="math inline">\((X_i.Y_i)\)</span> é igual a (0,0) ou (1,1), atribuímos 0 (empate).</p></li>
+</ol>
+<p>Identificando <span class="math inline">\(p_+=P(X=0,Y=1)\)</span> e <span class="math inline">\(p_-=1-p_+\)</span>, a hipótese nula do teste de McNemar é equivalente a <span class="math display">\[H_0:p_+=p_-\]</span></p>
+<p>A estatística do teste é o número de sinais positivos, ou seja <span class="math inline">\(N_+=b\)</span>. Como o tamanho da amostra após a eliminação dos empates é <span class="math inline">\(n'=b+c\)</span>, teremos que, sob <span class="math inline">\(H_0\)</span></p>
+<p><span class="math display">\[N_+\sim\hbox{Binomial}(b+c,1/2).\]</span> Contudo, é usual utilizar o TCL para realizar esse teste quando <span class="math inline">\(b&gt;20\)</span>. Nesses casos, teremos que, sob <span class="math inline">\(H_0\)</span></p>
+<p><span class="math display">\[\frac{2N_+-(b+c)}{\sqrt{n'}}=\frac{(b-c)^2fd}{\sqrt{b+c}}\stackrel{D}{\to}N(0,1)\]</span> e <span class="math display">\[T=\frac{b-c}{b+c}\stackrel{D}{\to}\chi^2_1.\]</span></p>
+<p>A tabela abaixo resume o uso das estatísticas apresentadas.</p>
+$$
+<span class="math display">\[\begin{array}{c|c|c}\hline\hbox{Estatística} &amp; N_+=b &amp; T=\frac{(b-c)^2}{b+c} \\ \hline
+\hbox{Distribuição sob }H_0 &amp; \hbox{Binomial}(b+c,1/2) &amp; \chi^2_1 \\ \hline
+\hbox{p-valor} &amp; 2\min\{P(N_+\geq n_+),P(N_+\leq n_+)\} &amp; P(T&gt;t) \\ \hline
+\end{array}\]</span>
+<p>$$</p>
+<div id="exm-" class="theorem example">
+<p><span class="theorem-title"><strong>Example 3.3</strong></span> Antes de um debate nacional entre dois candidatos à presidência dos EUA, uma amostra de 100 eleitores foi selecionada e o seu candidato anotado. 84 escolheram o candidato democrata e os 16 restantes o republicano. Após o debate, houveram mudanças de opinião, conforme a tabela abaixo:</p>
+<p><span class="math display">\[\begin{array}{c|cc|c}\hline
+    \hbox{Antes\Depois}  &amp; \hbox{Democrata} &amp; \hbox{Republicano}  &amp; \hbox{Total}\\ \hline
+     \hbox{Democrata}  &amp; 63 &amp; 21 &amp; 84 \\
+      \hbox{Republicano} &amp; 4 &amp; 12 &amp; 16 \\ \hline
+    \end{array}\]</span></p>
+<p>O objetivo é determinar se houve alteração na opinião dos eleitores após o detabe. Podemos escrever a seguinte hipótese nula</p>
+<p><span class="math display">\[H_0:\hbox{ o alinhamento político dos eleitores não foi alterado com o debate.}\]</span></p>
+<p>Vamos considerar que <span class="math inline">\(0\)</span> representa o voto para o candidato democrata e 1 representa o voto para o republicano. Vamos considerar ainda que <span class="math inline">\(X_i\)</span> é o voto do <span class="math inline">\(i\)</span>-ésimo indivíduo antes do debate e <span class="math inline">\(Y_i\)</span> é o mesmo depois. Então, a hipótese nula pode ser reescrita como</p>
+<pre><code>$$H_0:P(X=0)=P(Y=0).$$</code></pre>
+<p>Identificando <span class="math inline">\(b=21\)</span> e <span class="math inline">\(c=4\)</span>, podemos realizar o teste de McNemar:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>b <span class="ot">=</span> <span class="dv">21</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>c <span class="ot">=</span> <span class="dv">4</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">binom.test</span>(b, b<span class="sc">+</span>c, .<span class="dv">5</span>) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Exact binomial test
+
+data:  b and b + c
+number of successes = 21, number of trials = 25, p-value = 0.0009105
+alternative hypothesis: true probability of success is not equal to 0.5
+95 percent confidence interval:
+ 0.6391715 0.9546205
+sample estimates:
+probability of success 
+                  0.84 </code></pre>
+</div>
+</div>
+<p>que, um p-valor de 0,0009, nos leva a rejeitar a hipótese nula. Alternativamente, como <span class="math inline">\(b+c&gt;20\)</span>, podemos realizar o teste de McNemar aproximado. Como</p>
+<p><span class="math display">\[t_{obs}=\frac{(21-4)^2}{21+4}=\frac{289}{25}=11,56\]</span></p>
+<p>teremos que o p-valor deste teste é</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>t <span class="ot">=</span> <span class="fl">11.56</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pchisq</span>( t, <span class="dv">1</span>, <span class="at">lower.tail=</span><span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.0006738585</code></pre>
+</div>
+</div>
+<p>o que também nos leva a rejeitar a hipótese nula, concluindo que alinhamento político dos eleitores foi alterado com o debate.</p>
+</div>
+<div id="exr-" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 3.9</strong></span> Para testar o efeito de uma nova droga, um grupo de 100 pacientes foi avaliado em dois momentos. Em um dos momentos, o paciente recebeu um placebo e no outro a nova droga. Como resultado, 35 pácientes sentiram alívio com o placebo e 55 pacientes sentiram alívio com a nova droga. Foram observados os seguintes pares discordantes:</p>
+<ul>
+<li><p>Pessoas que sentiram alívio com o placebo, mas não com a droga: 15.</p></li>
+<li><p>Pessoas que não sentiram alívio com o placebo, mas sentiram com a droga: 35</p></li>
+</ul>
+<p>Complete a tabela abaixo. Em seguida, realize o teste de McNemar para testar se a nova droga tem efeito.</p>
+<p><span class="math display">\[\begin{array}{c|cc|c}\hline \hbox{placebo/nova drogra} &amp; \hbox{alívio} &amp; \hbox{não alívio} &amp; \hbox{Total} \\ \hline
+\hbox{alívio} &amp; &amp; 15 &amp; 35 \\ \hbox{não alívio} &amp; 35 &amp; &amp; \\ \hline \hbox{Total} &amp; 55  &amp; &amp; \\ \hline\end{array}\]</span></p>
+</div>
+<div id="exr-" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 3.10</strong></span> O desempenho de 28 vendedores foi classificado como “Aceitável” ou “Não Aceitável” antes e depois de assistirem a um filme de treinamento. Antes do filme, 9 eram aceitáveis; após o filme, esse número subiu para 18. Dos que mudaram de categoria, 13 vendedores passaram de “Não Aceitável” para “Aceitável”, e 4 vendedores passaram de “Aceitável” para “Não Aceitável”. Investigue se o treinamento teve um efeito positivo significativo na avaliação dos vendedores</p>
+</div>
+</section>
+<section id="o-teste-de-cox-e-stuart-para-tendência-monótona" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="o-teste-de-cox-e-stuart-para-tendência-monótona"><span class="header-section-number">3.4</span> O teste de Cox e Stuart para tendência monótona*</h2>
+<p>Os dados consistem de observações de uma sequência de variáveis aleatórias <span class="math inline">\(X_1,\ldots,X_m\)</span>, onde o índice representa o tempo. O objetivo é determinar se existe tendência monótona, podendo ainda classificar como de crescimento ou decrescimento.</p>
+<p>Seja <span class="math inline">\(c=m/2\)</span> se <span class="math inline">\(m\)</span> for par ou <span class="math inline">\(c=(m+1)/2\)</span> em caso contrário. As variáveis são agrupadas formando os pares <span class="math inline">\((X_1,X_{1+c}),(X_2,X_{2+c}),\ldots,(X_{m-c},X_m)\)</span>. Em seguida, para cada <span class="math inline">\(i\)</span>:</p>
+<ol type="1">
+<li>Atribua o sinal + se <span class="math inline">\(X_i&lt;X_{i+c}\)</span></li>
+<li>Atribua o sinal - se <span class="math inline">\(X_i&gt;X_{i+c}\)</span></li>
+<li>Atribua 0 (empate) se <span class="math inline">\(X_i=X_{i+c}\)</span></li>
+</ol>
+<p>Deste modo, podemos utilizar o teste do sinal. Como o usual, seja <span class="math inline">\(n'= n_++n_-\)</span>. A ideia é simples: se forem observados mais valores positivos(negativos), a segunda metade da série exibe valores maiores que a primeira, evidenciando tendência monótona crescente(decrescente). Se <span class="math inline">\(N_+\)</span> estiver próximo de <span class="math inline">\(n'/2\)</span>, não há evidências para tendência. As hipóteses são sumarizadas na tabela abaixo.</p>
+<p><span class="math display">\[\begin{array}{c|c} \hbox{Hipótese sobre a tendência} &amp; \hbox{Hipótese como função de }p_+\\\hline \\
+\begin{cases}H_0: \hbox{não há tendência}\\
+H_1: \hbox{há tendência monótona}\end{cases} &amp; \begin{cases}H_0: p_+=\frac{1}{2}\\
+H_1: p_+\neq\frac{1}{2}\end{cases}\\ \hline
+\begin{cases}H_0: \hbox{não há tendência}\\
+H_1: \hbox{há tendência crescente}\end{cases} &amp; \begin{cases}H_0: p_+\leq\frac{1}{2}\\
+H_1: p_+&gt;\frac{1}{2}\end{cases}\\ \hline
+\begin{cases}H_0: \hbox{não há tendência}\\
+H_1: \hbox{há tendência decrescente}\end{cases} &amp; \begin{cases}H_0: p_+\geq\frac{1}{2}\\
+H_1: p_+&lt;\frac{1}{2}\end{cases}\\ \hline
+\end{array}\]</span></p>
+<div id="exm-" class="theorem example">
+<p><span class="theorem-title"><strong>Example 3.4</strong></span> Foi registrado o total de precipitação anual por 19 anos. O objetivo é determinar se há tendência (monótona) de precipitação. As precipitações, em polegadas, foram</p>
+<p><span class="math display">\[\begin{array}{cccccc}
+    45,25  &amp; 45,83 &amp; 41,77 &amp; 36,26 &amp; 45,37 &amp; 52,25\\
+    33,37 &amp; 57,16 &amp; 35,37 &amp; 58,32 &amp; 41,05 &amp; 33,72 \\
+    45,73 &amp; 37,90 &amp; 41,72 &amp; 36,07 &amp; 49,83 &amp; 36,24\\\
+    39,90 &amp;       &amp;       &amp;       &amp;       &amp; \\
+    \end{array}\]</span></p>
+<p>Como <span class="math inline">\(m=19\)</span>, temos <span class="math inline">\(c=(19+1)/2=10\)</span>. Abaixo, organizamos o pares e os classificamos para a aplicação do teste</p>
+<p><span class="math display">\[\begin{array}{l|l}
+                 (X_1,X_{11}) = (45,25\;,\;   41,05)\equiv -
+                 &amp; (X_6,X_{16}) = (52, 25\;,\;   36,07)\equiv -\\
+                 (X_2,X_{12}) = (45,83\;,\;       33,72)\equiv -
+                 &amp; (X_7,X_{17}) = (35,37\;,\;  49,83)\equiv +\\
+                 (X_3,X_{13}) = (41,77\;,\;   45,73)\equiv +
+                 &amp; (X_8,X_{18}) = (57,16   \;,\;       36,24)\equiv -\\
+                 (X_4,X_{14}) = ( 36,26   \;,\;     37,09 )\equiv +                  &amp;
+                 (X_9,X_{19}) = (35,37 \;,\;  39 ,90)\equiv +  
+                 \\
+                 (X_5,X_{15}) = (45,   
+                 375\;,\;       41,72)\equiv -
+                 &amp; \\
+            \end{array}\]</span></p>
+<p>e obtivemos <span class="math inline">\(n_{+}=4\)</span>. As hipóteses são</p>
+<ul>
+<li><p><span class="math inline">\(H_0\)</span>: não há tendência (a amostra é aleatória)</p></li>
+<li><p><span class="math inline">\(H_1:\)</span> há tendência</p></li>
+</ul>
+<p>Como há 9 pares, teremos que, sob <span class="math inline">\(H_0\)</span>, <span class="math inline">\(T\sim\hbox{Binomial}(9,1/2)\)</span>. O p-valor o teste é</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">binom.test</span>(<span class="dv">4</span>,<span class="dv">9</span>,.<span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Exact binomial test
+
+data:  4 and 9
+number of successes = 4, number of trials = 9, p-value = 1
+alternative hypothesis: true probability of success is not equal to 0.5
+95 percent confidence interval:
+ 0.1369957 0.7879915
+sample estimates:
+probability of success 
+             0.4444444 </code></pre>
+</div>
+</div>
+<p>logo não há evidências de tendência monótona. Abaixo, apresentamos o gráfico da série temporal.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">45.25</span>, <span class="fl">45.83</span>, <span class="fl">41.77</span>, <span class="fl">36.26</span>, <span class="fl">45.37</span>, <span class="fl">52.25</span>,</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="fl">33.37</span>, <span class="fl">57.16</span>, <span class="fl">35.37</span>, <span class="fl">58.32</span>, <span class="fl">41.05</span>, <span class="fl">33.72</span>,</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="fl">45.73</span>, <span class="fl">37.90</span>, <span class="fl">41.72</span>, <span class="fl">36.07</span>, <span class="fl">49.83</span>, <span class="fl">36.24</span>,</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="fl">39.90</span>  )</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ts.plot</span>(x, <span class="at">main=</span> <span class="st">'Precipitação'</span>, <span class="at">xlab=</span><span class="st">'Anos'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="teste_do_sinal_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./fde.html" class="pagination-link" aria-label="A função de distribuição empírica">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">A função de distribuição empírica</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./references.html" class="pagination-link" aria-label="References">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

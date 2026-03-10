@@ -1,0 +1,21 @@
+project:
+  type: book
+  output-dir: docs
+
+book:
+  title: "Métodos não paramétricos"
+  author: "James D Santos"
+  date: "05/01/2026"
+  chapters:
+    - index.qmd
+    - intro.qmd
+    - fde.qmd
+    - teste_do_sinal.qmd
+    - references.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    css: styles.css
+ 

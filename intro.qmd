@@ -1,0 +1,44 @@
+# Métodos não paramétricos
+
+## Abordagens paramétrica e não paramétrica
+Problemas na inferência começam com o pressuposto de que a amostra de variáveis aleatórias $X_1,\ldots,X_n$ é proveniente de um modelo probabilístico com função de distribuição $F$ (desconhecida), suposta pertencer a certa família $\mathcal{F}$ de funções de distribuições. 
+Considerando $\mathcal{F}_{\Omega}$ como o conjunto de todas as funções de distribuição, pode-se considerar como primeiro desafio a identificação do modelo $F\in \mathcal{F}_{\Omega}$ gerador da amostra.
+
+A busca por um modelo em $\mathcal{F}_{\Omega}$ que explique de modo satisfatório a ocorrência da amostra observada $x_1,\ldots,x_n$ pode ser uma tarefa árdua. Em vez disso, é usual procurar por um modelo dentro de um subconjunto de $\mathcal{F}_{\Omega}$. O modo como escolhemos estes subconjuntos nos conduz a duas grandes abordagens para o problema: paramétrica e não paramétrica. 
+
+A abordagem paramétrica supõe que a função de distribuição está completamente especificada por um número finito e fixado de certas quantidades reais, não observáveis, denominadas **parâmetros**. Sem maiores prejuízos às especificidades das inferências frequentista e bayesiana, pode-se dizer que a distribuição de $X$ depende do conhecimento prévio de $\theta$, ou seja, a distribuição de $X|\theta$ é conhecida. 
+
+Na abordagem não paramétrica, a identificação da função de distribuição não está sujeita ao conhecimento de um número finito e fixado de parâmetros. Disto, surgem diversas técnicas distintas que ainda podem receber a alcunha de serem não paramétricas. 
+
+::: {#exm-}
+Sejam $X_1,\ldots,X_n$ vaiid com $X_1\sim F\in\mathcal{F}$ onde
+$$\mathcal{F}=\left\{F \in\mathcal{F}_{\Omega}:\int x^2dF(x)<\infty\right\}.$$
+Então, assume-se que a amostra é proveniente de alguma distribuição com segundo momento (variância) finito. Para esse problema, podemos estar interessados em estimar $\mu=E(X)$, que é um parâmetro. Contudo, o problema é não paramétrico porque a família $\mathcal{F}$ é vasta demais para ser indexada por um vetor de dimensão fixa.
+:::
+
+::: {#exm-} 
+Sejam $X_1,\ldots,X_n$ variáveis aleatórias independentes e identicamente distribuídas com $X_1\sim F\in\mathcal{F}_S$ onde
+$$\mathcal{F}_S=\left\{F \in\mathcal{F}_{\Omega}:\int \frac{d^2}{dx^2}f(x)<\infty\right\}.$$
+Então, é suposto que a amostra é proveniente de alguma distribuição contínua com curvatura esperada finita. Um dos objetivos aqui é estimar a função de densidade $f(x)=dF(x)/dx$. Embora $f(x)$ obviamente identifique $F$, temos que $f(x)$ não é um parâmetro de dimensão finita.
+:::
+
+::: {#exm-}
+Sejam $X_1,\ldots,X_n$ vaiid com 
+$$X_i=\theta+\varepsilon_i$$
+onde $\theta\in\mathbb{R}$, $\varepsilon_i\sim G\in\mathcal{G}$, com $\mathcal{G}$ sendo a família de todas as distribuições contínuas em $\mathbb{R}$ e simétricas em torno de 0. Então 
+$$\mathcal{F}_{\theta,G}=\left\{F_{\theta,G}:f(x|\theta)=g(x-\theta),\theta\in\mathbb{R},\int^x_{-\infty} g(t)dt \in\mathcal{G}\right\}.$$
+Aqui, $\theta$ é um parâmetro de locação, mas o seu conhecimento não especifica o modelo, pois a forma de $G$ permanece desconhecida e pertence a um espaço funcional.
+:::
+
+
+::: {#exm-}
+Seja $X_1,\ldots,X_n$ uma amostra de vaiid com $F\in\mathcal{F}_D$, onde $\mathcal{F}_D$ é a família de distribuições discretas. Seja $p_j=P(X=j)$ e seja
+$$N_j=\sum_{i=1}^n I(X_i=j).$$
+Sem perda de generalidade, podemos escrever
+
+$$\prod_{i=1}^nP(X_i=x_i|\boldsymbol{p})=\prod_{j\in\mathbb{Z}}p_j^{n_j}.$$
+Embora pareça um problema paramétrico à primeira vista, observe que a dimensão de $\boldsymbol{p}$ não é especificada, o que torna este um problema não paramétrico.
+:::
+
+## Sobre o curso
+
