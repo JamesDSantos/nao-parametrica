@@ -116,7 +116,7 @@ A hipótese científica é que os pombos conseguem se orientar e, portanto, deve
 Os ângulos situados mais a leste do que a oeste (no intervalo $[0^\circ, 90^\circ]$ ou $[270^\circ, 360^\circ]$) serão classificados como $+$ (sucesso), enquanto os demais serão classificados como $-$. Teste a hipótese de que os pombos conseguem se orientar em direção ao seu pombal ao nível de significância de 5%.
 :::
 
-:::: {#exr-darwin}
+:::: {#exr-}
 Charles Darwin realizou um experimento para comparar o crescimento de plantas da mesma espécie ($Zea \ mays$), porém com origens distintas: uma semente era fruto de fertilização cruzada e a outra de autofecundação. 
 Para controlar fatores ambientais (como luz e nutrientes), Darwin plantou os pares de sementes em lados opostos do mesmo vaso. Os dados abaixo referem-se às alturas (em polegadas) de 15 pares de plantas após um período determinado de crescimento:
 
@@ -142,7 +142,7 @@ $$\begin{array}{c|c|c}
 Deseja-se testar se a fertilização cruzada produz plantas com maior crescimento mediano do que a autofecundação. Formule as hipóteses e realize o teste do sinal ao nível de 5%.
 :::
 
-::: {#exr-primatas}
+::: {#exr-}
 Em seus estudos sobre inteligência de primatas, Wolfgang Köhler testou se chimpanzés demonstravam preferência por ferramentas que facilitassem a obtenção de comida. Em um experimento, 12 chimpanzés foram apresentados a dois tipos de varetas para alcançar uma fruta fora da jaula: uma vareta sólida (mais eficiente) e uma vareta flexível (menos eficiente). Cada chimpanzé foi testado uma única vez. Os resultados foram:
 
 $$\begin{array}{l|c}\hline
@@ -153,7 +153,7 @@ $$\begin{array}{l|c}\hline
 Teste a hipótese de que os chimpanzés possuem preferência pela ferramenta mais eficiente ao nível de 5%.
 :::
 
-::: {#exr-sono}
+::: {#exr-}
 Um estudo clínico investigou a eficácia de duas drogas (A e B) para prolongar o sono em 10 pacientes. Cada paciente usou ambas as drogas em noites diferentes. O dado registrado foi o ganho de horas de sono em relação à noite de controle (sem droga).
 
 $$\begin{array}{ccc}\hline
@@ -175,7 +175,7 @@ Deseja-se testar se a Droga B é superior à Droga A. Realize o teste com nível
 :::
 
 
-::: {#exr-poluicao}
+::: {#exr-}
 Para verificar se uma usina hidrelétrica está alterando a concentração de oxigênio dissolvido (OD) em um rio, biólogos coletaram amostras em 12 locais diferentes. Em cada local, uma amostra foi coletada 100 metros acima (montante) da usina e outra 100 metros abaixo (jusante).
 
 $$\begin{array}{lcccc}\hline\text{Local} & \text{Acima } (A) & \text{Abaixo } \\ \hline
@@ -195,7 +195,7 @@ $$\begin{array}{lcccc}\hline\text{Local} & \text{Acima } (A) & \text{Abaixo } \\
 Teste a hipótese de que a passagem pela usina reduz a concentração de oxigênio dissolvido ao nível de 5%. 
 :::
     
-::: {#exr-stroop}
+::: {#exr-}
 O efeito Stroop demonstra a dificuldade que o cérebro tem em processar informações conflitantes. Em um experimento, 10 indivíduos tiveram seus tempos de reação medidos em duas tarefas:
 
 1. **Tarefa Neutra**: Ler o nome de uma cor escrito em tinta preta.
