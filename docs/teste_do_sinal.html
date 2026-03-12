@@ -475,24 +475,26 @@ probability of success
     \end{array}
 \]</span> onde <span class="math inline">\(a,b,c,d\)</span> são as frequências de cada combinação de <span class="math inline">\((X,Y)\)</span>. O objetivo do teste de McNemar é testar se as marginais de <span class="math inline">\(X\)</span> e <span class="math inline">\(Y\)</span> são iguais. Para tanto, consideramos as seguintes hipóteses:</p>
 <p><span class="math display">\[\begin{align*}
-    H_0&amp;: P(X=0,Y=1)=P(X=1,Y=0)\\
-    H_1&amp;:P(X=1,Y=0)\neq P(X=0,Y=1)
+    H_0&amp;: P(X=0)=P(Y=0)\\
+    H_1&amp;:P(X=0)\neq P(Y=0)
 \end{align*}\]</span></p>
-<p>Note que isto é equivalente a testar</p>
-<p><span class="math display">\[\begin{align*}
-&amp;H_0: P(X=0,Y=1)=P(X=1,Y=0) \\ &amp;\Rightarrow    H_0: P(X=0,Y=1)+P(X=0,Y=0)=P(X=1,Y=0)+P(X=0,Y=0)\\
-&amp;\Rightarrow H_0:P(X=0)=P(Y=0)
-\end{align*}\]</span> e, portanto, o primeiro conjunto de hipóteses implica em marginais iguais.</p>
-<p>O teste de McNemar pode ser visto como uma variação do teste do sinal. Considere as classificações abaixo:</p>
+<p>Observe que</p>
+<p><span class="math display">\[\begin{align}P(X=0)&amp;=\sum_{y=0}^1 P(X=0,Y=y)=P(X=0,Y=0)+P(X=0,Y=1)\\
+P(Y=0)&amp;=\sum_{x=0}^1 P(X=x,Y=0)=P(X=0,Y=0)+P(X=1,Y=0)
+\end{align}\]</span> Portanto <span class="math display">\[P(X=0)=P(Y=0)\Leftrightarrow P(X=0,Y=1)+P(X=1,Y=0),\]</span> e as hipóteses podem ser reescritas como <span class="math display">\[\begin{align*}
+&amp;H_0: P(X=0,Y=1)=P(X=1,Y=0)\\
+&amp;H_1: P(X=0,Y=1)\neq P(X=1,Y=0)\end{align*}\]</span></p>
+<p>Observe então que a nossa atenção está voltada para quando <span class="math inline">\(X\)</span> e <span class="math inline">\(Y\)</span> assumem valores distintos. O teste de McNemar pode ser visto como uma variação do teste do sinal, onde as distinções dos pares geram os sinais, conforme a classificação abaixo:</p>
 <ol type="1">
 <li><p>Se <span class="math inline">\((X_i,Y_i)=(0,1)\)</span> atribuímos +</p></li>
 <li><p>Se <span class="math inline">\((X_i,Y_i)=(1,0))\)</span> atribuímos -</p></li>
 <li><p>Se <span class="math inline">\((X_i.Y_i)\)</span> é igual a (0,0) ou (1,1), atribuímos 0 (empate).</p></li>
 </ol>
-<p>Identificando <span class="math inline">\(p_+=P(X=0,Y=1)\)</span> e <span class="math inline">\(p_-=1-p_+\)</span>, a hipótese nula do teste de McNemar é equivalente a <span class="math display">\[H_0:p_+=p_-\]</span></p>
+<p>Identificando <span class="math inline">\(p_+=P(X=0,Y=1)\)</span> e <span class="math inline">\(p_-=P(X=1,Y=0)\)</span>, a hipótese nula do teste de McNemar é equivalente a <span class="math display">\[H_0:p_+=p_-\hbox{  , ou ainda,  }H_0:p_+=1/2.\]</span></p>
 <p>A estatística do teste é o número de sinais positivos, ou seja <span class="math inline">\(N_+=b\)</span>. Como o tamanho da amostra após a eliminação dos empates é <span class="math inline">\(n'=b+c\)</span>, teremos que, sob <span class="math inline">\(H_0\)</span></p>
-<p><span class="math display">\[N_+\sim\hbox{Binomial}(b+c,1/2).\]</span> Contudo, é usual utilizar o TCL para realizar esse teste quando <span class="math inline">\(b&gt;20\)</span>. Nesses casos, teremos que, sob <span class="math inline">\(H_0\)</span></p>
-<p><span class="math display">\[\frac{2N_+-(b+c)}{\sqrt{n'}}=\frac{(b-c)^2fd}{\sqrt{b+c}}\stackrel{D}{\to}N(0,1)\]</span> e <span class="math display">\[T=\frac{b-c}{b+c}\stackrel{D}{\to}\chi^2_1.\]</span></p>
+<p><span class="math display">\[N_+\sim\hbox{Binomial}\left(b+c,\frac{1}{2}\right).\]</span></p>
+<p>Para <span class="math inline">\(b&gt;20\)</span>, pode-se utilizar o TCL para realizar esse teste. Nesses casos, teremos que, sob <span class="math inline">\(H_0\)</span></p>
+<p><span class="math display">\[\frac{N_+-E(N_+)}{\sqrt{Var(N_+)}}=\frac{2N_+-(b+c)}{\sqrt{n'}}=\frac{b-c}{\sqrt{b+c}}\stackrel{D}{\to}N(0,1)\]</span> e é usual definir a estatística do teste de McNemar por <span class="math display">\[T=\frac{(b-c)^2}{b+c}\stackrel{D}{\to}\chi^2_1.\]</span></p>
 <p>A tabela abaixo resume o uso das estatísticas apresentadas.</p>
 $$
 <span class="math display">\[\begin{array}{c|c|c}\hline\hbox{Estatística} &amp; N_+=b &amp; T=\frac{(b-c)^2}{b+c} \\ \hline
@@ -507,7 +509,7 @@ $$
      \hbox{Democrata}  &amp; 63 &amp; 21 &amp; 84 \\
       \hbox{Republicano} &amp; 4 &amp; 12 &amp; 16 \\ \hline
     \end{array}\]</span></p>
-<p>O objetivo é determinar se houve alteração na opinião dos eleitores após o detabe. Podemos escrever a seguinte hipótese nula</p>
+<p>O objetivo é determinar se houve alteração na opinião dos eleitores após o dedate. Podemos escrever a seguinte hipótese nula</p>
 <p><span class="math display">\[H_0:\hbox{ o alinhamento político dos eleitores não foi alterado com o debate.}\]</span></p>
 <p>Vamos considerar que <span class="math inline">\(0\)</span> representa o voto para o candidato democrata e 1 representa o voto para o republicano. Vamos considerar ainda que <span class="math inline">\(X_i\)</span> é o voto do <span class="math inline">\(i\)</span>-ésimo indivíduo antes do debate e <span class="math inline">\(Y_i\)</span> é o mesmo depois. Então, a hipótese nula pode ser reescrita como</p>
 <pre><code>$$H_0:P(X=0)=P(Y=0).$$</code></pre>
@@ -542,6 +544,15 @@ probability of success
 </div>
 <p>o que também nos leva a rejeitar a hipótese nula, concluindo que alinhamento político dos eleitores foi alterado com o debate.</p>
 </div>
+<div class="alert alert-success">
+<p><strong>Importante.</strong> Conforme discutido, o teste de McNemar é um teste do sinal, realizado de maneira condicional através de <span class="math inline">\(N_+|b+c\)</span>. Contudo, diferente do caso no qual os empates são esporádicos, os valores descartados das diagonais podem ser substanciais. Considere a tabela abaixo, no mesmo contexto do exemplo anterior, mas com outros valores:</p>
+<p><span class="math display">\[\begin{array}{c|cc|c}\hline
+    \hbox{Antes\Depois}  &amp; \hbox{Democrata} &amp; \hbox{Republicano}  &amp; \hbox{Total}\\ \hline
+     \hbox{Democrata}  &amp; 499 &amp; 1 &amp; 500 \\
+      \hbox{Republicano} &amp; 9 &amp; 491 &amp; 500 \\ \hline
+    \end{array}\]</span> Note que a probabilidade estimada de “Democrata antes do debate” é a mesma de “Democrata depois do debate”. Ao ignorar os empates e focar apenas nas mudanças temos uma proporção de 90% de indivíduos que mudaram do candidado republicano para o democrata. É importante ressaltar o debate político tem como um de seus objetivos conseguir uma mudança de opinião.</p>
+<p>Isso ilustra que, mesmo que o teste de McNemar tenha sido desenhado para testar <span class="math inline">\(H_0:P(X=0)=P(Y=0)\)</span>, sua real relevância é detectar mudanças.</p>
+</div>
 <div id="exr-" class="theorem exercise">
 <p><span class="theorem-title"><strong>Exercise 3.9</strong></span> Para testar o efeito de uma nova droga, um grupo de 100 pacientes foi avaliado em dois momentos. Em um dos momentos, o paciente recebeu um placebo e no outro a nova droga. Como resultado, 35 pácientes sentiram alívio com o placebo e 55 pacientes sentiram alívio com a nova droga. Foram observados os seguintes pares discordantes:</p>
 <ul>
@@ -553,7 +564,35 @@ probability of success
 \hbox{alívio} &amp; &amp; 15 &amp; 35 \\ \hbox{não alívio} &amp; 35 &amp; &amp; \\ \hline \hbox{Total} &amp; 55  &amp; &amp; \\ \hline\end{array}\]</span></p>
 </div>
 <div id="exr-" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 3.10</strong></span> O desempenho de 28 vendedores foi classificado como “Aceitável” ou “Não Aceitável” antes e depois de assistirem a um filme de treinamento. Antes do filme, 9 eram aceitáveis; após o filme, esse número subiu para 18. Dos que mudaram de categoria, 13 vendedores passaram de “Não Aceitável” para “Aceitável”, e 4 vendedores passaram de “Aceitável” para “Não Aceitável”. Investigue se o treinamento teve um efeito positivo significativo na avaliação dos vendedores</p>
+<p><span class="theorem-title"><strong>Exercise 3.10</strong></span> Para testar a associação entre a amigdalectomia (remoção das amígdalas) e a doença de Hodgkin, Hollander e Wolfe (1999), analisaram 85 pares de irmãos. Em cada par, um dos irmãos possuía a doença e o outro não (amostra pareada por genética e ambiente). Os dados observados foram:</p>
+<ul>
+<li>Em 26 pares, ambos os irmãos haviam passado pela cirurgia.</li>
+<li>Em 37 pares, nenhum dos irmãos havia passado pela cirurgia.</li>
+<li>Em 15 pares, o irmão com a doença tinha feito a cirurgia, mas o saudável não. Em 7 pares, o irmão saudável tinha feito a cirurgia, mas o com doença não.</li>
+</ul>
+<p>Utilize o Teste de McNemar para verificar se há evidência de que a proporção de amigdalectomias difere entre os indivíduos doentes e saudáveis.</p>
+</div>
+<div id="exr-" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 3.11</strong></span> O desempenho de 28 vendedores foi classificado como “Aceitável” ou “Não Aceitável” antes e depois de assistirem a um filme de treinamento. Antes do filme, 9 eram aceitáveis; após o filme, esse número subiu para 18. Dos que mudaram de categoria, 13 vendedores passaram de “Não Aceitável” para “Aceitável”, e 4 vendedores passaram de “Aceitável” para “Não Aceitável”. Investigue se o treinamento teve um efeito positivo significativo na avaliação dos vendedores</p>
+</div>
+<div id="exr-" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 3.12</strong></span> Um estudo de opinião pública acompanhou um grupo de 1.600 cidadãos para avaliar a taxa de aprovação de um Primeiro-Ministro em dois momentos distintos, com um intervalo de seis meses entre as pesquisas. Os resultados mostraram que:</p>
+<ul>
+<li><p>794 pessoas aprovaram o governo em ambas as pesquisas.</p></li>
+<li><p>570 pessoas desaprovaram em ambas.</p></li>
+<li><p>150 pessoas que aprovavam na primeira pesquisa passaram a desaprovar na segunda.</p></li>
+<li><p>86 pessoas que desaprovavam na primeira pesquisa passaram a aprovar na segunda</p></li>
+</ul>
+<p>Determine se houve uma mudança significativa na aprovação do Primeiro-Ministro.</p>
+</div>
+<div id="exr-" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 3.13</strong></span> Um estudo de persuasão utilizou uma amostra de 30 pessoas para verificar a eficácia de uma newsletter informativa em convencer cidadãos a favor de um novo projeto de imposto de renda (imposto fixo). Antes de lerem o informativo, 11 pessoas eram a favor do projeto. Após a leitura, verificou-se que:</p>
+<ul>
+<li><p>5 pessoas que já eram a favor mantiveram sua opinião.</p></li>
+<li><p>6 pessoas que eram contra mantiveram sua posição de oposição.</p></li>
+<li><p>Os demais mudaram de opinião.</p></li>
+</ul>
+<p>Calcule quantos indivíduos mudaram de posição em cada direção e aplique o Teste de McNemar para determinar se o informativo foi eficaz em persuadir as pessoas a favor do projeto</p>
 </div>
 </section>
 <section id="o-teste-de-cox-e-stuart-para-tendência-monótona" class="level2" data-number="3.4">
