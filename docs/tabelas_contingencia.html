@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>References – Métodos não paramétricos</title>
+<title>4&nbsp; Tabelas de contingência – Métodos não paramétricos</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,26 +20,7 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -49,7 +30,8 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./tabelas_contingencia.html" rel="prev">
+<link href="./references.html" rel="next">
+<link href="./teste_do_sinal.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -89,6 +71,35 @@ div.csl-indent {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -102,7 +113,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./references.html">References</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./tabelas_contingencia.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Tabelas de contingência</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -155,13 +166,13 @@ div.csl-indent {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./tabelas_contingencia.html" class="sidebar-item-text sidebar-link">
+  <a href="./tabelas_contingencia.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Tabelas de contingência</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link active">
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References</span></a>
   </div>
 </li>
@@ -170,15 +181,30 @@ div.csl-indent {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#introdução" id="toc-introdução" class="nav-link active" data-scroll-target="#introdução"><span class="header-section-number">4.1</span> Introdução</a></li>
+  <li><a href="#o-teste-qui-quadrado-para-diferenças-entre-probabilidades-em-tabelas-2times-2" id="toc-o-teste-qui-quadrado-para-diferenças-entre-probabilidades-em-tabelas-2times-2" class="nav-link" data-scroll-target="#o-teste-qui-quadrado-para-diferenças-entre-probabilidades-em-tabelas-2times-2"><span class="header-section-number">4.2</span> O Teste Qui-quadrado para diferenças entre probabilidades em tabelas 2<span class="math inline">\(\times 2\)</span></a></li>
+  <li><a href="#o-teste-exato-de-fisher" id="toc-o-teste-exato-de-fisher" class="nav-link" data-scroll-target="#o-teste-exato-de-fisher"><span class="header-section-number">4.3</span> O Teste Exato de Fisher</a></li>
+  <li><a href="#teste-de-qui-quadrado-de-cochran-mantel-haenszel" id="toc-teste-de-qui-quadrado-de-cochran-mantel-haenszel" class="nav-link" data-scroll-target="#teste-de-qui-quadrado-de-cochran-mantel-haenszel"><span class="header-section-number">4.4</span> Teste de Qui-quadrado de Cochran-Mantel-Haenszel</a></li>
+  <li><a href="#o-teste-qui-quadrado-para-diferenças-entre-probabilidades" id="toc-o-teste-qui-quadrado-para-diferenças-entre-probabilidades" class="nav-link" data-scroll-target="#o-teste-qui-quadrado-para-diferenças-entre-probabilidades"><span class="header-section-number">4.5</span> O Teste Qui-quadrado para diferenças entre probabilidades}</a></li>
+  <li><a href="#o-teste-qui-quadrado-para-independência" id="toc-o-teste-qui-quadrado-para-independência" class="nav-link" data-scroll-target="#o-teste-qui-quadrado-para-independência"><span class="header-section-number">4.6</span> O Teste Qui-quadrado para independência</a></li>
+  <li><a href="#o-teste-da-mediana" id="toc-o-teste-da-mediana" class="nav-link" data-scroll-target="#o-teste-da-mediana"><span class="header-section-number">4.7</span> O Teste da mediana</a></li>
+  <li><a href="#medidas-de-dependência" id="toc-medidas-de-dependência" class="nav-link" data-scroll-target="#medidas-de-dependência"><span class="header-section-number">4.8</span> Medidas de dependência</a></li>
+  <li><a href="#o-teste-qui-quadrado-para-aderência-bondade-de-ajuste" id="toc-o-teste-qui-quadrado-para-aderência-bondade-de-ajuste" class="nav-link" data-scroll-target="#o-teste-qui-quadrado-para-aderência-bondade-de-ajuste"><span class="header-section-number">4.9</span> O teste Qui-quadrado para aderência (bondade de ajuste)</a></li>
+  <li><a href="#o-teste-de-cochran-para-observações-relacionadas" id="toc-o-teste-de-cochran-para-observações-relacionadas" class="nav-link" data-scroll-target="#o-teste-de-cochran-para-observações-relacionadas"><span class="header-section-number">4.10</span> O teste de Cochran para observações relacionadas</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">References</h1>
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Tabelas de contingência</span></h1>
 </div>
 
 
@@ -195,11 +221,94 @@ div.csl-indent {
 </header>
 
 
-<div id="refs" role="list" style="display: none">
+<section id="introdução" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="introdução"><span class="header-section-number">4.1</span> Introdução</h2>
+<p>Uma tabela de contingência é uma matriz de números naturais que representam frequências absolutas. Por exemplo, um entomologista coletou 37 insetos, conforme a seguinte tabela de contingência</p>
+<p><span class="math display">\[\begin{array}{ccc|c}\hline
+    \hbox{Mariposa} &amp; \hbox{Gafanhoto} &amp; \hbox{Outros} &amp;\hbox{Total} \\ \hline
+       12  &amp; 22&amp; 3 &amp;37 \\ \hline
+    \end{array}\]</span></p>
+<p>A tabela acima é uma tabela de contingência <span class="math inline">\(1\times 3\)</span> (1 linha por 3 colunas) e representa observações de uma variável categórica com três classes: Mariposa, Gafanhoto, Outros. \end{frame} O entomologista pode aumentar o nível de informação adicionando o evento no qual o inseto foi encontrado vivo. A nova tabela de contingência <span class="math inline">\(2\times 3\)</span> fica:</p>
+<p><span class="math display">\[\begin{array}{c|ccc|c}\hline
+             &amp;  \hbox{Mariposa} &amp; \hbox{Gafanhoto} &amp; \hbox{Outros} &amp; \hbox{Total}\\ \hline
+             \hbox{Vivo} &amp; 3 &amp; 21 &amp; 3 &amp; 27 \\
+             \hbox{Morto} &amp; 9&amp;1&amp;0&amp;10\\ \hline
+             \hbox{Total}&amp;12&amp;22&amp;3&amp;37\\ \hline
+        \end{array}\]</span></p>
+<p>Agora, a tabela apresenta observações e um par de variáveis categóricas, uma com as classes {Mariposa, Gafanhoto, Outros} e outra com as classes {Vivo, Morto}.</p>
+<p>Note que a coluna Total se refere ao total marginal das linhas, enquanto que a linha Total se refere ao total marginal das colunas. Tabelas de contingência com duas variáveis são denominadas tabelas de contingência de dupla entrada e podem ter várias linhas e colunas.</p>
+</section>
+<section id="o-teste-qui-quadrado-para-diferenças-entre-probabilidades-em-tabelas-2times-2" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="o-teste-qui-quadrado-para-diferenças-entre-probabilidades-em-tabelas-2times-2"><span class="header-section-number">4.2</span> O Teste Qui-quadrado para diferenças entre probabilidades em tabelas 2<span class="math inline">\(\times 2\)</span></h2>
+<pre><code>\begin{block}{Dados}
+Uma amostra aleatória de tamanho $n_1$ é retirada da população 1 (ou antes de um tratamento ser aplicado) é os resultados são \textcolor{purple}{organizados} em duas classes, sendo $O_{11}$ e $O_{12}$ suas respectivas frequências. Outra amostra aleatória, de tamanho $n_2$, é retirada da população 2 (ou da população 1 após a aplicação de um tratamento) é seus resultados são organizados nas mesmas duas classes, sendo $O_{21}$ e $O_{22}$ suas respectivas frequências. Esses resultados são organizados em um tabela de contingência de dupla entrada, como essa abaixo:
 
-</div>
+\begin{table}[]
+    \centering
+    \begin{tabular}{c|cc|c}\hline
+         &amp; Classe 1&amp; Classe 2 &amp; Total \\ \hline
+       População 1  &amp; $O_{11}$ &amp; $O_{12}$ &amp; $n_1$\\
+       População 2 &amp; $O_{21}$ &amp; $O_{22}$ &amp; $n_2$ \\ \hline
+       Total &amp; $C_1$ &amp; $C_2$ &amp; $N=n_1+n_2$\\
+    \end{tabular}
+
+\end{table}
+\end{block}</code></pre>
+<p>\end{frame}</p>
+</section>
+<section id="o-teste-exato-de-fisher" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="o-teste-exato-de-fisher"><span class="header-section-number">4.3</span> O Teste Exato de Fisher</h2>
+<p>\end{frame} </p>
+</section>
+<section id="teste-de-qui-quadrado-de-cochran-mantel-haenszel" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="teste-de-qui-quadrado-de-cochran-mantel-haenszel"><span class="header-section-number">4.4</span> Teste de Qui-quadrado de Cochran-Mantel-Haenszel</h2>
+<pre><code> \begin{block}{Dados}
+Os dados estão organizados em $k$s tabelas $2\times 2$, cada uma com totais de linhas e colunas fixados (não aleatórios). A $i$-ésima tabela é da forma
+
+\begin{table}[]
+    \centering
+    \begin{tabular}{c|cc|c}\hline
+         &amp; Coluna 1&amp; Coluna 2 &amp; Total \\ \hline
+       Linha 1  &amp; $x_i$ &amp; $r_i-x_i$ &amp; $r_i$\\
+       Linha 2  &amp; $c_i-x_i$ &amp; $N_i-r_i-c_i+x_i$ &amp; $N_i-r_i$ \\ \hline
+       Total &amp; $c_i$ &amp; $N_i-c_i$ &amp; $N_i$\\  \hline
+    \end{tabular}
+\end{table}
+
+Além disso, cada tabela é obtida de um experimento independente dos demais.
+\end{block}
+ </code></pre>
+<p>\end{frame}</p>
+<p>%=========================================================== % Aula 9 %===========================================================</p>
+</section>
+<section id="o-teste-qui-quadrado-para-diferenças-entre-probabilidades" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="o-teste-qui-quadrado-para-diferenças-entre-probabilidades"><span class="header-section-number">4.5</span> O Teste Qui-quadrado para diferenças entre probabilidades}</h2>
+<p>\end{frame}</p>
+</section>
+<section id="o-teste-qui-quadrado-para-independência" class="level2" data-number="4.6">
+<h2 data-number="4.6" class="anchored" data-anchor-id="o-teste-qui-quadrado-para-independência"><span class="header-section-number">4.6</span> O Teste Qui-quadrado para independência</h2>
+<p>\end{frame}</p>
+<p>%=========================================================== % Aula 10 %===========================================================</p>
+</section>
+<section id="o-teste-da-mediana" class="level2" data-number="4.7">
+<h2 data-number="4.7" class="anchored" data-anchor-id="o-teste-da-mediana"><span class="header-section-number">4.7</span> O Teste da mediana</h2>
+<p>\end{frame} </p>
+</section>
+<section id="medidas-de-dependência" class="level2" data-number="4.8">
+<h2 data-number="4.8" class="anchored" data-anchor-id="medidas-de-dependência"><span class="header-section-number">4.8</span> Medidas de dependência</h2>
+<p>\end{frame} </p>
+</section>
+<section id="o-teste-qui-quadrado-para-aderência-bondade-de-ajuste" class="level2" data-number="4.9">
+<h2 data-number="4.9" class="anchored" data-anchor-id="o-teste-qui-quadrado-para-aderência-bondade-de-ajuste"><span class="header-section-number">4.9</span> O teste Qui-quadrado para aderência (bondade de ajuste)</h2>
+<p>\end{frame} </p>
+</section>
+<section id="o-teste-de-cochran-para-observações-relacionadas" class="level2" data-number="4.10">
+<h2 data-number="4.10" class="anchored" data-anchor-id="o-teste-de-cochran-para-observações-relacionadas"><span class="header-section-number">4.10</span> O teste de Cochran para observações relacionadas</h2>
+<p>\end{frame} </p>
+<p>%=========================================================== % Aula 14 %===========================================================</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -604,11 +713,14 @@ div.csl-indent {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./tabelas_contingencia.html" class="pagination-link" aria-label="Tabelas de contingência">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Tabelas de contingência</span></span>
+      <a href="./teste_do_sinal.html" class="pagination-link" aria-label="O teste do sinal e suas variações">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">O teste do sinal e suas variações</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./references.html" class="pagination-link" aria-label="References">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->

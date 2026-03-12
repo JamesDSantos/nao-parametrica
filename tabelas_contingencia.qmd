@@ -1,0 +1,1266 @@
+# Tabelas de contingência
+
+## Introdução
+
+Uma tabela de contingência é uma matriz de números naturais que representam frequências absolutas. Por exemplo, um entomologista coletou 37 insetos, conforme a seguinte tabela de contingência 
+    
+$$\begin{array}{ccc|c}\hline
+    \hbox{Mariposa} & \hbox{Gafanhoto} & \hbox{Outros} &\hbox{Total} \\ \hline
+       12  & 22& 3 &37 \\ \hline
+    \end{array}$$
+
+A tabela acima é uma tabela de contingência $1\times 3$ (1 linha por 3 colunas) e representa observações de uma variável categórica com três classes: Mariposa, Gafanhoto, Outros. 
+\end{frame}
+O entomologista pode aumentar o nível de informação adicionando o evento no qual o inseto foi encontrado vivo. A nova tabela de contingência $2\times 3$ fica:
+    
+$$\begin{array}{c|ccc|c}\hline
+             &  \hbox{Mariposa} & \hbox{Gafanhoto} & \hbox{Outros} & \hbox{Total}\\ \hline
+             \hbox{Vivo} & 3 & 21 & 3 & 27 \\
+             \hbox{Morto} & 9&1&0&10\\ \hline
+             \hbox{Total}&12&22&3&37\\ \hline
+        \end{array}$$    
+
+Agora, a tabela apresenta observações e um par de variáveis categóricas, uma com as classes {Mariposa, Gafanhoto, Outros} e outra com as classes {Vivo, Morto}.
+
+Note que a coluna Total se refere ao total marginal das linhas, enquanto que a linha Total se refere ao total marginal das colunas. Tabelas de contingência com duas variáveis são denominadas tabelas de contingência de dupla entrada e podem ter várias linhas e colunas.
+
+
+
+
+\begingroup
+\setbeamertemplate{footline}{}
+\begin{frame}{}
+    \Huge{Aula 7 - Tabelas de contingência: o teste Qui-quadrado para diferença entre probabilidades  }
+\end{frame}
+\endgroup
+
+\begin{frame}{Tabelas de contingência}
+    Uma tabela de contingência é uma matriz de números naturais que representam frequências absulolutas. Por exemplo, um entomologista coletou 37 insetos, conforme a seguinte tabela de contingência 
+    
+    \begin{table}
+    \centering
+    \begin{tabular}{ccc|c}\hline
+    Mariposa & Gafanhoto & Outros &Total \\ \hline
+       12  & 22& 3 &37 \\ \hline
+    \end{tabular}
+    \end{table}
+    A tabela acima é uma tabela de contingência $1\times 3$ (1 linha por 3 colunas).
+\end{frame}
+
+\begin{frame}{}
+    O entomologista pode aumentar o nível de informação adicionando o evento no qual o inseto foi encontrado vivo. A nova tabela de contingência $2\times 3$ fica:
+    
+    \begin{table}[]
+        \centering
+        \begin{tabular}{c|ccc|c}\hline
+             &  Mariposa & Gafanhoto & Outros & Total\\ \hline
+             Vivo & 3 & 21 & 3 & 27 \\
+             Morto & 9&1&0&10\\ \hline
+             Total&12&22&3&37\\ \hline
+        \end{tabular}
+    \end{table}
+    Note que a coluna Total se refere ao total marginal das linhas, enquanto que a linha Total se refere ao total marginal das colunas. Tabelas de contingência com duas variáveis são denominadas tabelas de contingência de dupla entrada e podem ter várias linhas e colunas.
+\end{frame}
+
+## O Teste Qui-quadrado para diferenças entre probabilidades em tabelas 2$\times 2$
+    
+    \begin{block}{Dados}
+    Uma amostra aleatória de tamanho $n_1$ é retirada da população 1 (ou antes de um tratamento ser aplicado) é os resultados são \textcolor{purple}{organizados} em duas classes, sendo $O_{11}$ e $O_{12}$ suas respectivas frequências. Outra amostra aleatória, de tamanho $n_2$, é retirada da população 2 (ou da população 1 após a aplicação de um tratamento) é seus resultados são organizados nas mesmas duas classes, sendo $O_{21}$ e $O_{22}$ suas respectivas frequências. Esses resultados são organizados em um tabela de contingência de dupla entrada, como essa abaixo:
+    
+    \begin{table}[]
+        \centering
+        \begin{tabular}{c|cc|c}\hline
+             & Classe 1& Classe 2 & Total \\ \hline
+           População 1  & $O_{11}$ & $O_{12}$ & $n_1$\\
+           População 2 & $O_{21}$ & $O_{22}$ & $n_2$ \\ \hline
+           Total & $C_1$ & $C_2$ & $N=n_1+n_2$\\
+        \end{tabular}
+
+    \end{table}
+    \end{block}
+\end{frame}
+
+\begin{frame}{}
+    \begin{block}{Objetivo do teste}
+    Sejam $p_1$ e $p_2$ as probabilidades de ocorrência do evento na classe 1 para as populações 1 e 2, respectivamente. Estamos interessados nas seguintes hipóteses:
+    
+Hipótesess simples (two-sided)
+    
+    \begin{align*}
+        H_0&: p_1=p_2 \\
+        H_1&:p_1\neq p_2
+    \end{align*}
+        
+ Hipóteses compostas (one-sided)
+ 
+ \begin{align*}
+ \left\{\begin{array}{l}H_0: p_1\leq  p_2 \\ H_1:p_1>p_2 \end{array}\right.\;\;\;\;\;\left\{ \begin{array}{l}H_0:p_1\geq p_2 \\ H_1:p_1<p_2 \end{array}\right.
+ \end{align*}
+    \end{block}
+\end{frame}
+
+\begin{frame}{}
+ \begin{block}{Estatística de teste}
+ $$T_1=\sqrt{N}\frac{(O_{11}O_{22}-O_{12}O_{21})}{\sqrt{}n_1 n_2 C_1 C_2}$$
+ \end{block}
+ 
+ \begin{block}{Distribuição sob a hipótese nula}
+ Para grandes amostras, $T_1\sim \hbox{Normal}(0,1)$.
+ \end{block}
+\end{frame}
+
+\begin{frame}{Entendendo a distribuição da estatística sob a hipótese nula}
+ Sob $H_0$, $p_1=p_2=p$. Pelo Teorema Central do Limite,
+ $O_{11}/n_1$ e $O_{21}/n_{2}$ tem distribuição aproximadamente Normal$(p,\sigma^2/n_i)$, \textcolor{purple}{ onde $\sigma^2=p(1-p)$. Disto, teremos que}
+ 
+ $$\frac{O_{11}}{n_1}-\frac{O_{21}}{n_2}\approx N\left(0,\sigma^2\left(n_1^{-1}+\textcolor{purple}{n_2^{-1}}\right)\right)$$
+ 
+ Podemos estimar consistentemente $\sigma^2$ por
+ 
+ $$\hat{\sigma^2}=\hat{p}(1-\hat{p})=\frac{C_1 C_2}{N^2}$$
+\end{frame}
+
+\begin{frame}{}
+    Assim
+    \begin{align*}N(0,1)&\approx N\frac{\frac{O_{12}}{n_1}\textcolor{purple}{-}\frac{O_{21}}{n_2}}{\sqrt{C_1C_2 \left(\frac{1}{n_1}+\frac{1}{n_2}\right)
+    }}=N\frac{\frac{1}{n_1 n_2}(n_2 O_{11}-n_1 O_{21}\textcolor{purple}{)} }{\sqrt{\frac{C_1C_2(n_1+n_2)}{n_1n_2}}}
+    \\ &\textcolor{purple}{\sqrt{N}}\frac{(O_{21}+O_{22})O_{11}-(O_{11}+O_{12})O_{21}}{\sqrt{C_1C_2n_1n_2}}=T_1
+    \end{align*}
+\end{frame}
+
+\begin{frame}
+\begin{block}{p-valores }
+Para a hipótese simples $H_0:p_1=p_2$, 
+$$p\hbox{-valor}=2\min\{P(T_1\leq t_{obs}),P(T_1\geq  t_{obs})\}$$
+
+Para a hipótese composta $H_0:p_1\leq p_2$,
+$$p\hbox{-valor}=P(T_1\geq t_{obs})$$
+
+Para  hipótese composta $H_0:p_1\geq p_2$,
+$$p\hbox{-valor}=P(T_1\leq t_{obs}).$$
+\end{block}
+\end{frame}
+
+\begin{frame}{Exemplo 1}
+Dois carregamentos de itens manufaturados foram selecionados ao acaso e seus itens foram inspecionados. O objetivo é testar se há diferença entre as proporções de itens defeituosos nos dois carregamentos. Os dados foram organizados na seguinte tabela de contingência 
+
+\begin{table}[]
+    \centering
+    \begin{tabular}{c|cc|c}\hline
+         & Defeituoso & Não defeituoso & Total\\ \hline
+     Carregamento 1    & 13 & 73 & 86 \\
+     Carregamento 2 & 17 & 57 & 74 \\ \hline
+     Total& 30 & 130 & 160 \\ \hline
+    \end{tabular}
+\end{table}
+\end{frame}
+
+\begin{frame}{}
+    A estatística do teste \textcolor{purple}{Qui-quadrado} é
+    $$t_{obs}=\sqrt{160}\frac{(13)(57)-(73)(17)}{\sqrt{(86)(74)(30)(130)}}=-1,2695$$
+    
+    Como 
+    $$P(T_1\geq-1,2695)=0,8978$$
+    e 
+    $$P(T_1\leq-1,2695)=0,1021$$
+    logo,
+    $$p\hbox{-valor}=0,2042,$$
+    ou seja, não existem evidências de que há diferença na proporção de itens defeituosos dos dois carregamentos.
+\end{frame}
+
+\begin{frame}{Exemplo 2}
+    Na Academia Naval Americana, um novo sistema de iluminação foi instalado no dormitório dos aspirantes. Há a hipótese de que o novo sistema está causando problemas de visão. Considere as hipóteses:
+    
+    \begin{itemize}
+        \item $H_0:$ a proporção de aspirantes com boa visão é maior ou igual ao que era antes da instalação do novo sistema de iluminação 
+        
+        \item $H_1:$ a probabilidade de boa visão é menor do que era antes.
+    \end{itemize}
+    
+    Identificando $p_1$ como a proporção de aspirantes com boa visão antes do novo sistema ser instalado, temos que a hipótese nula é equivalente a $H_0:p_1\leq p_2$.
+\end{frame}
+
+\begin{frame}{}
+    Um grupo de aspirantes 4 anos antes da instalação do novo sistema foi selecionado (eles representam uma amostra a população 1).  Outra amostra foi selecionada dentre os aspirantes que já entraram com o novo sistema de iluminação em funcionamento (população 2). Foram obtidos os seguintes dados
+    
+    \begin{table}[]
+        \centering
+        \begin{tabular}{c|cc|c}\hline
+             &  Boa visão & Visão prejudicada & Total \\\hline
+          Sistema antigo   & 714 & 111& 825\\
+          Sistema novo & 662 & 154 & 816 \\ \hline
+          Total & 1376 & 265 & 1641 \\ \hline
+        \end{tabular}
+    \end{table}
+\end{frame}
+
+\begin{frame}{}
+    $$t_{obs}=\sqrt{1641}\frac{[(714)(154)-(111)(662)]}{\sqrt{(826)(816)(1376)(264)}}=2,982.$$
+    Como 
+    \textcolor{purple}{$$p\hbox{-valor}=P(T_1\geq 2,982)=0,00143$$}
+    existem evidências de que o novo sistema de iluminação é prejudicial para a vista.
+    
+    Nota: como de costume, utilizamos o comando \texttt{pnorm(t)} para calcular $P(T_1\leq t)$. 
+\end{frame}
+
+## O Teste Exato de Fisher 
+\end{frame}
+\endgroup
+
+\begin{frame}{O Teste Exato de Fisher}
+    \begin{block}{Dados}
+    As $N$ observações são organizadas em uma tabela de contingência $2\times 2$ da seguinte forma:
+    
+    \begin{table}[]
+        \centering
+        \begin{tabular}{c|cc|c}\hline
+             & Coluna 1& Coluna 2 & Total \\ \hline
+           Linha 1  & $x$ & $r-x$ & $r$\\
+           Linha 2  & $c-x$ & $N-r-c+x$ & $N-r$ \\ \hline
+           Total & $c$ & $N-c$ & $N$\\
+        \end{tabular}
+    \end{table}
+    
+    Neste teste, já sabemos o valor dos totais das linhas e colunas (logo, eles não são aleatórios).
+
+    \end{block}
+\end{frame}
+
+\begin{frame}{}
+    \begin{block}{Objetivo do teste}
+    Seja $p_1$ a probabilidade de ocorrência do evento na linha 1 e coluna 1 e seja $p_2$ a probabilidade de ocorrência do evento linha 2 e coluna 1. Estamos interessados nas seguintes hipóteses:
+    
+Hipótesess simples (two-sided)
+    
+    \begin{align*}
+        H_0&: p_1=p_2 \\
+        H_1&:p_1\neq p_2
+    \end{align*}
+        
+ Hipóteses compostas (one-sided)
+ 
+ \begin{align*}
+ \left\{\begin{array}{l}H_0: p_1\leq  p_2 \\ H_1:p_1>p_2 \end{array}\right.\;\;\;\;\;\left\{ \begin{array}{l}H_0:p_1\geq p_2 \\ H_1:p_1<p_2 \end{array}\right.
+ \end{align*}
+    \end{block}
+\end{frame}
+
+\begin{frame}{}
+ \begin{block}{Estatística de teste}
+ A estatística de teste $T_2$ é o número de observações na cela linha 1 e coluna 1.
+ \end{block}
+ 
+ \begin{block}{Distribuição sob a hipótese nula}
+ Quando $H_0$ é verdadeira, a distribuição exata de $T_2$ é 
+ $$P(T_2=x)=\frac{{r \choose x}{N-r\choose c-x}}{{N\choose c}},$$
+ para $x=0,1,\ldots,\min\{r,c\}.$ Para grandes amostras
+ $$T_3=\frac{x-\frac{rc}{N}}{\sqrt{\frac{rc(N-r)(N-c)}{N^2(N-1)}}}\approx N(0,1).$$
+ \end{block}
+\end{frame}
+
+\begin{frame}{Entendendo a distribuição da estatística sob a hipótese nula}
+ 
+ Suponha que $H_0$ é verdadeira e seja $p=p_1=p_2$. Seja $X$ o número de vezes que ocorreu o evento linha 1, coluna 1. Como o tota da linha 1 é fixado em $r$ sabemos que,
+ $$X|\hbox{linha 1}\sim \hbox{Binomail}(r,p).$$
+ Analogamente, definindo $Y$ como sendo o evento linha 2, coluna 1, teremos
+ $$Y|\hbox{linha 2}\sim \hbox{Binomail}(N-r,p).$$
+ Conjuntamente, teremos
+ \begin{align*}
+     P(X=x,Y=c-x)&={r \choose x}p^x(1-p)^{r-x}{N-r \choose c-x}p^{c-x}(1-p)^{N-r-c+x}\\&={r \choose x}{N-r \choose c-x}p^c(1-p)^{N-c}
+ \end{align*}\end{frame}
+
+\begin{frame}
+Além disso, sabemos que 
+$$X+Y\sim\hbox{Binomial}(c,p).$$
+Mas $X+Y$ é o total da coluna 1, que também é fixado. Então
+\begin{align*}
+    P(X=x|X+Y=c)&=\frac{P(X=x,X+Y=c)}{P(X+Y=c)}=\frac{P(X=x,x+Y=c)}{P(X+Y=c)}\\
+    &=\frac{P(X=x,Y=c-x)}{P(X+Y=c)}\\&=\frac{{r \choose x}{N-r \choose c-x}p^c(1-p)^{N-c}}{{N \choose c}p^c(1-p)^{N-c}}=\frac{{r \choose x}{N-r \choose c-x}}{{ N\choose c}}
+\end{align*}
+A distribuição de $T_3$ é consequência direta do Teorema Central do limite.
+\end{frame}
+
+\begin{frame}
+\begin{block}{p-valores }
+Para a hipótese simples $H_0:p_1=p_2$, 
+$$p\hbox{-valor}=2\min\{P(T_2\leq t_{obs}),P(T_2\geq  t_{obs})\}$$
+
+Para a hipótese composta $H_0:p_1\leq p_2$,
+$$p\hbox{-valor}=P(T_2\geq t_{obs})$$
+
+Para  hipótese composta $H_0:p_1\geq p_2$,
+$$p\hbox{-valor}=P(T_2\leq t_{obs}).$$
+\end{block}
+\end{frame}
+
+\begin{frame}{Exemplo 1}
+ Quatorze recém-graduados, 10 homens e 4 mulheres, todos igualmente qualificados, estão sendo designados pelo presidente de um banco aos seus novos cargos. 10 deles serão atendentes de caixas e 4 representantes de contas. A hipótese nula é a de que homens e mulheres tem igual chance de conseguir a vaga mais desejada, que é a de representante de contas. A hipótese alternativa de interesse é a de que as mulheres tem mais chance de conseguir esta vaga do que os homnes. Após a atribuição, apenas 1 mulher ficou com uma vaga de caixa. Existem evidências para rejeitar a hipótese nula?
+\end{frame}
+
+\begin{frame}{
+}
+ Os dados observados são
+ 
+    \begin{table}[]
+        \centering
+        \begin{tabular}{c|cc|c}\hline
+             & Representantes de conta & Caixa & Total \\ \hline
+           Homens   & $1$ & $9$ & $10$\\
+           Mulheres & $3$ & $1$ & $4$ \\ \hline
+           Total & $4$ & $10$ & $14$ \\ \hline
+        \end{tabular}
+    \end{table}
+    
+    A hipótese nula, relacionada com a coluna 1 é 
+    $H_0: p_1\geq p_2$ e a alternativa é \textcolor{purple}{$H_1: p_1< p_2$}. A estatística de teste é $t_{obs}=1$ e o  
+    $p$-valor deste teste é 
+    $$P(T_2\leq 1)=0,0409$$
+ \end{frame}
+ 
+ \begin{frame}[fragile]     No \texttt{R}, podemos chegar no $p$-valor anterior de dois modos diferentes:
+     
+     \begin{itemize}
+         \item Utilizando o comando \texttt{phyper(x,r,N-r,c)}. Neste caso usamos:
+         
+         \begin{center}
+             \texttt{phyper(1,10,4,4)}
+         \end{center}
+         
+         \item Escrevendo a tabela de contingência e usando a função \texttt{fisher.test}
+         \begin{verbatim}
+         
+             tab <- matrix( c(1,9,3,1), 2,2, byrow = T)
+             
+             fisher.test(tab,alternative = "less")
+         \end{verbatim}
+         
+     \end{itemize}
+ \end{frame}
+ 
+ \begin{frame}{Notas}
+  \textcolor{purple}{Este slide diverge da aula gravada, onde eu equivocadamente assumi que a origem do termo exato estava associada ao tamanho de um teste, mas na verdade, está associada à possibilidade de calcular o p-valor sem aproximações}
+ \begin{block}{Testes conservadores}
+ 
+ Em um teste \textcolor{purple}{para qualquer p-valor  , temos que
+ $$P(p-\hbox{valor}\leq \alpha)\leq \alpha.$$
+ Um teste é dito ser conservador quando a segunda desigualdade é acentuada. Nesse caso, o teste tem resistência em rejeitar $H_0$, mesmo quando ela \'e falsa.}
+ \end{block}
+ 
+ \textcolor{purple}{Alguns autores afirmam que o teste exato de Fisher é muito conservador, especialmente quando as linhas e colunas n\~ao s\~ao aleat\'orias (neste caso, o teste também não é exato)}
+ \end{frame}
+ 
+## Teste de Qui-quadrado de Cochran-Mantel-Haenszel
+
+     \begin{block}{Dados}
+    Os dados estão organizados em $k$s tabelas $2\times 2$, cada uma com totais de linhas e colunas fixados (não aleatórios). A $i$-ésima tabela é da forma
+    
+    \begin{table}[]
+        \centering
+        \begin{tabular}{c|cc|c}\hline
+             & Coluna 1& Coluna 2 & Total \\ \hline
+           Linha 1  & $x_i$ & $r_i-x_i$ & $r_i$\\
+           Linha 2  & $c_i-x_i$ & $N_i-r_i-c_i+x_i$ & $N_i-r_i$ \\ \hline
+           Total & $c_i$ & $N_i-c_i$ & $N_i$\\  \hline
+        \end{tabular}
+    \end{table}
+    
+    Além disso, cada tabela é obtida de um experimento independente dos demais.
+    \end{block}
+     
+ \end{frame}
+ 
+ \begin{frame}{}
+    \begin{block}{Objetivo do teste}
+    Seja $p_{1i}$ a probabilidade de ocorrência do evento na linha 1 e coluna 1 na $i$-ésima tabela e seja $p_{2i}$ a probabilidade de ocorrência do evento linha 2 e coluna 1 também na $i$-ésima tabela. Estamos interessados nas seguintes hipóteses:
+    
+Hipóteses simples (two-sided)
+    
+    \begin{align*}
+        H_0&: p_{1i}=p_{2i} \hbox{ para todo $i=1,\ldots,k$}\\
+        H_1&: \textcolor{purple}{p_{1i}\neq p_{2i}} \hbox{ para algum }i
+    \end{align*}
+        
+ Hipóteses compostas (one-sided)
+ 
+ \begin{align*}
+ \left\{\begin{array}{l}H_0: p_{1i}\leq  p_{2i} \hbox{ para todo }i=1,\ldots,k \\ H_1:p_{1i}>p_{2i} \hbox{ para \textcolor{purple}{algum} }i\end{array}\right.\;\;\;\;\;\left\{ \begin{array}{l}H_0:p_{1i}\geq p_{2i} \hbox{ para todo }i=1,\ldots,k \\ H_1:p_1<p_2 \hbox{ para \textcolor{purple}{algum} }i \end{array}\right.
+ \end{align*}
+    \end{block}
+\end{frame}
+
+\begin{frame}{}
+Note que $H_0$ \'e constru\'ida considerando que todas as hip\'oteses $H_{0i}: p_{1i}=p_{2i}$ s\~ao verdadeiras, ou seja
+
+$$H_0 = \cap_{i=1}^k H_{0i}$$
+
+Isso implica que
+
+$$H_1 = H_0^c=\left(\cap_{i=1}^k H_{0i}\right)^c =\cup_{i=1}^k H_{0i}^c=\cup_{i=1}^k H_{1i}$$
+
+ou seja, $H_1$ \'e equivalente a afirmar que pelo menos uma das $k$ hip\'oteses alternativas \'e verdadeira.
+    
+\end{frame}
+
+\begin{frame}{}
+ \begin{block}{Estatística de teste}
+ A estatística de teste é 
+ $$T_4=\frac{\sum_{i=1}^k x_i-\sum_{i=1}^k \frac{r_ic_i}{N_i}}{\sqrt{\sum_{i=1}^k\frac{r_ic_i(N_i-r_i)(N_i-c_i)}{N_i^2(N_i-1)}}}$$
+ \end{block}
+ 
+ \begin{block}{Distribuição sob a hipótese nula}
+ Quando $H_0$ é verdadeira, $T_4\approx N(0,1).$ para grandes amostras. Há a melhoria na aproximação com as seguintes correções de continuidade:
+ \begin{itemize}
+     \item Para $H_1:p_{1i}<p_{2i}$, some 0,5 no numerador de $T_4$
+     \item Para $H_1:p_{1i}>p_{2i}$, subtraia 0,5 no numerador de $T_4$
+ \end{itemize}
+ \end{block}
+\end{frame}
+
+\begin{frame}{Entendendo a distribui\c{c}\~ao da estat\'istica sob a hip\'otese nula}
+    Sob $H_0$, sabemos que $x_i$ tem distribui\c{c}\~ao hipergeom\'etrica com m\'edia $\mu_i=r_ic_i/N_i$ e vari\^ancia $\sigma^2_i=r_ic_i(N_i-r_i)(N_i-c_i)/N_i^2(N_i-1)$. Para $N_i$ suficientemente grande,
+    
+        $$x_i\approx N\left(\mu_i,\sigma^2_i\right)$$
+    
+    Como cada tabela \'e independente das demais, teremos que 
+    $$\sum_{i=1}^{k}x_i\approx N\left(\sum_{i=1}^{k}\mu_i,\sum_{i=1}^{k}\sigma^2_i\right),$$
+    ou equivalentemente
+    $$T_4=\frac{\sum_{i=1}^k x_i-\sum_{i=1}^k \mu_i}{\sqrt{\sum_{i=1}^{k}\sigma^2_i}}\approx N(0,1)$$
+\end{frame}
+
+\begin{frame}
+\begin{block}{p-valores }
+Para a hipótese simples $H_0:p_{1i}=p_{2i}$, 
+$$p\hbox{-valor}=2\min\{P(T_4\leq t_{obs}),P(T_2\geq  t_{obs})\}$$
+
+Para a hipótese composta $H_0:p_{1i}\leq p_{2i}$,
+$$p\hbox{-valor}=P(T_4\geq t_{obs})$$
+
+Para  hipótese composta $H_0:p_{1i}\geq p_{2i}$,
+$$p\hbox{-valor}=P(T_4\leq t_{obs}).$$
+\end{block}
+\end{frame}
+
+\begin{frame}{Exemplo 2}
+Um tratamento experimental foi administrado para três grupos de pacientes com câncer com o objetivo de verificar se há o aumento na taxa de sucesso. Os números de sucessos e fracassos estão registrados abaixo
+
+\begin{table}[]
+    \centering
+    \begin{tabular}{c|cc|cc|cc}\hline
+    & \multicolumn{2}{c|}{Grupo 1} &  \multicolumn{2}{c}{Grupo 2} &  \multicolumn{2}{|c}{Grupo 3} \\ \hline
+         & Sucesso & Fracasso & Sucesso & Fracasso & Sucesso & Fracasso \\ \hline
+    Tratamento & 10 & 1 & 9 & 0 & 8 & 0 \\ 
+    Controle & 12 & 1 & 11 & 1 & 7 & 3 \\ \hline
+    \end{tabular}
+\end{table}
+
+\end{frame}
+
+\begin{frame}
+Nossas hip\'oteses s\~ao
+\begin{itemize}
+    \item $H_0$: a taxa de sucesso do tratamento novo \'e menor ou equivalente à taxa do tratamento controle em todos os grupos
+    \item $H_1$: a taxa de sucesso do tratamento novo \'e maior que a taxa do tratamento controle em pelo menos um grupo.
+\end{itemize} 
+Para a $i$-ésimo tabela, identificando $p_{1i}$ como a probabilidade de sucesso com o tratamento novo e $p_{2i}$ como a mesma taxa para o grupo controle, teremos que $H_0:p_{1i}\leq p_{2i}$ para $i=1,2,3.$
+\end{frame}
+
+\begin{frame}{}
+    A estatístca de teste observada é
+    $$t_{obs}=\frac{1,6786}{1,1719}$$
+    e, com a correção da continuidade,
+    $$t_{obs}=\frac{1,6786-0,5}{1,1719}=1,0057$$
+    O $p$-valor deste teste é
+    $$P(T_4\geq 1,0057)=0,15728$$
+    logo, não há evidências de que o tratamento é eficaz. Note que os totais das linhas e colunas deste problema não são fixos, logo, o teste de Cochran-Mantel-Haenszel é conservador.
+\end{frame}
+
+\begin{frame}{Exercícios}
+    
+    Páginas 195, 196 e 197. Exercícios 1, 2, 3, 4, 7 e 8.
+\end{frame}
+
+%===========================================================
+% Aula 9
+%===========================================================
+
+\begingroup
+\setbeamertemplate{footline}{}
+\begin{frame}{}
+    \Huge{Aula 9 - Tabelas de contingência $r\times c$: os testes Qui-quadrado para diferenças entre probabilidades e para independência}
+\end{frame}
+\endgroup
+
+## O Teste Qui-quadrado para diferenças entre probabilidades}
+
+\begin{block}{Dados}
+Considere que existem $r$ populações  e que uma amostra aleatória é retirada de cada uma. Além disso, as amostras são mutualmente independentes. Seja $n_i$ o tamanho da amostra retirada da $i$-ésima população, com $1\leq i\leq r$. Cada observação da amostra pode ser classificada em uma das $c$ categorias existentes. Seja $O_{ij}$ o número de observações da população $i$ que foram classificadas como $j$. Então
+
+$$n_i=\sum_{j=1}^{c}O_{ij}.$$
+\end{block}
+\end{frame}
+
+\begin{frame}{}
+\begin{block}{Dados (cont.)}
+Os dados são organizados na seguinte tabela de contingência $r\times c$:
+
+\begin{table}[]
+    \centering
+    \begin{tabular}{c|cccc|c}\hline
+                    & Classe 1 & Classe 2 & $\cdots$ & Classe $c$ & Total (linhas) \\ \hline
+    População 1     & $O_{11}$ & $O_{12}$ & $\cdots$ & $O_{1c}$ & $n_1$ \\
+    População 2     & $O_{21}$ & $O_{22}$ & $\cdots$ & $O_{2c}$ & $n_2$ \\   
+    $\vdots$        & $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ \\   
+    População $r$   & $O_{r1}$ & $O_{r2}$ & $\cdots$ & $O_{rc}$ & $n_r$ \\ \hline 
+    Total (colunas) & $C_1$    & $C_2$    & $\cdots$ & $C_c$ & $N$ \\ \hline   
+    \end{tabular}
+        \label{tab:my_label}
+\end{table}
+onde $C_j$ é o número de observações na classe $j$ e $N=n_1+\cdots+n_r$.
+\end{block}    
+\end{frame}
+
+\begin{frame}{}
+    \begin{block}{Objetivo do teste}
+    Seja $p_{i,j}$ a probabilidade de ocorrência da classe $j$ na $i$-ésima população. O objetivo deste teste é determinar se as populações são identicamente distribuídas, i.e.,
+    
+
+    \begin{align*}
+        H_0&: p_{1,j}=p_{2,j}=\cdots=p_{r,j} \hbox{ para todo $j$}\\
+        H_1&:p_{i,j}\neq p_{k,j} \hbox{ para pelo menos um $j$ e um par $(i,k)$}
+    \end{align*}
+    \end{block}
+    
+     \begin{block}{Estatística de teste}
+ A estatística de teste $T$ é dada por
+ \begin{equation}
+     T=\sum_{i=1}^r\sum_{j=1}^c \frac{(O_{ij}-E_{ij})^2}{E_{ij}},
+ \end{equation}
+ onde  $E_{ij}=n_iC_j/N$.  Este teste também é conhecido como o teste Qui-quadrado de Pearson.
+  \end{block}
+ 
+\end{frame}
+
+\begin{frame}{}
+
+ \begin{block}{Distribuição sob a hipótese nula}
+ Complicada. Para grandes amostras, com todos $E_{ij}$ maiores que 0,5 e pelo menos a metade maior que 1, $T$ tem distribuição (aproximada) qui-quadrado com $(c-1)(r-1)$ graus de liberdade. Um p-valor mais acurado pode ser obtido via simulação de Monte Carlo.
+ \end{block}
+ 
+  \begin{block}{$p$-valor}
+  \begin{align}
+      p-\hbox{valor}=P(T\geq t_{obs})
+  \end{align}
+  \end{block}
+ 
+\end{frame}
+
+\begin{frame}{Entendendo a distribuição da estatística sob a hipótese nula}
+ 
+ Esta é uma demonstração complicada e faremos apenas um esboço. Sob $H_0$, podemos fazer $p_{1,j}=\cdots=p_{c,j}=p_j$. Deste modo $O_{i1},\ldots,O_{ic}\sim \hbox{Multinomial}(n_i,p_1,\ldots,p_c)$. Disto, é verdade que $Cov(O_{i,j},O_{i,j'})=-\sqrt{p_jp_{j'}}$. Agora, a partir do Teorema Central do Limite, é possível mostrar que
+ 
+ $$Z_{i,j}=\frac{O_{ij}-n_ip_j}{n_ip_j}\approx N(0,1-p_j)$$
+ 
+As variáveis $Z_i$ são correlacionadas, covariância igual a $-\sqrt{p_jp_{j'}}$. É possível mostrar que $\sum_{i=1}^r \sum_{j=1}^c Z_{i,j}^2\sim \chi_{(r-1)(c-1)}^2$. A estatística $T$ é obtida ao substituir $p_j$ por $\hat{p}_j=C_j/N$.
+ \end{frame}
+
+\begin{frame}{Exemplo 1}
+    Uma amostra aleatória de alunos de escolas públicas e outra de escolas privadas foram selecionadas. Todos os alunos realizaram uma avaliação e os escores obtidos estão sumarizados abaixo.
+    
+    \begin{table}[]
+        \centering
+        \begin{tabular}{c|cccc|c}\hline
+             &  \multicolumn{4}{c|}{Escore do teste}& \\
+             & 0-275 & 276-350 & 351-425 & 426-500 & Total \\ \hline
+    Escola privada & 6 & 14 & 17 & 9 & 46 \\
+    Escola pública & 30 & 32 & 17 & 3 & 82 \\ \hline
+    Total & 36 & 46 & 34 & 12 & 128 \\ \hline
+        \end{tabular}
+        \label{tab:my_label}
+    \end{table}
+    Os escores são os mesmos, tanto para as escolas públicas quanto para as privadas?
+\end{frame}
+
+\begin{frame}{}
+    Sejam $p_{1j}$ e $p_{2j}$ as probabilidades de um estudante obter um escore no intervalo descrito na coluna $j$, considerando as escolas privadas e públicas respectivamente. Se $H_0: p_{1j}=p_{2j}$ para todo $j$ for verdadeira, então os escores são provenientes do mesmo modelo de probabilidade, e, portanto, não há diferenças.
+    
+    
+    A estatística do teste é $t_{obs}=17,286$ e o $p$-valor (aproximado) correspondente é 0,0006, o que nos leva a rejeitar $H_0$, ou seja, há diferença significativa entre os escores nas escolas públicas e privadas.
+\end{frame}
+
+\begin{frame}[fragile]{}
+No \texttt{R}, utilizamos o comando \texttt{chisq.test(x)} onde \texttt{x} é uma matriz contendo a tabela de contingência. No exemplo acima, fizemos:
+
+\begin{verbatim}
+x <- matrix( c(6,14,17,9,30,32,17,3), 2,4, byrow = T)
+chisq.test(x)    
+\end{verbatim}
+
+Note que há uma mensagem, avisando que o p-valor não é preciso. Podemos calcular o p-valor por simulação, fazendo \texttt{chisq.test(x,simulate.p.value = TRUE)}. Neste caso, o p-valor é 0,001499, que ainda nos leva a mesma conclusão. 
+\end{frame}
+
+
+## O Teste Qui-quadrado para independência
+
+\begin{block}{Dados}
+Uma amostra aleatória de tamanho $N$ é obtida. Cada elemento é classificado de acordo com dois critérios. Usando o primeiro critério, cada elemento é associado com uma das $r$ linhas. Usando o segundo, cada elemento é associado com uma das $c$ colunas. A tabela de contingência correspondente é
+\begin{table}[]
+    \centering
+    \begin{tabular}{c|c|cccc|c}\hline
+                &    &  \multicolumn{4}{|c|}{Critério 2} & \\
+                &    &  1 &  2 & $\cdots$ & $c$ & Total (linhas) \\ \hline
+    \multirow{4}{*}{Critério 1}& 1     & $O_{11}$ & $O_{12}$ & $\cdots$ & $O_{1c}$ & $R_1$ \\
+    &2     & $O_{21}$ & $O_{22}$ & $\cdots$ & $O_{2c}$ & $R_2$ \\   
+    &$\vdots$        & $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ \\   
+    & $r$   & $O_{r1}$ & $O_{r2}$ & $\cdots$ & $O_{rc}$ & $R_r$ \\ \hline 
+    &Total (colunas) & $C_1$    & $C_2$    & $\cdots$ & $C_c$ & $N$ \\ \hline   
+    \end{tabular}
+        \label{tab:my_label}
+\end{table}
+
+\end{block}    
+\end{frame}
+
+\begin{frame}{}
+    \begin{block}{Objetivo do teste}
+    Objetivo deste teste é determinar se os dois critérios de classificação são independentes, i.é,
+    
+
+    \begin{align*}
+        H_0&: P(\hbox{linha $i$},\hbox{coluna $j$})= P(\hbox{linha $i$})P(\hbox{coluna $j$})\hbox{ para todo $i,j$}\\
+        H_1&: P(\hbox{linha $i$},\hbox{coluna $j$})\neq P(\hbox{linha $i$})P(\hbox{coluna $j$})\hbox{ para pelo menos um par $i,j$}\\
+    \end{align*}
+    \end{block}
+\end{frame}
+
+\begin{frame}{}
+
+ \begin{block}{Estatística de teste}
+ A estatística de teste $T$ é dada por
+ \begin{equation}
+     T=\sum_{i=1}^r\sum_{j=1}^c \frac{(O_{i,j}-E_{i,j})^2}{E_{i,j}},
+ \end{equation}
+ onde $E_{i,j}=R_iC_j/N$.
+   \end{block}
+ 
+ \begin{block}{Distribuição sob a hipótese nula}
+ Embora este teste tenha premissas diferentes do anterior, tanto a estatística de teste quanto a distribuição da estatística sob $H_0$ são as mesmas, i.e., $T\sim \chi^2_{(r-1)(c-1)}$.
+ \end{block}
+ 
+  \begin{block}{$p$-valor}
+  \begin{align}
+      p-\hbox{valor}=P(T\geq t_{obs})
+  \end{align}
+  \end{block}
+ 
+\end{frame}
+
+\begin{frame}{Exemplo 2}
+    Uma amostra aleatória de alunos universitários foi classificada de acordo com o curso escolhido e se eles são ou não do mesmo estado da universidade que estão cursando (vamos denominar essa variável por procedência).
+    
+    \begin{table}[]
+        \centering
+        \begin{tabular}{c|cccc|c}\hline
+             & Engenharia & Artes e ciências & Economia & Outras & Total \\ \hline
+    No estado & 16 & 14 & 13 & 13 & 56 \\
+    Fora do estado & 14 & 6 & 10 & 8 & 38 \\ \hline
+    Total & 30 & 20 & 23 & 21 & 94 \\ \hline
+        \end{tabular}
+        \label{tab:my_label}
+    \end{table}
+    Há independência entre a escolha do curso e a procedência? 
+\end{frame}
+
+\begin{frame}[fragile]{}
+    A estatística do teste é \textcolor{purple}{$t_{obs}=1,5242$} e o $p$-valor (aproximado) correspondente é \textcolor{purple}{0,6767}. Portanto, não temos evidências contra a hipótese de que a escolha do curso e a procedência são independentes.
+
+Abaixo, temos a resolução deste exemplo no \texttt{R}:
+
+\begin{verbatim}
+x <- matrix( c(16,14,13,13,14,6,10,8), 2,4, byrow = T)
+chisq.test(x)    
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}{Exercícios}
+
+Paǵinas 216 e 2017, exercícios 3, 4, 6 ,7 e 8.
+    
+\end{frame}
+
+%===========================================================
+% Aula 10
+%===========================================================
+
+## O Teste da mediana
+\end{frame}
+\endgroup
+
+
+\begin{frame}{O teste d mediana}
+ \begin{block}{Dados}
+    Considere $c$ amostras aleatórias independentes, sendo $n_i$ o tamanho da $i$-ésima amostra. Seja $N=n_1+\cdots+n_c$ o número de observações. Vamos juntar todas as amostras e encontrar a mediana (vamos denominá-la \textit{mediana global}). Em seguida, seja $Q_{1i}$ será o número de observações da $i$-ésima população que que excederam a mediana global, enquanto que $O_{2i}$ será o número de observações da $i$-ésima população que são menores ou iguais à mediana global. Os dados são organizados na seguinte tabela de contingência $2\times 2$:
+    
+    \begin{table}[]
+        \centering
+        \begin{tabular}{c|cccc|c}\hline
+            Amostra & 1 & 2 & $\cdots$ & Total  \\ \hline
+             $>$Mediana& $O_{11}$ &$O_{12}$ & $\cdots$ & $O_{1c}$ & $a$\\
+             $\leq$Mediana& $O_{21}$& $O_{22}$ & $\cdots$ & $O_{2c}$ & $b$\\ \hline
+             Total & $n_1$ & $n_2$ & $\cdots$ & $n_c$ & N \\ \hline
+        \end{tabular}
+        \label{tab:my_label}
+    \end{table}
+ \end{block}   
+\end{frame}
+
+\begin{frame}{}
+    \begin{block}{Objetivos do teste}
+    Se todas as populações tem a mesma mediana, cada uma delas tem a mesma probabilidade de exceder a mediana global. As hipóteses são:
+    
+    \begin{itemize}
+        \item $H_0:$ todas as $c$ populações tem a mesma mediana.
+        \item $H_1:$ pelo menos duas populações tem medianas diferentes.
+    \end{itemize}
+    \end{block}
+
+
+\begin{block}{Estatística de teste, distribuição sob $H_0$ e p-valor}
+A estatística de teste é
+$$T=\frac{N^2}{ab}\sum_{i=1}^c\frac{\left(O_{i1}-\frac{n_i a}{N}\right)^2}{n_i}$$
+e sob $H_0$, $T\sim\chi^2_{c-1}$. O p-valor do teste é $P(T\geq t_{obs})$.
+\end{block}
+\end{frame}
+
+\begin{frame}{Sobre a distribuição da estatística de teste}
+Note que, se todas as populações tem a mesma mediana, então $$P(O_{1i}>\hbox{mediana global})=P(O_{1j}>\hbox{mediana global})=p$$ para todo $i,j$.
+    Então, o problema se reduz a um teste para determinar se as probabilidades das celas são iguais. Isto pode ser realizado com um teste Qui-quadrado, com estatística de teste dada por
+    $$\sum_{i=1}^2\sum_{j=1}^c\frac{(O_{ij}-E_{ij})^2}{E_{ij}}=\sum_{j=1}^c\frac{(O_{1j}-E_{1j})^2}{E_{1j}}+\sum_{j=1}^c\frac{(O_{2j}-E_{2j})^2}{E_{2j}}$$
+\end{frame}
+
+\begin{frame}{}
+    Mas $O_{2j}=n_j-O_{1j}$ e $E_{2j}=n_j-E_{2j}.$ Então
+    $$\sum_{j=1}^c\frac{(O_{2j}-E_{2j})^2}{E_{2j}}=\sum_{j=1}^c\frac{(n_j-O_{1j}-n_j+E_{1j})^2}{n_j-E_{1j}}=\sum_{j=1}^c\frac{(O_{1j}-E_{1j})^2}{n_j-E_{1j}},$$
+    logo
+   \begin{align*}\sum_{i=1}^2\sum_{j=1}^c\frac{(O_{ij}-E_{ij})^2}{E_{ij}}&=\sum_{j=1}^c\frac{(O_{1j}-E_{1j})^2}{E_{1j}E_{2j}}\left(E_{1j}+E_{2j}\right)\\
+   &=\sum_{j=1}^c n_j\frac{(O_{1j}-E_{1j})^2}{E_{1j}E_{2j}}.
+   \end{align*}
+\end{frame}
+
+\begin{frame}{}
+Como $E_{1j}=n_ja/N$, teremos que
+   \begin{align*}\sum_{i=1}^2\sum_{j=1}^c\frac{(O_{ij}-E_{ij})^2}{E_{ij}}&=\sum_{j=1}^c n_j\frac{\left(O_{1j}-\frac{n_j a}{N}\right)^2}{n_j^2\frac{ab}{N^2}}=T.
+   \end{align*}
+   Portanto, este teste é um teste Qui-quadrado para diferença entre proporções.
+\end{frame}
+
+\begin{frame}{Comparações múltiplas}
+    Quando $H_0$ é rejeitada, podemos construir várias tabelas 2$\times 2$, comparando as populações 2 a 2. Neste caso, as estatísticas terão 1 grau de liberdade e, aquelas que nos levarem à rejeitar a hipótese de igualdade serão consideradas diferentes. 
+\end{frame}
+
+\begin{frame}{Exemplo 1}
+Quatro métodos para melhoria do crescimento de milho foram aleatoriamente assinalados em um grande número de lotes de terras e a produção por acre de cada lote foi registrada. Os resultados foram:
+
+\begin{center}
+\begin{tabular}{c|l}\hline
+Método & Produção por acre \\ \hline
+1 & 83 89 89 90 91 91 92 94 96   \\
+2 & 81 83 83 84 84 88 89 90 91 91  \\
+3 & 91 93 94 95 96 100 101  \\
+4 & 77 78 79 80 81 81  81 82  \\ \hline
+\end{tabular}    
+\end{center}
+Existe diferença entre os métodos de produção?
+\end{frame}
+
+\begin{frame}{}
+    São 34 observações no total e a mediana global é 89. Replicamos a tabela anterior, destacando em azul o número de observações por método que são maiores que a mediana global. Adicionamos uma coluna para guardar esse total
+    
+    \begin{center}
+\begin{tabular}{c|l|c}\hline
+Método & Produção por acre & Observações maiores que 89\\ \hline
+1 & 83 89 89 \textcolor{blue}{90 91 91 92 94 96}   & 6\\
+2 & 81 83 83 84 84 88 89 \textcolor{blue}{90 91 91}  &3 \\
+3 & \textcolor{blue}{91 93 94 95 96 100 101} & 7\\
+4 & 77 78 79 80 81 81  81 82  & 0\\ \hline
+\end{tabular}    
+\end{center}
+\end{frame}
+
+\begin{frame}{}
+Cada método será considerado uma população, o que vai gerar a seguinte tabela
+
+ \begin{table}[]
+        \centering
+        \begin{tabular}{c|cccc|c}\hline
+           & \multicolumn{4}{c|}{Método} & \\ \hline
+             & 1 & 2 & 3 & 4 & Total  \\ \hline
+             $>$89& 6 & 3 & 7 & 0 & 16 \\
+             $\leq$89& 3& 7 & 0 & 8 & 18\\ \hline
+             Total & 9 & 10 & 7 & 8 & 34 \\ \hline
+        \end{tabular}
+        \label{tab:my_label}
+    \end{table}
+    Encontramos $t_{obs}=17,543$. O p-valor, considerando uma distribuição $\chi^2$ com 3 graus de liberdade, é igual a 0,0005456, o que nos leva a rejeitar $H_0$. Então, pelo menos um par de métodos tem medianas diferentes.
+\end{frame}
+
+\begin{frame}{}
+   Podemos identificar quais são os métodos que possuem medianas diferentes criando subtabelas $2\times 2$ e refazendo o teste. Por exemplo, abaixo separamos a tabela que contém somente os métodos 1 e 2
+   
+   \begin{table}[]
+        \centering
+        \begin{tabular}{c|cc|c}\hline
+           & \multicolumn{2}{c|}{Método} & \\ \hline
+             & 1 & 2 & Total  \\ \hline
+             $>$89& 6 & 3  & 9 \\
+             $\leq$89& 3& 7 & 10\\ \hline
+             Total & 9 & 10  & 19 \\ \hline
+        \end{tabular}
+        \label{tab:my_label}
+    \end{table}
+    Obtivemos $t_{obs}=2,5544$ e um p-valor de 0,17 (via Monte Carlo). Logo, não há evidências de que as medianas são distintas entre os métodos 1 e 2.
+\end{frame}
+
+\begin{frame}{}
+    Exercícios: 1 e 2 da página 226
+\end{frame}
+
+##  Medidas de dependência
+\end{frame}
+\endgroup
+
+\begin{frame}{Introdução}
+    \begin{itemize}
+        \item Tabelas de contingência são úteis para verificar se há algum tipo de dependência
+        \item Vamos discutir como medir tal dependência
+        \item Até o momento, temos utilizado testes de hipóteses para este fim, utilizando majoritariamente, a estatística 
+        $$T=\sum_{i=1}^{r}\sum_{j=1}^c \frac{(O_{ij}-E_{ij})^2}{E_{ij}}$$
+        \item Sabemos que valores altos desta estatística dão evidências contra $H_0$ mas ela não é intuitiva, pois a distribuição da estatística de teste se altera com os valores de $(r,s)$ (e, assim, também se altera a noção sobre o que é um valor alto)
+        \item Vamos discutir algumas medidas que visam sanar essa dificuldade
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Coeficiente de Cramér}
+    \begin{itemize}
+        \item Um dos problemas da estatística $T$ é que não temos noção de quão alto é o valor de $T$. \item Podemos remediar isso encontrando qual é o maior valor possível de $T$ para um número fixado de linhas e colunas. 
+        \item É possível mostrar que $T$ assume seu valor máximo em tabelas que tem $O_{ij}=0$ para todo $i\neq j$. Neste caso, pode-se mostrar o valor máximo de $T$ é $N(q-1)$, onde $q=\min\{r,s\}$. Assim
+        $$R_1=\frac{T}{N(q-1)}$$ mede a dependência entre as linhas e colunas da tabela.
+        
+
+    \end{itemize}
+\end{frame}
+
+\begin{frame}        
+O coeficiente de Cramér é dado por $\sqrt{R_1}$ e é, geralmente, interpretado como segue:
+        \begin{center} 
+            \begin{tabular}{c|c}\hline
+                 Coeficiente & Dependência \\  \hline          
+                $[0,3/10)$ & Fraca \\
+                 $[3/10,7/10)$& Média \\
+                 $[7/10,1]$ & Forte \\ \hline
+            \end{tabular}
+        \end{center}     
+\end{frame}
+
+\begin{frame}{Exemplo 1}
+    Considere novamente o problema dos escores dos alunos de escolas públicas e privadas, abordado na aula 9, cuja tabela que contigência com os escores obtidos está replicada abaixo.
+    
+    \begin{table}[]
+        \centering
+        \begin{tabular}{c|cccc|c}\hline
+             &  \multicolumn{4}{c|}{Escore do teste}& \\
+             & 0-275 & 276-350 & 351-425 & 426-500 & Total \\ \hline
+    Escola privada & 6 & 14 & 17 & 9 & 46 \\
+    Escola pública & 30 & 32 & 17 & 3 & 82 \\ \hline
+    Total & 36 & 46 & 34 & 12 & 128 \\ \hline
+        \end{tabular}
+        \label{tab:my_label}
+    \end{table}
+    Mostramos que há evidências para rejeitar a hipótese de que a distribuição dos escores é a mesma tanto para as escolas públicas quanto para as privadas.
+\end{frame}
+
+\begin{frame}{}
+Temos que
+\begin{itemize}
+    \item $t_{obs}=17,286$ 
+    \item $q=\min\{2,5\}=2$
+    \item $N=128$
+\end{itemize}
+logo, o coeficiente de Cramér é igual a 
+$$R_1=\sqrt{\frac{17,286}{128\times (2-1)}}=0,68$$
+que pode ser classificado como uma dependência média ou moderada.
+\end{frame}
+
+\begin{frame}{Coeficiente Phi}
+    Considere a seguinte tabela de contingência
+    \begin{table}[]
+        \centering
+        \begin{tabular}{|cc|c|} \hline
+        
+$a$  &   $b$       & $r_1$ \\
+$c$ & $d$             & $r_2$\\ \hline
+$c_1$ & $c_2$ & $N$\\ \hline
+        \end{tabular}
+    \end{table}
+    Suponha que $a$ e $d$ é o número de classificações similares e $b$ e $c$ o número de classificações discrepantes.
+\end{frame}
+
+\begin{frame}{}
+\begin{itemize}
+    \item A estatística de Cramér vai indicar apenas a dependência entre linhas e colunas, mas não diz muito além disso.
+    \item Dizemos que há uma direção positiva se classificações similares são mais frequentes.
+    \item Dizemos que há uma direção negativa se classificações discrepantes são mais frequentes.
+    \item Para este fim, podemos utilizar a estatistica Phi, dada por
+    $$\frac{ad-bc}{\sqrt{r_1r_2c_1c_2}}$$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{}
+    Na verdade, a estatística Phi é, basicamente, a estatística do teste Qui-quadrado ($T_1$) apresentada na Aula 7, i.e.,
+    
+    $$\sqrt{N} \hbox{Phi}=T_1.$$
+    
+    Valores de Phi próximos a +1 dão evidências de uma direção positiva, enquanto que valores próximos de -1 dão evidências de uma direção negativa.
+\end{frame}
+
+\begin{frame}{Exemplo 2}
+Para verificar se o uso de cinto de segurança salva vidas, dados dos 100 últimos acidentes de carro que ocorreram ao longo de certa rodovia foram registrados. Haviam 242 pessoas envolvidas nos acidentes e cada uma delas foi classificada segundo o uso de cinto de segurança e se sobreviveu ao acidente. Os dados estão sumarizados abaixo:
+
+\begin{table}[]
+    \centering
+    \begin{tabular}{c|c|cc|c}\hline
+         & & \multicolumn{2}{c|}{Acidente fatal?}& Total  \\ 
+         & & Sim & Não & \\ \hline
+    Usava cinto? & Sim & 7 & 89 & 96 \\    
+     & Não & 24 & 122 & 146 \\ \hline
+     & Total & 1 & 211 & 242 \\ \hline
+    \end{tabular}
+    
+    \label{tab:my_label}
+\end{table}
+\end{frame}
+
+\begin{frame}{}
+    Note que desejamos mostrar que o uso de cinto (``Sim'' na linha) leva a acidentes não fatais (``Não'' na coluna). Então, seria interesante observar um valor de Phi negativo. Notemos que
+    
+    $$\hbox{Phi}=\frac{7\times 122-24\times 89}{\sqrt{31\times211\times 96\times 146}}=-0,138$$
+    
+    o que mostra que a direção é, de fato, negativa.
+    
+    Podemos ainda construir as seguintes hipóteses:
+    
+    \begin{itemize}
+        \item $H_0:$ a direção a dependência não é negativa 
+        \item $H_1:$ a direção a dependência é negativa 
+    \end{itemize}
+    \end{frame}
+
+\begin{frame}{}
+Note que valores muito negativos de Phi dão evidências contra $H_0$. Seja phi o valor observado de Phi. Então
+
+\begin{align*}
+    p-\hbox{valor}&=P(Phi\leq phi)=P(\sqrt{N}Phi\leq \sqrt{N}phi)\\
+    &=P(T_1\leq \sqrt{N}phi)
+\end{align*}
+    e, como $T_1\approx N(0,1)$ sob $H_0$, teremos que 
+    \begin{align*}
+    p-\hbox{valor}&=P(Phi\leq phi)=P(\sqrt{N}Phi\leq \sqrt{N}phi)\\
+    &=P(T_1\leq -0,138\sqrt{242})=P(T_1\leq -2,1467)=0,0159
+\end{align*}
+o que nos leva a aceitar que há uma direção negativa, i.e., há evidências de que o uso do cinto de segurança diminui a mortalidade em caso de acidentes.  
+\end{frame}
+
+\begin{frame}{}
+    Exercícios das páginas 237 e 238: 1 e 4 (nota: calcular apenas os coeficientes de Cramér e Phi) 
+\end{frame}
+
+##  O teste Qui-quadrado para aderência (bondade de ajuste)
+\end{frame}
+\endgroup
+
+
+\begin{frame}{Testes de aderência}
+
+\begin{block}{Definição}
+Seja $X_1,\ldots,X_n$ uma amostra aleatória. Qualquer teste cujo objetivo é testar 
+
+$$H_0: X_1\ldots,X_n\sim F_0,$$
+
+onde $F_0$ é uma função de distribuição, é denominado \textit{teste de aderência} (ou ainda \textbf{teste de bondade de ajuste}).
+
+\end{block}    
+\end{frame}
+ \begin{frame}{O Teste de Qui-quadrado para aderência }
+     \begin{block}{Dados}
+    Os dados consistem de uma amostra aleatória de tamanho $N$ de uma variável $X$. Estas $N$ variáveis são organizadas em $c$ classes, segundo a tabela de contingência $1\times c$ abaixo:
+    
+    \begin{table}[]
+        \centering
+        \begin{tabular}{c|cccc|c}\hline
+             & \multicolumn{4}{c|}{Classes}  & \\ \hline
+            & 1  & 2 & $\cdots$ & c & Total\\ \hline
+           Frequências& $O_1$  & $O_2$ & $\cdots$ & $O_c$ & $N$ \\ \hline
+        \end{tabular}
+    \end{table}
+    \end{block}
+     Como de costume, $O_i$ representa a frequência absoluta da classe $i$.
+ \end{frame}
+ 
+
+\begin{frame}{}
+ \begin{block}{Estatística de teste}
+ A estatística de teste é 
+ $$T=\sum_{i=1}^c \frac{(O_i-E_i)^2}{E_i},$$
+ onde $E_i=Np_i$ e 
+ $$p_i=P(X\in \hbox{Classe }i)$$
+ \end{block}
+ 
+ \begin{block}{Distribuição sob a hipótese nula}
+ Quando $H_0$ é verdadeira, e para grandes amostras, $T\approx \chi^2_{c-1}$.
+ \end{block}
+\end{frame}
+
+\begin{frame}{Sobre a validade do teste para famílias de \textcolor{purple}{distribuição}}
+
+ \begin{itemize}
+     \item Considere que desejamos testar $H_0:X_1,\ldots,X_n\sim F(.|\theta)$, com $\theta$ desconhecido.
+     \item Neste caso, o livro texto sugere que $\theta$ seja estimado e que os graus de liberdade da distribuição passem a ser $c-k-1$, onde $k$ é o comprimento de $\theta$
+     \item Hoje em dia é bem conhecido que esta aproximação não é adequada, no sentido de que a distribuição assintótica da estatística não é Qui-quadrado.
+     \item Entretanto, o teste ainda pode ser utilizado, mas tenha em mente que ele será conservador (ou seja, vai resistir em rejeitar $H_0$).
+     \item Também é recomentado que o menor valor de $E_i$ seja maior que 5
+     \item Existem alternativas melhores, como veremos posteriormente.
+ \end{itemize}   
+\end{frame}
+
+\begin{frame}{Exemplo}
+    Abaixo, mostramos o número de acertos dos 18 melhores rebatedores da liga de baseball. 
+    \begin{table}[]
+        \centering
+        \begin{tabular}{cc|cc|cc}
+             Clemente    & 18 & Kessinger   & 13 & Scott        & 10 \\
+             F. Robinson & 17 & L. Alvarado & 12 & Petrocelli   & 10 \\
+             F. Howard   & 16 & Santo       & 11 & E. Rodriguez & 10 \\
+             Johnstone   & 15 & Swoboda     & 11 & Campaneris   & 9 \\
+             Berry       & 14 & Unser       & 10 & Munson       & 8 \\
+             Spencer     & 14 & Williams    & 10 & Alvis        & 7 \\
+        \end{tabular}
+        \label{tab:my_label}
+    \end{table}
+\end{frame}
+
+\begin{frame}{}
+    Seja $X_i$ o número de acertos do $i$-ésimo rebatedor e assuma que a amostra é aleatória. Cada rebatedor teve 45 chances e deseja-se saber se estes dados tem distribuição Binomial(45,$p$). 
+    Antes de realizar o teste, estimamos $p$ pelo estimador de máxima verossimilhança, dado por 
+    $$\frac{\sum_{i=1}^{18}X_i}{18\times 45},$$
+    obtendo a estimativa 0,2654. Vamos organizar os dados na seguinte tabela de contingência:
+    
+    \begin{table}[]
+        \centering
+        \begin{tabular}{c|cccccccccccc|c}\hline
+             &  \multicolumn{12}{c|}{Número de acertos} &\\ \hline
+             & $\leq 7$& 8 & 9 & 10 & 11 & 12 & 13 & 14& 15& 16& 17& $\geq 18$ & Total \\ \hline
+    Observado& 1 & 1 & 1 & 5 & 2 & 1 & 1 & 2 & 1 & 1 & 1 & 1 & 18 \\    \hline     
+        \end{tabular}
+        \label{tab:my_label}
+    \end{table}
+\end{frame}
+
+\begin{frame}{}
+    Vamos encontrar o valor esperado para cada classe. Lembrando que 
+    $$p_i=\hbox{probabilidade da classe }i$$
+    é calculada seguindo a distribuição Binomial(45, $\hat{p}$) onde $\hat{p}=0,2654$.
+    
+    \begin{table}[]
+    \small
+        \centering
+        \begin{tabular}{c|cccccccccccc}\hline
+              &  \multicolumn{12}{c}{Número de acertos} \\ \hline
+              & $\leq 7$& 8 & 9 & 10 & 11 & 12 & 13 & 14& 15& 16& 17& $\geq 18$  \\ \hline
+    $p_i$     & 0,06,& 0,06& 0.09& 0,11& 0,13& 0,13& 0,12& 0,10& 0,08& 0,05& 0,03& 0,03  \\    \hline
+    $E_i$&  1,08 &1,08& 1,62& 1,98& 2,34& 2,34& 2,16& 1,80& 1,44& 0,90& 0,54& 0,54 \\    \hline    
+        \end{tabular}
+        \label{tab:my_label}
+    \end{table}
+   
+\end{frame} 
+
+\begin{frame}{}
+ Disto, temos que $t_{obs}=7,24$. Como $c=12$ e 1 parâmetro foi estimado, teremos que $T\approx \chi^2_{10}$ graus de liberdade.
+    
+    Utilizando o comando \texttt{pchisq(7.24, 10, lower.tail = F)}, temos um p-valor de 0,7026, o que implica que não há evidências contra a hipótese de que os dados tem distribuição Binomial(45,$p$).
+\end{frame}
+
+\begin{frame}[fragile]{Comentários em relação ao Exemplo 1}
+Existem algumas ressalvas em relação ao exemplo (e o uso \textcolor{purple}{deste teste})
+\begin{itemize}
+    \item Note que algumas classes foram criadas (como $\geq 18$ e $\leq 7$). Aqui vale a regra de um histograma: deve ter classes suficientes para que a forma da função densidade, ou de probabilidade, seja preservada. 
+    \item Podemos fazer esse teste no \texttt{R}, com a função \textcolor{purple}{\texttt{chisq.test(x,p=p0)}} onde \texttt{x} é um vetor com as contagens e \texttt{p0} é o vetor com as probabilidades das classes. Segue um exemplo de como ficaria do teste:
+    
+    \begin{verbatim}
+    
+     x <-  c( 1 , 1 , 1 , 5 , 2 , 1 , 1, 2 , 1 , 1 , 1 , 1)
+     p0 <-  c( pbinom(7,45,.2654), dbinom(8:17,45,.2654),
+                1-pbinom(17,45,.2654) )
+    chisq.test(x,p=p0)    
+    
+    \end{verbatim}
+    
+    cujo resultado é dado a seguir:
+    
+\end{itemize}
+\end{frame}
+ 
+ \begin{frame}[fragile]{}
+ 
+ \begin{verbatim}
+ Chi-squared test for given probabilities
+
+data:  x
+X-squared = 6.7306, df = 11, p-value = 0.8205    
+ \end{verbatim}
+ 
+A estatística Qui-quadrado não é igual a que encontramos manualmente porque utilizamos apenas 3 casas decimais no cálculo das probabilidades. Isso altera o p-valor mas não a conclusão.   
+
+ Note também que o teste considera $c-1$ como sendo os graus de liberdade (a diferença entre $c-1$ e $c-k-1$ será irrelevante se $c$ para $c$ grande em relação a $k$)
+ 
+ Note ainda que surge um \textbf{warning} comentando que a aproximação não deve ser adequada. Isto ocorre porque o menor valor dos $E_i$ é menor que 5. 
+ 
+ Neste caso, é melhor fazer um teste de Monte Carlo: \texttt{chisq.test(x,p=p0 , simulate.p.value = T, B= 20000)}. O p-valor deu 0,8316 o que ainda não altera a nossa conclusão.
+ \end{frame}
+ 
+ \begin{frame}{}
+     Exercícios da página 250: 2 e 6
+ \end{frame}
+ 
+
+##  O teste de Cochran para observações relacionadas
+\end{frame}
+\endgroup
+
+\begin{frame}
+ \begin{block}{Dados}
+    Considere que cada um dos $c$ tratamentos são administrados em $r$ indivíduos (ou blocos) e o resultado de cada tratamento é registrado como 1 se houve sucesso ou 0 em caso contrário. Seja $X_{ij}$ o variável indicado de sucesso para o indivíduo $i$ no tratamento $j$. Os dados são organizados do seguinte modo:
+    \begin{table}[]
+        \centering
+        \begin{tabular}{c|cccc|c}\hline
+               & \multicolumn{4}{c|}{Tratamentos} &  \\
+        Blocos & 1 & 2 & $\cdots$ &  $c$ & Total  \\ \hline
+        1 & $X_{11}$ & $X_{12}$ & $\cdots$ & $X_{1c}$ & $R_1$ \\
+        2 & $X_{21}$ & $X_{22}$ & $\cdots$ & $X_{2c}$ & $R_2$ \\
+        $\cdots$  & $\cdots$ & $\cdots$ & $\cdots$ & $\cdots$ & $\cdots$ \\
+        $r$ & $X_{r1}$ & $X_{r2}$ & $\cdots$ & $X_{rc}$ & $R_r$ \\ \hline
+        Total & $C_1$ & $C_{2}$ & $\cdots$ & $C_{c}$ & $N$ \\ \hline
+        \end{tabular}
+        
+        \label{tab:my_label}
+    \end{table}
+    Os indivíduos (blocos) são considerados independentes entre si. 
+ \end{block}
+\end{frame}
+
+\begin{frame}{}
+    \begin{block}{Objetivos do teste}
+        Em palavras, a hipótese nula é a de que todos os tratamentos são igualmente efetivos. Mais formalmente, seja $p_j$ a probabilidade de sucesso do tratamento $j$. Então
+        
+        $$H_0:p_1=\cdots = p_c$$
+        contra $H_1$ pelo menos um par ocorre $p_i\neq p_j$.
+    \end{block}
+    
+    \begin{block}{Estatística de teste e distribuição sob a hipótese nula}
+    A estatística de teste é 
+    $$T=c(c-1)\frac{\sum_{j=1}^{c}\left(C_j-\frac{N}{c}\right)^2}{\sum_{i=1}^r R_i(c-R_i)}$$
+    e, para $r$ suficientemente grande, $T\approx \chi^2_{c-1}$.
+    \end{block}
+\end{frame}
+
+\begin{frame}{Entendendo a distribuição da estatística de teste}
+Teremos que $C_j=\sum_{i=1}^r X_{ij}$. Como $X_{1j},\ldots,X_{rj}$ são variáveis independentes, pelo Teorema Central do Limite teremos
+$$\frac{C_j-E(C_j)}{\sqrt{Var(C_j)}}\rightarrow N(0,1),$$
+e
+$$\sum_{j=1}^c\frac{(C_j-E(C_j))^2}{Var(C_j)}\rightarrow \chi^2_c.$$
+  Sob $H_0$ $E(C_j)$ e $Var(C_j)$ são iguais para todo $j$, mas ainda permanecem desconhecidos. Esses valores são estimados como segue:
+  $$\widehat{E(C_j)}=\frac{1}{c}\sum_{j=1}^c C_j = \frac{N}{c}$$
+\end{frame}
+
+\begin{frame}
+Notemos que
+$$Var(C_j)=\sum_{i=1}^r Var(X_{ij})$$
+Vamos estimar a variância de $X_{ij}$. Sob $H_0$, $X_{ij},\ldots,X_{cj}$ tem a mesma probabilidade de sucesso e, portanto, a mesma variância. Assim, podemos estimar a probabilidade de sucesso por $R_i/c$. Deste modo,
+$$\widehat{Var(C_j)}=\sum_{i=1}^r \frac{c}{c-1}\frac{R_i}{c}\left(1-\frac{R_i}{c}\right)$$
+(este é um estimador não enviesado para a proporção). 
+
+Ao trocar $E(C_j)$ e $Var(C_j)$ por seus respectivos estimadores teremos a estatística $T$. Entretanto, a distribuição passa a ser $\chi^2_{c-1}$, mas a demonstração deste fato está além do escopo deste curso. 
+\end{frame}
+
+\begin{frame}{Exemplo}
+    Três métodos para previsão do vencedor de uma partida de certo campeonato de basquete foram aplicados a 12 jogos. Atribuímos o resultado 1 se o método acertou o vencedor do jogo e 0 em caso contrário. Abaixo temos os resultados:
+   
+   \tiny{ 
+    \begin{table}[]
+        \centering
+        \begin{tabular}{c|ccc|c}\hline
+                 & \multicolumn{3}{c|}{Método} & \\
+            Jogo & 1 & 2 & 3 & Total \\ \hline
+             1   & 1 & 1 & 1 & 3\\
+             2   & 1 & 1 & 1 & 3 \\
+             3   & 0 & 1 & 0 & 1\\
+             4   & 1 & 1 & 0 & 2\\
+             5   & 0 & 0 & 0 & 0\\
+             6   & 1 & 1 & 1 & 3 \\
+             7   & 1 & 1 & 1 & 3 \\
+             8   & 1 & 1 & 0 & 2\\
+             9   & 0 & 0 & 1 & 1\\
+             10  & 0 & 1 & 0 & 1\\
+             11  & 1 & 1 & 1 & 3 \\
+             12  & 1 & 1 & 1 & 3 \\ \hline
+            Total& 8 & 10& 7& 25 \\ \hline
+        \end{tabular}
+        \label{tab:my_label}
+    \end{table}
+    }
+\end{frame}
+
+\begin{frame}[fragile]{}
+Queremos testar se os três métodos são igualmente eficazes. Após alguns calculos, encontramos 
+$t_{obs}=2,8$. Utilizando o comando \texttt{pchisq(2.8, 2 , lower.tail = FALSE)}, encontramos um p-valor de 0,2465. Logo, não há evidências de que os métodos são diferentes.
+
+Existem diversos pacotes que podem realizar esse teste. Um deles é o \texttt{nonpar}, com a função \texttt{cochrans.q}, ilustrada abaixo:
+
+\begin{verbatim}
+# matriz com os valores da tabela
+x <- matrix(c (1,1,1,1,1,1,0,1,0,1,1,0,0,0,0,
+               1,1,1,1,1,1,1,1,0,0,0,1,0,1,0,
+               1,1,1,1,1,1),ncol=3, byrow = T)
+# teste               
+cochrans.q(x)    
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{}
+Resultado:
+\begin{verbatim}
+ Cochran's Q Test 
+ 
+ H0: There is no difference in the effectiveness of treatments. 
+ HA: There is a difference in the effectiveness of treatments. 
+ 
+ Q = 2.8 
+ 
+ Degrees of Freedom = 2 
+ 
+ Significance Level = 0.05 
+ The p-value is  0.246596963941606    
+\end{verbatim}
+ 
+\end{frame}
+
+\begin{frame}{}
+    Exercícios da página 256: 1 e 3.
+\end{frame}
+
+%===========================================================
+% Aula 14
+%===========================================================
+

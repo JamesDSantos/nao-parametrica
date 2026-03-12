@@ -11,6 +11,7 @@ book:
     - intro.qmd
     - fde.qmd
     - teste_do_sinal.qmd
+    - tabelas_contingencia.qmd
     - references.qmd
 
 bibliography: references.bib

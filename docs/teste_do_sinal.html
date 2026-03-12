@@ -65,7 +65,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./references.html" rel="next">
+<link href="./tabelas_contingencia.html" rel="next">
 <link href="./fde.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -197,6 +197,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="./teste_do_sinal.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">O teste do sinal e suas variações</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tabelas_contingencia.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Tabelas de contingência</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -429,19 +435,13 @@ probability of success
 <section id="o-teste-do-sinal-para-mediana" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="o-teste-do-sinal-para-mediana"><span class="header-section-number">3.2</span> O teste do sinal para mediana</h2>
 <p>Seja <span class="math inline">\(X_1,\ldots,X_n\)</span> uma amostra aleatória do modelo <span class="math inline">\(F\)</span> e seja <span class="math inline">\(\theta\)</span> a sua mediana. Sabemos que <span class="math display">\[\theta=F^{-1}(0,5)\Rightarrow F(\theta)=0,5.\]</span> Considere a hipótese <span class="math inline">\(H_0:\theta=\theta_0\)</span> contra <span class="math inline">\(H_1:\theta\neq\theta_0\)</span>. Seja <span class="math inline">\(Z_i=I_{(\theta_0,\infty)}(X_i)\)</span>. Então a estatística <span class="math inline">\(N_+=\sum_{i=1}^n Z_i\)</span> pode ser utilizada para testar <span class="math inline">\(H_0\)</span>.</p>
-<div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Exemplo</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Resolução</a></li></ul>
-<div class="tab-content">
-<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <div id="exm-" class="theorem example">
 <p><span class="theorem-title"><strong>Example 3.2</strong></span> Um modelo de forno de micro-ondas foi projetado para emitir um nível de radiação de no máximo 0,15. Deseja-se testar se um lote desses micro-ondas apresenta um excesso de radiação prejudicial, definido como uma mediana maior que o limite de segurança de 0,15. a mediana da radiação emitida por esses fornos é condizente com esse valor. Foram realizadas as seguintes medidas:</p>
 <p><span class="math display">\[\begin{array}{cccccccccc}
 0,09&amp; 0,18&amp; 0,10&amp; 0,05&amp; 0,12&amp; 0,40&amp; 0,10&amp; 0,05&amp; 0,03&amp; 0,20\\
 0,08&amp; 0,10&amp; 0,30&amp; 0,20&amp; 0,02&amp; 0,01&amp; 0,10&amp; 0,08&amp; 0,16&amp; 0,11\end{array}\]</span></p>
 <p>Utilize o teste do sinal para testar a hipótese de que o lote apresenta excesso de radiação.</p>
-</div>
-</div>
-<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<p><strong>Solução.</strong></p>
 <p>Seja <span class="math inline">\(\theta\)</span> a mediana da radiação emitida. Desejamos testar <span class="math inline">\(H_0:\theta\leq 0,15\)</span> contra <span class="math inline">\(H_1:\theta&gt;0,15\)</span>.</p>
 <p>Temos que verificar quais valores são maiores/menores que 0,15. Os sinais de cada valor são dados abaixo</p>
 <p><span class="math display">\[\begin{array}{c|c|c|c|c|c|c|c|c|c}
@@ -454,15 +454,55 @@ probability of success
 </div>
 </div>
 </div>
-</div>
-</div>
 <div id="exr-" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 3.8</strong></span> Foram coletadas 15 amostras de papel para medir sua densidade em gramas por centímetro cúbico (g/cm³). Espera-se que a amostra seja proveniente de uma distribuição com mediana iguaç a 0,8. Teste a hipótese de que o lote de papéis é mais denso do que o padrão.</p>
+<p><span class="theorem-title"><strong>Exercise 3.8</strong></span> Foram coletadas 15 amostras de papel para medir sua densidade em gramas por centímetro cúbico (g/cm³). Espera-se que a amostra seja proveniente de uma distribuição com mediana igual a 0,8. Teste a hipótese de que o lote de papéis é mais denso do que o padrão.</p>
 <p><span class="math display">\[\begin{array}{ccccc}
 0,816&amp; 0,836&amp; 0,815&amp; 0,822&amp; 0,822\\
 0,843&amp; 0,824&amp; 0,788&amp; 0,782&amp; 0,795\\
 0,805&amp; 0,836&amp; 0,738&amp; 0,772&amp; 0,776\\
 \end{array}\]</span></p>
+</div>
+<div id="exr-" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 3.9</strong></span> Uma nova formulação de protetor solar foi testada em dez indivíduos. Cada indivíduo recebeu a formulação atual em um braço e a nova no outro e o grau de queimadura sola foi medido em ambos os braços. Os dados observados foram:</p>
+<p><span class="math display">\[\begin{array}{c|cccccccccc}\hline
+\hbox{Sujeito} &amp;1&amp;2&amp;3&amp;4&amp;5&amp;6&amp;7&amp;8&amp;9&amp;10\\ \hline
+\hbox{Formula atual}&amp;41&amp;42&amp;48&amp;38&amp;38&amp;45&amp;21&amp;28&amp;29&amp;14 \\
+\hbox{Fórmula nova} &amp;37&amp;39&amp;31&amp;39&amp;34&amp;47&amp;19&amp;30&amp;25&amp;8\\ \hline
+\end{array}\]</span></p>
+<p>Teste a hipótese nula de que a diferença (Antiga - Nova) tem mediana zero contra a alternativa de que a nova fórmula é mais eficaz.</p>
+</div>
+<p>Agora vamos discutir como o teste do sinal pode ser utilizado para obter um intervalo de confiança para a mediana. Considere a hipótese nula de que a mediana é <span class="math inline">\(\theta_0\)</span>. Então <span class="math inline">\(N_+\sim\hbox{Binomial}(n,F(\theta_0)\)</span>, onde <span class="math inline">\(F(\theta_0)=0,5\)</span>. Pela simetria dessa distribuição, a região de rejeição desse teste é dada por <span class="math display">\[R=\{n_+: n_+\leq r\hbox{ ou } n_+\geq s \},\]</span> onde <span class="math inline">\(s=n-r+1\)</span> e <span class="math inline">\(P(N_+\leq r)\leq \alpha/2\)</span>. O complementar de <span class="math inline">\(R\)</span> é <span class="math inline">\(R^c=(r&lt;n_+&lt;s)\)</span> e, pelo Teorema da dualidade entre testes de hipóteses e intervalos, temos que <span class="math display">\[\begin{align}A(\theta)&amp;=\{\theta:r&lt;N_+&lt;s\}=\left\{\theta:r&lt;\sum_{i=1}^n I_{(\theta,\infty)}(X_i)&lt;s\right\}\\&amp;=\left\{\theta:r&lt;\sum_{i=1}^n I_{(-\infty,X_i)}(\theta)&lt;s\right\}\end{align}\]</span> Denotando por <span class="math inline">\(X_{(1)}&lt;\cdots&lt;X_{(n)}\)</span> as estatísticas de ordem, temos que:</p>
+<ul>
+<li><p>o maior valor de <span class="math inline">\(\theta\)</span> tal que <span class="math inline">\(r&lt;\sum_{i=1}^n I_{(-\infty,X_i)}(\theta)\)</span> é <span class="math inline">\(X_{(r)}\)</span></p></li>
+<li><p>o menor valor de <span class="math inline">\(\theta\)</span> tal que <span class="math inline">\(s&gt;\sum_{i=1}^n I_{(-\infty,X_i)}(\theta)\)</span> é <span class="math inline">\(X_{(s)}\)</span></p></li>
+</ul>
+<p>Portanto, <span class="math inline">\((X_{(r)},X_{(s)})\)</span> é um intervalo de confiança <span class="math inline">\(1-\alpha\)</span> para a mediana <span class="math inline">\(\theta\)</span>.</p>
+<div class="alert alert-success">
+<p><strong>Importante.</strong></p>
+<ol type="1">
+<li><p>Na construção do intervalo de confiança para a mediana por inversão do teste do sinal, os empates não devem ser descartados, pois contêm informação sobre a localização do parâmetro.</p></li>
+<li><p>O intervalo obtido por este método é tipicamente conservador, o que significa que seu nível de confiança real é, no mínimo, o nível nominal estabelecido (a probabilidade de cobertura é superior ao valor fixado).</p></li>
+</ol>
+</div>
+<div id="exm-" class="theorem example">
+<p><span class="theorem-title"><strong>Example 3.3</strong></span> Considere novamente os dados de radição emitidas por um lote de 20 fornos de micro-ondas.</p>
+<p><span class="math display">\[\begin{array}{cccccccccc}
+0,09&amp; 0,18&amp; 0,10&amp; 0,05&amp; 0,12&amp; 0,40&amp; 0,10&amp; 0,05&amp; 0,03&amp; 0,20\\
+0,08&amp; 0,10&amp; 0,30&amp; 0,20&amp; 0,02&amp; 0,01&amp; 0,10&amp; 0,08&amp; 0,16&amp; 0,11\end{array}\]</span></p>
+<p>Encontre um intervalo de 95% de confiança para a radiação mediana.</p>
+<p><strong>Solução.</strong></p>
+<p>Para <span class="math inline">\(\alpha/2=0,025\)</span>, e considerando que <span class="math inline">\(N_+\sim\hbox{Binomial}(20,1/2)\)</span>, temos que <span class="math inline">\(P(N_+\leq 6)=0,025\)</span>, logo <span class="math inline">\(r=6\)</span> e <span class="math inline">\(s=15\)</span>. As estatística de ordem <span class="math inline">\(X_{(5)}=0,05\)</span> e <span class="math inline">\(X_{(15)}=0,16\)</span>. Portanto, um intervalo de 95% confiança para a mediana da radiação deste lote é (0,05 , 0,16).</p>
+</div>
+<div id="exr-" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 3.10</strong></span> Um estudo piloto investigou a absorção de arsênio proveniente de água potável através da análise de recortes de unhas. Foram coletadas 21 observações (em ppm). A amostra obtida (já ordenada) é dada abaixo</p>
+<p><span class="math display">\[\begin{array}{ccccc}
+0,073&amp; 0,080&amp; 0,099&amp;, 0,105&amp; 0,118\\
+0,118&amp; 0,119&amp; 0,135&amp; 0,141&amp; 0,158\\
+0,175&amp; 0,269&amp; 0,275&amp; 0,277&amp; 0,310\\
+0,358&amp; 0,433&amp; 0,517&amp; 0,832&amp; 0,851\\
+2,252\\
+\end{array}\]</span></p>
+<p>Construa um intervalo de confiança de 95% para a mediana da concentração de arsênio utilizando o método da inversão do teste do sinal.</p>
 </div>
 </section>
 <section id="o-teste-de-mcnemar" class="level2" data-number="3.3">
@@ -503,7 +543,7 @@ $$
 \end{array}\]</span>
 <p>$$</p>
 <div id="exm-" class="theorem example">
-<p><span class="theorem-title"><strong>Example 3.3</strong></span> Antes de um debate nacional entre dois candidatos à presidência dos EUA, uma amostra de 100 eleitores foi selecionada e o seu candidato anotado. 84 escolheram o candidato democrata e os 16 restantes o republicano. Após o debate, houveram mudanças de opinião, conforme a tabela abaixo:</p>
+<p><span class="theorem-title"><strong>Example 3.4</strong></span> Antes de um debate nacional entre dois candidatos à presidência dos EUA, uma amostra de 100 eleitores foi selecionada e o seu candidato anotado. 84 escolheram o candidato democrata e os 16 restantes o republicano. Após o debate, houveram mudanças de opinião, conforme a tabela abaixo:</p>
 <p><span class="math display">\[\begin{array}{c|cc|c}\hline
     \hbox{Antes\Depois}  &amp; \hbox{Democrata} &amp; \hbox{Republicano}  &amp; \hbox{Total}\\ \hline
      \hbox{Democrata}  &amp; 63 &amp; 21 &amp; 84 \\
@@ -545,16 +585,19 @@ probability of success
 <p>o que também nos leva a rejeitar a hipótese nula, concluindo que alinhamento político dos eleitores foi alterado com o debate.</p>
 </div>
 <div class="alert alert-success">
-<p><strong>Importante.</strong> Conforme discutido, o teste de McNemar é um teste do sinal, realizado de maneira condicional através de <span class="math inline">\(N_+|b+c\)</span>. Contudo, diferente do caso no qual os empates são esporádicos, os valores descartados das diagonais podem ser substanciais. Considere a tabela abaixo, no mesmo contexto do exemplo anterior, mas com outros valores:</p>
+<p><strong>McNemar é um teste para mudança de opinião</strong></p>
+<p>Conforme discutido, o teste de McNemar é um teste do sinal, realizado de maneira condicional através de <span class="math inline">\(N_+|b+c\)</span>. Contudo, diferente do caso no qual os empates são esporádicos, os valores descartados das diagonais podem ser substanciais. Considere a tabela abaixo, no mesmo contexto do exemplo anterior, mas com outros valores:</p>
 <p><span class="math display">\[\begin{array}{c|cc|c}\hline
     \hbox{Antes\Depois}  &amp; \hbox{Democrata} &amp; \hbox{Republicano}  &amp; \hbox{Total}\\ \hline
      \hbox{Democrata}  &amp; 499 &amp; 1 &amp; 500 \\
       \hbox{Republicano} &amp; 9 &amp; 491 &amp; 500 \\ \hline
-    \end{array}\]</span> Note que a probabilidade estimada de “Democrata antes do debate” é a mesma de “Democrata depois do debate”. Ao ignorar os empates e focar apenas nas mudanças temos uma proporção de 90% de indivíduos que mudaram do candidado republicano para o democrata. É importante ressaltar o debate político tem como um de seus objetivos conseguir uma mudança de opinião.</p>
-<p>Isso ilustra que, mesmo que o teste de McNemar tenha sido desenhado para testar <span class="math inline">\(H_0:P(X=0)=P(Y=0)\)</span>, sua real relevância é detectar mudanças.</p>
+      \hbox{Total} &amp; 508 &amp; 492 &amp; 1000
+    \end{array}\]</span></p>
+<p>Note que a probabilidade estimada de “Democrata antes do debate” (50%) é praticamente a mesma de “Democrata depois do debate” (50,8%). Ao ignorar os empates e focar apenas nas mudanças temos uma proporção de 90% de indivíduos que mudaram do candidado republicano para o democrata. É importante ressaltar o debate político tem como um de seus objetivos conseguir uma mudança de opinião. Ao realizar o teste de McNemar obtemos um p-valor de 0,02, rejeitando a hipótese nula e encontrando mudança de alinhamento político.</p>
+<p>Isso ilustra que, mesmo que o teste de McNemar tenha sido desenhado para testar <span class="math inline">\(H_0:P(X=0)=P(Y=0)\)</span>, sua real relevância é detectar mudanças de opinião.</p>
 </div>
 <div id="exr-" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 3.9</strong></span> Para testar o efeito de uma nova droga, um grupo de 100 pacientes foi avaliado em dois momentos. Em um dos momentos, o paciente recebeu um placebo e no outro a nova droga. Como resultado, 35 pácientes sentiram alívio com o placebo e 55 pacientes sentiram alívio com a nova droga. Foram observados os seguintes pares discordantes:</p>
+<p><span class="theorem-title"><strong>Exercise 3.11</strong></span> Para testar o efeito de uma nova droga, um grupo de 100 pacientes foi avaliado em dois momentos. Em um dos momentos, o paciente recebeu um placebo e no outro a nova droga. Como resultado, 35 pácientes sentiram alívio com o placebo e 55 pacientes sentiram alívio com a nova droga. Foram observados os seguintes pares discordantes:</p>
 <ul>
 <li><p>Pessoas que sentiram alívio com o placebo, mas não com a droga: 15.</p></li>
 <li><p>Pessoas que não sentiram alívio com o placebo, mas sentiram com a droga: 35</p></li>
@@ -564,7 +607,7 @@ probability of success
 \hbox{alívio} &amp; &amp; 15 &amp; 35 \\ \hbox{não alívio} &amp; 35 &amp; &amp; \\ \hline \hbox{Total} &amp; 55  &amp; &amp; \\ \hline\end{array}\]</span></p>
 </div>
 <div id="exr-" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 3.10</strong></span> Para testar a associação entre a amigdalectomia (remoção das amígdalas) e a doença de Hodgkin, Hollander e Wolfe (1999), analisaram 85 pares de irmãos. Em cada par, um dos irmãos possuía a doença e o outro não (amostra pareada por genética e ambiente). Os dados observados foram:</p>
+<p><span class="theorem-title"><strong>Exercise 3.12</strong></span> Para testar a associação entre a amigdalectomia (remoção das amígdalas) e a doença de Hodgkin, Hollander e Wolfe (1999), analisaram 85 pares de irmãos. Em cada par, um dos irmãos possuía a doença e o outro não (amostra pareada por genética e ambiente). Os dados observados foram:</p>
 <ul>
 <li>Em 26 pares, ambos os irmãos haviam passado pela cirurgia.</li>
 <li>Em 37 pares, nenhum dos irmãos havia passado pela cirurgia.</li>
@@ -573,10 +616,10 @@ probability of success
 <p>Utilize o Teste de McNemar para verificar se há evidência de que a proporção de amigdalectomias difere entre os indivíduos doentes e saudáveis.</p>
 </div>
 <div id="exr-" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 3.11</strong></span> O desempenho de 28 vendedores foi classificado como “Aceitável” ou “Não Aceitável” antes e depois de assistirem a um filme de treinamento. Antes do filme, 9 eram aceitáveis; após o filme, esse número subiu para 18. Dos que mudaram de categoria, 13 vendedores passaram de “Não Aceitável” para “Aceitável”, e 4 vendedores passaram de “Aceitável” para “Não Aceitável”. Investigue se o treinamento teve um efeito positivo significativo na avaliação dos vendedores</p>
+<p><span class="theorem-title"><strong>Exercise 3.13</strong></span> O desempenho de 28 vendedores foi classificado como “Aceitável” ou “Não Aceitável” antes e depois de assistirem a um filme de treinamento. Antes do filme, 9 eram aceitáveis; após o filme, esse número subiu para 18. Dos que mudaram de categoria, 13 vendedores passaram de “Não Aceitável” para “Aceitável”, e 4 vendedores passaram de “Aceitável” para “Não Aceitável”. Investigue se o treinamento teve um efeito positivo significativo na avaliação dos vendedores</p>
 </div>
 <div id="exr-" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 3.12</strong></span> Um estudo de opinião pública acompanhou um grupo de 1.600 cidadãos para avaliar a taxa de aprovação de um Primeiro-Ministro em dois momentos distintos, com um intervalo de seis meses entre as pesquisas. Os resultados mostraram que:</p>
+<p><span class="theorem-title"><strong>Exercise 3.14</strong></span> Um estudo de opinião pública acompanhou um grupo de 1.600 cidadãos para avaliar a taxa de aprovação de um Primeiro-Ministro em dois momentos distintos, com um intervalo de seis meses entre as pesquisas. Os resultados mostraram que:</p>
 <ul>
 <li><p>794 pessoas aprovaram o governo em ambas as pesquisas.</p></li>
 <li><p>570 pessoas desaprovaram em ambas.</p></li>
@@ -586,7 +629,7 @@ probability of success
 <p>Determine se houve uma mudança significativa na aprovação do Primeiro-Ministro.</p>
 </div>
 <div id="exr-" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 3.13</strong></span> Um estudo de persuasão utilizou uma amostra de 30 pessoas para verificar a eficácia de uma newsletter informativa em convencer cidadãos a favor de um novo projeto de imposto de renda (imposto fixo). Antes de lerem o informativo, 11 pessoas eram a favor do projeto. Após a leitura, verificou-se que:</p>
+<p><span class="theorem-title"><strong>Exercise 3.15</strong></span> Um estudo de persuasão utilizou uma amostra de 30 pessoas para verificar a eficácia de uma newsletter informativa em convencer cidadãos a favor de um novo projeto de imposto de renda (imposto fixo). Antes de lerem o informativo, 11 pessoas eram a favor do projeto. Após a leitura, verificou-se que:</p>
 <ul>
 <li><p>5 pessoas que já eram a favor mantiveram sua opinião.</p></li>
 <li><p>6 pessoas que eram contra mantiveram sua posição de oposição.</p></li>
@@ -617,7 +660,7 @@ H_1: \hbox{há tendência decrescente}\end{cases} &amp; \begin{cases}H_0: p_+\ge
 H_1: p_+&lt;\frac{1}{2}\end{cases}\\ \hline
 \end{array}\]</span></p>
 <div id="exm-" class="theorem example">
-<p><span class="theorem-title"><strong>Example 3.4</strong></span> Foi registrado o total de precipitação anual por 19 anos. O objetivo é determinar se há tendência (monótona) de precipitação. As precipitações, em polegadas, foram</p>
+<p><span class="theorem-title"><strong>Example 3.5</strong></span> Foi registrado o total de precipitação anual por 19 anos. O objetivo é determinar se há tendência (monótona) de precipitação. As precipitações, em polegadas, foram</p>
 <p><span class="math display">\[\begin{array}{cccccc}
     45,25  &amp; 45,83 &amp; 41,77 &amp; 36,26 &amp; 45,37 &amp; 52,25\\
     33,37 &amp; 57,16 &amp; 35,37 &amp; 58,32 &amp; 41,05 &amp; 33,72 \\
@@ -632,17 +675,16 @@ H_1: p_+&lt;\frac{1}{2}\end{cases}\\ \hline
                  &amp; (X_7,X_{17}) = (35,37\;,\;  49,83)\equiv +\\
                  (X_3,X_{13}) = (41,77\;,\;   45,73)\equiv +
                  &amp; (X_8,X_{18}) = (57,16   \;,\;       36,24)\equiv -\\
-                 (X_4,X_{14}) = ( 36,26   \;,\;     37,09 )\equiv +                  &amp;
-                 (X_9,X_{19}) = (35,37 \;,\;  39 ,90)\equiv +  
-                 \\
+                 (X_4,X_{14}) = ( 36,26   \;,\;     37,90 )\equiv +                  &amp;
+                 (X_9,X_{19}) = (35,37 \;,\;  39 ,90)\equiv +  \\
                  (X_5,X_{15}) = (45,   
-                 375\;,\;       41,72)\equiv -
+                 37\;,\;       41,72)\equiv -
                  &amp; \\
             \end{array}\]</span></p>
 <p>e obtivemos <span class="math inline">\(n_{+}=4\)</span>. As hipóteses são</p>
 <ul>
-<li><p><span class="math inline">\(H_0\)</span>: não há tendência (a amostra é aleatória)</p></li>
-<li><p><span class="math inline">\(H_1:\)</span> há tendência</p></li>
+<li><p><span class="math inline">\(H_0\)</span>: não há tendência monótona</p></li>
+<li><p><span class="math inline">\(H_1:\)</span> há tendência monótona</p></li>
 </ul>
 <p>Como há 9 pares, teremos que, sob <span class="math inline">\(H_0\)</span>, <span class="math inline">\(T\sim\hbox{Binomial}(9,1/2)\)</span>. O p-valor o teste é</p>
 <div class="cell">
@@ -676,6 +718,41 @@ probability of success
 </div>
 </div>
 </div>
+</div>
+<div id="exr-" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 3.16</strong></span> Um laboratório contou o número de ovos postos por um grupo de insetos a cada hora durante 24 horas, conforme a tabela abaixo:</p>
+<p><span class="math display">\[\begin{array}{l|cccccccccccc}\hline
+\hbox{hora} &amp; 9h &amp; 10h&amp; 11h&amp; 12h &amp; 13&amp; 14h &amp; 15h &amp; 16h \\
+\hbox{No. ovos}&amp; 151 &amp; 119 &amp; 146 &amp; 111 &amp; 63 &amp; 84 &amp; 60 &amp;109\\ \hline
+\hbox{hora} &amp;  17h &amp; 18h &amp; 19h &amp; 20h &amp; 21h &amp; 22h &amp; 23h &amp; 0h \\
+\hbox{No. ovos} &amp; 83 &amp; 166 &amp; 143 &amp; 116 &amp; 163 &amp; 208 &amp; 283 &amp; 296 \\ \hline
+\hbox{hora}&amp; 1h &amp; 2h &amp; 3h &amp; 4h &amp; 5h &amp; 6h &amp; 7h &amp; 8h \\
+\hbox{No. ovos}&amp; 286 &amp; 235 &amp; 223 &amp; 176 &amp; 176 &amp; 174 &amp; 139 &amp; 137 \\ \hline
+\end{array}\]</span></p>
+<p>A hipótese é que a postura atinge um mínimo às 14h e um máximo às 2h. Para testar esse padrão, são construídas as hipóteses</p>
+<ul>
+<li><p><span class="math inline">\(H_0:\)</span> não há tendência no número de ovos contados no ciclo começando às 14h e terminando às 2h.</p></li>
+<li><p><span class="math inline">\(H_1:\)</span> há tendência monótona crescente no número de ovos contados no ciclo começando às 14h e terminando às 2h</p></li>
+</ul>
+<p>Teste a hipótese dos pesquisadores.</p>
+</div>
+<div class="alert alert-success">
+<p><strong>O teste de Cox e Stuart com sazonalidade</strong></p>
+<p>Um padrão sazonal se refere a efeitos que ocorrem regularmente após um período de tempo. Os períodos são divididos em fases. Abaixo seguem alguns exemplos:</p>
+<ul>
+<li><p>Temperatura mensal: a temperatura oscila ao longo do ano, implicando em um período de 12 meses, sendo que cada mês é uma fase</p></li>
+<li><p>Estações do ano: as estações se repetem em um período de 4 trimestres, sendo que cada estação é uma fase do período.</p></li>
+</ul>
+<p>Quando os dados exibem um padrão sazonal, a regra de dividir a série no meio para realizar o pareamento deve ser alterada, para evitar a confusão entre um movimento da sazonalidade com a tendência. Para tanto, sugere-se parear as observações considerando fases consecutivas, como (jan/ano1,jan/ano2).</p>
+</div>
+<div id="exr-" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 3.17</strong></span> A taxa de descarga de água de um rio foi medida mensalmente por 24 meses. Sabe-se que esse fenômeno tem um padrão sazonal anual. Para testar a existência de uma tendência de longo prazo (redução da descarga). Com base nos dados abaixo, verifique se há evidência de que a taxa de descarga está diminuindo ao nível de significância de 5%</p>
+<p><span class="math display">\[\begin{array}{c|cccccccccccc}\hline
+\hbox{Ano} &amp; \hbox{jan} &amp; \hbox{fev} &amp; \hbox{mar} &amp; \hbox{abr} &amp; \hbox{mai}
+&amp; \hbox{jun} &amp; \hbox{jul} &amp; \hbox{ago} &amp; \hbox{set} &amp; \hbox{out} &amp; \hbox{nov} &amp; \hbox{dez} \\ \hline
+1&amp; 14,6&amp; 12,2&amp; 104&amp; 220&amp; 110&amp; 86,0&amp; 92,8&amp; 74,4&amp; 75,4&amp; 51,7&amp; 29,3&amp; 16,0 \\ \hline
+2&amp; 14,2&amp; 10,5&amp; 123&amp; 190&amp; 138&amp; 98,1&amp; 88,1&amp; 80,0&amp; 75,6&amp; 48,8&amp; 27,1&amp; 15,7 \\ \hline
+\end{array}\]</span></p>
 </div>
 
 
@@ -1089,8 +1166,8 @@ probability of success
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./references.html" class="pagination-link" aria-label="References">
-        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./tabelas_contingencia.html" class="pagination-link" aria-label="Tabelas de contingência">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Tabelas de contingência</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

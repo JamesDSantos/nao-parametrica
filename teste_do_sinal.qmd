@@ -228,9 +228,6 @@ $$\theta=F^{-1}(0,5)\Rightarrow F(\theta)=0,5.$$
 Considere a hipótese $H_0:\theta=\theta_0$ contra $H_1:\theta\neq\theta_0$. Seja $Z_i=I_{(\theta_0,\infty)}(X_i)$. Então a estatística $N_+=\sum_{i=1}^n Z_i$ pode ser utilizada para testar $H_0$. 
 
 
-::: {.panel-tabset}
-
-### Exemplo 
 ::: {#exm-}
 Um modelo de forno de micro-ondas foi projetado para emitir um nível de radiação de no máximo 0,15. Deseja-se testar se um lote desses micro-ondas apresenta um excesso de radiação prejudicial, definido como uma mediana maior que o limite de segurança de 0,15. a mediana da radiação emitida por esses fornos é condizente com esse valor. Foram realizadas as seguintes medidas:
 
@@ -239,9 +236,8 @@ $$\begin{array}{cccccccccc}
 0,08& 0,10& 0,30& 0,20& 0,02& 0,01& 0,10& 0,08& 0,16& 0,11\end{array}$$
 
 Utilize o teste do sinal para testar a hipótese de que o lote apresenta excesso de radiação.  
-:::
 
-### Resolução
+**Solução.**
 
 Seja $\theta$ a mediana da radiação emitida. Desejamos testar $H_0:\theta\leq 0,15$ contra $H_1:\theta>0,15$.
 
@@ -259,7 +255,7 @@ pbinom(5,20,.5, lower.tail = FALSE)
 
 
 ::: {#exr-}
-Foram coletadas 15 amostras de papel para medir sua densidade em gramas por centímetro cúbico (g/cm³). Espera-se que a amostra seja proveniente de uma distribuição com mediana iguaç a 0,8. Teste a hipótese de que o lote de papéis é mais denso do que o padrão.
+Foram coletadas 15 amostras de papel para medir sua densidade em gramas por centímetro cúbico (g/cm³). Espera-se que a amostra seja proveniente de uma distribuição com mediana igual a 0,8. Teste a hipótese de que o lote de papéis é mais denso do que o padrão.
 
 
 $$\begin{array}{ccccc}
@@ -270,6 +266,67 @@ $$\begin{array}{ccccc}
 
 :::
 
+
+::: {#exr-}
+Uma nova formulação de protetor solar foi testada em dez indivíduos. Cada indivíduo recebeu a formulação atual em um braço e a nova no outro e o grau de queimadura sola foi medido em ambos os braços. Os dados observados foram: 
+
+$$\begin{array}{c|cccccccccc}\hline
+\hbox{Sujeito} &1&2&3&4&5&6&7&8&9&10\\ \hline
+\hbox{Formula atual}&41&42&48&38&38&45&21&28&29&14 \\
+\hbox{Fórmula nova} &37&39&31&39&34&47&19&30&25&8\\ \hline
+\end{array}$$
+
+Teste a hipótese nula de que a diferença (Antiga - Nova) tem mediana zero contra a alternativa de que a nova fórmula é mais eficaz.
+:::
+
+Agora vamos discutir como o teste do sinal pode ser utilizado para obter um intervalo de confiança para a mediana. Considere a hipótese nula de que a mediana é $\theta_0$. Então $N_+\sim\hbox{Binomial}(n,F(\theta_0)$, onde $F(\theta_0)=0,5$. Pela simetria dessa distribuição, a região de rejeição desse teste é dada por
+$$R=\{n_+: n_+\leq r\hbox{ ou } n_+\geq s \},$$
+onde $s=n-r+1$ e $P(N_+\leq r)\leq \alpha/2$. O complementar de $R$ é $R^c=(r<n_+<s)$ e, pelo Teorema da dualidade entre testes de hipóteses e intervalos, temos que 
+$$\begin{align}A(\theta)&=\{\theta:r<N_+<s\}=\left\{\theta:r<\sum_{i=1}^n I_{(\theta,\infty)}(X_i)<s\right\}\\&=\left\{\theta:r<\sum_{i=1}^n I_{(-\infty,X_i)}(\theta)<s\right\}\end{align}$$
+Denotando por $X_{(1)}<\cdots<X_{(n)}$ as estatísticas de ordem, temos que:
+
+* o maior valor de $\theta$ tal que $r<\sum_{i=1}^n I_{(-\infty,X_i)}(\theta)$ é $X_{(r)}$
+
+* o menor valor de $\theta$ tal que $s>\sum_{i=1}^n I_{(-\infty,X_i)}(\theta)$ é $X_{(s)}$
+
+Portanto, $(X_{(r)},X_{(s)})$ é um intervalo de confiança $1-\alpha$ para a mediana $\theta$.
+
+<div class='alert alert-success'>
+**Importante.** 
+
+1. Na construção do intervalo de confiança para a mediana por inversão do teste do sinal, os empates não devem ser descartados, pois contêm informação sobre a localização do parâmetro.
+
+2. O intervalo obtido por este método é tipicamente conservador, o que significa que seu nível de confiança real é, no mínimo, o nível nominal estabelecido (a probabilidade de cobertura é superior ao valor fixado).
+</div>
+
+::: {#exm-}
+
+Considere novamente os dados de radição emitidas por um lote de 20 fornos de micro-ondas.
+
+$$\begin{array}{cccccccccc}
+0,09& 0,18& 0,10& 0,05& 0,12& 0,40& 0,10& 0,05& 0,03& 0,20\\
+0,08& 0,10& 0,30& 0,20& 0,02& 0,01& 0,10& 0,08& 0,16& 0,11\end{array}$$
+
+Encontre um intervalo de 95% de confiança para a radiação mediana.
+
+**Solução.**
+
+Para $\alpha/2=0,025$, e considerando que $N_+\sim\hbox{Binomial}(20,1/2)$, temos que $P(N_+\leq 6)=0,025$, logo $r=6$ e $s=15$. As estatística de ordem $X_{(5)}=0,05$ e $X_{(15)}=0,16$. Portanto, um intervalo de 95% confiança para a mediana da radiação deste lote é (0,05 , 0,16). 
+:::
+
+::: {#exr-}
+Um estudo piloto investigou a absorção de arsênio proveniente de água potável através da análise de recortes de unhas. Foram coletadas 21 observações (em ppm). A amostra obtida (já ordenada) é dada abaixo
+
+$$\begin{array}{ccccc}
+0,073& 0,080& 0,099&, 0,105& 0,118\\
+0,118& 0,119& 0,135& 0,141& 0,158\\
+0,175& 0,269& 0,275& 0,277& 0,310\\
+0,358& 0,433& 0,517& 0,832& 0,851\\
+2,252\\
+\end{array}$$
+
+Construa um intervalo de confiança de 95% para a mediana da concentração de arsênio utilizando o método da inversão do teste do sinal.
+:::
 
 ## O teste de McNemar
 
@@ -374,16 +431,20 @@ o que também nos leva a rejeitar a hipótese nula, concluindo que alinhamento p
 :::
 
 <div class='alert alert-success'>
-**Importante.** Conforme discutido, o teste de McNemar é um teste do sinal, realizado de maneira condicional através de $N_+|b+c$. Contudo, diferente do caso no qual os empates são esporádicos, os valores descartados das diagonais podem ser substanciais. Considere a tabela abaixo, no mesmo contexto do exemplo anterior, mas com outros valores:
+**McNemar é um teste para mudança de opinião** 
+
+Conforme discutido, o teste de McNemar é um teste do sinal, realizado de maneira condicional através de $N_+|b+c$. Contudo, diferente do caso no qual os empates são esporádicos, os valores descartados das diagonais podem ser substanciais. Considere a tabela abaixo, no mesmo contexto do exemplo anterior, mas com outros valores:
 
 $$\begin{array}{c|cc|c}\hline
     \hbox{Antes\Depois}  & \hbox{Democrata} & \hbox{Republicano}  & \hbox{Total}\\ \hline
      \hbox{Democrata}  & 499 & 1 & 500 \\
       \hbox{Republicano} & 9 & 491 & 500 \\ \hline
+      \hbox{Total} & 508 & 492 & 1000
     \end{array}$$
-Note que a probabilidade estimada de "Democrata antes do debate" é a mesma de "Democrata depois do debate". Ao ignorar os empates e focar apenas nas mudanças temos uma proporção de 90% de indivíduos que mudaram do candidado republicano para o democrata. É importante ressaltar o debate político tem como um de seus objetivos conseguir uma mudança de opinião. 
+    
+Note que a probabilidade estimada de "Democrata antes do debate" (50%) é praticamente a mesma de "Democrata depois do debate" (50,8%). Ao ignorar os empates e focar apenas nas mudanças temos uma proporção de 90% de indivíduos que mudaram do candidado republicano para o democrata. É importante ressaltar o debate político tem como um de seus objetivos conseguir uma mudança de opinião.  Ao realizar o teste de McNemar obtemos um p-valor de 0,02, rejeitando a hipótese nula e encontrando mudança de alinhamento político.
 
-Isso ilustra que, mesmo que o teste de McNemar tenha sido desenhado para testar $H_0:P(X=0)=P(Y=0)$, sua real relevância é detectar mudanças.
+Isso ilustra que, mesmo que o teste de McNemar tenha sido desenhado para testar $H_0:P(X=0)=P(Y=0)$, sua real relevância é detectar mudanças de opinião.
 </div>
 
 ::: {#exr-}
@@ -489,19 +550,18 @@ $$\begin{array}{l|l}
                  & (X_7,X_{17}) = (35,37\;,\;  49,83)\equiv +\\
                  (X_3,X_{13}) = (41,77\;,\;   45,73)\equiv +
                  & (X_8,X_{18}) = (57,16   \;,\;       36,24)\equiv -\\
-                 (X_4,X_{14}) = ( 36,26   \;,\;     37,09 )\equiv +                  & 
-                 (X_9,X_{19}) = (35,37 \;,\;  39 ,90)\equiv +  
-                 \\
+                 (X_4,X_{14}) = ( 36,26   \;,\;     37,90 )\equiv +                  & 
+                 (X_9,X_{19}) = (35,37 \;,\;  39 ,90)\equiv +  \\
                  (X_5,X_{15}) = (45,   
-                 375\;,\;       41,72)\equiv -
+                 37\;,\;       41,72)\equiv -
                  & \\
             \end{array}$$
 
 e obtivemos $n_{+}=4$. As hipóteses são
 
-* $H_0$: não há tendência (a amostra é aleatória)
+* $H_0$: não há tendência monótona
 
-* $H_1:$ há tendência
+* $H_1:$ há tendência monótona
 
 Como há 9 pares, teremos que, sob $H_0$, $T\sim\hbox{Binomial}(9,1/2)$. O p-valor o teste é
 ```{r}
@@ -518,5 +578,47 @@ ts.plot(x, main= 'Precipitação', xlab='Anos')
 ```
 :::
 
+::: {#exr-}
+Um laboratório contou o número de ovos postos por um grupo de insetos a cada hora durante 24 horas, conforme a tabela abaixo:
 
+$$\begin{array}{l|cccccccccccc}\hline
+\hbox{hora} & 9h & 10h& 11h& 12h & 13& 14h & 15h & 16h \\
+\hbox{No. ovos}& 151 & 119 & 146 & 111 & 63 & 84 & 60 &109\\ \hline
+\hbox{hora} &  17h & 18h & 19h & 20h & 21h & 22h & 23h & 0h \\
+\hbox{No. ovos} & 83 & 166 & 143 & 116 & 163 & 208 & 283 & 296 \\ \hline
+\hbox{hora}& 1h & 2h & 3h & 4h & 5h & 6h & 7h & 8h \\
+\hbox{No. ovos}& 286 & 235 & 223 & 176 & 176 & 174 & 139 & 137 \\ \hline
+\end{array}$$
+
+A hipótese é que a postura atinge um mínimo às 14h e um máximo às 2h. Para testar esse padrão, são construídas as hipóteses
+
+* $H_0:$ não há tendência no número de ovos contados no ciclo começando às 14h e terminando às 2h.
+
+* $H_1:$ há tendência monótona crescente no número de ovos contados no ciclo começando às 14h e terminando às 2h
+
+Teste a hipótese dos pesquisadores.
+:::
+
+<div class='alert alert-success'>
+**O teste de Cox e Stuart com sazonalidade**
+
+Um padrão sazonal se refere a efeitos que ocorrem regularmente após um período de tempo. Os períodos são divididos em fases. Abaixo seguem alguns exemplos:
+
+* Temperatura mensal: a temperatura oscila ao longo do ano, implicando em um período de 12 meses, sendo que cada mês é uma fase
+
+* Estações do ano: as estações se repetem em um período de 4 trimestres, sendo que cada estação é uma fase do período.
+
+Quando os dados exibem um padrão sazonal, a regra de dividir a série no meio para realizar o pareamento deve ser alterada, para evitar a confusão entre um movimento da sazonalidade com a tendência. Para tanto, sugere-se parear as observações considerando fases consecutivas, como (jan/ano1,jan/ano2).
+</div>
+
+::: {#exr-}
+A taxa de descarga de água de um rio foi medida mensalmente por 24 meses. Sabe-se que esse fenômeno tem um padrão sazonal anual. Para testar a existência de uma tendência de longo prazo (redução da descarga). Com base nos dados abaixo, verifique se há evidência de que a taxa de descarga está diminuindo ao nível de significância de 5%
+
+$$\begin{array}{c|cccccccccccc}\hline
+\hbox{Ano} & \hbox{jan} & \hbox{fev} & \hbox{mar} & \hbox{abr} & \hbox{mai}
+& \hbox{jun} & \hbox{jul} & \hbox{ago} & \hbox{set} & \hbox{out} & \hbox{nov} & \hbox{dez} \\ \hline
+1& 14,6& 12,2& 104& 220& 110& 86,0& 92,8& 74,4& 75,4& 51,7& 29,3& 16,0 \\ \hline
+2& 14,2& 10,5& 123& 190& 138& 98,1& 88,1& 80,0& 75,6& 48,8& 27,1& 15,7 \\ \hline
+\end{array}$$
+:::
 
