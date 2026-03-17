@@ -228,37 +228,115 @@ window.Quarto = {
     \hbox{Mariposa} &amp; \hbox{Gafanhoto} &amp; \hbox{Outros} &amp;\hbox{Total} \\ \hline
        12  &amp; 22&amp; 3 &amp;37 \\ \hline
     \end{array}\]</span></p>
-<p>A tabela acima é uma tabela de contingência <span class="math inline">\(1\times 3\)</span> (1 linha por 3 colunas) e representa observações de uma variável categórica com três classes: Mariposa, Gafanhoto, Outros. \end{frame} O entomologista pode aumentar o nível de informação adicionando o evento no qual o inseto foi encontrado vivo. A nova tabela de contingência <span class="math inline">\(2\times 3\)</span> fica:</p>
+<p>A tabela acima é uma tabela de contingência univariada e representa observações de uma variável categórica com três classes: Mariposa, Gafanhoto, Outros. \end{frame} O entomologista pode aumentar o nível de informação adicionando o evento no qual o inseto foi encontrado vivo. A nova tabela de contingência fica:</p>
 <p><span class="math display">\[\begin{array}{c|ccc|c}\hline
              &amp;  \hbox{Mariposa} &amp; \hbox{Gafanhoto} &amp; \hbox{Outros} &amp; \hbox{Total}\\ \hline
              \hbox{Vivo} &amp; 3 &amp; 21 &amp; 3 &amp; 27 \\
              \hbox{Morto} &amp; 9&amp;1&amp;0&amp;10\\ \hline
              \hbox{Total}&amp;12&amp;22&amp;3&amp;37\\ \hline
         \end{array}\]</span></p>
-<p>Agora, a tabela apresenta observações e um par de variáveis categóricas, uma com as classes {Mariposa, Gafanhoto, Outros} e outra com as classes {Vivo, Morto}.</p>
-<p>Note que a coluna Total se refere ao total marginal das linhas, enquanto que a linha Total se refere ao total marginal das colunas. Tabelas de contingência com duas variáveis são denominadas tabelas de contingência de dupla entrada e podem ter várias linhas e colunas.</p>
+<p>Agora, a tabela apresenta observações e um par de variáveis categóricas, uma com as classes {Mariposa, Gafanhoto, Outros} e outra com as classes {Vivo, Morto}. Note que a coluna Total se refere ao total marginal das linhas, enquanto que a linha Total se refere ao total marginal das colunas.</p>
+<p>As tabelas construídas com duas variáveis são denominadas <strong>tabelas de dupla entrada</strong> ou ainda tabelas de contingência <span class="math inline">\(r\times c\)</span> onde <span class="math inline">\(r\)</span> é o número de linhas (categorias da primeira variável) e <span class="math inline">\(c\)</span> o número de colunas (categorias da segunda variável).</p>
+<p>As tabelas de contingência podem ter múltiplas entradas. Abaixo, mostramos uma tabela com três entradas com informações dos tripulantes do Titanic. As variáveis são Sobreviveu (Sim/Não), Sexo (Masculino/Feminino) e Classe (1ª,2ª,3ª), configurando um tabela <span class="math inline">\(2\times 2\times 3\)</span>.</p>
+<p><span class="math display">\[\begin{array}{l l |c c c |r}
+\hline
+\text{Sobreviveu} &amp; \text{Sexo} &amp; \text{Classe 1ª} &amp; \text{Classe 2ª} &amp; \text{Classe 3ª} &amp; \text{Total} \\
+\hline
+\text{Não} &amp; \text{Feminino} &amp; 3 &amp; 6 &amp; 72 &amp; \mathbf{81} \\
+&amp; \text{Masculino} &amp; 118 &amp; 146 &amp; 358 &amp; \mathbf{622} \\
+\hline
+\text{Sim} &amp; \text{Feminino} &amp; 91 &amp; 70 &amp; 72 &amp; \mathbf{233} \\
+&amp; \text{Masculino} &amp; 57 &amp; 17 &amp; 75 &amp; \mathbf{149} \\
+\hline
+\textbf{Total} &amp; &amp; \mathbf{269} &amp; \mathbf{239} &amp; \mathbf{577} &amp; \mathbf{1085} \\
+\hline
+\end{array}\]</span></p>
 </section>
 <section id="o-teste-qui-quadrado-para-diferenças-entre-probabilidades-em-tabelas-2times-2" class="level2" data-number="4.2">
 <h2 data-number="4.2" class="anchored" data-anchor-id="o-teste-qui-quadrado-para-diferenças-entre-probabilidades-em-tabelas-2times-2"><span class="header-section-number">4.2</span> O Teste Qui-quadrado para diferenças entre probabilidades em tabelas 2<span class="math inline">\(\times 2\)</span></h2>
-<pre><code>\begin{block}{Dados}
-Uma amostra aleatória de tamanho $n_1$ é retirada da população 1 (ou antes de um tratamento ser aplicado) é os resultados são \textcolor{purple}{organizados} em duas classes, sendo $O_{11}$ e $O_{12}$ suas respectivas frequências. Outra amostra aleatória, de tamanho $n_2$, é retirada da população 2 (ou da população 1 após a aplicação de um tratamento) é seus resultados são organizados nas mesmas duas classes, sendo $O_{21}$ e $O_{22}$ suas respectivas frequências. Esses resultados são organizados em um tabela de contingência de dupla entrada, como essa abaixo:
+<p>Sejam <span class="math inline">\(X_1,\ldots,X_{n_1}\)</span> e <span class="math inline">\(Y_1,\ldots,Y_{n_2}\)</span> duas amostras aleatórias, independentes entre si, onde <span class="math inline">\(X_i\)</span> e <span class="math inline">\(Y_j\)</span> só podem assumir duas classes. Esses resultados são organizados em um tabela de contingência de dupla entrada, como essa abaixo:</p>
+<p><span class="math display">\[\begin{array}{c|cc|c}\hline
+             &amp; \hbox{Classe 1}&amp; \hbox{Classe 2} &amp; \hbox{Total} \\ \hline
+           \hbox{Amostra 1 } (X)  &amp; O_{11} &amp; O_{12} &amp; n_1\\
+           \hbox{Amostra 2 } (Y)  &amp; O_{21} &amp; O_{22} &amp; n_2 \\ \hline
+           \hbox{Total} &amp;C_1 &amp; C_2 &amp; N=n_1+n_2\\
+        \end{array}\]</span></p>
+<p>Sejam <span class="math inline">\(p_X\)</span> e <span class="math inline">\(p_Y\)</span> as probabilidades de ocorrência do evento na classe 1 para as populações de <span class="math inline">\(X\)</span> e <span class="math inline">\(Y\)</span>, respectivamente. Estamos interessados nas seguintes hipóteses:</p>
+<p>Teste bilateral:</p>
+<p><span class="math display">\[\begin{align*}
+        H_0&amp;: p_X=p_Y \\
+        H_1&amp;:p_X\neq p_Y
+    \end{align*}\]</span></p>
+<p>Teste unilateral:</p>
+<p><span class="math display">\[\begin{align*}
+\left\{\begin{array}{l}H_0: p_X\leq  p_Y \\ H_1:p_X&gt;p_Y \end{array}\right.\;\;\;\;\;\left\{ \begin{array}{l}H_0:p_X\geq p_Y \\ H_1:p_X&lt;p_Y \end{array}\right.
+\end{align*}\]</span></p>
+<p>É natural comparar <span class="math inline">\(O_{11}/n_1\)</span> contra <span class="math inline">\(O_{21}/n_2\)</span> realizar o teste. Para a hipótese simples, sob <span class="math inline">\(H_0:p_X=p_Y=p\)</span>, teremos que</p>
+<p><span class="math display">\[\begin{align}O_{11}\sim\hbox{Binomial}(n_1,p)\\O_{21}\sim\hbox{Binomial}(n_2,p)\end{align}\]</span> Como <span class="math display">\[\begin{align}E\left(\frac{O_{11}}{n_1}-\frac{O_{21}}{n_2}\right)=&amp;0\\Var\left(\frac{O_{11}}{n_1}-\frac{O_{21}}{n_2}\right)&amp;=\left(\frac{1}{n_1}+\frac{1}{n_2}\right)p(1-p)\end{align},\]</span> teremos que, pelo Teorema Central do Limite,</p>
+<p><span class="math display">\[\begin{align}\frac{\frac{O_{11}}{n_1}-\frac{O_{21}}{n_2}}{\sqrt{\left(\frac{1}{n_1}+\frac{1}{n_2}\right)p(1-p)}}&amp;=\frac{1}{\sqrt{n_1n_2}}\frac{O_{11}n_2-O_{21}n_1}{\sqrt{Np(1-p)}}\\ &amp;=\frac{1}{\sqrt{n_1n_2}}\frac{O_{11}O_{21}-O_{12}O_{21}}{\sqrt{Np(1-p)}}\stackrel{D}{\to}N(0,1)\end{align}.\]</span> Agora, observe que, pela Lei Forte dos Grandes Números</p>
+<p><span class="math display">\[\hat{p}=\frac{C_1}{N}\stackrel{P}{\to}p\]</span> o que implica em <span class="math display">\[\hat{p}(1-\hat{p})=\frac{C_1}{N}\frac{C_2}{N}\stackrel{P}{\to}p(1-p).\]</span> Portanto, pelo Teorema de Slutsky, teremos que <span class="math display">\[\frac{1}{\sqrt{n_1n_2}}\frac{O_{11}O_{22}-O_{12}O_{21}}{\sqrt{N\hat{p}(1-\hat{p})}}=\sqrt{N}\frac{O_{11}O_{22}-O_{12}O_{21}}{\sqrt{n_1n_2C_1C_2}}\stackrel{D}{\to}N(0,1)\]</span></p>
+<div class="alert alert-success">
+<p>A estatística do teste Qui-quadrado para a diferença entre probabilidades em tabelas <span class="math inline">\(2\times 2\)</span> é</p>
+<p><span class="math display">\[T_1=\sqrt{N}\frac{O_{11}O_{21}-O_{12}O_{21}}{\sqrt{n_1n_2C_1C_2}},\]</span> e é equivalente a etatística do teste Z para diferença entre proporções. Para grandes amostras, a região de rejeição para a hipótese nula simples é <span class="math display">\[R=\{t_1: |t_1|&gt;z_{1-\alpha/2}\}\]</span> onde <span class="math inline">\(z_{1-\alpha/2}\)</span> é o quantil <span class="math inline">\((1-\alpha/2)\)</span> da normal padrão. Podemos, alternativamente, fazer <span class="math inline">\(T_2=T_1^2\)</span>, com região de rejeição <span class="math display">\[R=\{t_2: t_2&gt;\chi^2_{1,1-\alpha}\}\]</span> onde <span class="math inline">\(\chi^2_{\nu,1-\alpha}\)</span> é o quantil <span class="math inline">\((1-\alpha)\)</span> da distribuição <span class="math inline">\(\chi^2_\nu\)</span>.</p>
+<p>Para o teste unilateral, utilizamos a distribuição normal padrão, desde que o tamanho da amostra permita o uso do TCL. Via de regra, considera-se que a frequência de cada cela da tabela seja no mínimo igual a 5.</p>
+</div>
+<div id="exm-" class="theorem example">
+<p><span class="theorem-title"><strong>Example 4.1</strong></span> Dois carregamentos de itens manufaturados foram selecionados ao acaso e seus itens foram inspecionados. O objetivo é testar se há diferença entre as proporções de itens defeituosos nos dois carregamentos. Os dados foram organizados na seguinte tabela de contingência</p>
+<p><span class="math display">\[\begin{array}{c|cc|c}\hline
+         &amp; \hbox{Defeituoso} &amp; \hbox{Não defeituoso} &amp; \hbox{Total}\\ \hline
+     \hbox{Carregamento 1}    &amp; 13 &amp; 73 &amp; 86 \\
+     \hbox{Carregamento 2} &amp; 17 &amp; 57 &amp; 74 \\ \hline
+     \hbox{Total}&amp; 30 &amp; 130 &amp; 160 \\ \hline
+    \end{array}\]</span></p>
+<p>Seja <span class="math inline">\(p_1\)</span> a probabilidade de defeito no carregamento 1 e <span class="math inline">\(p_2\)</span> o mesmo para o carregamento 2. Nossa hipótese nula é <span class="math inline">\(H_0: p_1=p_2\)</span>.</p>
+<p>A estatística do teste Qui-quadrado é</p>
+<p><span class="math display">\[t_{obs}=\sqrt{160}\frac{13\cdot57-73\cdot17}{\sqrt{86\cdot74\cdot30\cdot130}}=-1,2695\]</span></p>
+<p>Como <span class="math display">\[\begin{align}P(T_1\geq-1,2695)&amp;=0,8978\\
+P(T_1\leq-1,2695)&amp;=0,1021\end{align}\]</span> logo, <span class="math display">\[p\hbox{-valor}=0,2042,\]</span> ou seja, não existem evidências de que há diferença na proporção de itens defeituosos dos dois carregamentos.</p>
+</div>
+<div id="exr-" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 4.1</strong></span> Na Academia Naval Americana, um novo sistema de iluminação foi instalado no dormitório dos aspirantes. Contudo, existe a conjectura de que o novo sistema está causando problemas de visão. Considere as hipóteses:</p>
+<ul>
+<li><p><span class="math inline">\(H_0:\)</span> a proporção de aspirantes com boa visão é maior ou igual ao que era antes da instalação do novo sistema de iluminação</p></li>
+<li><p><span class="math inline">\(H_1:\)</span> a probabilidade de boa visão é menor do que era antes.</p></li>
+</ul>
+<p>Um grupo de aspirantes 4 anos antes da instalação do novo sistema foi selecionado. Outra amostra foi selecionada dentre os aspirantes que já entraram com o novo sistema de iluminação em funcionamento. Foram obtidos os seguintes dados</p>
+<p><span class="math display">\[\begin{array}{c|cc|c}\hline
+             &amp;  \hbox{Boa visão} &amp; \hbox{Visão prejudicada} &amp; \hbox{Total} \\\hline
+          \hbox{Aspirantes antes do sistema}   &amp; 714 &amp; 111&amp; 825\\
+          \hbox{Aspirantes depois do sistema} &amp; 662 &amp; 154 &amp; 816 \\ \hline
+          \hbox{Total} &amp; 1376 &amp; 265 &amp; 1641 \\ \hline
+        \end{array}\]</span></p>
+<p>Teste a hipótese de que a visão dos aspirantes está sendo prejudicada com o novo sistema de iluminação.</p>
+</div>
+<div class="alert alert-success">
 
-\begin{table}[]
-    \centering
-    \begin{tabular}{c|cc|c}\hline
-         &amp; Classe 1&amp; Classe 2 &amp; Total \\ \hline
-       População 1  &amp; $O_{11}$ &amp; $O_{12}$ &amp; $n_1$\\
-       População 2 &amp; $O_{21}$ &amp; $O_{22}$ &amp; $n_2$ \\ \hline
-       Total &amp; $C_1$ &amp; $C_2$ &amp; $N=n_1+n_2$\\
-    \end{tabular}
-
-\end{table}
-\end{block}</code></pre>
-<p>\end{frame}</p>
+</div>
 </section>
 <section id="o-teste-exato-de-fisher" class="level2" data-number="4.3">
 <h2 data-number="4.3" class="anchored" data-anchor-id="o-teste-exato-de-fisher"><span class="header-section-number">4.3</span> O Teste Exato de Fisher</h2>
-<p>\end{frame} </p>
+<p>As <span class="math inline">\(N\)</span> observações são organizadas em uma tabela de contingência <span class="math inline">\(2\times 2\)</span> da</p>
+<pre><code>\begin{table}[]
+    \centering
+    \begin{tabular}{c|cc|c}\hline
+         &amp; Coluna 1&amp; Coluna 2 &amp; Total \\ \hline
+       Linha 1  &amp; $x$ &amp; $r-x$ &amp; $r$\\
+       Linha 2  &amp; $c-x$ &amp; $N-r-c+x$ &amp; $N-r$ \\ \hline
+       Total &amp; $c$ &amp; $N-c$ &amp; $N$\\
+    \end{tabular}
+\end{table}</code></pre>
+<p>Neste teste, já sabemos o valor dos totais das linhas e colunas (logo, eles não são aleatórios).</p>
+<p>Seja <span class="math inline">\(p_1\)</span> a probabilidade de ocorrência do evento na linha 1 e coluna 1 e seja <span class="math inline">\(p_2\)</span> a probabilidade de ocorrência do evento linha 2 e coluna 1. Estamos interessados nas seguintes hipóteses:</p>
+<p>Hipóteses simples (two-sided)</p>
+<pre><code>\begin{align*}
+    H_0&amp;: p_X=p_Y \\
+    H_1&amp;:p_1\neq p_2
+\end{align*}
+    </code></pre>
+<p>Hipóteses compostas (one-sided)</p>
+<p><span class="math display">\[\begin{align*}
+\left\{\begin{array}{l}H_0: p_1\leq  p_2 \\ H_1:p_1&gt;p_2 \end{array}\right.\;\;\;\;\;\left\{ \begin{array}{l}H_0:p_1\geq p_2 \\ H_1:p_1&lt;p_2 \end{array}\right.
+\end{align*}\]</span> \end{block} \end{frame}</p>
 </section>
 <section id="teste-de-qui-quadrado-de-cochran-mantel-haenszel" class="level2" data-number="4.4">
 <h2 data-number="4.4" class="anchored" data-anchor-id="teste-de-qui-quadrado-de-cochran-mantel-haenszel"><span class="header-section-number">4.4</span> Teste de Qui-quadrado de Cochran-Mantel-Haenszel</h2>

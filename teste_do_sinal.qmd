@@ -280,16 +280,22 @@ Teste a hipótese nula de que a diferença (Antiga - Nova) tem mediana zero cont
 :::
 
 Agora vamos discutir como o teste do sinal pode ser utilizado para obter um intervalo de confiança para a mediana. Considere a hipótese nula de que a mediana é $\theta_0$. Então $N_+\sim\hbox{Binomial}(n,F(\theta_0)$, onde $F(\theta_0)=0,5$. Pela simetria dessa distribuição, a região de rejeição desse teste é dada por
-$$R=\{n_+: n_+\leq r\hbox{ ou } n_+\geq s \},$$
-onde $s=n-r+1$ e $P(N_+\leq r)\leq \alpha/2$. O complementar de $R$ é $R^c=(r<n_+<s)$ e, pelo Teorema da dualidade entre testes de hipóteses e intervalos, temos que 
-$$\begin{align}A(\theta)&=\{\theta:r<N_+<s\}=\left\{\theta:r<\sum_{i=1}^n I_{(\theta,\infty)}(X_i)<s\right\}\\&=\left\{\theta:r<\sum_{i=1}^n I_{(-\infty,X_i)}(\theta)<s\right\}\end{align}$$
-Denotando por $X_{(1)}<\cdots<X_{(n)}$ as estatísticas de ordem, temos que:
+$$R=\{n_+: n_+\leq r\hbox{ ou } n_+\geq n-r \},$$
+onde $P(N_+\leq r)\leq \alpha/2$. O complementar de $R$ é $R^c=(r<n_+<n-r)$ e, pelo Teorema da dualidade entre testes de hipóteses e intervalos, temos que 
+$$\begin{align}A(\theta)&=\{\theta:r<N_+<n-r\}=\left\{\theta:r<\sum_{i=1}^n I_{(\theta,\infty)}(X_i)<n-r\right\}\\&=\left\{\theta:r<\sum_{i=1}^n I_{(-\infty,X_i)}(\theta)<n-r\right\}\\&=\left\{\theta:\frac{r}{n}<\frac{1}{n}\sum_{i=1}^n I_{(-\infty,X_i)}(\theta)<\frac{n-r}{n}\right\}\end{align}$$
+Observe que
+$$G_n(x)=\frac{1}{n}\sum_{i=1}^n I_{(-\infty,x_i)}(x)=\frac{1}{n}\sum_{i=1}^n I_{(x,\infty)}(x_{(i)})$$
+é um estimador para $P(X>x)$, onde $G_n(x)$ é a proporção de variáveis maiores que $x$. Note ainda que $G_n(x)$ é monótona não crescente e possui a inversa generalizada. Por último, note que 
+$$G_n(X_{(i)})=\frac{n-i}{n}.$$
 
-* o maior valor de $\theta$ tal que $r<\sum_{i=1}^n I_{(-\infty,X_i)}(\theta)$ é $X_{(r)}$
+Então,  
 
-* o menor valor de $\theta$ tal que $s>\sum_{i=1}^n I_{(-\infty,X_i)}(\theta)$ é $X_{(s)}$
+$$\frac{r}{n}=\frac{n-(n-r)}{n}=G_n(X_{(n-r)})$$
+e
+$$\frac{n-r}{n}=G_n(X_{(r)})$$
+Portanto,
 
-Portanto, $(X_{(r)},X_{(s)})$ é um intervalo de confiança $1-\alpha$ para a mediana $\theta$.
+$$\begin{align}A(\theta)&=\left\{\theta:\frac{r}{n}<\frac{1}{n}\sum_{i=1}^n I_{(-\infty,X_i)}(\theta)<\frac{n-r}{n}\right\}\\&=\left\{\theta:\frac{r}{n}<G_n(\theta)<\frac{n-r}{n}\right\}\\&=\left\{\theta:G_n^{-1}\left(\frac{n-r}{n}\right)<\theta<G_n^{-1}\left(\frac{r}{n}\right)\right\}\\&=\left\{\theta: X_{(r)}<\theta< X_{(n-r)}\right\}\end{align}$$
 
 <div class='alert alert-success'>
 **Importante.** 
@@ -311,7 +317,7 @@ Encontre um intervalo de 95% de confiança para a radiação mediana.
 
 **Solução.**
 
-Para $\alpha/2=0,025$, e considerando que $N_+\sim\hbox{Binomial}(20,1/2)$, temos que $P(N_+\leq 6)=0,025$, logo $r=6$ e $s=15$. As estatística de ordem $X_{(5)}=0,05$ e $X_{(15)}=0,16$. Portanto, um intervalo de 95% confiança para a mediana da radiação deste lote é (0,05 , 0,16). 
+Para $\alpha/2=0,025$, e considerando que $N_+\sim\hbox{Binomial}(20,1/2)$, temos que $P(N_+\leq 5)=0,02$ e $P(N_+\leq 6)=0,057$, logo $r=5$ e $s=15$. As estatística de ordem $X_{(5)}=0,05$ e $X_{(15)}=0,16$. Portanto, um intervalo de 95% confiança para a mediana da radiação deste lote é (0,05 , 0,16). 
 :::
 
 ::: {#exr-}
@@ -505,6 +511,11 @@ Calcule quantos indivíduos mudaram de posição em cada direção e aplique o T
 
 :::
 
+::: {#exr-}
+Um estudo retrospectivo de atestados de óbito teve como objetivo determinar se existe uma associação entre uma ocupação específica e uma determinada doença neoplásica. Em uma certa área geográfica, durante um período de tempo, cerca de 1.500 atestados listaram a doença neoplásica como causa primária de morte. Para cada um deles, foi selecionado um atestado de óbito de controle pareado, com base em idade, raça, sexo, condado de residência e data do óbito, declarando qualquer causa de morte que não fosse a doença neoplásica. A ocupação de cada falecido foi determinada.
+
+Apenas um par pareado tinha tanto o caso quanto o controle na ocupação especificada. Houve 69 pares em que o membro do grupo de casos estava na ocupação especificada, enquanto o membro do grupo de controle não estava. Houve 30 pares em que o membro do controle estava na ocupação e o membro do caso não estava. Em todos os 1.400 pares restantes, nem o membro do caso nem o do controle estavam na ocupação especificada. Teste a hipótese nula de que a proporção de membros dos grupos de casos e de controle na ocupação é a mesma
+:::
 
 ## O teste de Cox e Stuart para tendência monótona*
 

@@ -471,12 +471,10 @@ probability of success
 \end{array}\]</span></p>
 <p>Teste a hipótese nula de que a diferença (Antiga - Nova) tem mediana zero contra a alternativa de que a nova fórmula é mais eficaz.</p>
 </div>
-<p>Agora vamos discutir como o teste do sinal pode ser utilizado para obter um intervalo de confiança para a mediana. Considere a hipótese nula de que a mediana é <span class="math inline">\(\theta_0\)</span>. Então <span class="math inline">\(N_+\sim\hbox{Binomial}(n,F(\theta_0)\)</span>, onde <span class="math inline">\(F(\theta_0)=0,5\)</span>. Pela simetria dessa distribuição, a região de rejeição desse teste é dada por <span class="math display">\[R=\{n_+: n_+\leq r\hbox{ ou } n_+\geq s \},\]</span> onde <span class="math inline">\(s=n-r+1\)</span> e <span class="math inline">\(P(N_+\leq r)\leq \alpha/2\)</span>. O complementar de <span class="math inline">\(R\)</span> é <span class="math inline">\(R^c=(r&lt;n_+&lt;s)\)</span> e, pelo Teorema da dualidade entre testes de hipóteses e intervalos, temos que <span class="math display">\[\begin{align}A(\theta)&amp;=\{\theta:r&lt;N_+&lt;s\}=\left\{\theta:r&lt;\sum_{i=1}^n I_{(\theta,\infty)}(X_i)&lt;s\right\}\\&amp;=\left\{\theta:r&lt;\sum_{i=1}^n I_{(-\infty,X_i)}(\theta)&lt;s\right\}\end{align}\]</span> Denotando por <span class="math inline">\(X_{(1)}&lt;\cdots&lt;X_{(n)}\)</span> as estatísticas de ordem, temos que:</p>
-<ul>
-<li><p>o maior valor de <span class="math inline">\(\theta\)</span> tal que <span class="math inline">\(r&lt;\sum_{i=1}^n I_{(-\infty,X_i)}(\theta)\)</span> é <span class="math inline">\(X_{(r)}\)</span></p></li>
-<li><p>o menor valor de <span class="math inline">\(\theta\)</span> tal que <span class="math inline">\(s&gt;\sum_{i=1}^n I_{(-\infty,X_i)}(\theta)\)</span> é <span class="math inline">\(X_{(s)}\)</span></p></li>
-</ul>
-<p>Portanto, <span class="math inline">\((X_{(r)},X_{(s)})\)</span> é um intervalo de confiança <span class="math inline">\(1-\alpha\)</span> para a mediana <span class="math inline">\(\theta\)</span>.</p>
+<p>Agora vamos discutir como o teste do sinal pode ser utilizado para obter um intervalo de confiança para a mediana. Considere a hipótese nula de que a mediana é <span class="math inline">\(\theta_0\)</span>. Então <span class="math inline">\(N_+\sim\hbox{Binomial}(n,F(\theta_0)\)</span>, onde <span class="math inline">\(F(\theta_0)=0,5\)</span>. Pela simetria dessa distribuição, a região de rejeição desse teste é dada por <span class="math display">\[R=\{n_+: n_+\leq r\hbox{ ou } n_+\geq n-r \},\]</span> onde <span class="math inline">\(P(N_+\leq r)\leq \alpha/2\)</span>. O complementar de <span class="math inline">\(R\)</span> é <span class="math inline">\(R^c=(r&lt;n_+&lt;n-r)\)</span> e, pelo Teorema da dualidade entre testes de hipóteses e intervalos, temos que <span class="math display">\[\begin{align}A(\theta)&amp;=\{\theta:r&lt;N_+&lt;n-r\}=\left\{\theta:r&lt;\sum_{i=1}^n I_{(\theta,\infty)}(X_i)&lt;n-r\right\}\\&amp;=\left\{\theta:r&lt;\sum_{i=1}^n I_{(-\infty,X_i)}(\theta)&lt;n-r\right\}\\&amp;=\left\{\theta:\frac{r}{n}&lt;\frac{1}{n}\sum_{i=1}^n I_{(-\infty,X_i)}(\theta)&lt;\frac{n-r}{n}\right\}\end{align}\]</span> Observe que <span class="math display">\[G_n(x)=\frac{1}{n}\sum_{i=1}^n I_{(-\infty,x_i)}(x)=\frac{1}{n}\sum_{i=1}^n I_{(x,\infty)}(x_{(i)})\]</span> é um estimador para <span class="math inline">\(P(X&gt;x)\)</span>, onde <span class="math inline">\(G_n(x)\)</span> é a proporção de variáveis maiores que <span class="math inline">\(x\)</span>. Note ainda que <span class="math inline">\(G_n(x)\)</span> é monótona não crescente e possui a inversa generalizada. Por último, note que <span class="math display">\[G_n(X_{(i)})=\frac{n-i}{n}.\]</span></p>
+<p>Então,</p>
+<p><span class="math display">\[\frac{r}{n}=\frac{n-(n-r)}{n}=G_n(X_{(n-r)})\]</span> e <span class="math display">\[\frac{n-r}{n}=G_n(X_{(r)})\]</span> Portanto,</p>
+<p><span class="math display">\[\begin{align}A(\theta)&amp;=\left\{\theta:\frac{r}{n}&lt;\frac{1}{n}\sum_{i=1}^n I_{(-\infty,X_i)}(\theta)&lt;\frac{n-r}{n}\right\}\\&amp;=\left\{\theta:\frac{r}{n}&lt;G_n(\theta)&lt;\frac{n-r}{n}\right\}\\&amp;=\left\{\theta:G_n^{-1}\left(\frac{n-r}{n}\right)&lt;\theta&lt;G_n^{-1}\left(\frac{r}{n}\right)\right\}\\&amp;=\left\{\theta: X_{(r)}&lt;\theta&lt; X_{(n-r)}\right\}\end{align}\]</span></p>
 <div class="alert alert-success">
 <p><strong>Importante.</strong></p>
 <ol type="1">
@@ -491,7 +489,7 @@ probability of success
 0,08&amp; 0,10&amp; 0,30&amp; 0,20&amp; 0,02&amp; 0,01&amp; 0,10&amp; 0,08&amp; 0,16&amp; 0,11\end{array}\]</span></p>
 <p>Encontre um intervalo de 95% de confiança para a radiação mediana.</p>
 <p><strong>Solução.</strong></p>
-<p>Para <span class="math inline">\(\alpha/2=0,025\)</span>, e considerando que <span class="math inline">\(N_+\sim\hbox{Binomial}(20,1/2)\)</span>, temos que <span class="math inline">\(P(N_+\leq 6)=0,025\)</span>, logo <span class="math inline">\(r=6\)</span> e <span class="math inline">\(s=15\)</span>. As estatística de ordem <span class="math inline">\(X_{(5)}=0,05\)</span> e <span class="math inline">\(X_{(15)}=0,16\)</span>. Portanto, um intervalo de 95% confiança para a mediana da radiação deste lote é (0,05 , 0,16).</p>
+<p>Para <span class="math inline">\(\alpha/2=0,025\)</span>, e considerando que <span class="math inline">\(N_+\sim\hbox{Binomial}(20,1/2)\)</span>, temos que <span class="math inline">\(P(N_+\leq 5)=0,02\)</span> e <span class="math inline">\(P(N_+\leq 6)=0,057\)</span>, logo <span class="math inline">\(r=5\)</span> e <span class="math inline">\(s=15\)</span>. As estatística de ordem <span class="math inline">\(X_{(5)}=0,05\)</span> e <span class="math inline">\(X_{(15)}=0,16\)</span>. Portanto, um intervalo de 95% confiança para a mediana da radiação deste lote é (0,05 , 0,16).</p>
 </div>
 <div id="exr-" class="theorem exercise">
 <p><span class="theorem-title"><strong>Exercise 3.10</strong></span> Um estudo piloto investigou a absorção de arsênio proveniente de água potável através da análise de recortes de unhas. Foram coletadas 21 observações (em ppm). A amostra obtida (já ordenada) é dada abaixo</p>
@@ -637,6 +635,10 @@ probability of success
 </ul>
 <p>Calcule quantos indivíduos mudaram de posição em cada direção e aplique o Teste de McNemar para determinar se o informativo foi eficaz em persuadir as pessoas a favor do projeto</p>
 </div>
+<div id="exr-" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 3.16</strong></span> Um estudo retrospectivo de atestados de óbito teve como objetivo determinar se existe uma associação entre uma ocupação específica e uma determinada doença neoplásica. Em uma certa área geográfica, durante um período de tempo, cerca de 1.500 atestados listaram a doença neoplásica como causa primária de morte. Para cada um deles, foi selecionado um atestado de óbito de controle pareado, com base em idade, raça, sexo, condado de residência e data do óbito, declarando qualquer causa de morte que não fosse a doença neoplásica. A ocupação de cada falecido foi determinada.</p>
+<p>Apenas um par pareado tinha tanto o caso quanto o controle na ocupação especificada. Houve 69 pares em que o membro do grupo de casos estava na ocupação especificada, enquanto o membro do grupo de controle não estava. Houve 30 pares em que o membro do controle estava na ocupação e o membro do caso não estava. Em todos os 1.400 pares restantes, nem o membro do caso nem o do controle estavam na ocupação especificada. Teste a hipótese nula de que a proporção de membros dos grupos de casos e de controle na ocupação é a mesma</p>
+</div>
 </section>
 <section id="o-teste-de-cox-e-stuart-para-tendência-monótona" class="level2" data-number="3.4">
 <h2 data-number="3.4" class="anchored" data-anchor-id="o-teste-de-cox-e-stuart-para-tendência-monótona"><span class="header-section-number">3.4</span> O teste de Cox e Stuart para tendência monótona*</h2>
@@ -720,7 +722,7 @@ probability of success
 </div>
 </div>
 <div id="exr-" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 3.16</strong></span> Um laboratório contou o número de ovos postos por um grupo de insetos a cada hora durante 24 horas, conforme a tabela abaixo:</p>
+<p><span class="theorem-title"><strong>Exercise 3.17</strong></span> Um laboratório contou o número de ovos postos por um grupo de insetos a cada hora durante 24 horas, conforme a tabela abaixo:</p>
 <p><span class="math display">\[\begin{array}{l|cccccccccccc}\hline
 \hbox{hora} &amp; 9h &amp; 10h&amp; 11h&amp; 12h &amp; 13&amp; 14h &amp; 15h &amp; 16h \\
 \hbox{No. ovos}&amp; 151 &amp; 119 &amp; 146 &amp; 111 &amp; 63 &amp; 84 &amp; 60 &amp;109\\ \hline
@@ -746,7 +748,7 @@ probability of success
 <p>Quando os dados exibem um padrão sazonal, a regra de dividir a série no meio para realizar o pareamento deve ser alterada, para evitar a confusão entre um movimento da sazonalidade com a tendência. Para tanto, sugere-se parear as observações considerando fases consecutivas, como (jan/ano1,jan/ano2).</p>
 </div>
 <div id="exr-" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 3.17</strong></span> A taxa de descarga de água de um rio foi medida mensalmente por 24 meses. Sabe-se que esse fenômeno tem um padrão sazonal anual. Para testar a existência de uma tendência de longo prazo (redução da descarga). Com base nos dados abaixo, verifique se há evidência de que a taxa de descarga está diminuindo ao nível de significância de 5%</p>
+<p><span class="theorem-title"><strong>Exercise 3.18</strong></span> A taxa de descarga de água de um rio foi medida mensalmente por 24 meses. Sabe-se que esse fenômeno tem um padrão sazonal anual. Para testar a existência de uma tendência de longo prazo (redução da descarga). Com base nos dados abaixo, verifique se há evidência de que a taxa de descarga está diminuindo ao nível de significância de 5%</p>
 <p><span class="math display">\[\begin{array}{c|cccccccccccc}\hline
 \hbox{Ano} &amp; \hbox{jan} &amp; \hbox{fev} &amp; \hbox{mar} &amp; \hbox{abr} &amp; \hbox{mai}
 &amp; \hbox{jun} &amp; \hbox{jul} &amp; \hbox{ago} &amp; \hbox{set} &amp; \hbox{out} &amp; \hbox{nov} &amp; \hbox{dez} \\ \hline
