@@ -85,20 +85,43 @@ Portanto, pelo Teorema de Slutsky, teremos que
 $$\frac{1}{\sqrt{n_1n_2}}\frac{O_{11}O_{22}-O_{12}O_{21}}{\sqrt{N\hat{p}(1-\hat{p})}}=\sqrt{N}\frac{O_{11}O_{22}-O_{12}O_{21}}{\sqrt{n_1n_2C_1C_2}}\stackrel{D}{\to}N(0,1)$$
 
 <div class='alert alert-success'>
+**Sobre a validade da aproximação**
+
 A estatística do teste Qui-quadrado para a diferença entre probabilidades em tabelas $2\times 2$ é
 
-$$T_1=\sqrt{N}\frac{O_{11}O_{21}-O_{12}O_{21}}{\sqrt{n_1n_2C_1C_2}},$$
+$$T_1=\sqrt{N}\frac{O_{11}O_{22}-O_{12}O_{21}}{\sqrt{n_1n_2C_1C_2}},$$
 e é equivalente  a etatística do teste Z para diferença entre proporções. Para grandes amostras, a região de rejeição para a hipótese nula simples é
 $$R=\{t_1: |t_1|>z_{1-\alpha/2}\}$$
 onde $z_{1-\alpha/2}$ é o quantil $(1-\alpha/2)$ da normal padrão. Podemos, alternativamente, fazer $T_2=T_1^2$, com região de rejeição
 $$R=\{t_2: t_2>\chi^2_{1,1-\alpha}\}$$
 onde $\chi^2_{\nu,1-\alpha}$ é o quantil $(1-\alpha)$ da distribuição $\chi^2_\nu$.
 
-Para o teste unilateral, utilizamos a distribuição normal padrão, desde que o tamanho da amostra permita o uso do TCL. Via de regra, considera-se que a frequência de cada cela da tabela seja no mínimo igual a 5.  
+Para o teste unilateral, utilizamos a distribuição normal padrão, desde que o tamanho da amostra permita o uso do TCL.
+
+Via de regra, considera-se que o TCL é razoável considerando a distribuição binomial como base quando
+
+* $np \geq 5$ (Número esperado de sucessos)
+
+* $n \cdot (1-p) \geq 5$ (Número esperado de fracassos)
+
+Conforme discutido, sob $H_0$ $p$ pode ser $\hat{p}=C_1/n$. Portanto, é sempre útil observar a tabela de contagens esperadas:
+
+
+$$\begin{array}{c|cc|c}\hline
+             & \hbox{Classe 1}& \hbox{Classe 2} & \hbox{Total} \\ \hline
+           \hbox{Amostra 1 } (X)  & E_{11}=n_1\hat{p} & E_{12}=n_1(1-\hat{p}) & n_1\\
+           \hbox{Amostra 2 } (Y)  & E_{21}=n_2\hat{p} & E_{22}=n_2(1-\hat{p}) & n_2 \\ \hline
+           \hbox{Total} &C_1 & C_2 & N\\ \hline
+        \end{array}$$
+
+Contudo, é importante ressaltar ser existe um modo de realizar um teste exato, via método de Monte Carlo. Tal solução é apresentada na seção seguinte, sobre Teste Exato de Fisher e o teste de permutação.
 </div>
 
 
-::: {#exm-}
+
+
+
+::: {#exm-dois_lotes}
 Dois carregamentos de itens manufaturados foram selecionados ao acaso e seus itens foram inspecionados. O objetivo é testar se há diferença entre as proporções de itens defeituosos nos dois carregamentos. Os dados foram organizados na seguinte tabela de contingência 
 
 $$\begin{array}{c|cc|c}\hline
@@ -110,19 +133,26 @@ $$\begin{array}{c|cc|c}\hline
 
 Seja $p_1$ a probabilidade de defeito no carregamento 1 e $p_2$ o mesmo para o carregamento 2. Nossa hipótese nula é $H_0: p_1=p_2$. 
 
-
 A estatística do teste Qui-quadrado é
 
 $$t_{obs}=\sqrt{160}\frac{13\cdot57-73\cdot17}{\sqrt{86\cdot74\cdot30\cdot130}}=-1,2695$$
     
-Como 
+Vamos encontrar a tabela de valores esperados, para determinar se o TCL é adequado ao problema. Como $\hat{p}=30/160=3/16$, a referida tabela segue abaixo:
+
+$$\begin{array}{c|cc|c}\hline
+         & \hbox{Defeituoso} & \hbox{Não defeituoso} & \hbox{Total}\\ \hline
+     \hbox{Carregamento 1}    & 86\cdot\frac{3}{16}=16,125 & 86\cdot\frac{13}{16}=69,875 & 86 \\
+     \hbox{Carregamento 2} & 74\cdot\frac{3}{16}=13,875 & 74\cdot\frac{13}{16}=60,125 & 74 \\ \hline
+     \hbox{Total}& 30 & 130 & 160 \\ \hline
+    \end{array}$$
+
+Como todos os valores esperados são maiores que 5, temos que a aproximação normal é adequada. Como 
 $$\begin{align}P(T_1\geq-1,2695)&=0,8978\\
 P(T_1\leq-1,2695)&=0,1021\end{align}$$
 logo,
 $$p\hbox{-valor}=0,2042,$$
 ou seja, não existem evidências de que há diferença na proporção de itens defeituosos dos dois carregamentos.
 :::
-
 
 ::: {#exr-}
 Na Academia Naval Americana, um novo sistema de iluminação foi instalado no dormitório dos aspirantes. Contudo, existe a conjectura de que o novo sistema está causando problemas de visão. Considere as hipóteses:
@@ -141,17 +171,98 @@ $$\begin{array}{c|cc|c}\hline
         \end{array}$$
 
 
-Teste a hipótese de que a visão dos aspirantes está sendo prejudicada com o novo sistema de iluminação.
+Verifique se a aproximação normal é plausível e teste a hipótese de que a visão dos aspirantes está sendo prejudicada com o novo sistema de iluminação.
 :::
 
+
+::: {#def-}
+**Gráfico de mosaico**
+
+O **gráfico de mosaico** é formado por retângulos, um para cada cela da tabela, dispostos na mesma ordem. A área dos retângulos é proporcional à sua frequência observada, apresentando uma inspeção visual direta das celas. Os retângulos são construídos como segue:
+
+* A altura do retângulo da  cela $(i,j)$ é proporcional ao total da linha ($n_i/n$). 
+
+* A largura do retângulo da cela $(i,j)$ é proporcional à $O_{ij}/n_i$. 
+
+Em um gráfico de mosaico, as linhas se comportam como um gráfico de barras empilhadas 100%, mostrando como as probabilidades de cada classe se dividem ao longo da linha. Sob $H_0$, esperamos que as divisões entre as colunas estejam alinhadas através das linhas. 
+
+
+::: {#fig-mosaicos-residuos layout-ncol=2}
+
+![Mosaico sem evidências contra $H_0$.](Figuras/mosaic_como_construir_I.png){#fig-mosaico_construirI}
+
+![Mosaico com evidências contra $H_0$.](Figuras/mosaic_como_construir_II.png){#fig-mosaico_construirII}
+
+**Construção do gráfico de mosaico para tabelas 2x2.** (a) Ilustração de um mosaico com $H_0$ verdadeira. Observe como as linhas verticais são próximas. (b) Ilustração de um mosaico com $H_0$ falsa. Observe como as linhas verticais estão distantes.
+
+
+**Observação.** Existem diferentes implementações do gráfico de mosaico. No `R`, vamos utilizar o pacote `vcd`, que possui a função `mosaic`, cuja a implementação é a mesma apresentada aqui. Já o pacote `graphics` (o pacote básico do `R`) possui a função `mosaicplot`, no qual  a altura do retângulo da  cela $(i,j)$ é proporcional ao total da coluna ($C_j/n$) e a largura do retângulo da cela $(i,j)$ é proporcional à $O_{ij}/C_j$. Portanto, ao utilizar outra função para fazer um gráfico de mosaico, as interpretações podem variar.  
+:::
+
+::: {#exm-}
+De volta ao exemplo @exm-dois_lotes,  vamos fazer o gráfico de mosaico.
+
+```{r}
+tabela <- matrix( c(13,17,73,57),2,2)
+dimnames(tabela) <- list( Carregamento = c(1,2), Defeituoso = c('Sim','Não'))
+tabela
+```
+```{r}
+require(vcd)
+mosaic(tabela)
+```
+Como discutido, olhando as linhas como gráficos de barras empilhadas, temos a representação das frequências da variável Defeituoso. Pode-se ver que as **linhas verticais** que dividem as classes de Defeituoso estão próximas, o que podem ser indícios de que $H_0$ não deve ser rejeitada. Vamos realizar o mesmo gráfico com a função `mosaicplot`:
+
+```{r}
+mosaicplot(tabela)
+```
+Observe que o gráfico é o mesmo, mas com a orientação trocada. Aqui, as colunas representam as frequências relativas de cada carregamento Deste modo, devemos rejeitar $H_0$ se as linhas horizontais que dividem as classes da variável Defeituoso estiverem distantes entre si (desalinhadas).
+
+Essa proximidade visual das linhas confirma o resultado obtido pelo teste de hipóteses (p-valor=0,2042), indicando que a variação observada entre os carregamentos 1 e 2 pode ser atribuída ao erro amostral, e não a uma diferença real nas probabilidades de defeito.
+:::
+
+::: {#exr-}
+Durante um surto de uma nova variante de Dengue em Manaus, a Secretaria de Saúde comparou dois tipos de testes diagnósticos (Teste A e Teste B) em 100 pacientes sintomáticos. Queremos saber se a taxa de detecção de casos positivos depende do tipo de teste utilizado. 
+
+$$\begin{array}{l|cc|c}\hline
+ & \hbox{Teste Positivo (+)} & \hbox{Teste Negativo (-)} & \hbox{Total de Pacientes} \\ \hline\hbox{Teste tipo A} &40& 10& 50 \\ \hbox{Teste tipo B} & 20&30 &50 \\ \hline \hbox{Total}&60&40&N = 100\\ \hline\end{array}$$
+
+
+1. Esboce o gráfico de mosaico
+
+2. Verifique se há diferença entre os testes ao nível de significância de 5%.
+:::
+
+::: {#exr-}
+O artigo Polack et al. (2020) apresenta um estudo clínico de fase 3 randomizado e controlado por placebo que avaliou a eficácia da vacina BNT162b2 (Pfizer-BioNTech COVID-19) em participantes com 16 anos ou mais sem evidências de infecção por SARS-CoV-2. A tabela abaixo apresenta o número de participantes por grupo e o número de casos de Covid-19.
+
+$$\begin{array}{l|cc|c}\hline 
+ & \hbox{Não teve Covid-19} & \hbox{Teve Covid-19} & \hbox{Total} \\ \hline 
+ \hbox{Recebeu vacina} & 18.190 & 8 & 18.198 \\
+ \hbox{Recebeu placebo} & 18.163& 162 & 18.325 \\ \hline
+ \hbox{Total} & 36.353 & 170 & 36.523 \\ \hline
+ \end{array}$$
+
+Teste a hipótese de que a vacina é eficaz.
+:::  
+
+
 <div class='alert alert-success'>
+**Nota.**
+
+Por ser um teste aproximado, o teste Qui-quadrado não pode ser executado em todas as situações. Contudo, a estatística 
+
+$$T_2=T_1^2=N\frac{(O_{11}O_{22}-O_{12}O_{21})^2}{n_1n_2C_1C_2},$$
+
+ainda é uma estatística de teste válida, sendo que apenas sua distribuição sob a hipótese nula é desconhecida. 
 
 
 </div>
 
+
 ## O Teste Exato de Fisher 
 
-As $N$ observações são organizadas em uma tabela de contingência $2\times 2$ da 
+Considere que um experimento foi realizado  $2\times 2$ da 
 
     \begin{table}[]
         \centering

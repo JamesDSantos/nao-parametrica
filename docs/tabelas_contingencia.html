@@ -20,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -188,14 +223,6 @@ window.Quarto = {
   <ul>
   <li><a href="#introdução" id="toc-introdução" class="nav-link active" data-scroll-target="#introdução"><span class="header-section-number">4.1</span> Introdução</a></li>
   <li><a href="#o-teste-qui-quadrado-para-diferenças-entre-probabilidades-em-tabelas-2times-2" id="toc-o-teste-qui-quadrado-para-diferenças-entre-probabilidades-em-tabelas-2times-2" class="nav-link" data-scroll-target="#o-teste-qui-quadrado-para-diferenças-entre-probabilidades-em-tabelas-2times-2"><span class="header-section-number">4.2</span> O Teste Qui-quadrado para diferenças entre probabilidades em tabelas 2<span class="math inline">\(\times 2\)</span></a></li>
-  <li><a href="#o-teste-exato-de-fisher" id="toc-o-teste-exato-de-fisher" class="nav-link" data-scroll-target="#o-teste-exato-de-fisher"><span class="header-section-number">4.3</span> O Teste Exato de Fisher</a></li>
-  <li><a href="#teste-de-qui-quadrado-de-cochran-mantel-haenszel" id="toc-teste-de-qui-quadrado-de-cochran-mantel-haenszel" class="nav-link" data-scroll-target="#teste-de-qui-quadrado-de-cochran-mantel-haenszel"><span class="header-section-number">4.4</span> Teste de Qui-quadrado de Cochran-Mantel-Haenszel</a></li>
-  <li><a href="#o-teste-qui-quadrado-para-diferenças-entre-probabilidades" id="toc-o-teste-qui-quadrado-para-diferenças-entre-probabilidades" class="nav-link" data-scroll-target="#o-teste-qui-quadrado-para-diferenças-entre-probabilidades"><span class="header-section-number">4.5</span> O Teste Qui-quadrado para diferenças entre probabilidades}</a></li>
-  <li><a href="#o-teste-qui-quadrado-para-independência" id="toc-o-teste-qui-quadrado-para-independência" class="nav-link" data-scroll-target="#o-teste-qui-quadrado-para-independência"><span class="header-section-number">4.6</span> O Teste Qui-quadrado para independência</a></li>
-  <li><a href="#o-teste-da-mediana" id="toc-o-teste-da-mediana" class="nav-link" data-scroll-target="#o-teste-da-mediana"><span class="header-section-number">4.7</span> O Teste da mediana</a></li>
-  <li><a href="#medidas-de-dependência" id="toc-medidas-de-dependência" class="nav-link" data-scroll-target="#medidas-de-dependência"><span class="header-section-number">4.8</span> Medidas de dependência</a></li>
-  <li><a href="#o-teste-qui-quadrado-para-aderência-bondade-de-ajuste" id="toc-o-teste-qui-quadrado-para-aderência-bondade-de-ajuste" class="nav-link" data-scroll-target="#o-teste-qui-quadrado-para-aderência-bondade-de-ajuste"><span class="header-section-number">4.9</span> O teste Qui-quadrado para aderência (bondade de ajuste)</a></li>
-  <li><a href="#o-teste-de-cochran-para-observações-relacionadas" id="toc-o-teste-de-cochran-para-observações-relacionadas" class="nav-link" data-scroll-target="#o-teste-de-cochran-para-observações-relacionadas"><span class="header-section-number">4.10</span> O teste de Cochran para observações relacionadas</a></li>
   </ul>
 </nav>
     </div>
@@ -276,11 +303,25 @@ window.Quarto = {
 <p><span class="math display">\[\begin{align}\frac{\frac{O_{11}}{n_1}-\frac{O_{21}}{n_2}}{\sqrt{\left(\frac{1}{n_1}+\frac{1}{n_2}\right)p(1-p)}}&amp;=\frac{1}{\sqrt{n_1n_2}}\frac{O_{11}n_2-O_{21}n_1}{\sqrt{Np(1-p)}}\\ &amp;=\frac{1}{\sqrt{n_1n_2}}\frac{O_{11}O_{21}-O_{12}O_{21}}{\sqrt{Np(1-p)}}\stackrel{D}{\to}N(0,1)\end{align}.\]</span> Agora, observe que, pela Lei Forte dos Grandes Números</p>
 <p><span class="math display">\[\hat{p}=\frac{C_1}{N}\stackrel{P}{\to}p\]</span> o que implica em <span class="math display">\[\hat{p}(1-\hat{p})=\frac{C_1}{N}\frac{C_2}{N}\stackrel{P}{\to}p(1-p).\]</span> Portanto, pelo Teorema de Slutsky, teremos que <span class="math display">\[\frac{1}{\sqrt{n_1n_2}}\frac{O_{11}O_{22}-O_{12}O_{21}}{\sqrt{N\hat{p}(1-\hat{p})}}=\sqrt{N}\frac{O_{11}O_{22}-O_{12}O_{21}}{\sqrt{n_1n_2C_1C_2}}\stackrel{D}{\to}N(0,1)\]</span></p>
 <div class="alert alert-success">
+<p><strong>Sobre a validade da aproximação</strong></p>
 <p>A estatística do teste Qui-quadrado para a diferença entre probabilidades em tabelas <span class="math inline">\(2\times 2\)</span> é</p>
-<p><span class="math display">\[T_1=\sqrt{N}\frac{O_{11}O_{21}-O_{12}O_{21}}{\sqrt{n_1n_2C_1C_2}},\]</span> e é equivalente a etatística do teste Z para diferença entre proporções. Para grandes amostras, a região de rejeição para a hipótese nula simples é <span class="math display">\[R=\{t_1: |t_1|&gt;z_{1-\alpha/2}\}\]</span> onde <span class="math inline">\(z_{1-\alpha/2}\)</span> é o quantil <span class="math inline">\((1-\alpha/2)\)</span> da normal padrão. Podemos, alternativamente, fazer <span class="math inline">\(T_2=T_1^2\)</span>, com região de rejeição <span class="math display">\[R=\{t_2: t_2&gt;\chi^2_{1,1-\alpha}\}\]</span> onde <span class="math inline">\(\chi^2_{\nu,1-\alpha}\)</span> é o quantil <span class="math inline">\((1-\alpha)\)</span> da distribuição <span class="math inline">\(\chi^2_\nu\)</span>.</p>
-<p>Para o teste unilateral, utilizamos a distribuição normal padrão, desde que o tamanho da amostra permita o uso do TCL. Via de regra, considera-se que a frequência de cada cela da tabela seja no mínimo igual a 5.</p>
+<p><span class="math display">\[T_1=\sqrt{N}\frac{O_{11}O_{22}-O_{12}O_{21}}{\sqrt{n_1n_2C_1C_2}},\]</span> e é equivalente a etatística do teste Z para diferença entre proporções. Para grandes amostras, a região de rejeição para a hipótese nula simples é <span class="math display">\[R=\{t_1: |t_1|&gt;z_{1-\alpha/2}\}\]</span> onde <span class="math inline">\(z_{1-\alpha/2}\)</span> é o quantil <span class="math inline">\((1-\alpha/2)\)</span> da normal padrão. Podemos, alternativamente, fazer <span class="math inline">\(T_2=T_1^2\)</span>, com região de rejeição <span class="math display">\[R=\{t_2: t_2&gt;\chi^2_{1,1-\alpha}\}\]</span> onde <span class="math inline">\(\chi^2_{\nu,1-\alpha}\)</span> é o quantil <span class="math inline">\((1-\alpha)\)</span> da distribuição <span class="math inline">\(\chi^2_\nu\)</span>.</p>
+<p>Para o teste unilateral, utilizamos a distribuição normal padrão, desde que o tamanho da amostra permita o uso do TCL.</p>
+<p>Via de regra, considera-se que o TCL é razoável considerando a distribuição binomial como base quando</p>
+<ul>
+<li><p><span class="math inline">\(np \geq 5\)</span> (Número esperado de sucessos)</p></li>
+<li><p><span class="math inline">\(n \cdot (1-p) \geq 5\)</span> (Número esperado de fracassos)</p></li>
+</ul>
+<p>Conforme discutido, sob <span class="math inline">\(H_0\)</span> <span class="math inline">\(p\)</span> pode ser <span class="math inline">\(\hat{p}=C_1/n\)</span>. Portanto, é sempre útil observar a tabela de contagens esperadas:</p>
+<p><span class="math display">\[\begin{array}{c|cc|c}\hline
+             &amp; \hbox{Classe 1}&amp; \hbox{Classe 2} &amp; \hbox{Total} \\ \hline
+           \hbox{Amostra 1 } (X)  &amp; E_{11}=n_1\hat{p} &amp; E_{12}=n_1(1-\hat{p}) &amp; n_1\\
+           \hbox{Amostra 2 } (Y)  &amp; E_{21}=n_2\hat{p} &amp; E_{22}=n_2(1-\hat{p}) &amp; n_2 \\ \hline
+           \hbox{Total} &amp;C_1 &amp; C_2 &amp; N\\ \hline
+        \end{array}\]</span></p>
+<p>Contudo, é importante ressaltar ser existe um modo de realizar um teste exato, via método de Monte Carlo. Tal solução é apresentada na seção seguinte, sobre Teste Exato de Fisher e o teste de permutação.</p>
 </div>
-<div id="exm-" class="theorem example">
+<div id="exm-dois_lotes" class="theorem example">
 <p><span class="theorem-title"><strong>Example 4.1</strong></span> Dois carregamentos de itens manufaturados foram selecionados ao acaso e seus itens foram inspecionados. O objetivo é testar se há diferença entre as proporções de itens defeituosos nos dois carregamentos. Os dados foram organizados na seguinte tabela de contingência</p>
 <p><span class="math display">\[\begin{array}{c|cc|c}\hline
          &amp; \hbox{Defeituoso} &amp; \hbox{Não defeituoso} &amp; \hbox{Total}\\ \hline
@@ -291,7 +332,14 @@ window.Quarto = {
 <p>Seja <span class="math inline">\(p_1\)</span> a probabilidade de defeito no carregamento 1 e <span class="math inline">\(p_2\)</span> o mesmo para o carregamento 2. Nossa hipótese nula é <span class="math inline">\(H_0: p_1=p_2\)</span>.</p>
 <p>A estatística do teste Qui-quadrado é</p>
 <p><span class="math display">\[t_{obs}=\sqrt{160}\frac{13\cdot57-73\cdot17}{\sqrt{86\cdot74\cdot30\cdot130}}=-1,2695\]</span></p>
-<p>Como <span class="math display">\[\begin{align}P(T_1\geq-1,2695)&amp;=0,8978\\
+<p>Vamos encontrar a tabela de valores esperados, para determinar se o TCL é adequado ao problema. Como <span class="math inline">\(\hat{p}=30/160=3/16\)</span>, a referida tabela segue abaixo:</p>
+<p><span class="math display">\[\begin{array}{c|cc|c}\hline
+         &amp; \hbox{Defeituoso} &amp; \hbox{Não defeituoso} &amp; \hbox{Total}\\ \hline
+     \hbox{Carregamento 1}    &amp; 86\cdot\frac{3}{16}=16,125 &amp; 86\cdot\frac{13}{16}=69,875 &amp; 86 \\
+     \hbox{Carregamento 2} &amp; 74\cdot\frac{3}{16}=13,875 &amp; 74\cdot\frac{13}{16}=60,125 &amp; 74 \\ \hline
+     \hbox{Total}&amp; 30 &amp; 130 &amp; 160 \\ \hline
+    \end{array}\]</span></p>
+<p>Como todos os valores esperados são maiores que 5, temos que a aproximação normal é adequada. Como <span class="math display">\[\begin{align}P(T_1\geq-1,2695)&amp;=0,8978\\
 P(T_1\leq-1,2695)&amp;=0,1021\end{align}\]</span> logo, <span class="math display">\[p\hbox{-valor}=0,2042,\]</span> ou seja, não existem evidências de que há diferença na proporção de itens defeituosos dos dois carregamentos.</p>
 </div>
 <div id="exr-" class="theorem exercise">
@@ -307,15 +355,128 @@ P(T_1\leq-1,2695)&amp;=0,1021\end{align}\]</span> logo, <span class="math displa
           \hbox{Aspirantes depois do sistema} &amp; 662 &amp; 154 &amp; 816 \\ \hline
           \hbox{Total} &amp; 1376 &amp; 265 &amp; 1641 \\ \hline
         \end{array}\]</span></p>
-<p>Teste a hipótese de que a visão dos aspirantes está sendo prejudicada com o novo sistema de iluminação.</p>
+<p>Verifique se a aproximação normal é plausível e teste a hipótese de que a visão dos aspirantes está sendo prejudicada com o novo sistema de iluminação.</p>
+</div>
+<div id="def-" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 4.1</strong></span> <strong>Gráfico de mosaico</strong></p>
+<p>O <strong>gráfico de mosaico</strong> é formado por retângulos, um para cada cela da tabela, dispostos na mesma ordem. A área dos retângulos é proporcional à sua frequência observada, apresentando uma inspeção visual direta das celas. Os retângulos são construídos como segue:</p>
+<ul>
+<li><p>A altura do retângulo da cela <span class="math inline">\((i,j)\)</span> é proporcional ao total da linha (<span class="math inline">\(n_i/n\)</span>).</p></li>
+<li><p>A largura do retângulo da cela <span class="math inline">\((i,j)\)</span> é proporcional à <span class="math inline">\(O_{ij}/n_i\)</span>.</p></li>
+</ul>
+<p>Em um gráfico de mosaico, as linhas se comportam como um gráfico de barras empilhadas 100%, mostrando como as probabilidades de cada classe se dividem ao longo da linha. Sob <span class="math inline">\(H_0\)</span>, esperamos que as divisões entre as colunas estejam alinhadas através das linhas.</p>
+<div id="fig-mosaicos-residuos" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mosaicos-residuos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-mosaicos-residuos" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-mosaico_construirI" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-mosaico_construirI-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Figuras/mosaic_como_construir_I.png" class="img-fluid figure-img" data-ref-parent="fig-mosaicos-residuos">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-mosaico_construirI-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Mosaico sem evidências contra <span class="math inline">\(H_0\)</span>.
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-mosaicos-residuos" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-mosaico_construirII" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-mosaico_construirII-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Figuras/mosaic_como_construir_II.png" class="img-fluid figure-img" data-ref-parent="fig-mosaicos-residuos">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-mosaico_construirII-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Mosaico com evidências contra <span class="math inline">\(H_0\)</span>.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<p><strong>Construção do gráfico de mosaico para tabelas 2x2.</strong> (a) Ilustração de um mosaico com <span class="math inline">\(H_0\)</span> verdadeira. Observe como as linhas verticais são próximas. (b) Ilustração de um mosaico com <span class="math inline">\(H_0\)</span> falsa. Observe como as linhas verticais estão distantes.</p>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mosaicos-residuos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.1: <strong>Observação.</strong> Existem diferentes implementações do gráfico de mosaico. No <code>R</code>, vamos utilizar o pacote <code>vcd</code>, que possui a função <code>mosaic</code>, cuja a implementação é a mesma apresentada aqui. Já o pacote <code>graphics</code> (o pacote básico do <code>R</code>) possui a função <code>mosaicplot</code>, no qual a altura do retângulo da cela <span class="math inline">\((i,j)\)</span> é proporcional ao total da coluna (<span class="math inline">\(C_j/n\)</span>) e a largura do retângulo da cela <span class="math inline">\((i,j)\)</span> é proporcional à <span class="math inline">\(O_{ij}/C_j\)</span>. Portanto, ao utilizar outra função para fazer um gráfico de mosaico, as interpretações podem variar.
+</figcaption>
+</figure>
+</div>
+<div id="exm-" class="theorem example">
+<p><span class="theorem-title"><strong>Example 4.2</strong></span> De volta ao exemplo <a href="#exm-dois_lotes" class="quarto-xref">Example&nbsp;<span>4.1</span></a>, vamos fazer o gráfico de mosaico.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>tabela <span class="ot">&lt;-</span> <span class="fu">matrix</span>( <span class="fu">c</span>(<span class="dv">13</span>,<span class="dv">17</span>,<span class="dv">73</span>,<span class="dv">57</span>),<span class="dv">2</span>,<span class="dv">2</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dimnames</span>(tabela) <span class="ot">&lt;-</span> <span class="fu">list</span>( <span class="at">Carregamento =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">Defeituoso =</span> <span class="fu">c</span>(<span class="st">'Sim'</span>,<span class="st">'Não'</span>))</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>tabela</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            Defeituoso
+Carregamento Sim Não
+           1  13  73
+           2  17  57</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(vcd)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Carregando pacotes exigidos: vcd</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Carregando pacotes exigidos: grid</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mosaic</span>(tabela)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="tabelas_contingencia_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Como discutido, olhando as linhas como gráficos de barras empilhadas, temos a representação das frequências da variável Defeituoso. Pode-se ver que as <strong>linhas verticais</strong> que dividem as classes de Defeituoso estão próximas, o que podem ser indícios de que <span class="math inline">\(H_0\)</span> não deve ser rejeitada. Vamos realizar o mesmo gráfico com a função <code>mosaicplot</code>:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mosaicplot</span>(tabela)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="tabelas_contingencia_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Observe que o gráfico é o mesmo, mas com a orientação trocada. Aqui, as colunas representam as frequências relativas de cada carregamento Deste modo, devemos rejeitar <span class="math inline">\(H_0\)</span> se as linhas horizontais que dividem as classes da variável Defeituoso estiverem distantes entre si (desalinhadas).</p>
+<p>Essa proximidade visual das linhas confirma o resultado obtido pelo teste de hipóteses (p-valor=0,2042), indicando que a variação observada entre os carregamentos 1 e 2 pode ser atribuída ao erro amostral, e não a uma diferença real nas probabilidades de defeito.</p>
+</div>
+<div id="exr-" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 4.2</strong></span> Durante um surto de uma nova variante de Dengue em Manaus, a Secretaria de Saúde comparou dois tipos de testes diagnósticos (Teste A e Teste B) em 100 pacientes sintomáticos. Queremos saber se a taxa de detecção de casos positivos depende do tipo de teste utilizado.</p>
+<p><span class="math display">\[\begin{array}{l|cc|c}\hline
+&amp; \hbox{Teste Positivo (+)} &amp; \hbox{Teste Negativo (-)} &amp; \hbox{Total de Pacientes} \\ \hline\hbox{Teste tipo A} &amp;40&amp; 10&amp; 50 \\ \hbox{Teste tipo B} &amp; 20&amp;30 &amp;50 \\ \hline \hbox{Total}&amp;60&amp;40&amp;N = 100\\ \hline\end{array}\]</span></p>
+<ol type="1">
+<li><p>Esboce o gráfico de mosaico</p></li>
+<li><p>Verifique se há diferença entre os testes ao nível de significância de 5%.</p></li>
+</ol>
+</div>
+<div id="exr-" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 4.3</strong></span> O artigo Polack et al.&nbsp;(2020) apresenta um estudo clínico de fase 3 randomizado e controlado por placebo que avaliou a eficácia da vacina BNT162b2 (Pfizer-BioNTech COVID-19) em participantes com 16 anos ou mais sem evidências de infecção por SARS-CoV-2. A tabela abaixo apresenta o número de participantes por grupo e o número de casos de Covid-19.</p>
+<p><span class="math display">\[\begin{array}{l|cc|c}\hline
+&amp; \hbox{Não teve Covid-19} &amp; \hbox{Teve Covid-19} &amp; \hbox{Total} \\ \hline
+\hbox{Recebeu vacina} &amp; 18.190 &amp; 8 &amp; 18.198 \\
+\hbox{Recebeu placebo} &amp; 18.163&amp; 162 &amp; 18.325 \\ \hline
+\hbox{Total} &amp; 36.353 &amp; 170 &amp; 36.523 \\ \hline
+\end{array}\]</span></p>
+<p>Teste a hipótese de que a vacina é eficaz.</p>
 </div>
 <div class="alert alert-success">
-
+<p><strong>Nota.</strong></p>
+<p>Por ser um teste aproximado, o teste Qui-quadrado não pode ser executado em todas as situações. Contudo, a estatística</p>
+<p><span class="math display">\[T_2=T_1^2=N\frac{(O_{11}O_{22}-O_{12}O_{21})^2}{n_1n_2C_1C_2},\]</span></p>
+<p>ainda é uma estatística de teste válida, sendo que apenas sua distribuição sob a hipótese nula é desconhecida.</p>
 </div>
-</section>
 <section id="o-teste-exato-de-fisher" class="level2" data-number="4.3">
 <h2 data-number="4.3" class="anchored" data-anchor-id="o-teste-exato-de-fisher"><span class="header-section-number">4.3</span> O Teste Exato de Fisher</h2>
-<p>As <span class="math inline">\(N\)</span> observações são organizadas em uma tabela de contingência <span class="math inline">\(2\times 2\)</span> da</p>
+<p>Considere que um experimento foi realizado <span class="math inline">\(2\times 2\)</span> da</p>
 <pre><code>\begin{table}[]
     \centering
     \begin{tabular}{c|cc|c}\hline
@@ -386,6 +547,8 @@ Além disso, cada tabela é obtida de um experimento independente dos demais.
 <p>%=========================================================== % Aula 14 %===========================================================</p>
 
 
+</section>
+</div>
 </section>
 
 </main> <!-- /main -->
