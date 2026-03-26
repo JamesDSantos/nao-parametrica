@@ -187,7 +187,7 @@ O **gráfico de mosaico** é formado por retângulos, um para cada cela da tabel
 Em um gráfico de mosaico, as linhas se comportam como um gráfico de barras empilhadas 100%, mostrando como as probabilidades de cada classe se dividem ao longo da linha. Sob $H_0$, esperamos que as divisões entre as colunas estejam alinhadas através das linhas. 
 
 
-::: {#fig-mosaicos-residuos layout-ncol=2}
+:::{#fig-mosaicos-residuos layout-ncol=2}
 
 ![Mosaico sem evidências contra $H_0$.](Figuras/mosaic_como_construir_I.png){#fig-mosaico_construirI}
 
@@ -197,6 +197,8 @@ Em um gráfico de mosaico, as linhas se comportam como um gráfico de barras emp
 
 
 **Observação.** Existem diferentes implementações do gráfico de mosaico. No `R`, vamos utilizar o pacote `vcd`, que possui a função `mosaic`, cuja a implementação é a mesma apresentada aqui. Já o pacote `graphics` (o pacote básico do `R`) possui a função `mosaicplot`, no qual  a altura do retângulo da  cela $(i,j)$ é proporcional ao total da coluna ($C_j/n$) e a largura do retângulo da cela $(i,j)$ é proporcional à $O_{ij}/C_j$. Portanto, ao utilizar outra função para fazer um gráfico de mosaico, as interpretações podem variar.  
+:::
+
 :::
 
 ::: {#exm-}
@@ -248,155 +250,168 @@ Teste a hipótese de que a vacina é eficaz.
 
 
 <div class='alert alert-success'>
-**Nota.**
+**O teste exato da Barnard**
 
 Por ser um teste aproximado, o teste Qui-quadrado não pode ser executado em todas as situações. Contudo, a estatística 
 
 $$T_2=T_1^2=N\frac{(O_{11}O_{22}-O_{12}O_{21})^2}{n_1n_2C_1C_2},$$
 
-ainda é uma estatística de teste válida, sendo que apenas sua distribuição sob a hipótese nula é desconhecida. 
+ainda é uma estatística de teste válida, sendo que apenas sua distribuição sob a hipótese nula desconhecida. 
 
+Conforme visto, essa estatística $T_2$ é função de $O_{11}$ e $O_{21}$, considerando que o tamanho das amostras (marginal das linhas) é conhecido. Portanto, sem perda de generalidade, escreveremos $$W=T_2(O_{11},O_{21}).$$
 
+Como $W$ é função de $O_{11}$ e $O_{21}$, sabemos que
+
+$$P(W=w)=\sum_{(o_{11},o_{21}): T_2=w}{n_1\choose o_{11}}p_1^{o_{11}}(1-p_1)^{n_1-o_{11}}{n_2\choose o_{21}}p_2^{o_{21}}(1-p_2)^{n_2-o_{21}}$$
+e, considerando $H_0:p_1=p_2=p$, teremos
+
+$$P(W=w|p)=\sum_{(o_{11},o_{21}): T_2=w}{n_1\choose o_{11}}{n_2\choose o_{21}}p^{c_{1}}(1-p)^{c_2}$$
+Portanto, procuramos pelo ponto crítico $w^*$ no qual
+$$\sup_{0\leq p\leq 1}P(W\geq w^*|p)\leq \alpha,$$
+ou, de maneira equivalente, avaliamos a rejeição da hipótese nula através do p-valor
+
+$$\hbox{p-valor}=\sup_{0\leq p\leq 1}P(W\geq w_{obs}|p).$$
+Este é o teste de Barnard (1945). Sua lógica é construir todas as tabelas $2\times 2$ e encontrar $p$ que traz o pior cenário. Existem diversas implementações deste no `R`. Aqui, vamos utilizar o pacote `Exact`, com a função `exact.test`. Abaixo, apresentamos o uso dessa função para o conjunto de dados sobre o número de itens defeituosos em dois carregamentos.
+
+```{r}
+library(Exact)
+tabela <- matrix( c(13,17,73,57),2,2)
+dimnames(tabela) <- list( Carregamento = c(1,2), Defeituoso = c('Sim','Não'))
+
+exact.test(tabela)
+```
+
+Observe que este p-valor é, como esperado, próximo do obtido via aproxomação normal (0,2042).
 </div>
 
 
 ## O Teste Exato de Fisher 
 
-Considere que um experimento foi realizado  $2\times 2$ da 
-
-    \begin{table}[]
-        \centering
-        \begin{tabular}{c|cc|c}\hline
-             & Coluna 1& Coluna 2 & Total \\ \hline
-           Linha 1  & $x$ & $r-x$ & $r$\\
-           Linha 2  & $c-x$ & $N-r-c+x$ & $N-r$ \\ \hline
-           Total & $c$ & $N-c$ & $N$\\
-        \end{tabular}
-    \end{table}
+Considere novamente que $X_1,\ldots,X_{n_1}$ e $Y_1,\ldots,Y_{n_2}$ são duas amostras aleatórias, independentes entre si, onde $X_i$ e $Y_j$ só podem assumir duas classes. Os resultados são organizados em uma tabela de contingência de dupla entrada, como essa abaixo:
     
-Neste teste, já sabemos o valor dos totais das linhas e colunas (logo, eles não são aleatórios).
+$$\begin{array}{c|cc|c}\hline
+             & \hbox{Classe 1}& \hbox{Classe 2} & \hbox{Total} \\ \hline
+           \hbox{Amostra 1 } (X)  & O_{11} & O_{12} & n_1\\
+           \hbox{Amostra 2 } (Y)  & O_{21} & O_{22} & n_2 \\ \hline
+           \hbox{Total} &C_1 & C_2 & N=n_1+n_2\\ \hline
+        \end{array}$$
 
-Seja $p_1$ a probabilidade de ocorrência do evento na linha 1 e coluna 1 e seja $p_2$ a probabilidade de ocorrência do evento linha 2 e coluna 1. Estamos interessados nas seguintes hipóteses:
-    
-Hipóteses simples (two-sided)
-    
-    \begin{align*}
-        H_0&: p_X=p_Y \\
-        H_1&:p_1\neq p_2
-    \end{align*}
-        
- Hipóteses compostas (one-sided)
- 
- \begin{align*}
- \left\{\begin{array}{l}H_0: p_1\leq  p_2 \\ H_1:p_1>p_2 \end{array}\right.\;\;\;\;\;\left\{ \begin{array}{l}H_0:p_1\geq p_2 \\ H_1:p_1<p_2 \end{array}\right.
- \end{align*}
-    \end{block}
-\end{frame}
+Assim como na seção anterior, $H_0: p_1=p_2=p$, onde $p_i$ é a probabilidade de se obter a Classe 1 para a população da amostra aleatória $i$. 
 
-\begin{frame}{}
- \begin{block}{Estatística de teste}
- A estatística de teste $T_2$ é o número de observações na cela linha 1 e coluna 1.
- \end{block}
- 
- \begin{block}{Distribuição sob a hipótese nula}
- Quando $H_0$ é verdadeira, a distribuição exata de $T_2$ é 
- $$P(T_2=x)=\frac{{r \choose x}{N-r\choose c-x}}{{N\choose c}},$$
- para $x=0,1,\ldots,\min\{r,c\}.$ Para grandes amostras
- $$T_3=\frac{x-\frac{rc}{N}}{\sqrt{\frac{rc(N-r)(N-c)}{N^2(N-1)}}}\approx N(0,1).$$
- \end{block}
-\end{frame}
+Recorde novamente que $O_{11}\sim\hbox{Binomial}(n_1,p_1)$ e $O_{21}=C_1-O_{11}\sim\hbox{Binomial}(n_2,p_2)$, o que implica em
 
-\begin{frame}{Entendendo a distribuição da estatística sob a hipótese nula}
- 
- Suponha que $H_0$ é verdadeira e seja $p=p_1=p_2$. Seja $X$ o número de vezes que ocorreu o evento linha 1, coluna 1. Como o tota da linha 1 é fixado em $r$ sabemos que,
- $$X|\hbox{linha 1}\sim \hbox{Binomail}(r,p).$$
- Analogamente, definindo $Y$ como sendo o evento linha 2, coluna 1, teremos
- $$Y|\hbox{linha 2}\sim \hbox{Binomail}(N-r,p).$$
- Conjuntamente, teremos
- \begin{align*}
-     P(X=x,Y=c-x)&={r \choose x}p^x(1-p)^{r-x}{N-r \choose c-x}p^{c-x}(1-p)^{N-r-c+x}\\&={r \choose x}{N-r \choose c-x}p^c(1-p)^{N-c}
- \end{align*}\end{frame}
+$$\begin{align}P(O_{11}=x,O_{21}=c_1-x)&={n_1 \choose x}p_1^x(1-p_1)^{n_1-x}{n_2 \choose c_1-x}p_2^{c_1-x}(1-p_2)^{n_2-c_1+x}\\&={n_1\choose x}{n_2\choose c_1-x}\left[\left.\frac{p_1}{1-p_1}\right/\frac{p_2}{1-p_2}\right]^x p_2^{c_2}(1-p_2)^{n_2-c_1}\end{align}$$
+Fazendo 
 
-\begin{frame}
-Além disso, sabemos que 
-$$X+Y\sim\hbox{Binomial}(c,p).$$
-Mas $X+Y$ é o total da coluna 1, que também é fixado. Então
-\begin{align*}
-    P(X=x|X+Y=c)&=\frac{P(X=x,X+Y=c)}{P(X+Y=c)}=\frac{P(X=x,x+Y=c)}{P(X+Y=c)}\\
-    &=\frac{P(X=x,Y=c-x)}{P(X+Y=c)}\\&=\frac{{r \choose x}{N-r \choose c-x}p^c(1-p)^{N-c}}{{N \choose c}p^c(1-p)^{N-c}}=\frac{{r \choose x}{N-r \choose c-x}}{{ N\choose c}}
-\end{align*}
-A distribuição de $T_3$ é consequência direta do Teorema Central do limite.
-\end{frame}
+$$\phi=\left.\frac{p_1}{1-p_1}\right/\frac{p_2}{1-p_2},$$
+teremos
 
-\begin{frame}
-\begin{block}{p-valores }
-Para a hipótese simples $H_0:p_1=p_2$, 
-$$p\hbox{-valor}=2\min\{P(T_2\leq t_{obs}),P(T_2\geq  t_{obs})\}$$
+$$\begin{align}P(O_{11}=o_{11},O_{21}=c_1-x)&={n_1 \choose o_{11}}p_1^{o_{11}}(1-p_1)^{n_1-x}{n_2 \choose c_1-{o_{11}}}p_2^{c_1-{o_{11}}}(1-p_2)^{n_2-c_1+{o_{11}}}\\&={n_1\choose {o_{11}}}{n_2\choose c_1-{o_{11}}}\phi^{o_{11}} p_2^{c_1}(1-p_2)^{n_2-c_1}\end{align}$$
 
-Para a hipótese composta $H_0:p_1\leq p_2$,
-$$p\hbox{-valor}=P(T_2\geq t_{obs})$$
+A razão entre a probabilidade de sucesso e a de fracasso é denominada **chance**, enquanto que $\phi$ é denominada **razão de chances**. É importante notar que $H_0$ pode ser reescrita como $H_0:\phi=1$.
 
-Para  hipótese composta $H_0:p_1\geq p_2$,
-$$p\hbox{-valor}=P(T_2\leq t_{obs}).$$
-\end{block}
-\end{frame}
+As estatísticas suficientes para $(\phi,p_2)$ são $O_{11},C_1$. Contudo, como $C_1\sim\hbox{Binomial}(N,p_2)$, temos que ela é suficiente para $p_2$ e ancilar para $\phi$. Deste modo, a distribuição de ${o_{11}}|C_1$ não depende de $p$. Explicitamente, temos
 
-\begin{frame}{Exemplo 1}
- Quatorze recém-graduados, 10 homens e 4 mulheres, todos igualmente qualificados, estão sendo designados pelo presidente de um banco aos seus novos cargos. 10 deles serão atendentes de caixas e 4 representantes de contas. A hipótese nula é a de que homens e mulheres tem igual chance de conseguir a vaga mais desejada, que é a de representante de contas. A hipótese alternativa de interesse é a de que as mulheres tem mais chance de conseguir esta vaga do que os homnes. Após a atribuição, apenas 1 mulher ficou com uma vaga de caixa. Existem evidências para rejeitar a hipótese nula?
-\end{frame}
 
-\begin{frame}{
-}
- Os dados observados são
+$$
+\begin{align}
+P({O_{11}}=x|C_1=c_1)&=\frac{P(X=x,C_1=c_1)}{{N \choose c_1}p_2^{c_1}(1-p_2)^{N-c_1} }=\frac{P(X=x,X+Y=c_1)}{{N \choose c_1}p_2^{c_1}(1-p_2)^{N-c_1} }\\&=\frac{P(X=x,Y=c_1-x)}{{N \choose c_1}(1-p_2)^{c_1}p_2^{N-c_1} }=\frac{P(X=x)P(Y=c_1-x)}{{N \choose c_1}p_2^{c_1}(1-p_2)^{N-c_1} }\\&=
+\frac{{n_1 \choose x}p_1^{x}(1-p_1)^{n_1-x}{n_2\choose c_1-x} p_2^{c_1-x}(1-p_2)^{n_2-c_1+x}}{ {N \choose c_1} p_2^{c_1}(1-p_2)^{N-c_1}}\\&=
+\frac{{n_1 \choose x}{n_2 \choose c_1-x}}{{N \choose c_1}}\phi^x=\frac{{n_1 \choose x}{N-n_1 \choose c_1-x}}{{N \choose c_1}}\phi^x
+\end{align}
+$$
+e, sob $H_0$, $O_{11}|C_1=c_1\sim\hbox{Hipergeométrica}(N,n_1,c_1)$. 
+
+O **teste exato de Fisher** consiste em utilizar a estatística $O_{11}$ condicionada a $C_1=c_1$. Valores elevados de $O_{11}$ dão suporte para $H_1: p_1>p_2$, enquanto que valores baixos dão suporte para $H_1:p_1<p_2$. A tabela abaixo resume as hipóteses que podem ser testadas e seus p-valores.
+
+  
+::: {#exm-}
+
+Quatorze recém-graduados, 10 homens e 4 mulheres, todos igualmente qualificados, estão sendo designados pelo presidente de um banco aos seus novos cargos. 10 deles serão atendentes de caixas e 4 representantes de contas. A hipótese alternativa é a de que mulheres tem mais chance de conseguir a vaga mais desejada, que é a de representante de contas. A atribuição observada é dada abaixo:
+
+
+$$\begin{array}{c|cc|c}\hline
+             & \hbox{Representante de contas}& \hbox{Atendente de caixa} & \hbox{Total} \\ \hline
+           \hbox{Mulher}   & 3 & 1 & 4 \\ 
+           \hbox{Homem}  & 1 & 9 & 10\\ \hline
+           \hbox{Total} &4 & 10 & 14\\ \hline
+        \end{array}$$
+
+Após a atribuição, apenas 1 mulher ficou com uma vaga de caixa. Existem evidências para rejeitar a hipótese nula?
+
+
+Sob a hipótese nula, temos que $O_{11}|C_1=4\sim\hbox{Hipergeométrica}(14,4,4)$. Como $o_{11}=3$, logo
+
+$$\hbox{p-valor}=P(O_{11}\geq 3|C_1=4)=0,0409$$
+o que nos leva a rejeitar a hipótese nula, oou seja, há evidências de que as mulheres tem maiores chances de obter essa vaga.
+
+
+No `R`, podemos obter esse $p$-valor com o comando
+
+```{r}
+# phyper( o11, n1, n2, c1 )  calcula P(O11 <= o11)
+# phyper( o11-1, n1, n2, c1 ) calcula P(O11 > o11)
+phyper(2, 4,10, 4, lower.tail = FALSE)
+```
+ou, preferivelmente, utilizando a função `fisher.test`:
+
+```{r}
+tabela <- matrix(c(3,1,1,9), 2,2)
+dimnames(tabela) <- list( Genero = c('Mulher','Homem'), Vaga = c('Rep. cont', 'Atend caixa'))
+
+tabela
+
+fisher.test(tabela, alternative = 'greater')
+```
+
+::: {#exr-}
+O Nascimento dos Ensaios Clínicos (James Lind, 1747)
+
+James Lind selecionou 12 marinheiros com escorbuto severo a bordo do navio HMS Salisbury. Ele os dividiu em 6 grupos de dois, mantendo a dieta básica igual para todos, mas adicionando um suplemento diferente para cada par (vinagre, água do mar, cidra, ácido sulfúrico diluído, uma pasta de ervas ou laranjas/limões).
+
+Devido ao custo, apenas o grupo que recebeu laranjas e limões mostrou uma recuperação dramática e rápida (um marinheiro voltou ao serviço em 6 dias, o outro quase totalmente recuperado). Para fins estatísticos, vamos comparar o grupo dos Cítricos contra todos os outros 10 marinheiros que receberam os demais tratamentos (agregados aqui como "Outros Tratamentos").
+
+$$\begin{array}{c|cc|c}\hline\text{Tratamento} & \text{Recuperado} & \text{Não Recuperado} & \text{Total} \\ \hline\text{Cítricos (Laranja/Limão)} & 2 & 0 & 2 \\\text{Outros Tratamentos} & 0 & 10 & 10 \\ \hline\text{Total} & 2 & 10 & 12 \\ \hline\end{array}$$
+
+1. Verifique se a aproximação do teste Qui-quadrado é válida para esse problema. 
+
+2. Calcule o Teste Exato de Fisher para a hipótese unilateral de que os cítricos aumentam a chance de recuperação ($H_1: p_{cítrico} > p_{outros}$). Interprete o resultado.
+:::
+
+::: {#exer-}
+**O Paradoxo de Admissões em Berkeley (Bickel et al., 1975)**
+
+Em 1973, a Universidade de California, Berkeley, foi suspeita de discriminação de gênero em suas admissões de pós-graduação. Os dados agregados dos seis maiores departamentos mostravam uma disparidade óbvia. 
+
+Considere a tabela de contingência abaixo, que resume o total de candidatos e admitidos por gênero:
+
+$$\begin{array}{c|cc|c}\hline & \hbox{Admitido} & \hbox{Não Admitido} & \hbox{Total} \\ \hline\hbox{Homens} & 3738 & 4704 & 8442 \\ \hbox{Mulheres} & 1494 & 2827 & 4321 \\ \hline\hbox{Total} & 5232 & 7531 & 12763 \\ \hline\end{array}$$
+
+1. Existe evidência estatística de viés contra as mulheres nesta visão agregada?
+
+Para entender a origem da disparidade, foram analisados os departamentos separadamente. Abaixo, contrastamos o Departamento A (Engenharia), com alta oferta de vagas, e o Departamento F (Ciências Sociais), altamente seletivo.
+
+Departamento A (Engenharia Mecânica): 
+$$\begin{array}{c|cc|c}\hline
+\text{Gênero} & \text{Admitido} & \text{Não Admitido} & \text{Total} \\ \hline
+\text{Homens} & 512 & 313 & 825 \\
+\text{Mulheres} & 89 & 19 & 108 \\ \hline
+\end{array}$$
+
+Departamento F (Ciências Sociais/Humanas):
+$$\begin{array}{c|cc|c}\hline
+\text{Gênero} & \text{Admitido} & \text{Não Admitido} & \text{Total} \\ \hline
+\text{Homens} & 22 & 250 & 272 \\
+\text{Mulheres} & 24 & 317 & 341 \\ \hline
+\end{array}$$
+
+2. Existe evidência estatística de viés contra as mulheres quando realizamos a análise por departamento?
+
+3. Explique como a escolha da variável de controle (Departamento) altera a conclusão sobre a existência de viés.
+
+:::
  
-    \begin{table}[]
-        \centering
-        \begin{tabular}{c|cc|c}\hline
-             & Representantes de conta & Caixa & Total \\ \hline
-           Homens   & $1$ & $9$ & $10$\\
-           Mulheres & $3$ & $1$ & $4$ \\ \hline
-           Total & $4$ & $10$ & $14$ \\ \hline
-        \end{tabular}
-    \end{table}
-    
-    A hipótese nula, relacionada com a coluna 1 é 
-    $H_0: p_1\geq p_2$ e a alternativa é \textcolor{purple}{$H_1: p_1< p_2$}. A estatística de teste é $t_{obs}=1$ e o  
-    $p$-valor deste teste é 
-    $$P(T_2\leq 1)=0,0409$$
- \end{frame}
- 
- \begin{frame}[fragile]     No \texttt{R}, podemos chegar no $p$-valor anterior de dois modos diferentes:
-     
-     \begin{itemize}
-         \item Utilizando o comando \texttt{phyper(x,r,N-r,c)}. Neste caso usamos:
-         
-         \begin{center}
-             \texttt{phyper(1,10,4,4)}
-         \end{center}
-         
-         \item Escrevendo a tabela de contingência e usando a função \texttt{fisher.test}
-         \begin{verbatim}
-         
-             tab <- matrix( c(1,9,3,1), 2,2, byrow = T)
-             
-             fisher.test(tab,alternative = "less")
-         \end{verbatim}
-         
-     \end{itemize}
- \end{frame}
- 
- \begin{frame}{Notas}
-  \textcolor{purple}{Este slide diverge da aula gravada, onde eu equivocadamente assumi que a origem do termo exato estava associada ao tamanho de um teste, mas na verdade, está associada à possibilidade de calcular o p-valor sem aproximações}
- \begin{block}{Testes conservadores}
- 
- Em um teste \textcolor{purple}{para qualquer p-valor  , temos que
- $$P(p-\hbox{valor}\leq \alpha)\leq \alpha.$$
- Um teste é dito ser conservador quando a segunda desigualdade é acentuada. Nesse caso, o teste tem resistência em rejeitar $H_0$, mesmo quando ela \'e falsa.}
- \end{block}
- 
- \textcolor{purple}{Alguns autores afirmam que o teste exato de Fisher é muito conservador, especialmente quando as linhas e colunas n\~ao s\~ao aleat\'orias (neste caso, o teste também não é exato)}
- \end{frame}
- 
+
 ## Teste de Qui-quadrado de Cochran-Mantel-Haenszel
 
      \begin{block}{Dados}

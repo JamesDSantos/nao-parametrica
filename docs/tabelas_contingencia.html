@@ -223,6 +223,7 @@ window.Quarto = {
   <ul>
   <li><a href="#introdução" id="toc-introdução" class="nav-link active" data-scroll-target="#introdução"><span class="header-section-number">4.1</span> Introdução</a></li>
   <li><a href="#o-teste-qui-quadrado-para-diferenças-entre-probabilidades-em-tabelas-2times-2" id="toc-o-teste-qui-quadrado-para-diferenças-entre-probabilidades-em-tabelas-2times-2" class="nav-link" data-scroll-target="#o-teste-qui-quadrado-para-diferenças-entre-probabilidades-em-tabelas-2times-2"><span class="header-section-number">4.2</span> O Teste Qui-quadrado para diferenças entre probabilidades em tabelas 2<span class="math inline">\(\times 2\)</span></a></li>
+  <li><a href="#o-teste-exato-de-fisher" id="toc-o-teste-exato-de-fisher" class="nav-link" data-scroll-target="#o-teste-exato-de-fisher"><span class="header-section-number">4.3</span> O Teste Exato de Fisher</a></li>
   </ul>
 </nav>
     </div>
@@ -405,6 +406,7 @@ Figure&nbsp;4.1: <strong>Observação.</strong> Existem diferentes implementaç�
 </figcaption>
 </figure>
 </div>
+</div>
 <div id="exm-" class="theorem example">
 <p><span class="theorem-title"><strong>Example 4.2</strong></span> De volta ao exemplo <a href="#exm-dois_lotes" class="quarto-xref">Example&nbsp;<span>4.1</span></a>, vamos fazer o gráfico de mosaico.</p>
 <div class="cell">
@@ -469,36 +471,154 @@ Carregamento Sim Não
 <p>Teste a hipótese de que a vacina é eficaz.</p>
 </div>
 <div class="alert alert-success">
-<p><strong>Nota.</strong></p>
+<p><strong>O teste exato da Barnard</strong></p>
 <p>Por ser um teste aproximado, o teste Qui-quadrado não pode ser executado em todas as situações. Contudo, a estatística</p>
 <p><span class="math display">\[T_2=T_1^2=N\frac{(O_{11}O_{22}-O_{12}O_{21})^2}{n_1n_2C_1C_2},\]</span></p>
-<p>ainda é uma estatística de teste válida, sendo que apenas sua distribuição sob a hipótese nula é desconhecida.</p>
+<p>ainda é uma estatística de teste válida, sendo que apenas sua distribuição sob a hipótese nula desconhecida.</p>
+<p>Conforme visto, essa estatística <span class="math inline">\(T_2\)</span> é função de <span class="math inline">\(O_{11}\)</span> e <span class="math inline">\(O_{21}\)</span>, considerando que o tamanho das amostras (marginal das linhas) é conhecido. Portanto, sem perda de generalidade, escreveremos <span class="math display">\[W=T_2(O_{11},O_{21}).\]</span></p>
+<p>Como <span class="math inline">\(W\)</span> é função de <span class="math inline">\(O_{11}\)</span> e <span class="math inline">\(O_{21}\)</span>, sabemos que</p>
+<p><span class="math display">\[P(W=w)=\sum_{(o_{11},o_{21}): T_2=w}{n_1\choose o_{11}}p_1^{o_{11}}(1-p_1)^{n_1-o_{11}}{n_2\choose o_{21}}p_2^{o_{21}}(1-p_2)^{n_2-o_{21}}\]</span> e, considerando <span class="math inline">\(H_0:p_1=p_2=p\)</span>, teremos</p>
+<p><span class="math display">\[P(W=w|p)=\sum_{(o_{11},o_{21}): T_2=w}{n_1\choose o_{11}}{n_2\choose o_{21}}p^{c_{1}}(1-p)^{c_2}\]</span> Portanto, procuramos pelo ponto crítico <span class="math inline">\(w^*\)</span> no qual <span class="math display">\[\sup_{0\leq p\leq 1}P(W\geq w^*|p)\leq \alpha,\]</span> ou, de maneira equivalente, avaliamos a rejeição da hipótese nula através do p-valor</p>
+<p><span class="math display">\[\hbox{p-valor}=\sup_{0\leq p\leq 1}P(W\geq w_{obs}|p).\]</span> Este é o teste de Barnard (1945). Sua lógica é construir todas as tabelas <span class="math inline">\(2\times 2\)</span> e encontrar <span class="math inline">\(p\)</span> que traz o pior cenário. Existem diversas implementações deste no <code>R</code>. Aqui, vamos utilizar o pacote <code>Exact</code>, com a função <code>exact.test</code>. Abaixo, apresentamos o uso dessa função para o conjunto de dados sobre o número de itens defeituosos em dois carregamentos.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Exact)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>To use this package, you must install the ExactData package. To install
+that package, run `install.packages('ExactData',
+repos='https://pcalhoun1.github.io/drat/', type='source')`.</code></pre>
 </div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>tabela <span class="ot">&lt;-</span> <span class="fu">matrix</span>( <span class="fu">c</span>(<span class="dv">13</span>,<span class="dv">17</span>,<span class="dv">73</span>,<span class="dv">57</span>),<span class="dv">2</span>,<span class="dv">2</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dimnames</span>(tabela) <span class="ot">&lt;-</span> <span class="fu">list</span>( <span class="at">Carregamento =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">Defeituoso =</span> <span class="fu">c</span>(<span class="st">'Sim'</span>,<span class="st">'Não'</span>))</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">exact.test</span>(tabela)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="tabelas_contingencia_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Z-pooled Exact Test
+
+data:  13 out of 86 vs. 17 out of 74
+test statistic = -1.2695, first sample size = 86, second sample size =
+74, p-value = 0.2264
+alternative hypothesis: true difference in proportion is not equal to 0
+sample estimates:
+difference in proportion 
+             -0.07856694 </code></pre>
+</div>
+</div>
+<p>Observe que este p-valor é, como esperado, próximo do obtido via aproxomação normal (0,2042).</p>
+</div>
+</section>
 <section id="o-teste-exato-de-fisher" class="level2" data-number="4.3">
 <h2 data-number="4.3" class="anchored" data-anchor-id="o-teste-exato-de-fisher"><span class="header-section-number">4.3</span> O Teste Exato de Fisher</h2>
-<p>Considere que um experimento foi realizado <span class="math inline">\(2\times 2\)</span> da</p>
-<pre><code>\begin{table}[]
-    \centering
-    \begin{tabular}{c|cc|c}\hline
-         &amp; Coluna 1&amp; Coluna 2 &amp; Total \\ \hline
-       Linha 1  &amp; $x$ &amp; $r-x$ &amp; $r$\\
-       Linha 2  &amp; $c-x$ &amp; $N-r-c+x$ &amp; $N-r$ \\ \hline
-       Total &amp; $c$ &amp; $N-c$ &amp; $N$\\
-    \end{tabular}
-\end{table}</code></pre>
-<p>Neste teste, já sabemos o valor dos totais das linhas e colunas (logo, eles não são aleatórios).</p>
-<p>Seja <span class="math inline">\(p_1\)</span> a probabilidade de ocorrência do evento na linha 1 e coluna 1 e seja <span class="math inline">\(p_2\)</span> a probabilidade de ocorrência do evento linha 2 e coluna 1. Estamos interessados nas seguintes hipóteses:</p>
-<p>Hipóteses simples (two-sided)</p>
-<pre><code>\begin{align*}
-    H_0&amp;: p_X=p_Y \\
-    H_1&amp;:p_1\neq p_2
-\end{align*}
-    </code></pre>
-<p>Hipóteses compostas (one-sided)</p>
-<p><span class="math display">\[\begin{align*}
-\left\{\begin{array}{l}H_0: p_1\leq  p_2 \\ H_1:p_1&gt;p_2 \end{array}\right.\;\;\;\;\;\left\{ \begin{array}{l}H_0:p_1\geq p_2 \\ H_1:p_1&lt;p_2 \end{array}\right.
-\end{align*}\]</span> \end{block} \end{frame}</p>
-</section>
+<p>Considere novamente que <span class="math inline">\(X_1,\ldots,X_{n_1}\)</span> e <span class="math inline">\(Y_1,\ldots,Y_{n_2}\)</span> são duas amostras aleatórias, independentes entre si, onde <span class="math inline">\(X_i\)</span> e <span class="math inline">\(Y_j\)</span> só podem assumir duas classes. Os resultados são organizados em uma tabela de contingência de dupla entrada, como essa abaixo:</p>
+<p><span class="math display">\[\begin{array}{c|cc|c}\hline
+             &amp; \hbox{Classe 1}&amp; \hbox{Classe 2} &amp; \hbox{Total} \\ \hline
+           \hbox{Amostra 1 } (X)  &amp; O_{11} &amp; O_{12} &amp; n_1\\
+           \hbox{Amostra 2 } (Y)  &amp; O_{21} &amp; O_{22} &amp; n_2 \\ \hline
+           \hbox{Total} &amp;C_1 &amp; C_2 &amp; N=n_1+n_2\\ \hline
+        \end{array}\]</span></p>
+<p>Assim como na seção anterior, <span class="math inline">\(H_0: p_1=p_2=p\)</span>, onde <span class="math inline">\(p_i\)</span> é a probabilidade de se obter a Classe 1 para a população da amostra aleatória <span class="math inline">\(i\)</span>.</p>
+<p>Recorde novamente que <span class="math inline">\(O_{11}\sim\hbox{Binomial}(n_1,p_1)\)</span> e <span class="math inline">\(O_{21}=C_1-O_{11}\sim\hbox{Binomial}(n_2,p_2)\)</span>, o que implica em</p>
+<p><span class="math display">\[\begin{align}P(O_{11}=x,O_{21}=c_1-x)&amp;={n_1 \choose x}p_1^x(1-p_1)^{n_1-x}{n_2 \choose c_1-x}p_2^{c_1-x}(1-p_2)^{n_2-c_1+x}\\&amp;={n_1\choose x}{n_2\choose c_1-x}\left[\left.\frac{p_1}{1-p_1}\right/\frac{p_2}{1-p_2}\right]^x p_2^{c_2}(1-p_2)^{n_2-c_1}\end{align}\]</span> Fazendo</p>
+<p><span class="math display">\[\phi=\left.\frac{p_1}{1-p_1}\right/\frac{p_2}{1-p_2},\]</span> teremos</p>
+<p><span class="math display">\[\begin{align}P(O_{11}=o_{11},O_{21}=c_1-x)&amp;={n_1 \choose o_{11}}p_1^{o_{11}}(1-p_1)^{n_1-x}{n_2 \choose c_1-{o_{11}}}p_2^{c_1-{o_{11}}}(1-p_2)^{n_2-c_1+{o_{11}}}\\&amp;={n_1\choose {o_{11}}}{n_2\choose c_1-{o_{11}}}\phi^{o_{11}} p_2^{c_1}(1-p_2)^{n_2-c_1}\end{align}\]</span></p>
+<p>A razão entre a probabilidade de sucesso e a de fracasso é denominada <strong>chance</strong>, enquanto que <span class="math inline">\(\phi\)</span> é denominada <strong>razão de chances</strong>. É importante notar que <span class="math inline">\(H_0\)</span> pode ser reescrita como <span class="math inline">\(H_0:\phi=1\)</span>.</p>
+<p>As estatísticas suficientes para <span class="math inline">\((\phi,p_2)\)</span> são <span class="math inline">\(O_{11},C_1\)</span>. Contudo, como <span class="math inline">\(C_1\sim\hbox{Binomial}(N,p_2)\)</span>, temos que ela é suficiente para <span class="math inline">\(p_2\)</span> e ancilar para <span class="math inline">\(\phi\)</span>. Deste modo, a distribuição de <span class="math inline">\({o_{11}}|C_1\)</span> não depende de <span class="math inline">\(p\)</span>. Explicitamente, temos</p>
+<p><span class="math display">\[
+\begin{align}
+P({O_{11}}=x|C_1=c_1)&amp;=\frac{P(X=x,C_1=c_1)}{{N \choose c_1}p_2^{c_1}(1-p_2)^{N-c_1} }=\frac{P(X=x,X+Y=c_1)}{{N \choose c_1}p_2^{c_1}(1-p_2)^{N-c_1} }\\&amp;=\frac{P(X=x,Y=c_1-x)}{{N \choose c_1}(1-p_2)^{c_1}p_2^{N-c_1} }=\frac{P(X=x)P(Y=c_1-x)}{{N \choose c_1}p_2^{c_1}(1-p_2)^{N-c_1} }\\&amp;=
+\frac{{n_1 \choose x}p_1^{x}(1-p_1)^{n_1-x}{n_2\choose c_1-x} p_2^{c_1-x}(1-p_2)^{n_2-c_1+x}}{ {N \choose c_1} p_2^{c_1}(1-p_2)^{N-c_1}}\\&amp;=
+\frac{{n_1 \choose x}{n_2 \choose c_1-x}}{{N \choose c_1}}\phi^x=\frac{{n_1 \choose x}{N-n_1 \choose c_1-x}}{{N \choose c_1}}\phi^x
+\end{align}
+\]</span> e, sob <span class="math inline">\(H_0\)</span>, <span class="math inline">\(O_{11}|C_1=c_1\sim\hbox{Hipergeométrica}(N,n_1,c_1)\)</span>.</p>
+<p>O <strong>teste exato de Fisher</strong> consiste em utilizar a estatística <span class="math inline">\(O_{11}\)</span> condicionada a <span class="math inline">\(C_1=c_1\)</span>. Valores elevados de <span class="math inline">\(O_{11}\)</span> dão suporte para <span class="math inline">\(H_1: p_1&gt;p_2\)</span>, enquanto que valores baixos dão suporte para <span class="math inline">\(H_1:p_1&lt;p_2\)</span>. A tabela abaixo resume as hipóteses que podem ser testadas e seus p-valores.</p>
+<div id="exm-" class="theorem example">
+<p><span class="theorem-title"><strong>Example 4.3</strong></span> Quatorze recém-graduados, 10 homens e 4 mulheres, todos igualmente qualificados, estão sendo designados pelo presidente de um banco aos seus novos cargos. 10 deles serão atendentes de caixas e 4 representantes de contas. A hipótese alternativa é a de que mulheres tem mais chance de conseguir a vaga mais desejada, que é a de representante de contas. A atribuição observada é dada abaixo:</p>
+<p><span class="math display">\[\begin{array}{c|cc|c}\hline
+             &amp; \hbox{Representante de contas}&amp; \hbox{Atendente de caixa} &amp; \hbox{Total} \\ \hline
+           \hbox{Mulher}   &amp; 3 &amp; 1 &amp; 4 \\
+           \hbox{Homem}  &amp; 1 &amp; 9 &amp; 10\\ \hline
+           \hbox{Total} &amp;4 &amp; 10 &amp; 14\\ \hline
+        \end{array}\]</span></p>
+<p>Após a atribuição, apenas 1 mulher ficou com uma vaga de caixa. Existem evidências para rejeitar a hipótese nula?</p>
+<p>Sob a hipótese nula, temos que <span class="math inline">\(O_{11}|C_1=4\sim\hbox{Hipergeométrica}(14,4,4)\)</span>. Como <span class="math inline">\(o_{11}=3\)</span>, logo</p>
+<p><span class="math display">\[\hbox{p-valor}=P(O_{11}\geq 3|C_1=4)=0,0409\]</span> o que nos leva a rejeitar a hipótese nula, oou seja, há evidências de que as mulheres tem maiores chances de obter essa vaga.</p>
+<p>No <code>R</code>, podemos obter esse <span class="math inline">\(p\)</span>-valor com o comando</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># phyper( o11, n1, n2, c1 )  calcula P(O11 &lt;= o11)</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co"># phyper( o11-1, n1, n2, c1 ) calcula P(O11 &gt; o11)</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">phyper</span>(<span class="dv">2</span>, <span class="dv">4</span>,<span class="dv">10</span>, <span class="dv">4</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.04095904</code></pre>
+</div>
+</div>
+<p>ou, preferivelmente, utilizando a função <code>fisher.test</code>:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>tabela <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">9</span>), <span class="dv">2</span>,<span class="dv">2</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dimnames</span>(tabela) <span class="ot">&lt;-</span> <span class="fu">list</span>( <span class="at">Genero =</span> <span class="fu">c</span>(<span class="st">'Mulher'</span>,<span class="st">'Homem'</span>), <span class="at">Vaga =</span> <span class="fu">c</span>(<span class="st">'Rep. cont'</span>, <span class="st">'Atend caixa'</span>))</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>tabela</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        Vaga
+Genero   Rep. cont Atend caixa
+  Mulher         3           1
+  Homem          1           9</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fisher.test</span>(tabela, <span class="at">alternative =</span> <span class="st">'greater'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Fisher's Exact Test for Count Data
+
+data:  tabela
+p-value = 0.04096
+alternative hypothesis: true odds ratio is greater than 1
+95 percent confidence interval:
+ 1.113916      Inf
+sample estimates:
+odds ratio 
+   18.0326 </code></pre>
+</div>
+</div>
+<div id="exr-" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 4.4</strong></span> O Nascimento dos Ensaios Clínicos (James Lind, 1747)</p>
+<p>James Lind selecionou 12 marinheiros com escorbuto severo a bordo do navio HMS Salisbury. Ele os dividiu em 6 grupos de dois, mantendo a dieta básica igual para todos, mas adicionando um suplemento diferente para cada par (vinagre, água do mar, cidra, ácido sulfúrico diluído, uma pasta de ervas ou laranjas/limões).</p>
+<p>Devido ao custo, apenas o grupo que recebeu laranjas e limões mostrou uma recuperação dramática e rápida (um marinheiro voltou ao serviço em 6 dias, o outro quase totalmente recuperado). Para fins estatísticos, vamos comparar o grupo dos Cítricos contra todos os outros 10 marinheiros que receberam os demais tratamentos (agregados aqui como “Outros Tratamentos”).</p>
+<p><span class="math display">\[\begin{array}{c|cc|c}\hline\text{Tratamento} &amp; \text{Recuperado} &amp; \text{Não Recuperado} &amp; \text{Total} \\ \hline\text{Cítricos (Laranja/Limão)} &amp; 2 &amp; 0 &amp; 2 \\\text{Outros Tratamentos} &amp; 0 &amp; 10 &amp; 10 \\ \hline\text{Total} &amp; 2 &amp; 10 &amp; 12 \\ \hline\end{array}\]</span></p>
+<ol type="1">
+<li><p>Verifique se a aproximação do teste Qui-quadrado é válida para esse problema.</p></li>
+<li><p>Calcule o Teste Exato de Fisher para a hipótese unilateral de que os cítricos aumentam a chance de recuperação (<span class="math inline">\(H_1: p_{cítrico} &gt; p_{outros}\)</span>). Interprete o resultado.</p></li>
+</ol>
+</div>
+<div id="exer-">
+<p><strong>O Paradoxo de Admissões em Berkeley (Bickel et al., 1975)</strong></p>
+<p>Em 1973, a Universidade de California, Berkeley, foi suspeita de discriminação de gênero em suas admissões de pós-graduação. Os dados agregados dos seis maiores departamentos mostravam uma disparidade óbvia.</p>
+<p>Considere a tabela de contingência abaixo, que resume o total de candidatos e admitidos por gênero:</p>
+<p><span class="math display">\[\begin{array}{c|cc|c}\hline &amp; \hbox{Admitido} &amp; \hbox{Não Admitido} &amp; \hbox{Total} \\ \hline\hbox{Homens} &amp; 3738 &amp; 4704 &amp; 8442 \\ \hbox{Mulheres} &amp; 1494 &amp; 2827 &amp; 4321 \\ \hline\hbox{Total} &amp; 5232 &amp; 7531 &amp; 12763 \\ \hline\end{array}\]</span></p>
+<ol type="1">
+<li>Existe evidência estatística de viés contra as mulheres nesta visão agregada?</li>
+</ol>
+<p>Para entender a origem da disparidade, foram analisados os departamentos separadamente. Abaixo, contrastamos o Departamento A (Engenharia), com alta oferta de vagas, e o Departamento F (Ciências Sociais), altamente seletivo.</p>
+<p>Departamento A (Engenharia Mecânica): <span class="math display">\[\begin{array}{c|cc|c}\hline
+\text{Gênero} &amp; \text{Admitido} &amp; \text{Não Admitido} &amp; \text{Total} \\ \hline
+\text{Homens} &amp; 512 &amp; 313 &amp; 825 \\
+\text{Mulheres} &amp; 89 &amp; 19 &amp; 108 \\ \hline
+\end{array}\]</span></p>
+<p>Departamento F (Ciências Sociais/Humanas): <span class="math display">\[\begin{array}{c|cc|c}\hline
+\text{Gênero} &amp; \text{Admitido} &amp; \text{Não Admitido} &amp; \text{Total} \\ \hline
+\text{Homens} &amp; 22 &amp; 250 &amp; 272 \\
+\text{Mulheres} &amp; 24 &amp; 317 &amp; 341 \\ \hline
+\end{array}\]</span></p>
+<ol start="2" type="1">
+<li><p>Existe evidência estatística de viés contra as mulheres quando realizamos a análise por departamento?</p></li>
+<li><p>Explique como a escolha da variável de controle (Departamento) altera a conclusão sobre a existência de viés.</p></li>
+</ol>
+</div>
 <section id="teste-de-qui-quadrado-de-cochran-mantel-haenszel" class="level2" data-number="4.4">
 <h2 data-number="4.4" class="anchored" data-anchor-id="teste-de-qui-quadrado-de-cochran-mantel-haenszel"><span class="header-section-number">4.4</span> Teste de Qui-quadrado de Cochran-Mantel-Haenszel</h2>
 <pre><code> \begin{block}{Dados}
