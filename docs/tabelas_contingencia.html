@@ -224,6 +224,13 @@ window.Quarto = {
   <li><a href="#introdução" id="toc-introdução" class="nav-link active" data-scroll-target="#introdução"><span class="header-section-number">4.1</span> Introdução</a></li>
   <li><a href="#o-teste-qui-quadrado-para-diferenças-entre-probabilidades-em-tabelas-2times-2" id="toc-o-teste-qui-quadrado-para-diferenças-entre-probabilidades-em-tabelas-2times-2" class="nav-link" data-scroll-target="#o-teste-qui-quadrado-para-diferenças-entre-probabilidades-em-tabelas-2times-2"><span class="header-section-number">4.2</span> O Teste Qui-quadrado para diferenças entre probabilidades em tabelas 2<span class="math inline">\(\times 2\)</span></a></li>
   <li><a href="#o-teste-exato-de-fisher" id="toc-o-teste-exato-de-fisher" class="nav-link" data-scroll-target="#o-teste-exato-de-fisher"><span class="header-section-number">4.3</span> O Teste Exato de Fisher</a></li>
+  <li><a href="#o-teste-de-cochran-mantel-haenszel-e-o-teste-de-breslow-day" id="toc-o-teste-de-cochran-mantel-haenszel-e-o-teste-de-breslow-day" class="nav-link" data-scroll-target="#o-teste-de-cochran-mantel-haenszel-e-o-teste-de-breslow-day"><span class="header-section-number">4.4</span> O teste de Cochran-Mantel-Haenszel e o teste de Breslow-Day</a></li>
+  <li><a href="#o-teste-qui-quadrado-para-diferenças-entre-probabilidades" id="toc-o-teste-qui-quadrado-para-diferenças-entre-probabilidades" class="nav-link" data-scroll-target="#o-teste-qui-quadrado-para-diferenças-entre-probabilidades"><span class="header-section-number">4.5</span> O Teste Qui-quadrado para diferenças entre probabilidades}</a></li>
+  <li><a href="#o-teste-qui-quadrado-para-independência" id="toc-o-teste-qui-quadrado-para-independência" class="nav-link" data-scroll-target="#o-teste-qui-quadrado-para-independência"><span class="header-section-number">4.6</span> O Teste Qui-quadrado para independência</a></li>
+  <li><a href="#o-teste-da-mediana" id="toc-o-teste-da-mediana" class="nav-link" data-scroll-target="#o-teste-da-mediana"><span class="header-section-number">4.7</span> O Teste da mediana</a></li>
+  <li><a href="#medidas-de-dependência" id="toc-medidas-de-dependência" class="nav-link" data-scroll-target="#medidas-de-dependência"><span class="header-section-number">4.8</span> Medidas de dependência</a></li>
+  <li><a href="#o-teste-qui-quadrado-para-aderência-bondade-de-ajuste" id="toc-o-teste-qui-quadrado-para-aderência-bondade-de-ajuste" class="nav-link" data-scroll-target="#o-teste-qui-quadrado-para-aderência-bondade-de-ajuste"><span class="header-section-number">4.9</span> O teste Qui-quadrado para aderência (bondade de ajuste)</a></li>
+  <li><a href="#o-teste-de-cochran-para-observações-relacionadas" id="toc-o-teste-de-cochran-para-observações-relacionadas" class="nav-link" data-scroll-target="#o-teste-de-cochran-para-observações-relacionadas"><span class="header-section-number">4.10</span> O teste de Cochran para observações relacionadas</a></li>
   </ul>
 </nav>
     </div>
@@ -585,6 +592,7 @@ odds ratio
    18.0326 </code></pre>
 </div>
 </div>
+</div>
 <div id="exr-" class="theorem exercise">
 <p><span class="theorem-title"><strong>Exercise 4.4</strong></span> O Nascimento dos Ensaios Clínicos (James Lind, 1747)</p>
 <p>James Lind selecionou 12 marinheiros com escorbuto severo a bordo do navio HMS Salisbury. Ele os dividiu em 6 grupos de dois, mantendo a dieta básica igual para todos, mas adicionando um suplemento diferente para cada par (vinagre, água do mar, cidra, ácido sulfúrico diluído, uma pasta de ervas ou laranjas/limões).</p>
@@ -619,25 +627,212 @@ odds ratio
 <li><p>Explique como a escolha da variável de controle (Departamento) altera a conclusão sobre a existência de viés.</p></li>
 </ol>
 </div>
-<section id="teste-de-qui-quadrado-de-cochran-mantel-haenszel" class="level2" data-number="4.4">
-<h2 data-number="4.4" class="anchored" data-anchor-id="teste-de-qui-quadrado-de-cochran-mantel-haenszel"><span class="header-section-number">4.4</span> Teste de Qui-quadrado de Cochran-Mantel-Haenszel</h2>
-<pre><code> \begin{block}{Dados}
-Os dados estão organizados em $k$s tabelas $2\times 2$, cada uma com totais de linhas e colunas fixados (não aleatórios). A $i$-ésima tabela é da forma
+<div class="alert alert-success">
+<p><strong>Mais sobre chances e razão de chances</strong></p>
+<p>Seja <span class="math inline">\(X\sim\hbox{Bernoulli}(p)\)</span>. A chance (<em>odd</em>) é dada por</p>
+<p><span class="math display">\[\eta=\frac{p}{1-p}.\]</span> Se <span class="math inline">\(p=0,2\)</span>, a chance é dada por</p>
+<p><span class="math display">\[\eta=\frac{0,2}{0,8}=\frac{1}{4}\]</span> Em alguns meios, como em casas de apostas, essa chance é reportada como 1 para 4, sendo interpretada como 1 caso favorável para cada 4 desfavoráveis. É evidente que</p>
+<p><span class="math display">\[\eta \leq 1 \Leftrightarrow p\leq \frac{1}{2}.\]</span></p>
+<p>Observe que o modelo Bernoulli pode ser reparametrizado como função da chance <span class="math display">\[P(X=x)=p^x(1-p)^{1-x}=\left[\frac{p}{1-p}\right]^x(1-p)=\eta^x\left[\frac{\eta}{1+\eta}\right]\]</span> Agora, sejam <span class="math inline">\(X\)</span> e <span class="math inline">\(Y\)</span> variáveis aleatórias independentes com distribuição Bernoulli e chances <span class="math inline">\(\eta_1\)</span> e <span class="math inline">\(\eta_2\)</span> respectivamente. Conforme vimos no desenvolvimento do teste exato de Fisher, temos que <span class="math display">\[P(X=x,Y=y)=\left[\frac{\eta_1}{\eta_2}\right]^{x-y}\frac{\eta_1\eta_2}{[1+\eta_1][1+\eta_2]}\]</span> Deste modo, a estatística <span class="math inline">\(X-Y\)</span> é suficiente para a razão <span class="math inline">\(\eta_1/\eta_2\)</span>. A razão de chances (<em>odds ratio</em>) é dada por <span class="math display">\[\phi=\frac{\eta_1}{\eta_2}\]</span> e, se <span class="math inline">\(\phi=1\)</span>, <span class="math inline">\(X\)</span> e <span class="math inline">\(Y\)</span> são identicamente distribuídos. Se <span class="math inline">\(\phi&gt;1\)</span>, então <span class="math inline">\(\eta_1&gt;\eta_2\)</span>, então as chances de <span class="math inline">\(X\)</span> são maiores que as de <span class="math inline">\(Y\)</span>. Por exemplo, considere que <span class="math inline">\(X\sim\hbox{Bernoulli}(1/5)\)</span> e <span class="math inline">\(Y\hbox{Beroulli}(1/9)\)</span>. Então:</p>
+<ul>
+<li><p>Chances: <span class="math inline">\(\eta_1=1/4\)</span> (1 para 4) e <span class="math inline">\(eta_2=1/8\)</span> (1 para 8)</p></li>
+<li><p>Razão de chances: <span class="math inline">\(\phi=(1/4)/(1/8)=2\)</span>. Interpretação: a chance de <span class="math inline">\(X\)</span> é duas vezes maior que a de <span class="math inline">\(Y\)</span>.</p></li>
+</ul>
+<p>Para uma tabela de dupla entrada do tipo</p>
+<p><span class="math display">\[\begin{array}{c|cc|c}\hline
+             &amp; \hbox{Classe 1}&amp; \hbox{Classe 2} &amp; \hbox{Total} \\ \hline
+           \hbox{Amostra 1 } (X)  &amp; O_{11} &amp; O_{12} &amp; n_1\\
+           \hbox{Amostra 2 } (Y)  &amp; O_{21} &amp; O_{22} &amp; n_2 \\ \hline
+           \hbox{Total} &amp;C_1 &amp; C_2 &amp; N\\
+        \end{array}\]</span></p>
+<p>Temos que a chance da Classe 1 para <span class="math inline">\(X\)</span> é estimada por</p>
+<p><span class="math display">\[\hat{\eta}_1=\frac{O_{11}/n_1}{O_{12}/n_1}=\frac{O_{11}}{O_{12}}\]</span> e a mesma chance para <span class="math inline">\(Y\)</span> é estimada por <span class="math inline">\(\hat{\eta}_2=O_{21}/O_{22}\)</span>. Portanto, pelo princípio da substituição, a razão de chances é estimada por</p>
+<p><span class="math display">\[\hat{\phi}=\frac{O_{11}O_{22}}{O_{12}O_{21}}.\]</span></p>
+</div>
+<div id="exr-" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 4.5</strong></span> Um estudo epidemiológico em Manaus investigou a relação entre o uso regular de repelente e a infecção por Dengue durante uma semana de alta transmissão. Os dados observados foram:</p>
+<p><span class="math display">\[\begin{array}{c|cc|c}\hline&amp; \text{Teve Dengue} &amp; \text{Não teve Dengue} &amp; \text{Total} \\ \hline\text{Uso Regular} &amp; 15 &amp; 85 &amp; 100 \\\text{Não Usou} &amp; 45 &amp; 55 &amp; 100 \\ \hline\text{Total} &amp; 60 &amp; 140 &amp; 200 \\ \hline\end{array}\]</span></p>
+<ol type="1">
+<li>Calcule a chance (<span class="math inline">\(\eta_1\)</span>) de ter Dengue no grupo que usou repelente e a chance (<span class="math inline">\(\eta_2\)</span>) no grupo que não usou.</li>
+</ol>
+<p>2 Calcule a estimativa da razão de chances <span class="math inline">\(\hat{\phi}\)</span>. O repelente agiu como um fator de proteção ou de risco?</p>
+<ol start="3" type="1">
+<li>Teste a hipótese de que o repelente agiu como um fator de proteção.</li>
+</ol>
+</div>
+<div class="alert alert-success">
+<p><strong>P-valores aproximados</strong></p>
+<p>Seja <span class="math inline">\(O_{11}\)</span> a estatística do teste exato de Fisher. Sabemos que, sob <span class="math inline">\(H_0\)</span>, <span class="math inline">\(O_{11}|C_1=c_1\sim\hbox{Hipergeométrica}(N,n_1,c_1)\)</span>. Deste modo, fazendo,</p>
+<p><span class="math display">\[\begin{align}Z&amp;=\frac{O_{11}-E(O_{11}|C_1=c_1)}{\sqrt{Var(O_{11}|C_1=c_1)}}=\frac{O_{11}-\frac{c_1n_1}{N}}{\sqrt{\frac{c_1c_2n_1n_2}{N^2(N-1)}}}\end{align}\]</span> teremos que <span class="math inline">\(Z\stackrel{D}{\to}N(0,1)\)</span>. O poder computacional atual permite que o teste exato de Fisher seja calculado para tamanhos de amostra elevado. Contudo, esse cálculo é relevante para entender como certas estatísticas de outros testes surgem, como o teste de Cochram-Mantel-Haenzel, dado na próxima seção.</p>
+</div>
+</section>
+<section id="o-teste-de-cochran-mantel-haenszel-e-o-teste-de-breslow-day" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="o-teste-de-cochran-mantel-haenszel-e-o-teste-de-breslow-day"><span class="header-section-number">4.4</span> O teste de Cochran-Mantel-Haenszel e o teste de Breslow-Day</h2>
+<p>Considere uma variável categória assumindo os valores <span class="math inline">\(1,\ldots,K\)</span>. Considere que, para <span class="math inline">\(k\)</span>, as amostras aleatórias <span class="math inline">\(X_{k,1},\ldots,X_{k,n_{1k}}\)</span> e <span class="math inline">\(Y_{k,1},\ldots,Y_{k,n_{2k}}\)</span> são independentes entre si e podem assumir duas classes. A primeira variável, com <span class="math inline">\(K\)</span> categorias, é denominada <strong>estrato</strong> e os dados podem ser organizados em uma tabela de contingência <span class="math inline">\(K\times 2\times 2\)</span>, como a dada abaixo:</p>
+<p><span class="math display">\[\begin{array}{c|c|cc|c}\hline
+    \hbox{Estrato}         &amp;\hbox{Amostra}&amp; \hbox{Classe }1&amp; \hbox{Classe 2} &amp; \hbox{Total} \\ \hline
+          1 &amp; X  &amp; o_{11,1} &amp; o_{12,1} &amp; n_{1,1}\\
+           &amp; Y  &amp; o_{21,1} &amp; o_{22,1} &amp; n_{2,1} \\ \hline
+           \vdots &amp; \vdots &amp; \vdots &amp; \vdots\\  \hline
+           K &amp; X  &amp; o_{11,K} &amp; o_{12,K} &amp; n_{1,K}\\
+           &amp; Y  &amp; o_{21,K} &amp; o_{22,K} &amp; n_{2,K} \\ \hline
+\end{array}\]</span></p>
+<p>Para cada estrato, considere a tabela <span class="math inline">\(2\times 2\)</span> resultante. Considerando que as marginais são fixas, sabemos que</p>
+<p><span class="math display">\[P(O_{11,i}=x|C_{1,i}=c_{1,i})=\frac{ {n_i\choose x}{N_i-n_{1,i}\choose  c_{1,i}-x} }{{N_i\choose c_{1,i} }\phi_i^x,\]</span> onde <span class="math inline">\(c_{1,i}=o_{11,i}+o_{21,i}\)</span>, <span class="math inline">\(N_i=n_{1,i}+n_{2,i}\)</span> e <span class="math inline">\(\phi_i\)</span> é a razão de chances da probabilidade da Classe 1 entre as amostras <span class="math inline">\(X\)</span> e <span class="math inline">\(Y\)</span> dentro do estrato <span class="math inline">\(i\)</span>.</p>
+<p>Vamos discutir primeiramente o Cochran-Mantel-Haenszel (CMH). Nesse teste, supõe-se que, condicionado aos estratos, as razões de chances são iguais. Essa suposição é conhecida como <strong>homogeneidade das razões de chance</strong>. É importante ressaltar que os estratos podem ter diferentes probabilidades para as classes dentro de cada amostra. Considere a tabela abaixo:</p>
+<p><span class="math display">\[\begin{array}{c|c|cc|c}\hline
+    \hbox{Estrato}         &amp;\hbox{Amostra}&amp; \hbox{Classe }1&amp; \hbox{Classe 2} &amp; \hbox{Total} \\ \hline
+          1 &amp; X  &amp; 80 &amp; 80 &amp; 160\\
+           &amp; Y  &amp; 10 &amp; 20 &amp; 30 \\ \hline
+           2 &amp; X  &amp; 120 &amp; 90 &amp; 210\\
+           &amp; Y  &amp; 20 &amp; 30 &amp; 50 \\ \hline
+\end{array}\]</span></p>
+<p>Para o primeiro estrato, temos que a probabilidade de Classe 1 para a amostra <span class="math inline">\(X\)</span> é estimada por <span class="math inline">\(80/160=1/2\)</span>, enquanto para o estrato 2 essa mesma probabilidade é <span class="math inline">\(120/210=4/7\)</span>. Contudo, a razão de chances dentro de cada estrato é 2. Isso implica que a chance da amostra <span class="math inline">\(X\)</span> é 2 vezes maior que a da <span class="math inline">\(Y\)</span>. Para entender esse fenômeno, basta lembrar que, para o estrato <span class="math inline">\(k\)</span>, a tabela <span class="math inline">\(2\times 2\)</span> resultante é governada por</p>
+<p><span class="math display">\[\begin{align}P(O_{11,k}=o_{11,k},O_{21,i}=c_{1,k}-x)={n_{1,k}\choose {o_{11,k}}}{n_{2,k}\choose c_{1,k}-{o_{11,k}}}\phi_k^{o_{11}} p_{2,k}^{c_{1,k}}(1-p_{2,k})^{n_{2,k}-c_{1,k}}.\end{align}\]</span> Portanto, mesmo que <span class="math inline">\(\phi_k=\phi_{k'}\)</span>, é possível que <span class="math inline">\(p_{2,k}\neq p_{2,k'}\)</span>.</p>
+<p>A hipótese nula do CMH é <span class="math display">\[H_0:\phi_1=\cdots=\phi_K=1.\]</span> Em caso contrário, como a homogeneidade é assumida ser verdadeira, teremos que</p>
+<p><span class="math display">\[H_1:\phi_1=\cdots=\phi_K=\phi\neq 1\]</span></p>
+<p>Sob a hipótese nula, <span class="math inline">\(O_{11,1},\ldots,O_{11,K}\)</span> são indepentendes com <span class="math inline">\(O_{11,k}|C_{1,k}=c_{1,k}\sim\)</span> Hipergemétrica(<span class="math inline">\(N_k,n_{1,k},c_{1,k}\)</span>). Deste modo, pelo TCL, a estatística</p>
+<p><span class="math display">\[T=\frac{\sum_{k=1}^K O_{11,k}-\sum_{k=1}^K \frac{n_{1,k}c_{1,k} }{N_k}}{\sqrt{\sum_{k=1}^K\frac{n_{1,k}n_{2,k}c_{1,k}c_{2,k}}{N_k^2(N_k-1)}}}\]</span> tem distribuição aproximadamente normal quando <span class="math inline">\(H_0\)</span> é verdadeira, ou ainda <span class="math inline">\(T^2\sim\chi^2_1\)</span>. O p-valor deste teste é dado por <span class="math inline">\(P(T^2&gt;t^2_{obs})\)</span>.</p>
+<p>Ao rejeitar a hipótese nula, a razão de chances para os dados é estimada por</p>
+<p><span class="math display">\[\hat{\phi}_{CMH}=\frac{\sum_{k=1}^KO_{11,k}O_{22,k}/N_k}{\sum_{k=1}^KO_{12,k}O_{21,k}/N_k}.\]</span></p>
+<div id="exm-" class="theorem example">
+<p><span class="theorem-title"><strong>Example 4.4</strong></span> Um tratamento experimental foi administrado em pacientes com câncer em três hospitais com o objetivo de verificar se há o aumento na taxa de sucesso. Os números de sucessos e fracassos estão registrados abaixo</p>
+$$
+<span class="math display">\[\begin{array}{c|c|cc|c}\hline
+    \hbox{Hospital}         &amp;\hbox{Grupo}&amp; \hbox{Sucesso}&amp; \hbox{Fracasso} &amp; \hbox{Total} \\ \hline
+          1 &amp; \hbox{Tratamento}  &amp; 10 &amp; 1 &amp; 11\\
+           &amp; \hbox{Controle}     &amp; 12 &amp; 1 &amp; 13 \\ \hline
+          2 &amp; \hbox{Tratamento}  &amp; 9 &amp; 0 &amp; 9\\
+           &amp; \hbox{Controle}     &amp; 11 &amp; 1 &amp; 12 \\ \hline
+        3 &amp; \hbox{Tratamento}    &amp; 8 &amp; 0 &amp; 8\\
+           &amp; \hbox{Controle}     &amp; 7 &amp; 3 &amp; 10 \\ \hline
 
-\begin{table}[]
-    \centering
-    \begin{tabular}{c|cc|c}\hline
-         &amp; Coluna 1&amp; Coluna 2 &amp; Total \\ \hline
-       Linha 1  &amp; $x_i$ &amp; $r_i-x_i$ &amp; $r_i$\\
-       Linha 2  &amp; $c_i-x_i$ &amp; $N_i-r_i-c_i+x_i$ &amp; $N_i-r_i$ \\ \hline
-       Total &amp; $c_i$ &amp; $N_i-c_i$ &amp; $N_i$\\  \hline
-    \end{tabular}
-\end{table}
+\end{array}\]</span>
+<p>$$</p>
+<p>Aqui, o hospital é a variável de estrato, mesmo que a probabildiade de sucesso varie entre hospitais, supomos que a razão de chances entre os grupos é constante (suposição de homogeneidade). Vamos realizar o teste CMH.</p>
+<ul>
+<li><span class="math inline">\(\sum_{k=1}^{3}o_{11,k}=10+9+8=27\)</span></li>
+<li><span class="math inline">\(\sum_{k=1}^3\frac{n_{1,k}c_{1,k}}{N_k}=\frac{11\cdot 22}{24}+\frac{9\cdot 20}{21}+\frac{8\cdot15}{18}=25,32\)</span>
+<ul>
+<li><span class="math inline">\(\sum_{k=1}^3\frac{n_{1,k}n_{2,k}c_{1,k}c_{2,k}}{N_k^2(N_k-1)}=\frac{11\cdot 13\cdot 22\cdot 2}{24^2\cdot 23}+\frac{9\cdot 12\cdot 20\cdot 1}{21^2\cdot 20}+\frac{8\cdot 10\cdot 15\cdot 3}{18^2\cdot 17}=1,37\)</span></li>
+</ul></li>
+</ul>
+<p>logo,</p>
+<p><span class="math display">\[t^2=\frac{(27-25,32)^2}{1,37}=2,06\]</span> e o p-valor deste teste é</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pchisq</span>(<span class="fl">2.06</span>,<span class="dv">1</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1512102</code></pre>
+</div>
+</div>
+<p>logo, após controlar pelo efeito do hospital, não há evidência estatística significativa de que o tratamento seja superior ao controle.</p>
+</div>
+<p>O gráfico de mosaico é uma ferramenta útil para verificar a hipótese de homogeneidade da razão de chances. Para tanto, utilizamos um gráfico de mosaico em painéis (ou condicional). Nesse gráfico, um moisaico é feito para cada estrato. Deste modo, podemos verificar visualmente o deslocamento da probabilidade de sucesso. Comportamentos extremos, como degraus muito diferentes ou escadas em sentido contrário nos ajudam a suspeitar da hipótese de homogeneidade.</p>
+<div id="exm-" class="theorem example">
+<p><span class="theorem-title"><strong>Example 4.5</strong></span> Abaixo, apresentamos o gráfico de mosaico em painéis por estrato para os dados do exemplo anterior. O hospital 1 indica uma razão de chances próxima de 1. Já para os hospitais 2 e 3 probabiliade de sucesso no grupo de tratamento parece ser maior que no controle.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>dados <span class="ot">&lt;-</span> <span class="fu">array</span>( <span class="cn">NA_real_</span>,  <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">3</span>))</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>dados[,,<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">matrix</span>( <span class="fu">c</span>(<span class="dv">10</span>,<span class="dv">12</span>,<span class="dv">1</span>,<span class="dv">1</span>), <span class="dv">2</span>,<span class="dv">2</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>dados[,,<span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="fu">matrix</span>( <span class="fu">c</span>(<span class="dv">9</span>,<span class="dv">11</span>,<span class="dv">0</span>,<span class="dv">1</span>), <span class="dv">2</span>,<span class="dv">2</span>)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>dados[,,<span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="fu">matrix</span>( <span class="fu">c</span>(<span class="dv">8</span>,<span class="dv">7</span>,<span class="dv">0</span>,<span class="dv">3</span>), <span class="dv">2</span>,<span class="dv">2</span>)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="fu">dimnames</span>(dados) <span class="ot">&lt;-</span> <span class="fu">list</span>( <span class="at">Grupo =</span> <span class="fu">c</span>(<span class="st">'Tratamento'</span>,<span class="st">'Controle'</span>), </span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>                         <span class="at">Desfecho =</span> <span class="fu">c</span>(<span class="st">'Suc.'</span>,<span class="st">'Frac.'</span>),</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>                         <span class="at">Hospital =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>))</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>dados</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>, , Hospital = 1
 
-Além disso, cada tabela é obtida de um experimento independente dos demais.
-\end{block}
- </code></pre>
-<p>\end{frame}</p>
+            Desfecho
+Grupo        Suc. Frac.
+  Tratamento   10     1
+  Controle     12     1
+
+, , Hospital = 2
+
+            Desfecho
+Grupo        Suc. Frac.
+  Tratamento    9     0
+  Controle     11     1
+
+, , Hospital = 3
+
+            Desfecho
+Grupo        Suc. Frac.
+  Tratamento    8     0
+  Controle      7     3</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(vcd)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cotabplot</span>(dados)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="tabelas_contingencia_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<p>O exemplo acima mostra que a suposição de homogeneidade pode não ser tão trivialmente aceita. Portanto, antes de realizar o teste CMH, recomenda-se testar a homogeneidade das razões de chances através do teste de Breslow-Day, cuja hipótese nula é</p>
+<p><span class="math display">\[H_0:\phi_1=\cdots=\phi_K=\hat{\phi}_{CMH}.\]</span> e a alternativa <span class="math display">\[H_1:\hbox{pelo menos uma razão de chances é diferente}.\]</span></p>
+<p>Para um nível de significância <span class="math inline">\(\alpha\)</span>, o teste de Breslow-Day tem as seguintes implicações:</p>
+<ul>
+<li><p>Se <span class="math inline">\(p\text{-valor} &lt; \alpha\)</span>: Rejeitamos a homogeneidade. Concluímos que a razão de chances varia entre os estratos. O uso de um valor único (<span class="math inline">\(\hat{\phi}_{CMH}\)</span>) é estatisticamente inadequado e o teste CMH pode ser enganoso.</p></li>
+<li><p>Se <span class="math inline">\(p\text{-valor} \geq \alpha\)</span>: Falhamos em rejeitar a homogeneidade. A suposição de um efeito comum é estatisticamente aceitável, validando a aplicação subsequente do teste CMH.</p></li>
+</ul>
+<div class="{exm-}">
+<p>Vamos concluir o exemplo dado no começo dessa seção. Primeiro, devemos testar se as razões de chances são homogêneas:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages('DescTools')</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(DescTools)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Carregando pacotes exigidos: DescTools</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: pacote 'DescTools' foi compilado no R versão 4.5.3</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">BreslowDayTest</span>(dados)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Breslow-Day test on Homogeneity of Odds Ratios
+
+data:  dados
+X-squared = 2.4543, df = 2, p-value = 0.2931</code></pre>
+</div>
+</div>
+<p>O teste não dá evidências contra a hipótese de homogeneidade das razões de chances. Vamos então realizar o teste CMH (agora no <code>R</code>):</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mantelhaen.test</span>(dados)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Mantel-Haenszel chi-squared test with continuity correction
+
+data:  dados
+Mantel-Haenszel X-squared = 1.0114, df = 1, p-value = 0.3146
+alternative hypothesis: true common odds ratio is not equal to 1
+95 percent confidence interval:
+  0.5005156 37.9302749
+sample estimates:
+common odds ratio 
+         4.357143 </code></pre>
+</div>
+</div>
+<p>Portanto, o teste não dá evidências contra a hipótese nula (observação: o p-valor é diferente do obtido pois no <code>R</code> é aplicada uma correção de continuidade);</p>
+</div>
+<div id="exr-" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 4.6</strong></span> A poliomielite paralítica (paralisia infantil) é uma doença viral aguda que afeta o sistema nervoso, causando paralisia, geralmente nos membros inferiores, podendo ser permanente. O estudo de campo da vacina Salk em 1954 contra a poliomielite paralítica foi um dos maiores experimentos científicos da história. Considere os dados deste exeprimento, com a faixa etária atuando como estrato.</p>
+<p><span class="math display">\[\begin{array}{c|c|cc|c}
+\hline
+\hbox{Faixa etária}&amp;\text{Grupo} &amp; \text{Paralisia} &amp; \text{Sem Paralisia} &amp; \text{Total} \\ \hline
+\hbox{0 a 4 anos}&amp;\text{Vacinados} &amp; 10 &amp; 19.990 &amp; 20.000 \\
+&amp;\text{Controle} &amp; 45 &amp; 19.955 &amp; 20.000 \\ \hline
+\hbox{5 a 9 anos}&amp;\text{Vacinados} &amp; 8 &amp; 24.992 &amp; 25.000 \\
+&amp;\text{Controle} &amp; 60 &amp; 24.940 &amp; 25.000 \\ \hline
+\hbox{10 a 14 anos}&amp;\text{Vacinados} &amp; 2 &amp; 14.998 &amp; 15.000 \\
+&amp;\text{Controle} &amp; 15 &amp; 14.985 &amp; 15.000 \\ \hline
+\end{array}\]</span></p>
+<p>Para fins didáticos, considere que o teste de Breslow-Day já foi aplicado, gerando um p-valor de 0,5233. Realize o teste Cochran-Mantel-Haenszel, para determinar se a vacina é benéfica.</p>
+</div>
 <p>%=========================================================== % Aula 9 %===========================================================</p>
 </section>
 <section id="o-teste-qui-quadrado-para-diferenças-entre-probabilidades" class="level2" data-number="4.5">
@@ -667,8 +862,6 @@ Além disso, cada tabela é obtida de um experimento independente dos demais.
 <p>%=========================================================== % Aula 14 %===========================================================</p>
 
 
-</section>
-</div>
 </section>
 
 </main> <!-- /main -->
