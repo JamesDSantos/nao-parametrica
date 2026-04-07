@@ -633,3 +633,119 @@ $$\begin{array}{c|cccccccccccc}\hline
 \end{array}$$
 :::
 
+##  O teste de Cochran para observações relacionadas (escrevendo...)
+    
+Considere que cada um dos $c$ tratamentos são administrados em $r$ indivíduos (ou blocos) e o resultado de cada tratamento é registrado como 1 se houve sucesso ou 0 em caso contrário. Seja $X_{ij}$ a variável indicado de sucesso para o indivíduo $i$ no tratamento $j$. Os dados são organizados do seguinte modo:
+    \begin{table}[]
+        \centering
+        \begin{tabular}{c|cccc|c}\hline
+               & \multicolumn{4}{c|}{Tratamentos} &  \\
+        Blocos & 1 & 2 & $\cdots$ &  $c$ & Total  \\ \hline
+        1 & $X_{11}$ & $X_{12}$ & $\cdots$ & $X_{1c}$ & $R_1$ \\
+        2 & $X_{21}$ & $X_{22}$ & $\cdots$ & $X_{2c}$ & $R_2$ \\
+        $\cdots$  & $\cdots$ & $\cdots$ & $\cdots$ & $\cdots$ & $\cdots$ \\
+        $r$ & $X_{r1}$ & $X_{r2}$ & $\cdots$ & $X_{rc}$ & $R_r$ \\ \hline
+        Total & $C_1$ & $C_{2}$ & $\cdots$ & $C_{c}$ & $N$ \\ \hline
+        \end{tabular}
+        
+        \label{tab:my_label}
+    \end{table}
+    Os indivíduos (blocos) são considerados independentes entre si. 
+ \end{block}
+\end{frame}
+
+\begin{frame}{}
+    \begin{block}{Objetivos do teste}
+        Em palavras, a hipótese nula é a de que todos os tratamentos são igualmente efetivos. Mais formalmente, seja $p_j$ a probabilidade de sucesso do tratamento $j$. Então
+        
+        $$H_0:p_1=\cdots = p_c$$
+        contra $H_1$ pelo menos um par ocorre $p_i\neq p_j$.
+    \end{block}
+    
+    \begin{block}{Estatística de teste e distribuição sob a hipótese nula}
+    A estatística de teste é 
+    $$T=c(c-1)\frac{\sum_{j=1}^{c}\left(C_j-\frac{N}{c}\right)^2}{\sum_{i=1}^r R_i(c-R_i)}$$
+    e, para $r$ suficientemente grande, $T\approx \chi^2_{c-1}$.
+    \end{block}
+\end{frame}
+
+\begin{frame}{Entendendo a distribuição da estatística de teste}
+Teremos que $C_j=\sum_{i=1}^r X_{ij}$. Como $X_{1j},\ldots,X_{rj}$ são variáveis independentes, pelo Teorema Central do Limite teremos
+$$\frac{C_j-E(C_j)}{\sqrt{Var(C_j)}}\rightarrow N(0,1),$$
+e
+$$\sum_{j=1}^c\frac{(C_j-E(C_j))^2}{Var(C_j)}\rightarrow \chi^2_c.$$
+  Sob $H_0$ $E(C_j)$ e $Var(C_j)$ são iguais para todo $j$, mas ainda permanecem desconhecidos. Esses valores são estimados como segue:
+  $$\widehat{E(C_j)}=\frac{1}{c}\sum_{j=1}^c C_j = \frac{N}{c}$$
+\end{frame}
+
+\begin{frame}
+Notemos que
+$$Var(C_j)=\sum_{i=1}^r Var(X_{ij})$$
+Vamos estimar a variância de $X_{ij}$. Sob $H_0$, $X_{ij},\ldots,X_{cj}$ tem a mesma probabilidade de sucesso e, portanto, a mesma variância. Assim, podemos estimar a probabilidade de sucesso por $R_i/c$. Deste modo,
+$$\widehat{Var(C_j)}=\sum_{i=1}^r \frac{c}{c-1}\frac{R_i}{c}\left(1-\frac{R_i}{c}\right)$$
+(este é um estimador não enviesado para a proporção). 
+
+Ao trocar $E(C_j)$ e $Var(C_j)$ por seus respectivos estimadores teremos a estatística $T$. Entretanto, a distribuição passa a ser $\chi^2_{c-1}$, mas a demonstração deste fato está além do escopo deste curso. 
+\end{frame}
+
+\begin{frame}{Exemplo}
+    Três métodos para previsão do vencedor de uma partida de certo campeonato de basquete foram aplicados a 12 jogos. Atribuímos o resultado 1 se o método acertou o vencedor do jogo e 0 em caso contrário. Abaixo temos os resultados:
+   
+   \tiny{ 
+    \begin{table}[]
+        \centering
+        \begin{tabular}{c|ccc|c}\hline
+                 & \multicolumn{3}{c|}{Método} & \\
+            Jogo & 1 & 2 & 3 & Total \\ \hline
+             1   & 1 & 1 & 1 & 3\\
+             2   & 1 & 1 & 1 & 3 \\
+             3   & 0 & 1 & 0 & 1\\
+             4   & 1 & 1 & 0 & 2\\
+             5   & 0 & 0 & 0 & 0\\
+             6   & 1 & 1 & 1 & 3 \\
+             7   & 1 & 1 & 1 & 3 \\
+             8   & 1 & 1 & 0 & 2\\
+             9   & 0 & 0 & 1 & 1\\
+             10  & 0 & 1 & 0 & 1\\
+             11  & 1 & 1 & 1 & 3 \\
+             12  & 1 & 1 & 1 & 3 \\ \hline
+            Total& 8 & 10& 7& 25 \\ \hline
+        \end{tabular}
+        \label{tab:my_label}
+    \end{table}
+    }
+\end{frame}
+
+\begin{frame}[fragile]{}
+Queremos testar se os três métodos são igualmente eficazes. Após alguns calculos, encontramos 
+$t_{obs}=2,8$. Utilizando o comando \texttt{pchisq(2.8, 2 , lower.tail = FALSE)}, encontramos um p-valor de 0,2465. Logo, não há evidências de que os métodos são diferentes.
+
+Existem diversos pacotes que podem realizar esse teste. Um deles é o \texttt{nonpar}, com a função \texttt{cochrans.q}, ilustrada abaixo:
+
+# matriz com os valores da tabela
+x <- matrix(c (1,1,1,1,1,1,0,1,0,1,1,0,0,0,0,
+               1,1,1,1,1,1,1,1,0,0,0,1,0,1,0,
+               1,1,1,1,1,1),ncol=3, byrow = T)
+# teste               
+
+\begin{frame}[fragile]{}
+Resultado:
+\begin{verbatim}
+ Cochran's Q Test 
+ 
+ H0: There is no difference in the effectiveness of treatments. 
+ HA: There is a difference in the effectiveness of treatments. 
+ 
+ Q = 2.8 
+ 
+ Degrees of Freedom = 2 
+ 
+ Significance Level = 0.05 
+ The p-value is  0.246596963941606    
+\end{verbatim}
+ 
+\end{frame}
+
+\begin{frame}{}
+    Exercícios da página 256: 1 e 3.
+\end{frame}
