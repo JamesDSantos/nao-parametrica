@@ -884,7 +884,7 @@ $$\begin{array}{c|cccc|c}\hline
 
 Vamos verificar se há independência entre a escolha do curso e a procedência.
 
-A estatística do teste qui-quadrado é $t_{obs}=1,5242$ e o $p$-valor (aproximado) correspondente é 0,6767. Portanto, não temos evidências de que a escolha do curso e a procedência são independentes.
+A estatística do teste qui-quadrado é $t_{obs}=1,5242$ e o $p$-valor (aproximado) correspondente é 0,6767. Portanto, temos evidências de que a escolha do curso e a procedência são independentes.
 
 Abaixo, temos a resolução deste exemplo no `R`:
 
@@ -901,7 +901,7 @@ $$\begin{array}{l|ccc|c} \hline \hbox{Álcool (oz/dia)} & \hbox{Sem Nicotina} & 
 Para esta população, teste se existe independência entre o consumo de álcool e nicotina.
 :::
 
-### O Teste Qui-quadrado para a independência condicional
+## O Teste Qui-quadrado para a independência conjunta e condicional
 
 Uma amostra aleatória de tamanho $N$ é obtida. Cada elemento é classificado de acordo com três critérios ($X,Y,Z$). Usando o primeiro critério ($X$), cada elemento é associado com uma das $r$ linhas. Usando o segundo ($Y$), cada elemento é associado com uma das $c$ colunas. O critério $Z$, com $K$ elementos, atua como estrato. A tabela de contingência para o $k$-ésimo estrato é
 
@@ -911,7 +911,7 @@ $$\begin{array}{c|c|cccc|c}\hline
     X& 1     & O_{11k} & O_{12k} & \cdots & O_{1ck} & R_{1k} \\
     &2     & O_{21k} & O_{22k} & \cdots & O_{2ck} & R_{2k} \\   
     &\vdots        & \vdots & \vdots & \vdots & \vdots & \vdots \\   
-    & r   & O_{r1} & O_{r2k} & \cdots & O_{rck} & R_{rk} \\ \hline 
+    & r   & O_{r1k} & O_{r2k} & \cdots & O_{rck} & R_{rk} \\ \hline 
     &\hbox{Total (colunas)} & C_{1k}    & C_{2k}    & \cdots & C_{ck} &N_k \\ \hline   
     \end{array}$$
 
@@ -919,13 +919,13 @@ Estamos interessados na relação de  $X$ e $Y$, considerando a existência de $
 
 * $X\perp Y \perp Z$ (independência): nesse caso, $X$, $Y$ e $Z$ são independentes.
 
-* $X\perp Y |Z$ (independência condicional): nesse caso, $X$ e $Y$ são independentes dado $Z$. Aqui, $Z$ é denominada variável de confusão, uma vez que $X$ não é independente de $Y$.
+* $X\perp Y |Z$ (independência condicional): nesse caso, $X$ e $Y$ são independentes dado $Z$.
 
 * $X,Y\perp Z$* (independência conjunta): nesse caso, $X$ e $Y$ são dependentes entre si, mas são independentes em relação ao estrato $Z$;
 
 Vamos analisar cada um dos casos.
 
-**Independência.** Nesse caso, $P(X_i\cap Y_j\cap Z_k)=P(X_i)P(Y_j)P(Z_k)$. Os estimadores para as probabilidades marginais são
+**Independência mútua.** Nesse caso, $P(X_i\cap Y_j\cap Z_k)=P(X_i)P(Y_j)P(Z_k)$. Os estimadores para as probabilidades marginais são
 
 $$\begin{align}\hat{P}(X_i)&=\frac{\sum_{j,k}O_{i,j,k}}{N}=\frac{\sum_{k=1}^KR_{i,k}}{N}=\frac{R_i}{N}\\\hat{P}(Y_j)&=\frac{\sum_{i,k}O_{i,j,k}}{N}=\frac{\sum_{k=1}^KC_{j,k}}{N}=\frac{C_j}{N}\\\hat{P}(Z_k)&=\frac{\sum_{i,j}O_{i,j,k}}{N}=\frac{N_k}{N}\end{align}$$
 Deste modo, o valor esperado da cela $(i,j,k)$ sob $H_0$ é dado por
@@ -933,7 +933,7 @@ Deste modo, o valor esperado da cela $(i,j,k)$ sob $H_0$ é dado por
 $$E_{ijk}=N\hat{P}(X_i,Y_j,Z_k)=N\frac{R_i}{N}\frac{C_j}{N}\frac{N_k}{N}=\frac{R_iC_jN_k}{N^2}.$$
 A estatística do teste qui-quadrado é dada por
 $$Q=\sum_{i=1}^r\sum_{j=1}^c \sum_{k=1}^K \frac{(O_{ijk}-E_{ijk})^2}{E_{ijk}}$$
-e o p-valor é calculado utilizando a distribuição $\chi^2_{(r-1)(c-1)(k-1)}$.
+e o p-valor é calculado utilizando a distribuição $\chi^2_{rck-r-c-k+2}$.
 
 **Independência condicional.** Nesse caso, $P(X_i\cap Y_j\cap Z_k)=P(X_i|Z_k)P(Y_j|Z_k)P(Z_k)$. Os estimadores para essas probabilidades são
 
@@ -941,43 +941,44 @@ $$\begin{align}
 \hat{P}(Z_k)&=\frac{\sum_{i,j}O_{i,j,k}}{N}=\frac{N_k}{N}\\
 \hat{P}(X_i|Z_k)&=\frac{\frac{\sum_{j}O_{ijk}}{N}}{\hat{P}(Z_k)}=\frac{\sum_{j=1}^c O_{i,j,k}}{N_k}=\frac{R_{i,k}}{N_k}\\\hat{P}(Y_j|Z_k)&=\frac{\frac{\sum_{i}O_{i,j,k}}{N}}{\hat{P}(Z_k)}=\frac{\sum_{i=1}^r O_{ijk}}{N_k}=\frac{C_{j,k}}{N_k}\end{align}$$
 
-Observe então podemos analisar $K$ tabelas $r\times c$ em separado. Desre modo, os valores esperados das frequências estão condicionados com o estrato. Para o $k$-ésimo estrato, teremos
+Observe então podemos analisar $K$ tabelas $r\times c$ em separado. Deste modo, os valores esperados das frequências estão condicionados com o estrato. Para o $k$-ésimo estrato, teremos
 
-$$E_{ij|k}=N\hat{P}(X_i\cap Y_j\cap| Z_k)=N\hat{P}(X_i|Z_k)\hat{P}(Y_j|Z_k)=\frac{R_{ik}C_{jk}}{N_k}$$
+$$E_{ijk}=N\hat{P}(X_i\cap Y_j\cap| Z_k)=N\hat{P}(X_i|Z_k)\hat{P}(Y_j|Z_k)=\frac{R_{ik}C_{jk}}{N_k}$$
 
 e 
 
-$$Q_k=\sum_{i=1}^r\sum_{j=1}^c\frac{(O_{ijk}-E_{ij|k})^2}{E_{ij|k}}\sim\chi^2_{(r-1)(c-1)}.$$
+$$Q_k=\sum_{i=1}^r\sum_{j=1}^c\frac{(O_{ijk}-E_{ijk})^2}{E_{ijk}}\sim\chi^2_{(r-1)(c-1)}.$$
 A estatística do teste é
 $$Q=\sum_{k=1}^K Q_k\sim\chi^2_{K(r-1)(c-1)}.$$
 
 
-**Independência conjunta.** Nesse caso $P(X_i\cap Y_j\cap Z_k)=P(X_i\cap Y_j)P(Z_k)$. Fazendo $W_{i,j}=X_i\cap Y_j$, isso é o mesmo que assumir que $P(W_{ij}\cap Z_k)=P(W_{ij})P(Z_k)$. Construímos então uma tabela $rc\times K$, onde as linhas representa todas as combinações de $(X,Y)$ e as coluna os estratos. Então, o teste de independência é aplicado nessa nova tabela e o p-valor é calculado sob a distribuição $\chi^2_{(K-1)(rc-1)}$.
+**Independência conjunta.** Nesse caso $P(X_i\cap Y_j\cap Z_k)=P(X_i\cap Y_j)P(Z_k)$. Como
 
-Para exemplificar, considere a seguinte tabela
+$$\begin{align}
+\hat{P}(Z_k)&=\frac{\sum_{i,j}O_{i,j,k}}{N}=\frac{N_k}{N}\\
+\hat{P}(X_i\cap Y_j)&=\frac{\sum_{k}O_{ijk}}{N}\end{align}$$
+temos que
+$$E_{ijk}=N\hat{P}(X_i,Y_j,Z_k)=N\frac{\sum_{k}O_{ijk}}{N}\frac{N_k}{N}=\frac{N_k}{N}\sum_{k}O_{ijk}$$
+e a estatítica do teste é
+$$Q=\sum_{k=1}^K\sum_{i=1}^r\sum_{j=1}^c\frac{(O_{ijk}-E_{ijk})^2}{E_{ijk}}\sim\chi^2_{(rc-1)(K-1)}$$
 
-$$\begin{array}{c|c|cc}\hline\\
-    &X&Y \\ \hline
-Z&  X& 0& 1&  \\ \hline
-1 & 0 & o_{111} & o_{121} \\
-  & 1 & o_{211} & o_{221} \\ \hline
-2 & 0 & o_{112} & o_{122} \\
-  & 1 & o_{212} & o_{222} \\ \hline
+<div class='alert alert-success'>
+**Resumo**
+
+$$\begin{array}{l |c |c |c}
+\hline
+\text{Tipo de Independência} & \text{Notação} & \text{Cálculo do Valor Esperado } (E_{ijk}) & \text{Graus de Liberdade } (df) \\
+\hline
+\text{Mútua (Global)} & X \perp Y \perp Z & \displaystyle \frac{R_i \cdot C_j \cdot N_k}{N^2} & rck - r - c - K + 2 \\ \hline
+\text{Condicional} & X \perp Y \mid Z & \displaystyle \frac{R_{ik} \cdot C_{jk}}{N_k} & K(r-1)(c-1) \\ \hline
+\text{Conjunta} & (X, Y) \perp Z & \displaystyle \frac{(\sum_{k=1}^K O_{ijk}) \cdot N_k}{N} & (rc - 1)(K - 1) \\
+\hline
 \end{array}$$
-
-A variável $W$ tem as classes $(0,0),(0,1),(1,0)$ e $(1,1)$, representando todas as combinações possíveis dos níveis de $X$ e $Y$. A tabela utilizada para o teste é 
-
-$$\begin{array}{c|cc|c}\hline\\
-    &Z \\ \hline
-  W& 1& 2&  \\ \hline
- (0,0)  & o_{111} & o_{112} & r_{1} \\
- (0,1)  & o_{121} & o_{122} & r_{2} \\ 
- (1,0)  & o_{211} & o_{212} & r_{3} \\
- (1,1)  & o_{221} & o_{222} & r_{4} \\ \hline
-  & C_1 & C_2 & N \\ \hline
-\end{array}$$
+</div>
 
 ::: {#exm-}
+**Titanic**
+
 Considere novamente os dados sobre os tripulantes do Titanic, apresentados no início do capítulo e reproduzidos abaixo em um tabela $2\times 2\times 3$. Vamos assumir que a Classe é nosso estrato.
 
 $$\begin{array}{l l |c c c |r}
@@ -985,158 +986,147 @@ $$\begin{array}{l l |c c c |r}
 \text{Sobreviveu} & \text{Sexo} & \text{Classe 1ª} & \text{Classe 2ª} & \text{Classe 3ª} & \text{Total} \\
 \hline
 \text{Não} & \text{Feminino} & 3 & 6 & 72 & \mathbf{81} \\
- & \text{Masculino} & 118 & 146 & 358 & \mathbf{622} \\ 
- \hbox{Total} & \mathbf{121} & \mathbf{152} & \mathbf{430} &  \mathbf{703}
-\hline
+ & \text{Masculino} & 118 & 146 & 358 & \mathbf{622} \\ \hline
 \text{Sim} & \text{Feminino} & 91 & 70 & 72 & \mathbf{233} \\
  & \text{Masculino} & 57 & 17 & 75 & \mathbf{149} \\
-\hline
+\hline 
 \textbf{Total} & & \mathbf{269} & \mathbf{239} & \mathbf{577} & \mathbf{1085} \\
 \hline
 \end{array}$$
 
-Vamos testar primeiro a hipótese de independência entre as variáveis Sexo, Sobreviveu e Classe. Para essa hipótese nula, as frequências esperadas são
+1. **Independência mútua.** A tabela abaixo apresenta os valores observados e as frequências esperadas entre parênteses.
 
+$$\begin{array}{l l |c c c |r}\hline\text{Sobreviveu} & \text{Sexo} & \text{Classe 1ª} & \text{Classe 2ª} & \text{Classe 3ª} & \text{Total} \\ \hline\text{Não} & \text{Feminino} & 3 \ (50,4) & 6 \ (44,8) & 72 \ (108,2) & \mathbf{81} \\ & \text{Masculino} & 118 \ (123,8) & 146 \ (110) & 358 \ (265,7) & \mathbf{622} \\ \hline\text{Sim} & \text{Feminino} & 91 \ (27,4) & 70 \ (24,3) & 72 \ (58,8) & \mathbf{233} \\& \text{Masculino} & 57 \ (67,3) & 17 \ (59,8) & 75 \ (144,4) & \mathbf{149} \\\hline\textbf{Total} & & \mathbf{269} & \mathbf{239} & \mathbf{577} & \mathbf{1085} \\ \hline\end{array}$$
+Obtivemos $Q_{obs}\approx 436,5$. Como $rcK-r-c-k+2=7$, temos que o p-valor do teste é
+```{r}
+pchisq(436.5,7,lower.tail = FALSE)
+```
 
+O gráfico de mosaico é dado abaixo. Observe na notação do tipo fórmula (`~`) que foi utilizada na função. Ao colocar as variáveis nessa ordem, estamos dizendo que a altura vai ser construída com as proporções da Classe, as larguras com as proporções do sexo e cada retângulo formado pelo cruzamento de classe e sexo vai ser dividido com a frequência relativa da variável sobrevivência. Portanto, pela tabel pode-se observar, fixado o estrato classe, que as proporção de mulheres sobrevivendo foi maior. Contudo, os resíduos de Pearson revelam que mais homens sobreviveram na primeira classe do que o esperado para a hipótese de independência e menos mulheres sobreviveram do que o esperado para a terceira classe.    
 
+```{r}
+dados <- array(0, c(2,2,3))
+dados[,,1] <- matrix( c(91,57,3,118),2,2)
+dados[,,2] <- matrix( c(70,17,6,146),2,2)
+dados[,,3] <- matrix( c(72,75,72,358),2,2)
 
+dimnames(dados) = list( Sexo = c('M','F'), Sobreviveu = c('S','N'),
+                        Classe = c(1,2,3))
+require(vcd)
+mosaic(~ Classe + Sexo + Sobreviveu, data = dados, shade = TRUE)
+```
+
+2. **Independência condicional.** Para verificar se a sobrevivência é independente do sexo dado a classe, calculamos a estatística do teste para cada tabela $2\times 2$ com a Classe fixada. As tabelas são
+
+Classe 1ª ($Q_1\approx 101,95$)
+$$\begin{array}{l |c c |r}
+\hline
+\text{Sexo} & \text{Sim} & \text{Não} & \text{Total} \\
+\hline
+\text{Feminino} & 91 \ (51,72) & 3 \ (42,28) & \mathbf{94} \\
+\text{Masculino} & 57 \ (96,28) & 118 \ (78,72) & \mathbf{175} \\
+\hline
+\textbf{Total} & \mathbf{148} & \mathbf{121} & \mathbf{269} \\
+\hline
+\end{array}$$
+
+Classe 2ª ($Q_2\approx 149,31$)
+$$\begin{array}{l |c c |r}
+\hline
+\text{Sexo} & \text{Sim} & \text{Não} & \text{Total} \\
+\hline
+\text{Feminino} & 70 \ (27,67) & 6 \ (48,33) & \mathbf{76} \\
+\text{Masculino} & 17 \ (59,33) & 146 \ (103,67) & \mathbf{163} \\
+\hline
+\textbf{Total} & \mathbf{87} & \mathbf{152} & \mathbf{239} \\
+\hline
+\end{array}$$
+
+Classe 3ª ($Q_3\approx 60,76$)
+$$\begin{array}{l |c c |r}
+\hline
+\text{Sexo} & \text{Sim} & \text{Não} & \text{Total} \\
+\hline
+\text{Feminino} & 72 \ (36,69) & 72 \ (107,31) & \mathbf{144} \\
+\text{Masculino} & 75 \ (110,31) & 358 \ (322,69) & \mathbf{433} \\
+\hline
+\textbf{Total} & \mathbf{147} & \mathbf{430} & \mathbf{577} \\
+\hline
+\end{array}$$
+
+A estatística final para o teste é $Q_{obs}=312,2$. O p-valor para este é
+```{r}
+pchisq(312,3, lower.tail = FALSE)
+```
+o que nos leva a rejeitar que Sobrevivência e Sexo são independentes dado a Classe.
+
+* **Indepenência conjunta** Vamos testar se a conjunta (Sexo,Sobrevivência) independe da classe. 
+
+Aqui está a reordenação da tabela solicitada. Note que os valores observados e esperados (entre parênteses) foram mantidos para cada célula correspondente.
+
+Nesta nova disposição, o foco da leitura passa a ser como o Sexo e a Sobrevivência se distribuem dentro de cada Classe.
+
+$$\begin{array}{l l |c c |r}
+\hline
+\text{Classe} & \text{Sobreviveu} & \text{Sexo: Fem.} & \text{Sexo: Masc.} & \text{Total} \\ \hline
+\text{1ª} & \text{Não} & 3 \ (20,08) & 118 \ (154,21) & \mathbf{121} \\
+& \text{Sim} & 91 \ (57,77) & 57 \ (36,94) & \mathbf{148} \\ \hline
+\text{2ª} & \text{Não} & 6 \ (17,84) & 146 \ (137,01) & \mathbf{152} \\
+& \text{Sim} & 70 \ (51,32) & 17 \ (32,82) & \mathbf{87} \\ \hline
+\text{3ª} & \text{Não} & 72 \ (43,08) & 358 \ (330,78) & \mathbf{430} \\
+& \text{Sim} & 72 \ (123,91) & 75 \ (79,24) & \mathbf{147} \\ \hline
+\textbf{Total} & & \mathbf{314} & \mathbf{771} & \mathbf{1085} \\ \hline
+\end{array}$$
+O valor da estatística qui-quadrado é 103,55 e, com 6 graus de liberdade temos que
+```{r}
+pchisq(103.55,6,lower.tail = FALSE)
+```
+logo, rejeitamos a hipótese de que a relação conjunta entre Sexo e Sobrevivência é independente da Classe
+
+**Final.** Os dados não apenas mostram que as variáveis são dependentes, mas que a Classe atuou como um moderador crítico. Embora o sexo tenha sido o principal divisor entre a vida e a morte, a proteção conferida ao gênero feminino foi severamente reduzida para as tripulantes da 3ª Classe.
 :::
 
-%===========================================================
-% Aula 10
-%===========================================================
 
-### O teste da mediana
-\end{frame}
-\endgroup
+<div class='alert alert-success'>
+**A função loglm**
 
+A função `loglm` utiliza a notação por fórmula (`~`) e seu resultado apresenta tanto o teste Qui-quadrado quanto o teste da razão de verossimilhanças (não explorado nesse curso). Abaixo, apresentamos a notação para testar os diferentes tipos de independência para as variáveis $A,B$ e $C$:
 
-\begin{frame}{O teste d mediana}
- \begin{block}{Dados}
-    Considere $c$ amostras aleatórias independentes, sendo $n_i$ o tamanho da $i$-ésima amostra. Seja $N=n_1+\cdots+n_c$ o número de observações. Vamos juntar todas as amostras e encontrar a mediana (vamos denominá-la \textit{mediana global}). Em seguida, seja $Q_{1i}$ será o número de observações da $i$-ésima população que que excederam a mediana global, enquanto que $O_{2i}$ será o número de observações da $i$-ésima população que são menores ou iguais à mediana global. Os dados são organizados na seguinte tabela de contingência $2\times 2$:
-    
-    \begin{table}[]
-        \centering
-        \begin{tabular}{c|cccc|c}\hline
-            Amostra & 1 & 2 & $\cdots$ & Total  \\ \hline
-             $>$Mediana& $O_{11}$ &$O_{12}$ & $\cdots$ & $O_{1c}$ & $a$\\
-             $\leq$Mediana& $O_{21}$& $O_{22}$ & $\cdots$ & $O_{2c}$ & $b$\\ \hline
-             Total & $n_1$ & $n_2$ & $\cdots$ & $n_c$ & N \\ \hline
-        \end{tabular}
-        \label{tab:my_label}
-    \end{table}
- \end{block}   
-\end{frame}
+* Independência mútua: `~A + B + C`
 
-\begin{frame}{}
-    \begin{block}{Objetivos do teste}
-    Se todas as populações tem a mesma mediana, cada uma delas tem a mesma probabilidade de exceder a mediana global. As hipóteses são:
-    
-    \begin{itemize}
-        \item $H_0:$ todas as $c$ populações tem a mesma mediana.
-        \item $H_1:$ pelo menos duas populações tem medianas diferentes.
-    \end{itemize}
-    \end{block}
+* Independência condicional: `~A*C + B*C`
+
+* Independência conjunta: `~A*B + C`
+
+* Modelo de associação homogênea (todas as iterações de duas variáveis): `~(A+B+C)^2`
+
+Essa função permite mais de 3 variáveis, embora ela tenha suas limitações para tabelas esparsas (muitas celas vazias). Para facilitar a busca por modelos, é útil utilizar um grafo de dependências para interações 2 a 2. Nesse grafo, cada vértice é uma variável e existe uma aresta sempre que as variáveis correspondentes aos vértices são dependentes. A figura abaixo ilustra esse conceito.
+
+![Grafos representando as dependências e suas fórmulas  para a função `loglm`](Figuras/grafos.png){#fig-meu-grafo}
 
 
-\begin{block}{Estatística de teste, distribuição sob $H_0$ e p-valor}
-A estatística de teste é
-$$T=\frac{N^2}{ab}\sum_{i=1}^c\frac{\left(O_{i1}-\frac{n_i a}{N}\right)^2}{n_i}$$
-e sob $H_0$, $T\sim\chi^2_{c-1}$. O p-valor do teste é $P(T\geq t_{obs})$.
-\end{block}
-\end{frame}
+Para o exemplo do Titanic, temos o modelo de associação dado abaixo:
+```{r}
+require(MASS)
+loglm(~(Sexo + Sobreviveu + Classe)^2, data = dados)
+```
+Ao rejeitar esse modelo, nos resta o modelo de interação tripla. Isso implica que estes dados sempre devem ser discutidos com as três variáveis simultaneamente. 
+</div>
 
-\begin{frame}{Sobre a distribuição da estatística de teste}
-Note que, se todas as populações tem a mesma mediana, então $$P(O_{1i}>\hbox{mediana global})=P(O_{1j}>\hbox{mediana global})=p$$ para todo $i,j$.
-    Então, o problema se reduz a um teste para determinar se as probabilidades das celas são iguais. Isto pode ser realizado com um teste Qui-quadrado, com estatística de teste dada por
-    $$\sum_{i=1}^2\sum_{j=1}^c\frac{(O_{ij}-E_{ij})^2}{E_{ij}}=\sum_{j=1}^c\frac{(O_{1j}-E_{1j})^2}{E_{1j}}+\sum_{j=1}^c\frac{(O_{2j}-E_{2j})^2}{E_{2j}}$$
-\end{frame}
+::: {#exr-tipodeparto}
+A tabela apresenta a contagem de recém-nascidos em um hospital:
 
-\begin{frame}{}
-    Mas $O_{2j}=n_j-O_{1j}$ e $E_{2j}=n_j-E_{2j}.$ Então
-    $$\sum_{j=1}^c\frac{(O_{2j}-E_{2j})^2}{E_{2j}}=\sum_{j=1}^c\frac{(n_j-O_{1j}-n_j+E_{1j})^2}{n_j-E_{1j}}=\sum_{j=1}^c\frac{(O_{1j}-E_{1j})^2}{n_j-E_{1j}},$$
-    logo
-$$\begin{align*}\sum_{i=1}^2\sum_{j=1}^c\frac{(O_{ij}-E_{ij})^2}{E_{ij}}&=\sum_{j=1}^c\frac{(O_{1j}-E_{1j})^2}{E_{1j}E_{2j}}\left(E_{1j}+E_{2j}\right)\\
-   &=\sum_{j=1}^c n_j\frac{(O_{1j}-E_{1j})^2}{E_{1j}E_{2j}}.
-   \end{align*}$$
+Estrato: Bebês com Baixo Peso ($< 2500g$)
+$$\begin{array}{l|l |c c |r}\hline
+&& \hbox{Sobreviveu}\\
+\hbox{Peso}& \text{Parto} & \text{Sim} & \text{Não} & \text{Total} \\\hline
+\hbox{Baixo (<2,5Kg)} &\text{Cesárea} & 45 & 12 & \mathbf{57} \\ &\text{Natural} & 48 & 15 & \mathbf{63} \\\hline
+\hbox{Normal(>=2,5Kg)}&\text{Cesárea} & 180 & 4 & \mathbf{184} \\&\text{Natural} & 210 & 5 & \mathbf{215} \\\hline\end{array}$$
 
-\begin{frame}{}
-Como $E_{1j}=n_ja/N$, teremos que
-   \begin{align*}\sum_{i=1}^2\sum_{j=1}^c\frac{(O_{ij}-E_{ij})^2}{E_{ij}}&=\sum_{j=1}^c n_j\frac{\left(O_{1j}-\frac{n_j a}{N}\right)^2}{n_j^2\frac{ab}{N^2}}=T.
-   \end{align*}
-   Portanto, este teste é um teste Qui-quadrado para diferença entre proporções.
-\end{frame}
+1. Teste se Peso, Parto e Sobrevivência são mutuamente independentes
 
-\begin{frame}{Comparações múltiplas}
-    Quando $H_0$ é rejeitada, podemos construir várias tabelas 2$\times 2$, comparando as populações 2 a 2. Neste caso, as estatísticas terão 1 grau de liberdade e, aquelas que nos levarem à rejeitar a hipótese de igualdade serão consideradas diferentes. 
-\end{frame}
-
-\begin{frame}{Exemplo 1}
-Quatro métodos para melhoria do crescimento de milho foram aleatoriamente assinalados em um grande número de lotes de terras e a produção por acre de cada lote foi registrada. Os resultados foram:
-
-\begin{center}
-\begin{tabular}{c|l}\hline
-Método & Produção por acre \\ \hline
-1 & 83 89 89 90 91 91 92 94 96   \\
-2 & 81 83 83 84 84 88 89 90 91 91  \\
-3 & 91 93 94 95 96 100 101  \\
-4 & 77 78 79 80 81 81  81 82  \\ \hline
-\end{tabular}    
-\end{center}
-Existe diferença entre os métodos de produção?
-\end{frame}
-
-\begin{frame}{}
-    São 34 observações no total e a mediana global é 89. Replicamos a tabela anterior, destacando em azul o número de observações por método que são maiores que a mediana global. Adicionamos uma coluna para guardar esse total
-    
-    \begin{center}
-\begin{tabular}{c|l|c}\hline
-Método & Produção por acre & Observações maiores que 89\\ \hline
-1 & 83 89 89 \textcolor{blue}{90 91 91 92 94 96}   & 6\\
-2 & 81 83 83 84 84 88 89 \textcolor{blue}{90 91 91}  &3 \\
-3 & \textcolor{blue}{91 93 94 95 96 100 101} & 7\\
-4 & 77 78 79 80 81 81  81 82  & 0\\ \hline
-\end{tabular}    
-\end{center}
-\end{frame}
-
-\begin{frame}{}
-Cada método será considerado uma população, o que vai gerar a seguinte tabela
-
- \begin{table}[]
-        \centering
-        \begin{tabular}{c|cccc|c}\hline
-           & \multicolumn{4}{c|}{Método} & \\ \hline
-             & 1 & 2 & 3 & 4 & Total  \\ \hline
-             $>$89& 6 & 3 & 7 & 0 & 16 \\
-             $\leq$89& 3& 7 & 0 & 8 & 18\\ \hline
-             Total & 9 & 10 & 7 & 8 & 34 \\ \hline
-        \end{tabular}
-        \label{tab:my_label}
-    \end{table}
-    Encontramos $t_{obs}=17,543$. O p-valor, considerando uma distribuição $\chi^2$ com 3 graus de liberdade, é igual a 0,0005456, o que nos leva a rejeitar $H_0$. Então, pelo menos um par de métodos tem medianas diferentes.
-\end{frame}
-
-\begin{frame}{}
-   Podemos identificar quais são os métodos que possuem medianas diferentes criando subtabelas $2\times 2$ e refazendo o teste. Por exemplo, abaixo separamos a tabela que contém somente os métodos 1 e 2
-   
-   \begin{table}[]
-        \centering
-        \begin{tabular}{c|cc|c}\hline
-           & \multicolumn{2}{c|}{Método} & \\ \hline
-             & 1 & 2 & Total  \\ \hline
-             $>$89& 6 & 3  & 9 \\
-             $\leq$89& 3& 7 & 10\\ \hline
-             Total & 9 & 10  & 19 \\ \hline
-        \end{tabular}
-        \label{tab:my_label}
-    \end{table}
-    Obtivemos $t_{obs}=2,5544$ e um p-valor de 0,17 (via Monte Carlo). Logo, não há evidências de que as medianas são distintas entre os métodos 1 e 2.
-\end{frame}
-
-\begin{frame}{}
-    Exercícios: 1 e 2 da página 226
-\end{frame}
+2. Teste se Sobrevivência e Parto são condicionalmente independentes dado o Peso
+:::
 
 ##  Medidas de dependência
 \end{frame}

@@ -233,12 +233,14 @@ window.Quarto = {
   <li><a href="#a-estatística-do-teste-qui-quadrado" id="toc-a-estatística-do-teste-qui-quadrado" class="nav-link" data-scroll-target="#a-estatística-do-teste-qui-quadrado"><span class="header-section-number">4.3.1</span> A estatística do teste qui-quadrado</a></li>
   <li><a href="#o-teste-qui-quadrado-para-diferenças-entre-probabilidades" id="toc-o-teste-qui-quadrado-para-diferenças-entre-probabilidades" class="nav-link" data-scroll-target="#o-teste-qui-quadrado-para-diferenças-entre-probabilidades"><span class="header-section-number">4.3.2</span> O Teste Qui-quadrado para diferenças entre probabilidades</a></li>
   <li><a href="#o-teste-qui-quadrado-para-independência" id="toc-o-teste-qui-quadrado-para-independência" class="nav-link" data-scroll-target="#o-teste-qui-quadrado-para-independência"><span class="header-section-number">4.3.3</span> O Teste Qui-quadrado para independência</a></li>
-  <li><a href="#o-teste-qui-quadrado-para-a-independência-condicional" id="toc-o-teste-qui-quadrado-para-a-independência-condicional" class="nav-link" data-scroll-target="#o-teste-qui-quadrado-para-a-independência-condicional"><span class="header-section-number">4.3.4</span> O Teste Qui-quadrado para a independência condicional</a></li>
-  <li><a href="#o-teste-da-mediana" id="toc-o-teste-da-mediana" class="nav-link" data-scroll-target="#o-teste-da-mediana"><span class="header-section-number">4.3.5</span> O teste da mediana</a></li>
-  <li><a href="#o-coeficiente-de-cramér" id="toc-o-coeficiente-de-cramér" class="nav-link" data-scroll-target="#o-coeficiente-de-cramér"><span class="header-section-number">4.3.6</span> O Coeficiente de Cramér</a></li>
-  <li><a href="#o-coeficiente-phi" id="toc-o-coeficiente-phi" class="nav-link" data-scroll-target="#o-coeficiente-phi"><span class="header-section-number">4.3.7</span> O Coeficiente Phi</a></li>
   </ul></li>
-  <li><a href="#o-teste-qui-quadrado-para-aderência-bondade-de-ajuste" id="toc-o-teste-qui-quadrado-para-aderência-bondade-de-ajuste" class="nav-link" data-scroll-target="#o-teste-qui-quadrado-para-aderência-bondade-de-ajuste"><span class="header-section-number">4.4</span> O teste Qui-quadrado para aderência (bondade de ajuste)</a></li>
+  <li><a href="#o-teste-qui-quadrado-para-a-independência-conjunta-e-condicional" id="toc-o-teste-qui-quadrado-para-a-independência-conjunta-e-condicional" class="nav-link" data-scroll-target="#o-teste-qui-quadrado-para-a-independência-conjunta-e-condicional"><span class="header-section-number">4.4</span> O Teste Qui-quadrado para a independência conjunta e condicional</a></li>
+  <li><a href="#medidas-de-dependência" id="toc-medidas-de-dependência" class="nav-link" data-scroll-target="#medidas-de-dependência"><span class="header-section-number">4.5</span> Medidas de dependência</a>
+  <ul class="collapse">
+  <li><a href="#o-coeficiente-de-cramér" id="toc-o-coeficiente-de-cramér" class="nav-link" data-scroll-target="#o-coeficiente-de-cramér"><span class="header-section-number">4.5.1</span> O Coeficiente de Cramér</a></li>
+  <li><a href="#o-coeficiente-phi" id="toc-o-coeficiente-phi" class="nav-link" data-scroll-target="#o-coeficiente-phi"><span class="header-section-number">4.5.2</span> O Coeficiente Phi</a></li>
+  </ul></li>
+  <li><a href="#o-teste-qui-quadrado-para-aderência-bondade-de-ajuste" id="toc-o-teste-qui-quadrado-para-aderência-bondade-de-ajuste" class="nav-link" data-scroll-target="#o-teste-qui-quadrado-para-aderência-bondade-de-ajuste"><span class="header-section-number">4.6</span> O teste Qui-quadrado para aderência (bondade de ajuste)</a></li>
   </ul>
 </nav>
     </div>
@@ -1002,7 +1004,7 @@ H_1&amp;:p_{i,j}\neq p_{k,j} \hbox{ para pelo menos um }j\hbox{ e um par }(i,k)
     \hbox{Total} &amp; 30 &amp; 20 &amp; 23 &amp; 21 &amp; 94 \\ \hline
         \end{array}\]</span></p>
 <p>Vamos verificar se há independência entre a escolha do curso e a procedência.</p>
-<p>A estatística do teste qui-quadrado é <span class="math inline">\(t_{obs}=1,5242\)</span> e o <span class="math inline">\(p\)</span>-valor (aproximado) correspondente é 0,6767. Portanto, não temos evidências de que a escolha do curso e a procedência são independentes.</p>
+<p>A estatística do teste qui-quadrado é <span class="math inline">\(t_{obs}=1,5242\)</span> e o <span class="math inline">\(p\)</span>-valor (aproximado) correspondente é 0,6767. Portanto, temos evidências de que a escolha do curso e a procedência são independentes.</p>
 <p>Abaixo, temos a resolução deste exemplo no <code>R</code>:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">matrix</span>( <span class="fu">c</span>(<span class="dv">16</span>,<span class="dv">14</span>,<span class="dv">13</span>,<span class="dv">13</span>,<span class="dv">14</span>,<span class="dv">6</span>,<span class="dv">10</span>,<span class="dv">8</span>), <span class="dv">2</span>,<span class="dv">4</span>, <span class="at">byrow =</span> T)</span>
@@ -1021,8 +1023,9 @@ X-squared = 1.5242, df = 3, p-value = 0.6767</code></pre>
 <p><span class="math display">\[\begin{array}{l|ccc|c} \hline \hbox{Álcool (oz/dia)} &amp; \hbox{Sem Nicotina} &amp; \hbox{1-15 mg/dia} &amp; \hbox{16 ou mais} &amp; \hbox{Total} \\ \hline \hbox{Nenhum} &amp; 105 &amp; 7 &amp; 11 &amp; 123 \\ \hbox{0,01 a 0,10} &amp; 58 &amp; 5 &amp; 13 &amp; 76 \\ \hbox{0,11 a 0,99} &amp; 84 &amp; 37 &amp; 42 &amp; 163 \\ \hbox{1,00 ou mais} &amp; 57 &amp; 16 &amp; 17 &amp; 90 \\ \hline \hbox{Total} &amp; 304 &amp; 65 &amp; 83 &amp; 452 \\ \hline \end{array}\]</span> Para esta população, teste se existe independência entre o consumo de álcool e nicotina.</p>
 </div>
 </section>
-<section id="o-teste-qui-quadrado-para-a-independência-condicional" class="level3" data-number="4.3.4">
-<h3 data-number="4.3.4" class="anchored" data-anchor-id="o-teste-qui-quadrado-para-a-independência-condicional"><span class="header-section-number">4.3.4</span> O Teste Qui-quadrado para a independência condicional</h3>
+</section>
+<section id="o-teste-qui-quadrado-para-a-independência-conjunta-e-condicional" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="o-teste-qui-quadrado-para-a-independência-conjunta-e-condicional"><span class="header-section-number">4.4</span> O Teste Qui-quadrado para a independência conjunta e condicional</h2>
 <p>Uma amostra aleatória de tamanho <span class="math inline">\(N\)</span> é obtida. Cada elemento é classificado de acordo com três critérios (<span class="math inline">\(X,Y,Z\)</span>). Usando o primeiro critério (<span class="math inline">\(X\)</span>), cada elemento é associado com uma das <span class="math inline">\(r\)</span> linhas. Usando o segundo (<span class="math inline">\(Y\)</span>), cada elemento é associado com uma das <span class="math inline">\(c\)</span> colunas. O critério <span class="math inline">\(Z\)</span>, com <span class="math inline">\(K\)</span> elementos, atua como estrato. A tabela de contingência para o <span class="math inline">\(k\)</span>-ésimo estrato é</p>
 <p><span class="math display">\[\begin{array}{c|c|cccc|c}\hline
                 &amp;    &amp;  Y  \\
@@ -1030,73 +1033,210 @@ X-squared = 1.5242, df = 3, p-value = 0.6767</code></pre>
     X&amp; 1     &amp; O_{11k} &amp; O_{12k} &amp; \cdots &amp; O_{1ck} &amp; R_{1k} \\
     &amp;2     &amp; O_{21k} &amp; O_{22k} &amp; \cdots &amp; O_{2ck} &amp; R_{2k} \\   
     &amp;\vdots        &amp; \vdots &amp; \vdots &amp; \vdots &amp; \vdots &amp; \vdots \\   
-    &amp; r   &amp; O_{r1} &amp; O_{r2k} &amp; \cdots &amp; O_{rck} &amp; R_{rk} \\ \hline
+    &amp; r   &amp; O_{r1k} &amp; O_{r2k} &amp; \cdots &amp; O_{rck} &amp; R_{rk} \\ \hline
     &amp;\hbox{Total (colunas)} &amp; C_{1k}    &amp; C_{2k}    &amp; \cdots &amp; C_{ck} &amp;N_k \\ \hline   
     \end{array}\]</span></p>
 <p>Estamos interessados na relação de <span class="math inline">\(X\)</span> e <span class="math inline">\(Y\)</span>, considerando a existência de <span class="math inline">\(Z\)</span>. Temos as seguintes possibilidades:</p>
 <ul>
 <li><p><span class="math inline">\(X\perp Y \perp Z\)</span> (independência): nesse caso, <span class="math inline">\(X\)</span>, <span class="math inline">\(Y\)</span> e <span class="math inline">\(Z\)</span> são independentes.</p></li>
-<li><p><span class="math inline">\(X\perp Y |Z\)</span> (independência condicional): nesse caso, <span class="math inline">\(X\)</span> e <span class="math inline">\(Y\)</span> são independentes dado <span class="math inline">\(Z\)</span>. Aqui, <span class="math inline">\(Z\)</span> é denominada variável de confusão, uma vez que <span class="math inline">\(X\)</span> não é independente de <span class="math inline">\(Y\)</span>.</p></li>
+<li><p><span class="math inline">\(X\perp Y |Z\)</span> (independência condicional): nesse caso, <span class="math inline">\(X\)</span> e <span class="math inline">\(Y\)</span> são independentes dado <span class="math inline">\(Z\)</span>.</p></li>
 <li><p><span class="math inline">\(X,Y\perp Z\)</span>* (independência conjunta): nesse caso, <span class="math inline">\(X\)</span> e <span class="math inline">\(Y\)</span> são dependentes entre si, mas são independentes em relação ao estrato <span class="math inline">\(Z\)</span>;</p></li>
 </ul>
 <p>Vamos analisar cada um dos casos.</p>
-<p><strong>Independência.</strong> Nesse caso, <span class="math inline">\(P(X_i\cap Y_j\cap Z_k)=P(X_i)P(Y_j)P(Z_k)\)</span>. Os estimadores para as probabilidades marginais são</p>
+<p><strong>Independência mútua.</strong> Nesse caso, <span class="math inline">\(P(X_i\cap Y_j\cap Z_k)=P(X_i)P(Y_j)P(Z_k)\)</span>. Os estimadores para as probabilidades marginais são</p>
 <p><span class="math display">\[\begin{align}\hat{P}(X_i)&amp;=\frac{\sum_{j,k}O_{i,j,k}}{N}=\frac{\sum_{k=1}^KR_{i,k}}{N}=\frac{R_i}{N}\\\hat{P}(Y_j)&amp;=\frac{\sum_{i,k}O_{i,j,k}}{N}=\frac{\sum_{k=1}^KC_{j,k}}{N}=\frac{C_j}{N}\\\hat{P}(Z_k)&amp;=\frac{\sum_{i,j}O_{i,j,k}}{N}=\frac{N_k}{N}\end{align}\]</span> Deste modo, o valor esperado da cela <span class="math inline">\((i,j,k)\)</span> sob <span class="math inline">\(H_0\)</span> é dado por</p>
-<p><span class="math display">\[E_{ijk}=N\hat{P}(X_i,Y_j,Z_k)=N\frac{R_i}{N}\frac{C_j}{N}\frac{N_k}{N}=\frac{R_iC_jN_k}{N^2}.\]</span> A estatística do teste qui-quadrado é dada por <span class="math display">\[Q=\sum_{i=1}^r\sum_{j=1}^c \sum_{k=1}^K \frac{(O_{ijk}-E_{ijk})^2}{E_{ijk}}\]</span> e o p-valor é calculado utilizando a distribuição <span class="math inline">\(\chi^2_{(r-1)(c-1)(k-1)}\)</span>.</p>
+<p><span class="math display">\[E_{ijk}=N\hat{P}(X_i,Y_j,Z_k)=N\frac{R_i}{N}\frac{C_j}{N}\frac{N_k}{N}=\frac{R_iC_jN_k}{N^2}.\]</span> A estatística do teste qui-quadrado é dada por <span class="math display">\[Q=\sum_{i=1}^r\sum_{j=1}^c \sum_{k=1}^K \frac{(O_{ijk}-E_{ijk})^2}{E_{ijk}}\]</span> e o p-valor é calculado utilizando a distribuição <span class="math inline">\(\chi^2_{rck-r-c-k+2}\)</span>.</p>
 <p><strong>Independência condicional.</strong> Nesse caso, <span class="math inline">\(P(X_i\cap Y_j\cap Z_k)=P(X_i|Z_k)P(Y_j|Z_k)P(Z_k)\)</span>. Os estimadores para essas probabilidades são</p>
 <p><span class="math display">\[\begin{align}
 \hat{P}(Z_k)&amp;=\frac{\sum_{i,j}O_{i,j,k}}{N}=\frac{N_k}{N}\\
 \hat{P}(X_i|Z_k)&amp;=\frac{\frac{\sum_{j}O_{ijk}}{N}}{\hat{P}(Z_k)}=\frac{\sum_{j=1}^c O_{i,j,k}}{N_k}=\frac{R_{i,k}}{N_k}\\\hat{P}(Y_j|Z_k)&amp;=\frac{\frac{\sum_{i}O_{i,j,k}}{N}}{\hat{P}(Z_k)}=\frac{\sum_{i=1}^r O_{ijk}}{N_k}=\frac{C_{j,k}}{N_k}\end{align}\]</span></p>
-<p>Observe então podemos analisar <span class="math inline">\(K\)</span> tabelas <span class="math inline">\(r\times c\)</span> em separado. Desre modo, os valores esperados das frequências estão condicionados com o estrato. Para o <span class="math inline">\(k\)</span>-ésimo estrato, teremos</p>
-<p><span class="math display">\[E_{ij|k}=N\hat{P}(X_i\cap Y_j\cap| Z_k)=N\hat{P}(X_i|Z_k)\hat{P}(Y_j|Z_k)=\frac{R_{ik}C_{jk}}{N_k}\]</span></p>
+<p>Observe então podemos analisar <span class="math inline">\(K\)</span> tabelas <span class="math inline">\(r\times c\)</span> em separado. Deste modo, os valores esperados das frequências estão condicionados com o estrato. Para o <span class="math inline">\(k\)</span>-ésimo estrato, teremos</p>
+<p><span class="math display">\[E_{ijk}=N\hat{P}(X_i\cap Y_j\cap| Z_k)=N\hat{P}(X_i|Z_k)\hat{P}(Y_j|Z_k)=\frac{R_{ik}C_{jk}}{N_k}\]</span></p>
 <p>e</p>
-<p><span class="math display">\[Q_k=\sum_{i=1}^r\sum_{j=1}^c\frac{(O_{ijk}-E_{ij|k})^2}{E_{ij|k}}\sim\chi^2_{(r-1)(c-1)}.\]</span> A estatística do teste é <span class="math display">\[Q=\sum_{k=1}^K Q_k\sim\chi^2_{K(r-1)(c-1)}.\]</span></p>
-<p><strong>Independência conjunta.</strong> Nesse caso <span class="math inline">\(P(X_i\cap Y_j\cap Z_k)=P(X_i\cap Y_j)P(Z_k)\)</span>. Fazendo <span class="math inline">\(W_{i,j}=X_i\cap Y_j\)</span>, isso é o mesmo que assumir que <span class="math inline">\(P(W_{ij}\cap Z_k)=P(W_{ij})P(Z_k)\)</span>. Construímos então uma tabela <span class="math inline">\(rc\times K\)</span>, onde as linhas representa todas as combinações de <span class="math inline">\((X,Y)\)</span> e as coluna os estratos. Então, o teste de independência é aplicado nessa nova tabela e o p-valor é calculado sob a distribuição <span class="math inline">\(\chi^2_{(K-1)(rc-1)}\)</span>.</p>
-<p>Para exemplificar, considere a seguinte tabela</p>
-<p><span class="math display">\[\begin{array}{c|c|cc}\hline\\
-    &amp;X&amp;Y \\ \hline
-Z&amp;  X&amp; 0&amp; 1&amp;  \\ \hline
-1 &amp; 0 &amp; o_{111} &amp; o_{121} \\
-  &amp; 1 &amp; o_{211} &amp; o_{221} \\ \hline
-2 &amp; 0 &amp; o_{112} &amp; o_{122} \\
-  &amp; 1 &amp; o_{212} &amp; o_{222} \\ \hline
+<p><span class="math display">\[Q_k=\sum_{i=1}^r\sum_{j=1}^c\frac{(O_{ijk}-E_{ijk})^2}{E_{ijk}}\sim\chi^2_{(r-1)(c-1)}.\]</span> A estatística do teste é <span class="math display">\[Q=\sum_{k=1}^K Q_k\sim\chi^2_{K(r-1)(c-1)}.\]</span></p>
+<p><strong>Independência conjunta.</strong> Nesse caso <span class="math inline">\(P(X_i\cap Y_j\cap Z_k)=P(X_i\cap Y_j)P(Z_k)\)</span>. Como</p>
+<p><span class="math display">\[\begin{align}
+\hat{P}(Z_k)&amp;=\frac{\sum_{i,j}O_{i,j,k}}{N}=\frac{N_k}{N}\\
+\hat{P}(X_i\cap Y_j)&amp;=\frac{\sum_{k}O_{ijk}}{N}\end{align}\]</span> temos que <span class="math display">\[E_{ijk}=N\hat{P}(X_i,Y_j,Z_k)=N\frac{\sum_{k}O_{ijk}}{N}\frac{N_k}{N}=\frac{N_k}{N}\sum_{k}O_{ijk}\]</span> e a estatítica do teste é <span class="math display">\[Q=\sum_{k=1}^K\sum_{i=1}^r\sum_{j=1}^c\frac{(O_{ijk}-E_{ijk})^2}{E_{ijk}}\sim\chi^2_{(rc-1)(K-1)}\]</span></p>
+<div class="alert alert-success">
+<p><strong>Resumo</strong></p>
+<p><span class="math display">\[\begin{array}{l |c |c |c}
+\hline
+\text{Tipo de Independência} &amp; \text{Notação} &amp; \text{Cálculo do Valor Esperado } (E_{ijk}) &amp; \text{Graus de Liberdade } (df) \\
+\hline
+\text{Mútua (Global)} &amp; X \perp Y \perp Z &amp; \displaystyle \frac{R_i \cdot C_j \cdot N_k}{N^2} &amp; rck - r - c - K + 2 \\ \hline
+\text{Condicional} &amp; X \perp Y \mid Z &amp; \displaystyle \frac{R_{ik} \cdot C_{jk}}{N_k} &amp; K(r-1)(c-1) \\ \hline
+\text{Conjunta} &amp; (X, Y) \perp Z &amp; \displaystyle \frac{(\sum_{k=1}^K O_{ijk}) \cdot N_k}{N} &amp; (rc - 1)(K - 1) \\
+\hline
 \end{array}\]</span></p>
-<p>A variável <span class="math inline">\(W\)</span> tem as classes <span class="math inline">\((0,0),(0,1),(1,0)\)</span> e <span class="math inline">\((1,1)\)</span>, representando todas as combinações possíveis dos níveis de <span class="math inline">\(X\)</span> e <span class="math inline">\(Y\)</span>. A tabela utilizada para o teste é</p>
-<p><span class="math display">\[\begin{array}{c|cc|c}\hline\\
-    &amp;Z \\ \hline
-  W&amp; 1&amp; 2&amp;  \\ \hline
-(0,0)  &amp; o_{111} &amp; o_{112} &amp; r_{1} \\
-(0,1)  &amp; o_{121} &amp; o_{122} &amp; r_{2} \\
-(1,0)  &amp; o_{211} &amp; o_{212} &amp; r_{3} \\
-(1,1)  &amp; o_{221} &amp; o_{222} &amp; r_{4} \\ \hline
-  &amp; C_1 &amp; C_2 &amp; N \\ \hline
-\end{array}\]</span></p>
+</div>
 <div id="exm-" class="theorem example">
-<p><span class="theorem-title"><strong>Example 4.8</strong></span> Considere novamente os dados sobre os tripulantes do Titanic, apresentados no início do capítulo e reproduzidos abaixo em um tabela <span class="math inline">\(2\times 2\times 3\)</span>. Vamos assumir que a Classe é nosso estrato.</p>
+<p><span class="theorem-title"><strong>Example 4.8</strong></span> <strong>Titanic</strong></p>
+<p>Considere novamente os dados sobre os tripulantes do Titanic, apresentados no início do capítulo e reproduzidos abaixo em um tabela <span class="math inline">\(2\times 2\times 3\)</span>. Vamos assumir que a Classe é nosso estrato.</p>
 <p><span class="math display">\[\begin{array}{l l |c c c |r}
 \hline
 \text{Sobreviveu} &amp; \text{Sexo} &amp; \text{Classe 1ª} &amp; \text{Classe 2ª} &amp; \text{Classe 3ª} &amp; \text{Total} \\
 \hline
 \text{Não} &amp; \text{Feminino} &amp; 3 &amp; 6 &amp; 72 &amp; \mathbf{81} \\
-&amp; \text{Masculino} &amp; 118 &amp; 146 &amp; 358 &amp; \mathbf{622} \\
-\hbox{Total} &amp; \mathbf{121} &amp; \mathbf{152} &amp; \mathbf{430} &amp;  \mathbf{703}
-\hline
+&amp; \text{Masculino} &amp; 118 &amp; 146 &amp; 358 &amp; \mathbf{622} \\ \hline
 \text{Sim} &amp; \text{Feminino} &amp; 91 &amp; 70 &amp; 72 &amp; \mathbf{233} \\
 &amp; \text{Masculino} &amp; 57 &amp; 17 &amp; 75 &amp; \mathbf{149} \\
 \hline
 \textbf{Total} &amp; &amp; \mathbf{269} &amp; \mathbf{239} &amp; \mathbf{577} &amp; \mathbf{1085} \\
 \hline
 \end{array}\]</span></p>
-<p>Vamos testar primeiro a hipótese de independência entre as variáveis Sexo, Sobreviveu e Classe. Para essa hipótese nula, as frequências esperadas são</p>
+<ol type="1">
+<li><strong>Independência mútua.</strong> A tabela abaixo apresenta os valores observados e as frequências esperadas entre parênteses.</li>
+</ol>
+<p><span class="math display">\[\begin{array}{l l |c c c |r}\hline\text{Sobreviveu} &amp; \text{Sexo} &amp; \text{Classe 1ª} &amp; \text{Classe 2ª} &amp; \text{Classe 3ª} &amp; \text{Total} \\ \hline\text{Não} &amp; \text{Feminino} &amp; 3 \ (50,4) &amp; 6 \ (44,8) &amp; 72 \ (108,2) &amp; \mathbf{81} \\ &amp; \text{Masculino} &amp; 118 \ (123,8) &amp; 146 \ (110) &amp; 358 \ (265,7) &amp; \mathbf{622} \\ \hline\text{Sim} &amp; \text{Feminino} &amp; 91 \ (27,4) &amp; 70 \ (24,3) &amp; 72 \ (58,8) &amp; \mathbf{233} \\&amp; \text{Masculino} &amp; 57 \ (67,3) &amp; 17 \ (59,8) &amp; 75 \ (144,4) &amp; \mathbf{149} \\\hline\textbf{Total} &amp; &amp; \mathbf{269} &amp; \mathbf{239} &amp; \mathbf{577} &amp; \mathbf{1085} \\ \hline\end{array}\]</span> Obtivemos <span class="math inline">\(Q_{obs}\approx 436,5\)</span>. Como <span class="math inline">\(rcK-r-c-k+2=7\)</span>, temos que o p-valor do teste é</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pchisq</span>(<span class="fl">436.5</span>,<span class="dv">7</span>,<span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3.515759e-90</code></pre>
 </div>
-<p>%=========================================================== % Aula 10 %===========================================================</p>
+</div>
+<p>O gráfico de mosaico é dado abaixo. Observe na notação do tipo fórmula (<code>~</code>) que foi utilizada na função. Ao colocar as variáveis nessa ordem, estamos dizendo que a altura vai ser construída com as proporções da Classe, as larguras com as proporções do sexo e cada retângulo formado pelo cruzamento de classe e sexo vai ser dividido com a frequência relativa da variável sobrevivência. Portanto, pela tabel pode-se observar, fixado o estrato classe, que as proporção de mulheres sobrevivendo foi maior. Contudo, os resíduos de Pearson revelam que mais homens sobreviveram na primeira classe do que o esperado para a hipótese de independência e menos mulheres sobreviveram do que o esperado para a terceira classe.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>dados <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="dv">0</span>, <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">3</span>))</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>dados[,,<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">matrix</span>( <span class="fu">c</span>(<span class="dv">91</span>,<span class="dv">57</span>,<span class="dv">3</span>,<span class="dv">118</span>),<span class="dv">2</span>,<span class="dv">2</span>)</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>dados[,,<span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="fu">matrix</span>( <span class="fu">c</span>(<span class="dv">70</span>,<span class="dv">17</span>,<span class="dv">6</span>,<span class="dv">146</span>),<span class="dv">2</span>,<span class="dv">2</span>)</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>dados[,,<span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="fu">matrix</span>( <span class="fu">c</span>(<span class="dv">72</span>,<span class="dv">75</span>,<span class="dv">72</span>,<span class="dv">358</span>),<span class="dv">2</span>,<span class="dv">2</span>)</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="fu">dimnames</span>(dados) <span class="ot">=</span> <span class="fu">list</span>( <span class="at">Sexo =</span> <span class="fu">c</span>(<span class="st">'M'</span>,<span class="st">'F'</span>), <span class="at">Sobreviveu =</span> <span class="fu">c</span>(<span class="st">'S'</span>,<span class="st">'N'</span>),</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>                        <span class="at">Classe =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>))</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(vcd)</span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a><span class="fu">mosaic</span>(<span class="sc">~</span> Classe <span class="sc">+</span> Sexo <span class="sc">+</span> Sobreviveu, <span class="at">data =</span> dados, <span class="at">shade =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="tabelas_contingencia_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<ol start="2" type="1">
+<li><strong>Independência condicional.</strong> Para verificar se a sobrevivência é independente do sexo dado a classe, calculamos a estatística do teste para cada tabela <span class="math inline">\(2\times 2\)</span> com a Classe fixada. As tabelas são</li>
+</ol>
+<p>Classe 1ª (<span class="math inline">\(Q_1\approx 101,95\)</span>) <span class="math display">\[\begin{array}{l |c c |r}
+\hline
+\text{Sexo} &amp; \text{Sim} &amp; \text{Não} &amp; \text{Total} \\
+\hline
+\text{Feminino} &amp; 91 \ (51,72) &amp; 3 \ (42,28) &amp; \mathbf{94} \\
+\text{Masculino} &amp; 57 \ (96,28) &amp; 118 \ (78,72) &amp; \mathbf{175} \\
+\hline
+\textbf{Total} &amp; \mathbf{148} &amp; \mathbf{121} &amp; \mathbf{269} \\
+\hline
+\end{array}\]</span></p>
+<p>Classe 2ª (<span class="math inline">\(Q_2\approx 149,31\)</span>) <span class="math display">\[\begin{array}{l |c c |r}
+\hline
+\text{Sexo} &amp; \text{Sim} &amp; \text{Não} &amp; \text{Total} \\
+\hline
+\text{Feminino} &amp; 70 \ (27,67) &amp; 6 \ (48,33) &amp; \mathbf{76} \\
+\text{Masculino} &amp; 17 \ (59,33) &amp; 146 \ (103,67) &amp; \mathbf{163} \\
+\hline
+\textbf{Total} &amp; \mathbf{87} &amp; \mathbf{152} &amp; \mathbf{239} \\
+\hline
+\end{array}\]</span></p>
+<p>Classe 3ª (<span class="math inline">\(Q_3\approx 60,76\)</span>) <span class="math display">\[\begin{array}{l |c c |r}
+\hline
+\text{Sexo} &amp; \text{Sim} &amp; \text{Não} &amp; \text{Total} \\
+\hline
+\text{Feminino} &amp; 72 \ (36,69) &amp; 72 \ (107,31) &amp; \mathbf{144} \\
+\text{Masculino} &amp; 75 \ (110,31) &amp; 358 \ (322,69) &amp; \mathbf{433} \\
+\hline
+\textbf{Total} &amp; \mathbf{147} &amp; \mathbf{430} &amp; \mathbf{577} \\
+\hline
+\end{array}\]</span></p>
+<p>A estatística final para o teste é <span class="math inline">\(Q_{obs}=312,2\)</span>. O p-valor para este é</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pchisq</span>(<span class="dv">312</span>,<span class="dv">3</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.514569e-67</code></pre>
+</div>
+</div>
+<p>o que nos leva a rejeitar que Sobrevivência e Sexo são independentes dado a Classe.</p>
+<ul>
+<li><strong>Indepenência conjunta</strong> Vamos testar se a conjunta (Sexo,Sobrevivência) independe da classe.</li>
+</ul>
+<p>Aqui está a reordenação da tabela solicitada. Note que os valores observados e esperados (entre parênteses) foram mantidos para cada célula correspondente.</p>
+<p>Nesta nova disposição, o foco da leitura passa a ser como o Sexo e a Sobrevivência se distribuem dentro de cada Classe.</p>
+<p><span class="math display">\[\begin{array}{l l |c c |r}
+\hline
+\text{Classe} &amp; \text{Sobreviveu} &amp; \text{Sexo: Fem.} &amp; \text{Sexo: Masc.} &amp; \text{Total} \\ \hline
+\text{1ª} &amp; \text{Não} &amp; 3 \ (20,08) &amp; 118 \ (154,21) &amp; \mathbf{121} \\
+&amp; \text{Sim} &amp; 91 \ (57,77) &amp; 57 \ (36,94) &amp; \mathbf{148} \\ \hline
+\text{2ª} &amp; \text{Não} &amp; 6 \ (17,84) &amp; 146 \ (137,01) &amp; \mathbf{152} \\
+&amp; \text{Sim} &amp; 70 \ (51,32) &amp; 17 \ (32,82) &amp; \mathbf{87} \\ \hline
+\text{3ª} &amp; \text{Não} &amp; 72 \ (43,08) &amp; 358 \ (330,78) &amp; \mathbf{430} \\
+&amp; \text{Sim} &amp; 72 \ (123,91) &amp; 75 \ (79,24) &amp; \mathbf{147} \\ \hline
+\textbf{Total} &amp; &amp; \mathbf{314} &amp; \mathbf{771} &amp; \mathbf{1085} \\ \hline
+\end{array}\]</span> O valor da estatística qui-quadrado é 103,55 e, com 6 graus de liberdade temos que</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pchisq</span>(<span class="fl">103.55</span>,<span class="dv">6</span>,<span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4.553922e-20</code></pre>
+</div>
+</div>
+<p>logo, rejeitamos a hipótese de que a relação conjunta entre Sexo e Sobrevivência é independente da Classe</p>
+<p><strong>Final.</strong> Os dados não apenas mostram que as variáveis são dependentes, mas que a Classe atuou como um moderador crítico. Embora o sexo tenha sido o principal divisor entre a vida e a morte, a proteção conferida ao gênero feminino foi severamente reduzida para as tripulantes da 3ª Classe.</p>
+</div>
+<div class="alert alert-success">
+<p><strong>A função loglm</strong></p>
+<p>A função <code>loglm</code> utiliza a notação por fórmula (<code>~</code>) e seu resultado apresenta tanto o teste Qui-quadrado quanto o teste da razão de verossimilhanças (não explorado nesse curso). Abaixo, apresentamos a notação para testar os diferentes tipos de independência para as variáveis <span class="math inline">\(A,B\)</span> e <span class="math inline">\(C\)</span>:</p>
+<ul>
+<li><p>Independência mútua: <code>~A + B + C</code></p></li>
+<li><p>Independência condicional: <code>~A*C + B*C</code></p></li>
+<li><p>Independência conjunta: <code>~A*B + C</code></p></li>
+<li><p>Modelo de associação homogênea (todas as iterações de duas variáveis): <code>~(A+B+C)^2</code></p></li>
+</ul>
+<p>Essa função permite mais de 3 variáveis, embora ela tenha suas limitações para tabelas esparsas (muitas celas vazias). Para facilitar a busca por modelos, é útil utilizar um grafo de dependências para interações 2 a 2. Nesse grafo, cada vértice é uma variável e existe uma aresta sempre que as variáveis correspondentes aos vértices são dependentes. A figura abaixo ilustra esse conceito.</p>
+<div id="fig-meu-grafo" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-meu-grafo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Figuras/grafos.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-meu-grafo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.2: Grafos representando as dependências e suas fórmulas para a função <code>loglm</code>
+</figcaption>
+</figure>
+</div>
+<p>Para o exemplo do Titanic, temos o modelo de associação dado abaixo:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(MASS)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Carregando pacotes exigidos: MASS</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">loglm</span>(<span class="sc">~</span>(Sexo <span class="sc">+</span> Sobreviveu <span class="sc">+</span> Classe)<span class="sc">^</span><span class="dv">2</span>, <span class="at">data =</span> dados)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+loglm(formula = ~(Sexo + Sobreviveu + Classe)^2, data = dados)
+
+Statistics:
+                      X^2 df     P(&gt; X^2)
+Likelihood Ratio 55.63452  2 8.301138e-13
+Pearson          50.53669  2 1.061939e-11</code></pre>
+</div>
+</div>
+<p>Ao rejeitar esse modelo, nos resta o modelo de interação tripla. Isso implica que estes dados sempre devem ser discutidos com as três variáveis simultaneamente.</p>
+</div>
+<div id="exr-tipodeparto" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 4.12</strong></span> A tabela apresenta a contagem de recém-nascidos em um hospital:</p>
+<p>Estrato: Bebês com Baixo Peso (<span class="math inline">\(&lt; 2500g\)</span>) <span class="math display">\[\begin{array}{l|l |c c |r}\hline
+&amp;&amp; \hbox{Sobreviveu}\\
+\hbox{Peso}&amp; \text{Parto} &amp; \text{Sim} &amp; \text{Não} &amp; \text{Total} \\\hline
+\hbox{Baixo (&lt;2,5Kg)} &amp;\text{Cesárea} &amp; 45 &amp; 12 &amp; \mathbf{57} \\ &amp;\text{Natural} &amp; 48 &amp; 15 &amp; \mathbf{63} \\\hline
+\hbox{Normal(&gt;=2,5Kg)}&amp;\text{Cesárea} &amp; 180 &amp; 4 &amp; \mathbf{184} \\&amp;\text{Natural} &amp; 210 &amp; 5 &amp; \mathbf{215} \\\hline\end{array}\]</span></p>
+<ol type="1">
+<li><p>Teste se Peso, Parto e Sobrevivência são mutuamente independentes</p></li>
+<li><p>Teste se Sobrevivência e Parto são condicionalmente independentes dado o Peso</p></li>
+</ol>
+</div>
 </section>
-<section id="o-teste-da-mediana" class="level3" data-number="4.3.5">
-<h3 data-number="4.3.5" class="anchored" data-anchor-id="o-teste-da-mediana"><span class="header-section-number">4.3.5</span> O teste da mediana</h3>
+<section id="medidas-de-dependência" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="medidas-de-dependência"><span class="header-section-number">4.5</span> Medidas de dependência</h2>
 <p>\end{frame} </p>
-</section>
-<section id="o-coeficiente-de-cramér" class="level3" data-number="4.3.6">
-<h3 data-number="4.3.6" class="anchored" data-anchor-id="o-coeficiente-de-cramér"><span class="header-section-number">4.3.6</span> O Coeficiente de Cramér</h3>
+<section id="o-coeficiente-de-cramér" class="level3" data-number="4.5.1">
+<h3 data-number="4.5.1" class="anchored" data-anchor-id="o-coeficiente-de-cramér"><span class="header-section-number">4.5.1</span> O Coeficiente de Cramér</h3>
 <pre><code>\begin{itemize}
     \item Um dos problemas da estatística $T$ é que não temos noção de quão alto é o valor de $T$. \item Podemos remediar isso encontrando qual é o maior valor possível de $T$ para um número fixado de linhas e colunas. 
     \item É possível mostrar que $T$ assume seu valor máximo em tabelas que tem $O_{ij}=0$ para todo $i\neq j$. Neste caso, pode-se mostrar o valor máximo de $T$ é $N(q-1)$, onde $q=\min\{r,s\}$. Assim
@@ -1106,8 +1246,8 @@ Z&amp;  X&amp; 0&amp; 1&amp;  \\ \hline
 \end{itemize}</code></pre>
 <p>\end{frame}</p>
 </section>
-<section id="o-coeficiente-phi" class="level3" data-number="4.3.7">
-<h3 data-number="4.3.7" class="anchored" data-anchor-id="o-coeficiente-phi"><span class="header-section-number">4.3.7</span> O Coeficiente Phi</h3>
+<section id="o-coeficiente-phi" class="level3" data-number="4.5.2">
+<h3 data-number="4.5.2" class="anchored" data-anchor-id="o-coeficiente-phi"><span class="header-section-number">4.5.2</span> O Coeficiente Phi</h3>
 <pre><code>Considere a seguinte tabela de contingência
 \begin{table}[]
     \centering
@@ -1116,8 +1256,8 @@ Z&amp;  X&amp; 0&amp; 1&amp;  \\ \hline
 <p><span class="math inline">\(a\)</span> &amp; <span class="math inline">\(b\)</span> &amp; <span class="math inline">\(r_1\)</span> \ <span class="math inline">\(c\)</span> &amp; <span class="math inline">\(d\)</span> &amp; <span class="math inline">\(r_2\)</span>\ <span class="math inline">\(c_1\)</span> &amp; <span class="math inline">\(c_2\)</span> &amp; <span class="math inline">\(N\)</span>\ \end{tabular} \end{table} Suponha que <span class="math inline">\(a\)</span> e <span class="math inline">\(d\)</span> é o número de classificações similares e <span class="math inline">\(b\)</span> e <span class="math inline">\(c\)</span> o número de classificações discrepantes. \end{frame}</p>
 </section>
 </section>
-<section id="o-teste-qui-quadrado-para-aderência-bondade-de-ajuste" class="level2" data-number="4.4">
-<h2 data-number="4.4" class="anchored" data-anchor-id="o-teste-qui-quadrado-para-aderência-bondade-de-ajuste"><span class="header-section-number">4.4</span> O teste Qui-quadrado para aderência (bondade de ajuste)</h2>
+<section id="o-teste-qui-quadrado-para-aderência-bondade-de-ajuste" class="level2" data-number="4.6">
+<h2 data-number="4.6" class="anchored" data-anchor-id="o-teste-qui-quadrado-para-aderência-bondade-de-ajuste"><span class="header-section-number">4.6</span> O teste Qui-quadrado para aderência (bondade de ajuste)</h2>
 <p>\end{frame} </p>
 
 
