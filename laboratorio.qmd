@@ -1,0 +1,39 @@
+# "Laboratório 1: Satisfação Residencial de Famílias Homoafetivas"
+
+## Contexto
+
+Este exercício baseia-se na dissertação de mestrado de **Beatriz da Silva Moreira (2025)**, intitulada *"Satisfação Residencial de Famílias Homoafetivas na Cidade de Manaus - AM"*, analisado pelo LabEst em 2025. O estudo investigou como o ambiente residencial e social impacta a qualidade de vida dessas famílias.
+
+O projeto adotou uma abordagem mista. Na etapa quantitativa, foram coletadas respostas de **104 participantes**, focando em:
+
+1. **Variáveis socioeconômicas** (renda, escolaridade, zona da cidade).
+
+2. **Escalas de Satisfação** (Residência, Bairro e Acolhimento), mensuradas em escala Likert de 5 pontos (1 = Muito Insatisfeito a 5 = Muito Satisfeito).
+
+O trabalho completo pode ser consultado no [Repositório da UFAM](https://tede.ufam.edu.br/bitstream/tede/11079/6/DISS_BeatrizMoreira_PPGPSI).
+
+## Carregamento dos Dados
+
+```{r}
+#| message: false
+#| warning: false
+
+if (!require("gsheet")) install.packages("gsheet")
+library(gsheet)
+
+url <- '[https://docs.google.com/spreadsheets/d/1Bt51Ub_ufq35V6fwBs5rvO3Imwmfq9dAOPFNQkw2guk/edit?usp=sharing](https://docs.google.com/spreadsheets/d/1Bt51Ub_ufq35V6fwBs5rvO3Imwmfq9dAOPFNQkw2guk/edit?usp=sharing)'
+dados <- gsheet2tbl(url)
+```
+
+
+## Exercícios Propostos
+
+**Exercício 1:**  A teoria de satisfação residencial sugere que as pessoas tendem a ser mais satisfeitas com o interior de suas casas (controle privado) do que com o bairro/vizinhança (controle público). Verifique se existe uma diferença significativa entre a satisfação com a residência e a satisfação com o bairro para o mesmo participante.
+
+**Exercício 2:** A dissertação sugere que a percepção de acolhimento social (segurança contra homofobia) pode variar drasticamente dependendo da zona da cidade onde a família reside.
+
+Construa uma tabela de contingência cruzando a variável Zona da Cidade com a escala de Acolhimento e investigue a afirmação. Observação: como a escala Likert tem 5 níveis, para evitar tabelas muito esparsas, agrupe as respostas em duas categorias: "Baixa Satisfação" (níveis 1, 2 e 3) e "Alta Satisfação" (níveis 4 e 5).
+
+**Exercício 3:** Queremos investigar se a associação entre a Zona da Cidade e a Satisfação é a mesma para Homens e Mulheres. Monte uma tabela de contingência tripla: Gênero x Zona x Satisfação e analise os diferentes tipos de dependência.
+
+**Exercício 4.** Procure por outras associações entre as variáveis de satisfação e as sócio-econômicas.
