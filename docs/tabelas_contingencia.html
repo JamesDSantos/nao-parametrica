@@ -241,10 +241,11 @@ window.Quarto = {
   <li><a href="#o-teste-qui-quadrado-para-independência" id="toc-o-teste-qui-quadrado-para-independência" class="nav-link" data-scroll-target="#o-teste-qui-quadrado-para-independência"><span class="header-section-number">4.3.3</span> O Teste Qui-quadrado para independência</a></li>
   </ul></li>
   <li><a href="#o-teste-qui-quadrado-para-a-independência-conjunta-e-condicional" id="toc-o-teste-qui-quadrado-para-a-independência-conjunta-e-condicional" class="nav-link" data-scroll-target="#o-teste-qui-quadrado-para-a-independência-conjunta-e-condicional"><span class="header-section-number">4.4</span> O Teste Qui-quadrado para a independência conjunta e condicional</a></li>
-  <li><a href="#medidas-de-dependência" id="toc-medidas-de-dependência" class="nav-link" data-scroll-target="#medidas-de-dependência"><span class="header-section-number">4.5</span> Medidas de dependência</a>
+  <li><a href="#medidas-de-associação" id="toc-medidas-de-associação" class="nav-link" data-scroll-target="#medidas-de-associação"><span class="header-section-number">4.5</span> Medidas de associação</a>
   <ul class="collapse">
-  <li><a href="#o-coeficiente-de-cramér" id="toc-o-coeficiente-de-cramér" class="nav-link" data-scroll-target="#o-coeficiente-de-cramér"><span class="header-section-number">4.5.1</span> O Coeficiente de Cramér</a></li>
+  <li><a href="#coeficiente-v-de-cramér" id="toc-coeficiente-v-de-cramér" class="nav-link" data-scroll-target="#coeficiente-v-de-cramér"><span class="header-section-number">4.5.1</span> Coeficiente <span class="math inline">\(V\)</span> de Cramér</a></li>
   <li><a href="#o-coeficiente-phi" id="toc-o-coeficiente-phi" class="nav-link" data-scroll-target="#o-coeficiente-phi"><span class="header-section-number">4.5.2</span> O Coeficiente Phi</a></li>
+  <li><a href="#coeficiente-gamma" id="toc-coeficiente-gamma" class="nav-link" data-scroll-target="#coeficiente-gamma"><span class="header-section-number">4.5.3</span> Coeficiente <span class="math inline">\(\gamma\)</span></a></li>
   </ul></li>
   <li><a href="#o-teste-qui-quadrado-para-aderência-bondade-de-ajuste" id="toc-o-teste-qui-quadrado-para-aderência-bondade-de-ajuste" class="nav-link" data-scroll-target="#o-teste-qui-quadrado-para-aderência-bondade-de-ajuste"><span class="header-section-number">4.6</span> O teste Qui-quadrado para aderência (bondade de ajuste)</a></li>
   </ul>
@@ -385,10 +386,10 @@ P(T_1\leq-1,2695)&amp;=0,1021\end{align}\]</span> logo, <span class="math displa
 </div>
 <div id="def-" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 4.1</strong></span> <strong>Gráfico de mosaico</strong></p>
-<p>O <strong>gráfico de mosaico</strong> é formado por retângulos, um para cada cela da tabela, dispostos na mesma ordem. A área dos retângulos é proporcional à sua frequência observada, apresentando uma inspeção visual direta das celas. Os retângulos são construídos como segue:</p>
+<p>O <strong>gráfico de mosaico</strong> é formado por retângulos, um para cada célula da tabela, dispostos na mesma ordem. A área dos retângulos é proporcional à sua frequência observada, apresentando uma inspeção visual direta das células. Os retângulos são construídos como segue:</p>
 <ul>
-<li><p>A altura do retângulo da cela <span class="math inline">\((i,j)\)</span> é proporcional ao total da linha (<span class="math inline">\(n_i/n\)</span>).</p></li>
-<li><p>A largura do retângulo da cela <span class="math inline">\((i,j)\)</span> é proporcional à <span class="math inline">\(O_{ij}/n_i\)</span>.</p></li>
+<li><p>A altura do retângulo da célula <span class="math inline">\((i,j)\)</span> é proporcional ao total da linha (<span class="math inline">\(n_i/n\)</span>).</p></li>
+<li><p>A largura do retângulo da célula <span class="math inline">\((i,j)\)</span> é proporcional à <span class="math inline">\(O_{ij}/n_i\)</span>.</p></li>
 </ul>
 <p>Em um gráfico de mosaico, as linhas se comportam como um gráfico de barras empilhadas 100%, mostrando como as probabilidades de cada classe se dividem ao longo da linha. Sob <span class="math inline">\(H_0\)</span>, esperamos que as divisões entre as colunas estejam alinhadas através das linhas.</p>
 <div id="fig-mosaicos-residuos" class="quarto-layout-panel">
@@ -427,7 +428,7 @@ P(T_1\leq-1,2695)&amp;=0,1021\end{align}\]</span> logo, <span class="math displa
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mosaicos-residuos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4.1: <strong>Observação.</strong> Existem diferentes implementações do gráfico de mosaico. No <code>R</code>, vamos utilizar o pacote <code>vcd</code>, que possui a função <code>mosaic</code>, cuja a implementação é a mesma apresentada aqui. Já o pacote <code>graphics</code> (o pacote básico do <code>R</code>) possui a função <code>mosaicplot</code>, no qual a altura do retângulo da cela <span class="math inline">\((i,j)\)</span> é proporcional ao total da coluna (<span class="math inline">\(C_j/n\)</span>) e a largura do retângulo da cela <span class="math inline">\((i,j)\)</span> é proporcional à <span class="math inline">\(O_{ij}/C_j\)</span>. Portanto, ao utilizar outra função para fazer um gráfico de mosaico, as interpretações podem variar.
+Figure&nbsp;4.1: <strong>Observação.</strong> Existem diferentes implementações do gráfico de mosaico. No <code>R</code>, vamos utilizar o pacote <code>vcd</code>, que possui a função <code>mosaic</code>, cuja a implementação é a mesma apresentada aqui. Já o pacote <code>graphics</code> (o pacote básico do <code>R</code>) possui a função <code>mosaicplot</code>, no qual a altura do retângulo da célula <span class="math inline">\((i,j)\)</span> é proporcional ao total da coluna (<span class="math inline">\(C_j/n\)</span>) e a largura do retângulo da célula <span class="math inline">\((i,j)\)</span> é proporcional à <span class="math inline">\(O_{ij}/C_j\)</span>. Portanto, ao utilizar outra função para fazer um gráfico de mosaico, as interpretações podem variar.
 </figcaption>
 </figure>
 </div>
@@ -858,7 +859,7 @@ common odds ratio
 <section id="a-estatística-do-teste-qui-quadrado" class="level3" data-number="4.3.1">
 <h3 data-number="4.3.1" class="anchored" data-anchor-id="a-estatística-do-teste-qui-quadrado"><span class="header-section-number">4.3.1</span> A estatística do teste qui-quadrado</h3>
 <p>Para uma tabela <span class="math inline">\(r\times c\)</span>, a estatística do teste qui-quadrado é dada por</p>
-<p><span class="math display">\[Q=\sum_{i=1}^r\sum_{j=1}^c \frac{(O_{ij}-E_{ij})^2}{E_{ij}},\]</span> onde, <span class="math inline">\(E_{ij}\)</span> é uma estimativa de <span class="math inline">\(E[O_{ij}]\)</span>, representando a frequência esperada para a cela <span class="math inline">\((i,j)\)</span>. Sob certas condições, <span class="math inline">\(Q\sim\chi^2_{(r-1)(c-1)}\)</span>. Para chegar a essa conclusão. considere o caso particular de uma tabela <span class="math inline">\(1\times c\)</span>:</p>
+<p><span class="math display">\[Q=\sum_{i=1}^r\sum_{j=1}^c \frac{(O_{ij}-E_{ij})^2}{E_{ij}},\]</span> onde, <span class="math inline">\(E_{ij}\)</span> é uma estimativa de <span class="math inline">\(E[O_{ij}]\)</span>, representando a frequência esperada para a célula <span class="math inline">\((i,j)\)</span>. Sob certas condições, <span class="math inline">\(Q\sim\chi^2_{(r-1)(c-1)}\)</span>. Para chegar a essa conclusão. considere o caso particular de uma tabela <span class="math inline">\(1\times c\)</span>:</p>
 <p><span class="math display">\[\begin{array}{c|cccc|c}\hline
 &amp;  \hbox{Classe 1}&amp; \hbox{Classe 2} &amp; \cdots &amp; \hbox{Classe c} &amp; \hbox{Total}\\ \hline
 \hbox{amostra} &amp; O_1 &amp; O_2 &amp; \cdots  &amp; O_c &amp; n_1 \\ \hline
@@ -870,17 +871,17 @@ common odds ratio
 \sum_{j=1}^{c-1} \frac{(O_j-n_1p_j)^2}{n_1p_j}+\frac{\left[n_1-\sum_{j=1}^{c-1}O_j-n_1\left(1-\sum_{j=1}^{c-1}p_j\right)\right]^2}{n_1p_c}\\\
 &amp;=\sum_{j=1}^{c-1} (O_j-n_1p_j)^2\left[\frac{1}{n_1p_j}+\frac{1}{n_1p_c}\right]+\sum_{i\neq j}(O_i-n_1p_i)(O_j-n_1p_j)\frac{1}{n_1p_c}
 \end{align}\]</span> A expressão acima é equivalente à forma quadrática <span class="math display">\[(\textbf{O}-\boldsymbol{\mu})'\Sigma^{-1}(\textbf{O}-\boldsymbol{\mu}),\]</span> Como o vetor <span class="math inline">\(\textbf{O}\)</span> tem dimensão <span class="math inline">\(c-1\)</span> e a matriz de covariância <span class="math inline">\(\Sigma\)</span> é de posto completo, segue diretamente do Teorema Central do Limite Multivariado que essa forma quadrática converge em distribuição para uma qui-quadrado com <span class="math inline">\(c-1\)</span> graus de liberdade. Logo, para proporções populacionais <span class="math inline">\(p_i\)</span> conhecidas, temos <span class="math inline">\(Q\sim\chi^2_{c-1}\)</span>. Na prática, as proporções não são conhecidas e a frequência esperada passa a ser baseada nas estimativas consistentes a partir dos dados, ou seja, <span class="math inline">\(E_i=n_1\hat{p}_i\)</span>. Como <span class="math display">\[E_i=n_1\hat{p}_i=n_1p_i\frac{\hat{p}_i}{p_i}\stackrel{P}{\to} n_1p_i,\]</span>temos, pelo TCL e pelo Teorema de Slutsky, que a convergência para a família qui-quadrado é preservada quando substituímos <span class="math inline">\(p_i\)</span> por <span class="math inline">\(\hat{p}_i\)</span>. que implica que <span class="math inline">\(Q\sim\chi^2_{c-1}\)</span>.</p>
-<p>Para tabela <span class="math inline">\(r\times c\)</span>, observe que, dado os valores das marginais, apenas <span class="math inline">\((r-1)(c-1)\)</span> celas são utilizadas para a aproximação normal, o que implica em <span class="math display">\[Q=\sum_{i=1}^r\sum_{j=1}^c \frac{(O_{ij}-E_{ij})^2}{E_{ij}}\sim\chi^2_{(r-1)(c-1)}.\]</span></p>
-<p>As parcelas da estatística <span class="math inline">\(Q\)</span> trazem informações individuais sobre as celas da tabela.</p>
+<p>Para tabela <span class="math inline">\(r\times c\)</span>, observe que, dado os valores das marginais, apenas <span class="math inline">\((r-1)(c-1)\)</span> células são utilizadas para a aproximação normal, o que implica em <span class="math display">\[Q=\sum_{i=1}^r\sum_{j=1}^c \frac{(O_{ij}-E_{ij})^2}{E_{ij}}\sim\chi^2_{(r-1)(c-1)}.\]</span></p>
+<p>As parcélulas da estatística <span class="math inline">\(Q\)</span> trazem informações individuais sobre as células da tabela.</p>
 <div id="def-" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 4.2</strong></span> <strong>Resíduos de Pearson</strong></p>
-<p>A quantidade <span class="math display">\[R_{ij}=\frac{O_{ij}-E_{ij}}{\sqrt{E_{ij}}}\]</span> é denominada resíduo de Pearson. Sob a hipótese nula, esperamos que <span class="math inline">\(R_{ij}\approx N(0,1)\)</span>. Deste modo, valores <span class="math inline">\(|R_{ij}|&gt;2\)</span> indicam falta de ajuste na cela <span class="math inline">\((i,j)\)</span> da tabela.</p>
+<p>A quantidade <span class="math display">\[R_{ij}=\frac{O_{ij}-E_{ij}}{\sqrt{E_{ij}}}\]</span> é denominada resíduo de Pearson. Sob a hipótese nula, esperamos que <span class="math inline">\(R_{ij}\approx N(0,1)\)</span>. Deste modo, valores <span class="math inline">\(|R_{ij}|&gt;2\)</span> indicam falta de ajuste na célula <span class="math inline">\((i,j)\)</span> da tabela.</p>
 <p>O gráfico de mosaico costuma ter seus retângulos coloridos de acordo com o seu respectivo valor de <span class="math inline">\(R_{ij}\)</span>.</p>
 </div>
 <p>Da demonstração da distribuição assintótica de <span class="math inline">\(Q\)</span>, é fácil notar que a estatística <span class="math inline">\(Q\)</span> pode ser utilizada para tabelas de contingência com mais de duas entradas. Entretanto, a aproximação para a distribuição qui-quadrado pode ser violada se as frequências esperadas forem baixas. A famosa recomendação de Cochran (1954) diz o seguinte:</p>
 <ul>
-<li><p><strong>A Regra dos 80%</strong>: Pelo menos 80% das celas devem ter frequência esperada maior ou igual a 5.</p></li>
-<li><p><strong>A Regra do 1</strong>: Nenhuma cela pode ter uma frequência esperada menor que 1.</p></li>
+<li><p><strong>A Regra dos 80%</strong>: Pelo menos 80% das células devem ter frequência esperada maior ou igual a 5.</p></li>
+<li><p><strong>A Regra do 1</strong>: Nenhuma célula pode ter uma frequência esperada menor que 1.</p></li>
 </ul>
 <p>Quando as recomendações de Cochran são violadas, a distribuição de <span class="math inline">\(Q\)</span> é obtida via simulação. Nesse caso, tabelas são simuladas considerando a hipótese nula e as marginais fixadas, sendo portanto uma generalização do teste exato de Fisher para tabelas <span class="math inline">\(2\times 2\)</span>. Para a <span class="math inline">\(i\)</span>-ésima tabela simulada, o valor da estatística <span class="math inline">\(Q_i\)</span> é calculado. Após <span class="math inline">\(B\)</span> simulações, o p-valor é dado por <span class="math display">\[\frac{1}{B}\sum_{i=1}^B I(Q_{i}&gt;Q_{obs}).\]</span></p>
 <div class="alert alert-info">
@@ -888,11 +889,11 @@ common odds ratio
 <p>O algoritmo de Patefield está implementado na função <code>fisher.test</code> e é utilizado em tabelas maiores que as <span class="math inline">\(2\times 2\)</span>. Para ilustrar o funcionamento, considere a tabela abaixo</p>
 <p><span class="math display">\[\begin{array}{c|ccc|c}\hline &amp; \hbox{Classe 1} &amp; \hbox{Classe 2 }&amp; \hbox{Classe 3}&amp;\hbox{Total}\\ \hline \hbox{Amostra 1}&amp;&amp;&amp;&amp;n_1\\
 \hbox{Amostra 2}&amp;&amp;&amp;&amp;n_2\\  \hline \hbox{}&amp;c_1&amp;c_2&amp;c_3&amp;N\\\hline\end{array}\]</span></p>
-<p>Sob a hipótese nula, as <span class="math inline">\(N\)</span> observações podem ser distribuídas ao acaso nas seis celas, respeitando as restrições impostas nas marginais. Podemos primeiro simular <span class="math inline">\(o_{11},\)</span> onde</p>
+<p>Sob a hipótese nula, as <span class="math inline">\(N\)</span> observações podem ser distribuídas ao acaso nas seis células, respeitando as restrições impostas nas marginais. Podemos primeiro simular <span class="math inline">\(o_{11},\)</span> onde</p>
 <p><span class="math display">\[O_{11}\sim\hbox{Hipergeométrica}(N,n_1,c_1).\]</span> Após a simulação de <span class="math inline">\(o_{11}\)</span>, teremos</p>
 <p><span class="math display">\[\begin{array}{c|ccc|c}\hline &amp; \hbox{Classe 1} &amp; \hbox{Classe 2 }&amp; \hbox{Classe 3}&amp;\hbox{Total}\\ \hline \hbox{Amostra 1}&amp;o_{11}&amp;&amp;&amp;n_1\\
 \hbox{Amostra 2}&amp;&amp;&amp;&amp;n_2\\  \hline \hbox{}&amp;c_1&amp;c_2&amp;c_3&amp;N\\\hline\end{array}\]</span></p>
-<p>Para simular <span class="math inline">\(O_{12}\)</span>, observe que faltam simular <span class="math inline">\(N-o_{11}\)</span> observações e que apenas <span class="math inline">\(n_1-o_{11}\)</span> podem vir da amostra 1. Nesse caso, <span class="math inline">\(O_{12}\)</span> é simulada através de <span class="math display">\[O_{12}\sim\hbox{Hipergeométrica}(N-o_{11},n_1-o_{11},c_1).\]</span> O algoritmo segue, simulando as celas da esquerda para direita e de cima a baixo até completar a tabela (pela restrição das marginais, apenas <span class="math inline">\((r-1)(c-1)\)</span> simulações são necessárias).</p>
+<p>Para simular <span class="math inline">\(O_{12}\)</span>, observe que faltam simular <span class="math inline">\(N-o_{11}\)</span> observações e que apenas <span class="math inline">\(n_1-o_{11}\)</span> podem vir da amostra 1. Nesse caso, <span class="math inline">\(O_{12}\)</span> é simulada através de <span class="math display">\[O_{12}\sim\hbox{Hipergeométrica}(N-o_{11},n_1-o_{11},c_1).\]</span> O algoritmo segue, simulando as células da esquerda para direita e de cima a baixo até completar a tabela (pela restrição das marginais, apenas <span class="math inline">\((r-1)(c-1)\)</span> simulações são necessárias).</p>
 </div>
 </section>
 <section id="o-teste-qui-quadrado-para-diferenças-entre-probabilidades" class="level3" data-number="4.3.2">
@@ -910,7 +911,7 @@ common odds ratio
 H_0&amp;: p_{1,j}=p_{2,j}=\cdots=p_{r,j}=p_j \hbox{ para todo }j\\
 H_1&amp;:p_{i,j}\neq p_{k,j} \hbox{ para pelo menos um }j\hbox{ e um par }(i,k)
 \end{align*}\]</span></p>
-<p>Quando a hipótese nula é verdadeira, temos que <span class="math display">\[\hat{p}_{j}=\frac{_j}{N},\]</span> de modo que a frequência esperada da cela <span class="math inline">\((i,j)\)</span> é</p>
+<p>Quando a hipótese nula é verdadeira, temos que <span class="math display">\[\hat{p}_{j}=\frac{_j}{N},\]</span> de modo que a frequência esperada da célula <span class="math inline">\((i,j)\)</span> é</p>
 <p><span class="math display">\[E_{ij}=n_i\hat{p}_j=\frac{n_iC_j}{N},\]</span> e a estatística de teste é dada por <span class="math display">\[\begin{equation}
      Q=\sum_{i=1}^r\sum_{j=1}^c \frac{(O_{ij}-E_{ij})^2}{E_{ij}},
 \end{equation}\]</span></p>
@@ -923,7 +924,7 @@ H_1&amp;:p_{i,j}\neq p_{k,j} \hbox{ para pelo menos um }j\hbox{ e um par }(i,k)
     \hbox{Escola pública} &amp; 30 &amp; 32 &amp; 17 &amp; 3 &amp; 82 \\ \hline
     \hbox{Total} &amp; 36 &amp; 46 &amp; 34 &amp; 12 &amp; 128 \\ \hline
         \end{array}\]</span></p>
-<p>A seguir, mostramos o gráfico de mosaico para esta tabela. Observe que do resíduo de Pearson para a cela relacionada com a escola privada e o escore 426-500 é maior que 2, o que implica que esse valor é maior do que o esperado sob a hipótese de que não há diferenças entre os tipos de escola.</p>
+<p>A seguir, mostramos o gráfico de mosaico para esta tabela. Observe que do resíduo de Pearson para a célula relacionada com a escola privada e o escore 426-500 é maior que 2, o que implica que esse valor é maior do que o esperado sob a hipótese de que não há diferenças entre os tipos de escola.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>dados <span class="ot">&lt;-</span> <span class="fu">matrix</span>( <span class="fu">c</span>(<span class="dv">6</span>,<span class="dv">30</span>,<span class="dv">14</span>,<span class="dv">32</span>,<span class="dv">17</span>,<span class="dv">17</span>,<span class="dv">9</span>,<span class="dv">3</span>),<span class="dv">2</span>,<span class="dv">4</span>)</span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dimnames</span>(dados) <span class="ot">&lt;-</span> <span class="fu">list</span>( escola <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">'Privada'</span>, <span class="st">'Pública'</span>), </span>
@@ -939,7 +940,7 @@ H_1&amp;:p_{i,j}\neq p_{k,j} \hbox{ para pelo menos um }j\hbox{ e um par }(i,k)
 </div>
 </div>
 </div>
-<p>A tabela com as frequências esperadas é dada abaixo. Observe que a regra de Cochran está satisfeita, pois devemos ter pelo menos 7 (80% de 8 celas) com frequências esperadas maiores que ou iguais que 5 e nenhuma menor que 1.</p>
+<p>A tabela com as frequências esperadas é dada abaixo. Observe que a regra de Cochran está satisfeita, pois devemos ter pelo menos 7 (80% de 8 células) com frequências esperadas maiores que ou iguais que 5 e nenhuma menor que 1.</p>
 <p><span class="math display">\[\begin{array}{c|cccc|c}\hline
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&amp;&nbsp; \hbox{Escore do teste}&amp; \\
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&amp; 0-275 &amp; 276-350 &amp; 351-425 &amp; 426-500 &amp; \hbox{Total} \\ \hline
@@ -997,7 +998,7 @@ H_1&amp;:p_{i,j}\neq p_{k,j} \hbox{ para pelo menos um }j\hbox{ e um par }(i,k)
         H_0&amp;: P(\hbox{linha }i,\hbox{coluna }j)= P(\hbox{linha }i)P(\hbox{coluna }j)\hbox{ para todo }(i,j)\\
         H_1&amp;: P(\hbox{linha }i,\hbox{coluna }j)\neq P(\hbox{linha }i)P(\hbox{coluna }j)\hbox{ para pelo menos um par }(i,j)\\
     \end{align*}\]</span></p>
-<p>As probabilidades <span class="math inline">\(P(\hbox{linha }i)\)</span> e <span class="math inline">\(P(\hbox{coluna }j)\)</span> são estimadas por <span class="math inline">\(R_i/N\)</span> e <span class="math inline">\(C_j/N\)</span> respectivamente. Logo, sob <span class="math inline">\(H_0\)</span>, teremos que a frequência esperada para a cela <span class="math inline">\((i,j)\)</span> é</p>
+<p>As probabilidades <span class="math inline">\(P(\hbox{linha }i)\)</span> e <span class="math inline">\(P(\hbox{coluna }j)\)</span> são estimadas por <span class="math inline">\(R_i/N\)</span> e <span class="math inline">\(C_j/N\)</span> respectivamente. Logo, sob <span class="math inline">\(H_0\)</span>, teremos que a frequência esperada para a célula <span class="math inline">\((i,j)\)</span> é</p>
 <p><span class="math display">\[E_{ij}=N\frac{R_i}{N}\frac{C_j}{N}=\frac{R_iC_j}{N}\]</span> e estatística de teste qui-quadrado é dada por</p>
 <p><span class="math display">\[Q=\sum_{i=1}^r\sum_{j=1}^c \frac{(O_{i,j}-E_{i,j})^2}{E_{i,j}}.\]</span></p>
 <p>Portanto, em termos de execução, esse teste é idêntico ao teste para diferença entre popoulações dado na seção anterior.</p>
@@ -1050,7 +1051,7 @@ X-squared = 1.5242, df = 3, p-value = 0.6767</code></pre>
 </ul>
 <p>Vamos analisar cada um dos casos.</p>
 <p><strong>Independência mútua.</strong> Nesse caso, <span class="math inline">\(P(X_i\cap Y_j\cap Z_k)=P(X_i)P(Y_j)P(Z_k)\)</span>. Os estimadores para as probabilidades marginais são</p>
-<p><span class="math display">\[\begin{align}\hat{P}(X_i)&amp;=\frac{\sum_{j,k}O_{i,j,k}}{N}=\frac{\sum_{k=1}^KR_{i,k}}{N}=\frac{R_i}{N}\\\hat{P}(Y_j)&amp;=\frac{\sum_{i,k}O_{i,j,k}}{N}=\frac{\sum_{k=1}^KC_{j,k}}{N}=\frac{C_j}{N}\\\hat{P}(Z_k)&amp;=\frac{\sum_{i,j}O_{i,j,k}}{N}=\frac{N_k}{N}\end{align}\]</span> Deste modo, o valor esperado da cela <span class="math inline">\((i,j,k)\)</span> sob <span class="math inline">\(H_0\)</span> é dado por</p>
+<p><span class="math display">\[\begin{align}\hat{P}(X_i)&amp;=\frac{\sum_{j,k}O_{i,j,k}}{N}=\frac{\sum_{k=1}^KR_{i,k}}{N}=\frac{R_i}{N}\\\hat{P}(Y_j)&amp;=\frac{\sum_{i,k}O_{i,j,k}}{N}=\frac{\sum_{k=1}^KC_{j,k}}{N}=\frac{C_j}{N}\\\hat{P}(Z_k)&amp;=\frac{\sum_{i,j}O_{i,j,k}}{N}=\frac{N_k}{N}\end{align}\]</span> Deste modo, o valor esperado da célula <span class="math inline">\((i,j,k)\)</span> sob <span class="math inline">\(H_0\)</span> é dado por</p>
 <p><span class="math display">\[E_{ijk}=N\hat{P}(X_i,Y_j,Z_k)=N\frac{R_i}{N}\frac{C_j}{N}\frac{N_k}{N}=\frac{R_iC_jN_k}{N^2}.\]</span> A estatística do teste qui-quadrado é dada por <span class="math display">\[Q=\sum_{i=1}^r\sum_{j=1}^c \sum_{k=1}^K \frac{(O_{ijk}-E_{ijk})^2}{E_{ijk}}\]</span> e o p-valor é calculado utilizando a distribuição <span class="math inline">\(\chi^2_{rck-r-c-k+2}\)</span>.</p>
 <p><strong>Independência condicional.</strong> Nesse caso, <span class="math inline">\(P(X_i\cap Y_j\cap Z_k)=P(X_i|Z_k)P(Y_j|Z_k)P(Z_k)\)</span>. Os estimadores para essas probabilidades são</p>
 <p><span class="math display">\[\begin{align}
@@ -1195,7 +1196,7 @@ X-squared = 1.5242, df = 3, p-value = 0.6767</code></pre>
 <li><p>Independência conjunta: <code>~A*B + C</code></p></li>
 <li><p>Modelo de associação homogênea (todas as iterações de duas variáveis): <code>~(A+B+C)^2</code></p></li>
 </ul>
-<p>Essa função permite mais de 3 variáveis, embora ela tenha suas limitações para tabelas esparsas (muitas celas vazias). Para facilitar a busca por modelos, é útil utilizar um grafo de dependências para interações 2 a 2. Nesse grafo, cada vértice é uma variável e existe uma aresta sempre que as variáveis correspondentes aos vértices são dependentes. A figura abaixo ilustra esse conceito.</p>
+<p>Essa função permite mais de 3 variáveis, embora ela tenha suas limitações para tabelas esparsas (muitas células vazias). Para facilitar a busca por modelos, é útil utilizar um grafo de dependências para interações 2 a 2. Nesse grafo, cada vértice é uma variável e existe uma aresta sempre que as variáveis correspondentes aos vértices são dependentes. A figura abaixo ilustra esse conceito.</p>
 <div id="fig-meu-grafo" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-meu-grafo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -1238,28 +1239,139 @@ Pearson          50.53669  2 1.061939e-11</code></pre>
 </ol>
 </div>
 </section>
-<section id="medidas-de-dependência" class="level2" data-number="4.5">
-<h2 data-number="4.5" class="anchored" data-anchor-id="medidas-de-dependência"><span class="header-section-number">4.5</span> Medidas de dependência</h2>
-<p>\end{frame} </p>
-<section id="o-coeficiente-de-cramér" class="level3" data-number="4.5.1">
-<h3 data-number="4.5.1" class="anchored" data-anchor-id="o-coeficiente-de-cramér"><span class="header-section-number">4.5.1</span> O Coeficiente de Cramér</h3>
-<pre><code>\begin{itemize}
-    \item Um dos problemas da estatística $T$ é que não temos noção de quão alto é o valor de $T$. \item Podemos remediar isso encontrando qual é o maior valor possível de $T$ para um número fixado de linhas e colunas. 
-    \item É possível mostrar que $T$ assume seu valor máximo em tabelas que tem $O_{ij}=0$ para todo $i\neq j$. Neste caso, pode-se mostrar o valor máximo de $T$ é $N(q-1)$, onde $q=\min\{r,s\}$. Assim
-    $$R_1=\frac{T}{N(q-1)}$$ mede a dependência entre as linhas e colunas da tabela.
-    
-
-\end{itemize}</code></pre>
-<p>\end{frame}</p>
+<section id="medidas-de-associação" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="medidas-de-associação"><span class="header-section-number">4.5</span> Medidas de associação</h2>
+<p>Tabelas de contingência são úteis para verificar se há algum tipo de dependência/associação entre as variáveis envolvidas. Apresentamos nessa seção três medidas de associação:</p>
+<ul>
+<li><p><span class="math inline">\(V\)</span> de Cramér: para tabelas <span class="math inline">\(r\times c\)</span>, mede a força da associação</p></li>
+<li><p>Coeficiente <span class="math inline">\(\phi\)</span>: para tabelas <span class="math inline">\(2\times 2\)</span>, mede força e sentido.</p></li>
+<li><p><span class="math inline">\(\tau\)</span> <span class="math inline">\(\gamma\)</span> de Goodman e Kruskal: para tabelas <span class="math inline">\(r\times c\)</span>, com as duas variáveis ordinais, mede força e sentido.</p></li>
+</ul>
+<p>Para tabelas <span class="math inline">\(r\times c\)</span> com as duas variáveis nominais não há medida de direção. Deste modo, relações relevantes além da independência podem ser analisadas via resíduos de Pearson.</p>
+<section id="coeficiente-v-de-cramér" class="level3" data-number="4.5.1">
+<h3 data-number="4.5.1" class="anchored" data-anchor-id="coeficiente-v-de-cramér"><span class="header-section-number">4.5.1</span> Coeficiente <span class="math inline">\(V\)</span> de Cramér</h3>
+<p>Até o momento, temos utilizado testes de hipóteses para este fim, utilizando majoritariamente, a estatística <span class="math display">\[Q=\sum_{i=1}^{r}\sum_{j=1}^c \frac{(O_{ij}-E_{ij})^2}{E_{ij}}\]</span> Sabemos que valores altos desta estatística dão evidências contra <span class="math inline">\(H_0\)</span> mas ela não é intuitiva, pois a distribuição da estatística de teste se altera com os valores de <span class="math inline">\((r,s)\)</span> (e, assim, também se altera a noção sobre o que é um valor alto). O <strong>coeficiente <span class="math inline">\(V\)</span> de Cramér</strong> foi construído para sanar essa dificuldade.</p>
+<p>É possível mostrar o valor máximo de <span class="math inline">\(Q\)</span> é <span class="math inline">\(N(q-1)\)</span>, onde <span class="math inline">\(q=\min\{r,s\}\)</span>. Deste modo <span class="math display">\[0&lt;\frac{Q}{N(q-1)}&lt;1.\]</span> Assim, o coeficiente <span class="math inline">\(V\)</span> de Cramér é definido por</p>
+<p><span class="math display">\[V=\sqrt{\frac{Q}{N(q-1)}}\]</span> e mede a associação entre as linhas e colunas da tabela. Tal coeficiente geralmente é interpretado como segue:</p>
+$$
+<span class="math display">\[\begin{array}{c|l}\hline
+                 \text{Coeficiente} &amp; \text{Associação} \\  \hline  
+                 [0,\;\;0,05] &amp; \text{Sem, ou muito fraca}\\
+                [0,05\;,\;0,1) &amp; \text{Fraca} \\
+                 [0,1\;,\;0,15)&amp; \text{Moderado} \\
+                 [0,15\;,\;0,25) &amp; \text{Forte} \\
+                 [0,25\;,\;1] &amp; \text{Muito forte} \\
+                 
+                 \hline
+\end{array}\]</span>
+<p>$$</p>
+<div id="exm-" class="theorem example">
+<p><span class="theorem-title"><strong>Example 4.9</strong></span> &nbsp;</p>
+<pre><code>Considere novamente o problema dos escores dos alunos de escolas públicas e privadas, abordado na aula 9, cuja tabela que contigência com os escores obtidos está replicada abaixo.</code></pre>
+<p><span class="math display">\[\begin{array}{c|cccc|c}\hline
+             &amp;  \hbox{Escore do teste}&amp; \\
+             &amp; 0-275 &amp; 276-350 &amp; 351-425 &amp; 426-500 &amp; \hbox{Total} \\ \hline
+    \hbox{Escola privada} &amp; 6 &amp; 14 &amp; 17 &amp; 9 &amp; 46 \\
+    \hbox{Escola pública} &amp; 30 &amp; 32 &amp; 17 &amp; 3 &amp; 82 \\ \hline
+    \hbox{Total} &amp; 36 &amp; 46 &amp; 34 &amp; 12 &amp; 128 \\ \hline
+        \end{array}\]</span></p>
+<p>Mostramos que há evidências para rejeitar a hipótese de que a distribuição dos escores é a mesma tanto para as escolas públicas quanto para as privadas. Temos que</p>
+<ul>
+<li><span class="math inline">\(Q_{obs}=17,286\)</span></li>
+<li><span class="math inline">\(q=\min\{2,4\}=2\)</span></li>
+<li><span class="math inline">\(N=128\)</span></li>
+</ul>
+<p>logo, o coeficiente de Cramér é igual a <span class="math display">\[V=\sqrt{\frac{17,286}{128\cdot (2-1)}}=0,68\]</span> que pode ser classificado como uma associação muito forte.</p>
+</div>
+<div id="exr-" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 4.13</strong></span> Um estudo clássico de sociologia urbana analisou a relação entre a zona de residência em uma metrópole (Norte, Sul, Leste, Oeste e Centro) e a principal forma de deslocamento utilizada (Carro próprio, Transporte Público, Bicicleta, A pé). Em uma amostra de 500 residentes, obteve-se uma estatística Qui-Quadrado de <span class="math inline">\(Q_{obs} = 48,5\)</span>.</p>
+<ol type="a">
+<li><p>Calcule o Coeficiente <span class="math inline">\(V\)</span> de Cramér para esta tabela <span class="math inline">\(5 \times 4\)</span>.</p></li>
+<li><p>Classifique a força da associação utilizando a escala de interpretação fornecida.</p></li>
+</ol>
+</div>
 </section>
 <section id="o-coeficiente-phi" class="level3" data-number="4.5.2">
 <h3 data-number="4.5.2" class="anchored" data-anchor-id="o-coeficiente-phi"><span class="header-section-number">4.5.2</span> O Coeficiente Phi</h3>
-<pre><code>Considere a seguinte tabela de contingência
-\begin{table}[]
-    \centering
-    \begin{tabular}{|cc|c|} \hline
-    </code></pre>
-<p><span class="math inline">\(a\)</span> &amp; <span class="math inline">\(b\)</span> &amp; <span class="math inline">\(r_1\)</span> \ <span class="math inline">\(c\)</span> &amp; <span class="math inline">\(d\)</span> &amp; <span class="math inline">\(r_2\)</span>\ <span class="math inline">\(c_1\)</span> &amp; <span class="math inline">\(c_2\)</span> &amp; <span class="math inline">\(N\)</span>\ \end{tabular} \end{table} Suponha que <span class="math inline">\(a\)</span> e <span class="math inline">\(d\)</span> é o número de classificações similares e <span class="math inline">\(b\)</span> e <span class="math inline">\(c\)</span> o número de classificações discrepantes. \end{frame}</p>
+<p>Recorde que, para tabelas <span class="math inline">\(2\times 2\)</span>, a estatística <span class="math display">\[T_1=\sqrt{N}\frac{O_{11}O_{22}-O_{12}O_{21}}{\sqrt{r_1r_2c_1c_2}}\]</span> com <span class="math inline">\(T_1\sim\hbox{Normal}(0,1)\)</span> foi utilizada para testar hipóteses que comparavam <span class="math inline">\(p_1\)</span> (sucesso na primeira linha) contra <span class="math inline">\(p_2\)</span> (sucesso na segunda linha). Por ser um caso particular da estatística <span class="math inline">\(Q\)</span>, é fato que <span class="math inline">\(T_1^2&lt;N\)</span>, o que implica em <span class="math display">\[-1&lt;\frac{T_1}{\sqrt{N}}&lt;1\]</span> A estatística <span class="math inline">\(\Phi\)</span> é definida por</p>
+<p><span class="math display">\[\phi=\frac{O_{11}O_{22}-O_{12}O_{21}}{\sqrt{r_1r_2c_1c_2}}\]</span></p>
+<p>Valores de <span class="math inline">\(\phi\)</span> próximos a +1 dão evidências de uma direção positiva, enquanto que valores próximos de -1 dão evidências de uma direção negativa. É simples notar que o coeficiente <span class="math inline">\(\phi\)</span> é o <span class="math inline">\(V\)</span> de Cramér para tabelas <span class="math inline">\(2\times 2\)</span>, de modo que a asssocição pode ser classificada de modo semelhante ao <span class="math inline">\(V\)</span> de Cramér, adicionando apenas a direção.</p>
+<div id="exm-" class="theorem example">
+<p><span class="theorem-title"><strong>Example 4.10</strong></span> Para verificar se o uso de cinto de segurança salva vidas, dados dos 100 últimos acidentes de carro que ocorreram ao longo de certa rodovia foram registrados. Haviam 242 pessoas envolvidas nos acidentes e cada uma delas foi classificada segundo o uso de cinto de segurança e se sobreviveu ao acidente. Os dados estão sumarizados abaixo:</p>
+<p><span class="math display">\[\begin{array}{c|c|cc|c}\hline
+         &amp; &amp; \text{Acidente fatal?}&amp; &amp;\text{Total}  \\
+         &amp; &amp; \text{Sim} &amp; \text{Não} &amp; \\ \hline
+    \text{Usava cinto?} &amp; \text{Sim} &amp; 7 &amp; 89 &amp; 96 \\    
+     &amp; \text{Não} &amp; 24 &amp; 122 &amp; 146 \\ \hline
+     &amp; \text{Total} &amp; 31 &amp; 211 &amp; 242 \\ \hline
+    \end{array}\]</span></p>
+<p>O coeficiente <span class="math inline">\(\phi\)</span> é</p>
+<p><span class="math display">\[\phi=\frac{7\cdot 122-24\cdot 89}{\sqrt{31\cdot 211\cdot 96\cdot 146}}=-0,138\]</span></p>
+<p>o que mostra que a direção negativa e moderada, o que implica que, mudar o uso do cinto de Sim para Não, altera o acidente fatal de Não para Sim. Observe que a direção negativa e moderada faz sentido, uma vez que usar o cinto de segurança aumenta a chance de sobrevivência, mas não a ponto de evitar com completo uma fatalidade.</p>
+</div>
+<div id="exr">
+<p>Em um ensaio clínico para testar a eficácia de uma nova vacina, 200 participantes foram divididos em dois grupos: Tratamento (recebeu a vacina) e Controle (recebeu placebo). Após seis meses, registrou-se a ocorrência de infecção conforme a tabela abaixo:</p>
+<p><span class="math display">\[\begin{array}{l|cc|c}\hline  &amp; \text{Infecção} &amp;&amp;\\\text{Grupo} &amp; \text{Sim} &amp; \text{Não} &amp; \text{Total} \\ \hline\text{Tratamento} &amp; 8 &amp; 92 &amp; 100 \\\text{Controle}    &amp; 22 &amp; 78 &amp; 100 \\ \hline\text{Total}       &amp; 30 &amp; 170 &amp; 200 \\ \hline\end{array}\]</span></p>
+<p>Calcule o coeficiente <span class="math inline">\(\phi\)</span>, interprete o sinal da associação e classifique sua intensidade.</p>
+</div>
+</section>
+<section id="coeficiente-gamma" class="level3" data-number="4.5.3">
+<h3 data-number="4.5.3" class="anchored" data-anchor-id="coeficiente-gamma"><span class="header-section-number">4.5.3</span> Coeficiente <span class="math inline">\(\gamma\)</span></h3>
+<p>Seja <span class="math inline">\((X_1,Y_1),\ldots,(X_n,Y_n)\)</span> uma amstra bivariada de variáveis categóricas. Dizemos que o par <span class="math inline">\((X_i,Y_i)\)</span> e <span class="math inline">\((X_j,Y_j)\)</span> é:</p>
+<ul>
+<li><p><strong>concordante</strong> se <span class="math inline">\(X_i&gt;X_j\)</span> e <span class="math inline">\(Y_i&gt;Y_j\)</span> OU <span class="math inline">\(X_i&lt;X_j\)</span> e <span class="math inline">\(Y_i&lt;Y_j\)</span></p></li>
+<li><p><strong>discordante</strong> se <span class="math inline">\(X_i&gt;X_j\)</span> e <span class="math inline">\(Y_i&lt;Y_j\)</span> OU <span class="math inline">\(X_i&lt;X_j\)</span> e <span class="math inline">\(Y_i&gt;Y_j\)</span></p></li>
+</ul>
+<p>Para essa medida, empates são desconsiderados. Sejam <span class="math inline">\(C\)</span> e <span class="math inline">\(D\)</span> o número pares concordantes e discordantes respectivamente. O coeficiente <span class="math inline">\(\gamma\)</span> é dado por</p>
+<p><span class="math display">\[\gamma=\frac{C-D}{C+D}.\]</span> Essa medida não considera empates, por isso o denominador é menor ou igual a <span class="math inline">\(n\)</span>. Claramente, a direção é dada pelo sinal da diferença entre <span class="math inline">\(C-D\)</span>. Valores próximos de +1 implica na existência de mais pares concordantes e <span class="math inline">\(-1\)</span> indica mais discordantes. O coeficiente <span class="math inline">\(\gamma\)</span> pode ser interpretado como segue:</p>
+$$
+<span class="math display">\[\begin{array}{c|l}
+\hline
+\text{Valor Absoluto } (|\gamma|) &amp; \text{Força da Associação} \\
+\hline
+
+[0,00 \quad , \quad 0,10) &amp; \text{Inexistente ou muito fraca} \\
+[0,10 \quad , \quad 0,30) &amp; \text{Fraca} \\
+[0,30 \quad , \quad 0,50) &amp; \text{Moderada} \\
+[0,50 \quad , \quad 0,70) &amp; \text{Forte} \\
+[0,70 \quad , \quad 1,00] &amp; \text{Muito forte} \\
+\hline
+\end{array}\]</span>
+<p>$$</p>
+<div id="exm">
+<p>Considere a seguinte tabela <span class="math inline">\(3\times 2\)</span> com dados hipotéticos. Vaores foram atribuídos para as classes para facilitar nossa discussão. Deste modo, o par <span class="math inline">\((1,1)\)</span> é equivalente ao nível fundamental com baixa renda.</p>
+<p><span class="math display">\[\begin{array}{l|cc|c}
+\hline  &amp; \text{Renda} &amp;&amp;\\
+\text{Escolaridade } &amp; \text{1-Baixa} &amp; \text{2-Alta} &amp; \text{Total} \\ \hline
+\text{1-Fundamental} &amp; 50 &amp; 5  &amp; 55 \\
+\text{2-Médio}       &amp; 20 &amp; 25 &amp; 45 \\
+\text{3-Superior}    &amp; 5  &amp; 45 &amp; 50 \\ \hline
+\text{Total}       &amp; 75 &amp; 75 &amp; 150 \\ \hline
+\end{array}\]</span></p>
+<p>Sobre os pares concordantes: Para evitar contagens repetidas, iniciamos a análise pela célula <span class="math inline">\((1,1)\)</span>. Para qualquer célula <span class="math inline">\((i,j)\)</span>, os pares concordantes estão localizados nas células abaixo e à direita. Deste modo:</p>
+<ul>
+<li><p>Célula (1,1): Existem 50 observações. As células concordantes são <span class="math inline">\((2,2)\)</span> e <span class="math inline">\((3,2)\)</span>. Assim, temos <span class="math inline">\(50 \cdot (25 + 45) = 3500\)</span> pares.</p></li>
+<li><p>Célula (2,1): Existem 20 observações. A única célula concordante abaixo e à direita é <span class="math inline">\((3,2)\)</span>. Assim, temos <span class="math inline">\(20 \cdot 45 = 900\)</span> pares.</p></li>
+<li><p>As células da última coluna <span class="math inline">\((1,2), (2,2), (3,2)\)</span> e as da última linha <span class="math inline">\((3,1), (3,2)\)</span> não geram novos pares concordantes, pois não possuem células simultaneamente abaixo e à direita.</p></li>
+</ul>
+<p>Portanto, <span class="math inline">\(C = 3500 + 900 = 4400\)</span>.</p>
+<p>Sobre os pares discordantes: Para identificar esses pares, iniciamos a análise pelas células da coluna mais à direita. Para qualquer célula <span class="math inline">\((i,j)\)</span>, os pares discordantes estão localizados nas células abaixo e à esquerda. Deste modo:</p>
+<ul>
+<li><p>Célula (1,2): Existem 5 observações. As células discordantes (abaixo e à esquerda) são <span class="math inline">\((2,1)\)</span> e <span class="math inline">\((3,1)\)</span>. Assim, temos <span class="math inline">\(5 \cdot (20 + 5) = 125\)</span> pares.</p></li>
+<li><p>Célula (2,2): Existem 25 observações. A única célula discordante abaixo e à esquerda é <span class="math inline">\((3,1)\)</span>. Assim, temos <span class="math inline">\(25 \cdot 5 = 125\)</span> pares.</p></li>
+<li><p>As células da primeira coluna <span class="math inline">\((1,1), (2,1), (3,1)\)</span> e as da última linha <span class="math inline">\((3,1), (3,2)\)</span> não geram novos pares discordantes, pois não possuem células simultaneamente abaixo e à esquerda.</p></li>
+</ul>
+<p>Portanto, <span class="math inline">\(D = 125 + 125 = 250\)</span> e</p>
+<p><span class="math display">\[\gamma=\frac{4400-250}{4400+250}=0,89\]</span> o que indica forte associação.</p>
+</div>
+<div id="exr-" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 4.14</strong></span> Pesquisadores investigaram a relação entre a frequência de atividade física e a autopercepção da saúde mental. Ambas as variáveis são ordinais. Os dados de 150 indivíduos estão sumarizados a seguir:</p>
+<p><span class="math display">\[\begin{array}{l|ccc|c}\hline  &amp; \text{Saúde Mental} &amp; &amp;\\ \text{Frequência Física} &amp; \text{1-Baixa} &amp; \text{2-Média} &amp; \text{3-Alta} &amp; \text{Total} \\ \hline\text{1-Rara} &amp; 35 &amp; 10 &amp; 5 &amp; 50 \\ \text{2-Ocasional} &amp; 15 &amp; 25 &amp; 10 &amp; 50 \\ \text{3-Frequente} &amp; 5 &amp; 15 &amp; 30 &amp; 50 \\ \hline \text{Total} &amp; 55 &amp; 50 &amp; 45 &amp; 150 \\ \hline\end{array}\]</span></p>
+<ol type="a">
+<li><p>Identifique o número de pares concordantes (<span class="math inline">\(C\)</span>) e discordantes (<span class="math inline">\(D\)</span>).</p></li>
+<li><p>Calcule o coeficiente <span class="math inline">\(\gamma\)</span> e discuta se o estilo de vida ativo está associado a uma melhor percepção de saúde mental conforme esta amostra.</p></li>
+</ol>
+</div>
 </section>
 </section>
 <section id="o-teste-qui-quadrado-para-aderência-bondade-de-ajuste" class="level2" data-number="4.6">

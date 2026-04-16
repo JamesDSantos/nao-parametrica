@@ -179,11 +179,11 @@ Verifique se a aproximação normal é plausível e teste a hipótese de que a v
 ::: {#def-}
 **Gráfico de mosaico**
 
-O **gráfico de mosaico** é formado por retângulos, um para cada cela da tabela, dispostos na mesma ordem. A área dos retângulos é proporcional à sua frequência observada, apresentando uma inspeção visual direta das celas. Os retângulos são construídos como segue:
+O **gráfico de mosaico** é formado por retângulos, um para cada célula da tabela, dispostos na mesma ordem. A área dos retângulos é proporcional à sua frequência observada, apresentando uma inspeção visual direta das células. Os retângulos são construídos como segue:
 
-* A altura do retângulo da  cela $(i,j)$ é proporcional ao total da linha ($n_i/n$). 
+* A altura do retângulo da  célula $(i,j)$ é proporcional ao total da linha ($n_i/n$). 
 
-* A largura do retângulo da cela $(i,j)$ é proporcional à $O_{ij}/n_i$. 
+* A largura do retângulo da célula $(i,j)$ é proporcional à $O_{ij}/n_i$. 
 
 Em um gráfico de mosaico, as linhas se comportam como um gráfico de barras empilhadas 100%, mostrando como as probabilidades de cada classe se dividem ao longo da linha. Sob $H_0$, esperamos que as divisões entre as colunas estejam alinhadas através das linhas. 
 
@@ -197,7 +197,7 @@ Em um gráfico de mosaico, as linhas se comportam como um gráfico de barras emp
 **Construção do gráfico de mosaico para tabelas 2x2.** (a) Ilustração de um mosaico com $H_0$ verdadeira. Observe como as linhas verticais são próximas. (b) Ilustração de um mosaico com $H_0$ falsa. Observe como as linhas verticais estão distantes.
 
 
-**Observação.** Existem diferentes implementações do gráfico de mosaico. No `R`, vamos utilizar o pacote `vcd`, que possui a função `mosaic`, cuja a implementação é a mesma apresentada aqui. Já o pacote `graphics` (o pacote básico do `R`) possui a função `mosaicplot`, no qual  a altura do retângulo da  cela $(i,j)$ é proporcional ao total da coluna ($C_j/n$) e a largura do retângulo da cela $(i,j)$ é proporcional à $O_{ij}/C_j$. Portanto, ao utilizar outra função para fazer um gráfico de mosaico, as interpretações podem variar.  
+**Observação.** Existem diferentes implementações do gráfico de mosaico. No `R`, vamos utilizar o pacote `vcd`, que possui a função `mosaic`, cuja a implementação é a mesma apresentada aqui. Já o pacote `graphics` (o pacote básico do `R`) possui a função `mosaicplot`, no qual  a altura do retângulo da  célula $(i,j)$ é proporcional ao total da coluna ($C_j/n$) e a largura do retângulo da célula $(i,j)$ é proporcional à $O_{ij}/C_j$. Portanto, ao utilizar outra função para fazer um gráfico de mosaico, as interpretações podem variar.  
 :::
 
 :::
@@ -640,7 +640,7 @@ Para fins didáticos, considere que o teste de Breslow-Day já foi aplicado, ger
 Para uma tabela $r\times c$, a estatística do teste qui-quadrado é dada por
 
 $$Q=\sum_{i=1}^r\sum_{j=1}^c \frac{(O_{ij}-E_{ij})^2}{E_{ij}},$$
-onde, $E_{ij}$ é uma estimativa de $E[O_{ij}]$, representando a frequência esperada para a cela $(i,j)$. Sob certas condições, $Q\sim\chi^2_{(r-1)(c-1)}$. Para chegar a essa conclusão. considere o caso particular de uma tabela $1\times c$:
+onde, $E_{ij}$ é uma estimativa de $E[O_{ij}]$, representando a frequência esperada para a célula $(i,j)$. Sob certas condições, $Q\sim\chi^2_{(r-1)(c-1)}$. Para chegar a essa conclusão. considere o caso particular de uma tabela $1\times c$:
 
 $$\begin{array}{c|cccc|c}\hline 
 &  \hbox{Classe 1}& \hbox{Classe 2} & \cdots & \hbox{Classe c} & \hbox{Total}\\ \hline 
@@ -676,10 +676,10 @@ $$E_i=n_1\hat{p}_i=n_1p_i\frac{\hat{p}_i}{p_i}\stackrel{P}{\to} n_1p_i,$$temos, 
 que implica que $Q\sim\chi^2_{c-1}$.
 
 
-Para tabela $r\times c$, observe que, dado os valores das marginais, apenas $(r-1)(c-1)$ celas são utilizadas para a aproximação normal, o que implica em
+Para tabela $r\times c$, observe que, dado os valores das marginais, apenas $(r-1)(c-1)$ células são utilizadas para a aproximação normal, o que implica em
 $$Q=\sum_{i=1}^r\sum_{j=1}^c \frac{(O_{ij}-E_{ij})^2}{E_{ij}}\sim\chi^2_{(r-1)(c-1)}.$$
 
-As parcelas da estatística $Q$ trazem informações individuais sobre as celas da tabela.
+As parcélulas da estatística $Q$ trazem informações individuais sobre as células da tabela.
 
 :::{#def-}
 
@@ -687,7 +687,7 @@ As parcelas da estatística $Q$ trazem informações individuais sobre as celas 
 
 A quantidade 
 $$R_{ij}=\frac{O_{ij}-E_{ij}}{\sqrt{E_{ij}}}$$
-é denominada resíduo de Pearson. Sob a hipótese nula, esperamos que $R_{ij}\approx N(0,1)$. Deste modo, valores $|R_{ij}|>2$ indicam falta de ajuste na cela $(i,j)$ da tabela.  
+é denominada resíduo de Pearson. Sob a hipótese nula, esperamos que $R_{ij}\approx N(0,1)$. Deste modo, valores $|R_{ij}|>2$ indicam falta de ajuste na célula $(i,j)$ da tabela.  
 
 O gráfico de mosaico costuma ter seus retângulos coloridos de acordo com o seu respectivo valor de $R_{ij}$.
 :::
@@ -695,9 +695,9 @@ O gráfico de mosaico costuma ter seus retângulos coloridos de acordo com o seu
 
 Da demonstração da distribuição assintótica de $Q$, é fácil notar que a estatística $Q$ pode ser utilizada para tabelas de contingência com mais de duas entradas. Entretanto, a aproximação para a distribuição qui-quadrado pode ser violada se as frequências esperadas forem baixas. A famosa recomendação de Cochran (1954) diz o seguinte:
 
-* **A Regra dos 80%**: Pelo menos 80% das celas devem ter frequência esperada maior ou igual a 5.
+* **A Regra dos 80%**: Pelo menos 80% das células devem ter frequência esperada maior ou igual a 5.
 
-* **A Regra do 1**: Nenhuma cela pode ter uma frequência esperada menor que 1.
+* **A Regra do 1**: Nenhuma célula pode ter uma frequência esperada menor que 1.
 
 Quando as recomendações de Cochran são violadas, a distribuição de $Q$ é obtida via simulação. Nesse caso, tabelas são simuladas considerando a hipótese nula e as marginais fixadas, sendo portanto uma generalização do teste exato de Fisher para tabelas $2\times 2$. Para a $i$-ésima tabela simulada, o valor da estatística $Q_i$ é calculado. Após $B$ simulações, o p-valor é dado por
 $$\frac{1}{B}\sum_{i=1}^B I(Q_{i}>Q_{obs}).$$
@@ -710,7 +710,7 @@ O algoritmo de Patefield está implementado na função `fisher.test` e é utili
 $$\begin{array}{c|ccc|c}\hline & \hbox{Classe 1} & \hbox{Classe 2 }& \hbox{Classe 3}&\hbox{Total}\\ \hline \hbox{Amostra 1}&&&&n_1\\
  \hbox{Amostra 2}&&&&n_2\\  \hline \hbox{}&c_1&c_2&c_3&N\\\hline\end{array}$$
 
-Sob a hipótese nula, as $N$ observações podem ser distribuídas ao acaso nas seis celas, respeitando as restrições impostas nas marginais. Podemos primeiro simular $o_{11},$ onde
+Sob a hipótese nula, as $N$ observações podem ser distribuídas ao acaso nas seis células, respeitando as restrições impostas nas marginais. Podemos primeiro simular $o_{11},$ onde
 
 $$O_{11}\sim\hbox{Hipergeométrica}(N,n_1,c_1).$$
 Após a simulação de $o_{11}$, teremos
@@ -720,7 +720,7 @@ $$\begin{array}{c|ccc|c}\hline & \hbox{Classe 1} & \hbox{Classe 2 }& \hbox{Class
 
 Para  simular $O_{12}$, observe que faltam simular $N-o_{11}$ observações e  que apenas $n_1-o_{11}$ podem vir da amostra 1. Nesse caso, $O_{12}$ é simulada através de 
 $$O_{12}\sim\hbox{Hipergeométrica}(N-o_{11},n_1-o_{11},c_1).$$
-O algoritmo segue, simulando as celas da esquerda para direita e de cima a baixo até completar a tabela (pela restrição das marginais, apenas $(r-1)(c-1)$ simulações são necessárias).
+O algoritmo segue, simulando as células da esquerda para direita e de cima a baixo até completar a tabela (pela restrição das marginais, apenas $(r-1)(c-1)$ simulações são necessárias).
 </div>
 
 
@@ -745,7 +745,7 @@ H_1&:p_{i,j}\neq p_{k,j} \hbox{ para pelo menos um }j\hbox{ e um par }(i,k)
 
 Quando a hipótese nula é verdadeira, temos que
 $$\hat{p}_{j}=\frac{_j}{N},$$
-de modo que a frequência esperada da cela $(i,j)$ é
+de modo que a frequência esperada da célula $(i,j)$ é
 
 $$E_{ij}=n_i\hat{p}_j=\frac{n_iC_j}{N},$$
 e a estatística de teste é dada por
@@ -765,7 +765,7 @@ $$\begin{array}{c|cccc|c}\hline
     \hbox{Total} & 36 & 46 & 34 & 12 & 128 \\ \hline
         \end{array}$$
 
-A seguir, mostramos o gráfico de mosaico para esta tabela. Observe que do resíduo de Pearson para a cela relacionada com a escola privada e o escore 426-500 é maior que 2, o que implica que esse valor é maior do que o esperado sob a hipótese de que não há diferenças entre os tipos de escola.
+A seguir, mostramos o gráfico de mosaico para esta tabela. Observe que do resíduo de Pearson para a célula relacionada com a escola privada e o escore 426-500 é maior que 2, o que implica que esse valor é maior do que o esperado sob a hipótese de que não há diferenças entre os tipos de escola.
 
 ```{r}
 dados <- matrix( c(6,30,14,32,17,17,9,3),2,4)
@@ -776,7 +776,7 @@ require(vcd)
 mosaic(dados, shade = TRUE)
 ```
   
-A tabela com as frequências esperadas é dada abaixo. Observe que a regra de Cochran está satisfeita, pois devemos ter pelo menos 7 (80% de 8 celas) com frequências esperadas maiores que ou iguais que 5 e nenhuma menor que 1.
+A tabela com as frequências esperadas é dada abaixo. Observe que a regra de Cochran está satisfeita, pois devemos ter pelo menos 7 (80% de 8 células) com frequências esperadas maiores que ou iguais que 5 e nenhuma menor que 1.
 
 $$\begin{array}{c|cccc|c}\hline
              &  \hbox{Escore do teste}& \\
@@ -862,7 +862,7 @@ $$\begin{align*}
         H_1&: P(\hbox{linha }i,\hbox{coluna }j)\neq P(\hbox{linha }i)P(\hbox{coluna }j)\hbox{ para pelo menos um par }(i,j)\\
     \end{align*}$$
 
-As probabilidades $P(\hbox{linha }i)$ e $P(\hbox{coluna }j)$ são estimadas por $R_i/N$ e $C_j/N$ respectivamente. Logo, sob $H_0$, teremos que a frequência esperada para a cela $(i,j)$ é
+As probabilidades $P(\hbox{linha }i)$ e $P(\hbox{coluna }j)$ são estimadas por $R_i/N$ e $C_j/N$ respectivamente. Logo, sob $H_0$, teremos que a frequência esperada para a célula $(i,j)$ é
 
 $$E_{ij}=N\frac{R_i}{N}\frac{C_j}{N}=\frac{R_iC_j}{N}$$
 e estatística de teste qui-quadrado é dada por
@@ -928,7 +928,7 @@ Vamos analisar cada um dos casos.
 **Independência mútua.** Nesse caso, $P(X_i\cap Y_j\cap Z_k)=P(X_i)P(Y_j)P(Z_k)$. Os estimadores para as probabilidades marginais são
 
 $$\begin{align}\hat{P}(X_i)&=\frac{\sum_{j,k}O_{i,j,k}}{N}=\frac{\sum_{k=1}^KR_{i,k}}{N}=\frac{R_i}{N}\\\hat{P}(Y_j)&=\frac{\sum_{i,k}O_{i,j,k}}{N}=\frac{\sum_{k=1}^KC_{j,k}}{N}=\frac{C_j}{N}\\\hat{P}(Z_k)&=\frac{\sum_{i,j}O_{i,j,k}}{N}=\frac{N_k}{N}\end{align}$$
-Deste modo, o valor esperado da cela $(i,j,k)$ sob $H_0$ é dado por
+Deste modo, o valor esperado da célula $(i,j,k)$ sob $H_0$ é dado por
 
 $$E_{ijk}=N\hat{P}(X_i,Y_j,Z_k)=N\frac{R_i}{N}\frac{C_j}{N}\frac{N_k}{N}=\frac{R_iC_jN_k}{N^2}.$$
 A estatística do teste qui-quadrado é dada por
@@ -1100,7 +1100,7 @@ A função `loglm` utiliza a notação por fórmula (`~`) e seu resultado aprese
 
 * Modelo de associação homogênea (todas as iterações de duas variáveis): `~(A+B+C)^2`
 
-Essa função permite mais de 3 variáveis, embora ela tenha suas limitações para tabelas esparsas (muitas celas vazias). Para facilitar a busca por modelos, é útil utilizar um grafo de dependências para interações 2 a 2. Nesse grafo, cada vértice é uma variável e existe uma aresta sempre que as variáveis correspondentes aos vértices são dependentes. A figura abaixo ilustra esse conceito.
+Essa função permite mais de 3 variáveis, embora ela tenha suas limitações para tabelas esparsas (muitas células vazias). Para facilitar a busca por modelos, é útil utilizar um grafo de dependências para interações 2 a 2. Nesse grafo, cada vértice é uma variável e existe uma aresta sempre que as variáveis correspondentes aos vértices são dependentes. A figura abaixo ilustra esse conceito.
 
 ![Grafos representando as dependências e suas fórmulas  para a função `loglm`](Figuras/grafos.png){#fig-meu-grafo}
 
@@ -1128,157 +1128,203 @@ $$\begin{array}{l|l |c c |r}\hline
 2. Teste se Sobrevivência e Parto são condicionalmente independentes dado o Peso
 :::
 
-##  Medidas de dependência
-\end{frame}
-\endgroup
+##  Medidas de associação
 
-\begin{frame}{Introdução}
-    \begin{itemize}
-        \item Tabelas de contingência são úteis para verificar se há algum tipo de dependência
-        \item Vamos discutir como medir tal dependência
-        \item Até o momento, temos utilizado testes de hipóteses para este fim, utilizando majoritariamente, a estatística 
-        $$T=\sum_{i=1}^{r}\sum_{j=1}^c \frac{(O_{ij}-E_{ij})^2}{E_{ij}}$$
-        \item Sabemos que valores altos desta estatística dão evidências contra $H_0$ mas ela não é intuitiva, pois a distribuição da estatística de teste se altera com os valores de $(r,s)$ (e, assim, também se altera a noção sobre o que é um valor alto)
-        \item Vamos discutir algumas medidas que visam sanar essa dificuldade
-    \end{itemize}
-\end{frame}
+Tabelas de contingência são úteis para verificar se há algum tipo de dependência/associação entre as variáveis envolvidas. Apresentamos nessa seção três medidas de associação:
+
+* $V$ de Cramér: para tabelas $r\times c$, mede a força da associação
+
+* Coeficiente $\phi$: para tabelas $2\times 2$, mede força e sentido.
+
+* $\tau$ $\gamma$ de Goodman e Kruskal: para tabelas $r\times c$, com as duas variáveis ordinais, mede força e sentido.
+
+Para tabelas $r\times c$ com as duas variáveis nominais não há medida de direção. Deste modo, relações relevantes além da independência podem ser analisadas via resíduos de Pearson.
 
 
-### O Coeficiente de Cramér
-    \begin{itemize}
-        \item Um dos problemas da estatística $T$ é que não temos noção de quão alto é o valor de $T$. \item Podemos remediar isso encontrando qual é o maior valor possível de $T$ para um número fixado de linhas e colunas. 
-        \item É possível mostrar que $T$ assume seu valor máximo em tabelas que tem $O_{ij}=0$ para todo $i\neq j$. Neste caso, pode-se mostrar o valor máximo de $T$ é $N(q-1)$, onde $q=\min\{r,s\}$. Assim
-        $$R_1=\frac{T}{N(q-1)}$$ mede a dependência entre as linhas e colunas da tabela.
-        
+### Coeficiente $V$ de Cramér
 
-    \end{itemize}
-\end{frame}
+Até o momento, temos utilizado testes de hipóteses para este fim, utilizando majoritariamente, a estatística 
+        $$Q=\sum_{i=1}^{r}\sum_{j=1}^c \frac{(O_{ij}-E_{ij})^2}{E_{ij}}$$
+Sabemos que valores altos desta estatística dão evidências contra $H_0$ mas ela não é intuitiva, pois a distribuição da estatística de teste se altera com os valores de $(r,s)$ (e, assim, também se altera a noção sobre o que é um valor alto). O **coeficiente $V$ de Cramér** foi construído para sanar essa dificuldade.
 
-\begin{frame}        
-O coeficiente de Cramér é dado por $\sqrt{R_1}$ e é, geralmente, interpretado como segue:
-        \begin{center} 
-            \begin{tabular}{c|c}\hline
-                 Coeficiente & Dependência \\  \hline          
-                $[0,3/10)$ & Fraca \\
-                 $[3/10,7/10)$& Média \\
-                 $[7/10,1]$ & Forte \\ \hline
-            \end{tabular}
-        \end{center}     
-\end{frame}
+É possível mostrar o valor máximo de $Q$ é  $N(q-1)$, onde $q=\min\{r,s\}$. Deste modo
+$$0<\frac{Q}{N(q-1)}<1.$$
+Assim, o coeficiente $V$  de Cramér é definido por 
 
-\begin{frame}{Exemplo 1}
+$$V=\sqrt{\frac{Q}{N(q-1)}}$$ 
+e mede a associação entre as linhas e colunas da tabela. Tal coeficiente geralmente é interpretado como segue:
+
+$$\begin{array}{c|l}\hline
+                 \text{Coeficiente} & \text{Associação} \\  \hline  
+                 [0,\;\;0,05] & \text{Sem, ou muito fraca}\\
+                [0,05\;,\;0,1) & \text{Fraca} \\
+                 [0,1\;,\;0,15)& \text{Moderado} \\
+                 [0,15\;,\;0,25) & \text{Forte} \\ 
+                 [0,25\;,\;1] & \text{Muito forte} \\ 
+                 
+                 \hline
+\end{array}$$
+
+
+
+::: {#exm-}
     Considere novamente o problema dos escores dos alunos de escolas públicas e privadas, abordado na aula 9, cuja tabela que contigência com os escores obtidos está replicada abaixo.
     
-    \begin{table}[]
-        \centering
-        \begin{tabular}{c|cccc|c}\hline
-             &  \multicolumn{4}{c|}{Escore do teste}& \\
-             & 0-275 & 276-350 & 351-425 & 426-500 & Total \\ \hline
-    Escola privada & 6 & 14 & 17 & 9 & 46 \\
-    Escola pública & 30 & 32 & 17 & 3 & 82 \\ \hline
-    Total & 36 & 46 & 34 & 12 & 128 \\ \hline
-        \end{tabular}
-        \label{tab:my_label}
-    \end{table}
-    Mostramos que há evidências para rejeitar a hipótese de que a distribuição dos escores é a mesma tanto para as escolas públicas quanto para as privadas.
-\end{frame}
+$$\begin{array}{c|cccc|c}\hline
+             &  \hbox{Escore do teste}& \\
+             & 0-275 & 276-350 & 351-425 & 426-500 & \hbox{Total} \\ \hline
+    \hbox{Escola privada} & 6 & 14 & 17 & 9 & 46 \\
+    \hbox{Escola pública} & 30 & 32 & 17 & 3 & 82 \\ \hline
+    \hbox{Total} & 36 & 46 & 34 & 12 & 128 \\ \hline
+        \end{array}$$
 
-\begin{frame}{}
-Temos que
-\begin{itemize}
-    \item $t_{obs}=17,286$ 
-    \item $q=\min\{2,5\}=2$
-    \item $N=128$
-\end{itemize}
+Mostramos que há evidências para rejeitar a hipótese de que a distribuição dos escores é a mesma tanto para as escolas públicas quanto para as privadas. Temos que
+
+* $Q_{obs}=17,286$ 
+* $q=\min\{2,4\}=2$
+* $N=128$
+
 logo, o coeficiente de Cramér é igual a 
-$$R_1=\sqrt{\frac{17,286}{128\times (2-1)}}=0,68$$
-que pode ser classificado como uma dependência média ou moderada.
-\end{frame}
+$$V=\sqrt{\frac{17,286}{128\cdot (2-1)}}=0,68$$
+que pode ser classificado como uma associação muito forte.
+:::
+
+::: {#exr-} 
+Um estudo clássico de sociologia urbana analisou a relação entre a zona de residência em uma metrópole (Norte, Sul, Leste, Oeste e Centro) e a principal forma de deslocamento utilizada (Carro próprio, Transporte Público, Bicicleta, A pé). Em uma amostra de 500 residentes, obteve-se uma estatística Qui-Quadrado de $Q_{obs} = 48,5$.
+
+a) Calcule o Coeficiente $V$ de Cramér para esta tabela $5 \times 4$.
+
+b) Classifique a força da associação utilizando a escala de interpretação fornecida.
+:::
+
+
 
 ### O Coeficiente Phi
-    Considere a seguinte tabela de contingência
-    \begin{table}[]
-        \centering
-        \begin{tabular}{|cc|c|} \hline
-        
-$a$  &   $b$       & $r_1$ \\
-$c$ & $d$             & $r_2$\\ \hline
-$c_1$ & $c_2$ & $N$\\ \hline
-        \end{tabular}
-    \end{table}
-    Suponha que $a$ e $d$ é o número de classificações similares e $b$ e $c$ o número de classificações discrepantes.
-\end{frame}
 
-\begin{frame}{}
-\begin{itemize}
-    \item A estatística de Cramér vai indicar apenas a dependência entre linhas e colunas, mas não diz muito além disso.
-    \item Dizemos que há uma direção positiva se classificações similares são mais frequentes.
-    \item Dizemos que há uma direção negativa se classificações discrepantes são mais frequentes.
-    \item Para este fim, podemos utilizar a estatistica Phi, dada por
-    $$\frac{ad-bc}{\sqrt{r_1r_2c_1c_2}}$$
-\end{itemize}
-\end{frame}
+Recorde que, para tabelas $2\times 2$, a estatística 
+    $$T_1=\sqrt{N}\frac{O_{11}O_{22}-O_{12}O_{21}}{\sqrt{r_1r_2c_1c_2}}$$
+com $T_1\sim\hbox{Normal}(0,1)$ foi utilizada para testar hipóteses que comparavam $p_1$ (sucesso na primeira linha) contra $p_2$ (sucesso na segunda linha). Por ser um caso particular da estatística $Q$, é fato que
+$T_1^2<N$, o que implica em 
+$$-1<\frac{T_1}{\sqrt{N}}<1$$
+A estatística $\Phi$ é definida por
 
-\begin{frame}{}
-    Na verdade, a estatística Phi é, basicamente, a estatística do teste Qui-quadrado ($T_1$) apresentada na Aula 7, i.e.,
-    
-    $$\sqrt{N} \hbox{Phi}=T_1.$$
-    
-    Valores de Phi próximos a +1 dão evidências de uma direção positiva, enquanto que valores próximos de -1 dão evidências de uma direção negativa.
-\end{frame}
+$$\phi=\frac{O_{11}O_{22}-O_{12}O_{21}}{\sqrt{r_1r_2c_1c_2}}$$
 
-\begin{frame}{Exemplo 2}
+Valores de $\phi$ próximos a +1 dão evidências de uma direção positiva, enquanto que valores próximos de -1 dão evidências de uma direção negativa.
+É simples notar que o coeficiente $\phi$ é o $V$ de Cramér para tabelas $2\times 2$, de modo que a asssocição pode ser classificada de modo semelhante ao $V$ de Cramér, adicionando apenas a direção.
+
+
+::: {#exm-}
 Para verificar se o uso de cinto de segurança salva vidas, dados dos 100 últimos acidentes de carro que ocorreram ao longo de certa rodovia foram registrados. Haviam 242 pessoas envolvidas nos acidentes e cada uma delas foi classificada segundo o uso de cinto de segurança e se sobreviveu ao acidente. Os dados estão sumarizados abaixo:
 
-\begin{table}[]
-    \centering
-    \begin{tabular}{c|c|cc|c}\hline
-         & & \multicolumn{2}{c|}{Acidente fatal?}& Total  \\ 
-         & & Sim & Não & \\ \hline
-    Usava cinto? & Sim & 7 & 89 & 96 \\    
-     & Não & 24 & 122 & 146 \\ \hline
-     & Total & 1 & 211 & 242 \\ \hline
-    \end{tabular}
-    
-    \label{tab:my_label}
-\end{table}
-\end{frame}
+$$\begin{array}{c|c|cc|c}\hline
+         & & \text{Acidente fatal?}& &\text{Total}  \\ 
+         & & \text{Sim} & \text{Não} & \\ \hline
+    \text{Usava cinto?} & \text{Sim} & 7 & 89 & 96 \\    
+     & \text{Não} & 24 & 122 & 146 \\ \hline
+     & \text{Total} & 31 & 211 & 242 \\ \hline
+    \end{array}$$    
 
-\begin{frame}{}
-    Note que desejamos mostrar que o uso de cinto (``Sim'' na linha) leva a acidentes não fatais (``Não'' na coluna). Então, seria interesante observar um valor de Phi negativo. Notemos que
-    
-    $$\hbox{Phi}=\frac{7\times 122-24\times 89}{\sqrt{31\times211\times 96\times 146}}=-0,138$$
-    
-    o que mostra que a direção é, de fato, negativa.
-    
-    Podemos ainda construir as seguintes hipóteses:
-    
-    \begin{itemize}
-        \item $H_0:$ a direção a dependência não é negativa 
-        \item $H_1:$ a direção a dependência é negativa 
-    \end{itemize}
-    \end{frame}
+O coeficiente $\phi$ é 
 
-\begin{frame}{}
-Note que valores muito negativos de Phi dão evidências contra $H_0$. Seja phi o valor observado de Phi. Então
+$$\phi=\frac{7\cdot 122-24\cdot 89}{\sqrt{31\cdot 211\cdot 96\cdot 146}}=-0,138$$
+    
+o que mostra que a direção negativa e moderada, o que implica que, mudar o uso do cinto de Sim para Não, altera o acidente fatal de Não para Sim. Observe que a direção negativa e moderada faz sentido, uma vez que usar o cinto de segurança aumenta a chance de sobrevivência, mas não a ponto de evitar com completo uma fatalidade.
+:::
 
-\begin{align*}
-    p-\hbox{valor}&=P(Phi\leq phi)=P(\sqrt{N}Phi\leq \sqrt{N}phi)\\
-    &=P(T_1\leq \sqrt{N}phi)
-\end{align*}
-    e, como $T_1\approx N(0,1)$ sob $H_0$, teremos que 
-    \begin{align*}
-    p-\hbox{valor}&=P(Phi\leq phi)=P(\sqrt{N}Phi\leq \sqrt{N}phi)\\
-    &=P(T_1\leq -0,138\sqrt{242})=P(T_1\leq -2,1467)=0,0159
-\end{align*}
-o que nos leva a aceitar que há uma direção negativa, i.e., há evidências de que o uso do cinto de segurança diminui a mortalidade em caso de acidentes.  
-\end{frame}
+
+::: {#exr}
+Em um ensaio clínico para testar a eficácia de uma nova vacina, 200 participantes foram divididos em dois grupos: Tratamento (recebeu a vacina) e Controle (recebeu placebo). Após seis meses, registrou-se a ocorrência de infecção conforme a tabela abaixo:
+
+$$\begin{array}{l|cc|c}\hline  & \text{Infecção} &&\\\text{Grupo} & \text{Sim} & \text{Não} & \text{Total} \\ \hline\text{Tratamento} & 8 & 92 & 100 \\\text{Controle}    & 22 & 78 & 100 \\ \hline\text{Total}       & 30 & 170 & 200 \\ \hline\end{array}$$
+
+Calcule o coeficiente $\phi$, interprete o sinal da associação e classifique sua intensidade.
+:::
+
+### Coeficiente $\gamma$
+
+Seja $(X_1,Y_1),\ldots,(X_n,Y_n)$ uma amstra bivariada de variáveis categóricas. Dizemos que o par $(X_i,Y_i)$ e $(X_j,Y_j)$ é: 
+
+* **concordante** se $X_i>X_j$ e $Y_i>Y_j$ OU $X_i<X_j$ e $Y_i<Y_j$   
+
+* **discordante** se $X_i>X_j$ e $Y_i<Y_j$ OU $X_i<X_j$ e $Y_i>Y_j$   
+
+Para essa medida, empates são desconsiderados. Sejam $C$ e $D$ o número pares concordantes e discordantes respectivamente. O coeficiente $\gamma$ é dado por
+
+$$\gamma=\frac{C-D}{C+D}.$$
+Essa medida não considera empates, por isso o denominador é menor ou igual a $n$. Claramente, a direção é dada pelo sinal da diferença entre $C-D$. Valores próximos de +1 implica na existência de mais pares concordantes e $-1$ indica mais discordantes. O coeficiente $\gamma$ pode ser interpretado como segue:
+
+
+$$\begin{array}{c|l}
+\hline
+\text{Valor Absoluto } (|\gamma|) & \text{Força da Associação} \\
+\hline
+
+[0,00 \quad , \quad 0,10) & \text{Inexistente ou muito fraca} \\
+[0,10 \quad , \quad 0,30) & \text{Fraca} \\
+[0,30 \quad , \quad 0,50) & \text{Moderada} \\
+[0,50 \quad , \quad 0,70) & \text{Forte} \\
+[0,70 \quad , \quad 1,00] & \text{Muito forte} \\
+\hline
+\end{array}$$
+
+::: {#exm}
+
+Considere a seguinte tabela $3\times 2$ com dados hipotéticos. Vaores foram atribuídos para as classes para facilitar nossa discussão. Deste modo, o par $(1,1)$ é equivalente ao nível fundamental com baixa renda.
+
+$$\begin{array}{l|cc|c}
+\hline  & \text{Renda} &&\\
+\text{Escolaridade } & \text{1-Baixa} & \text{2-Alta} & \text{Total} \\ \hline
+\text{1-Fundamental} & 50 & 5  & 55 \\
+\text{2-Médio}       & 20 & 25 & 45 \\
+\text{3-Superior}    & 5  & 45 & 50 \\ \hline
+\text{Total}       & 75 & 75 & 150 \\ \hline
+\end{array}$$
+
+Sobre os pares concordantes: Para evitar contagens repetidas, iniciamos a análise pela célula $(1,1)$. Para qualquer célula $(i,j)$, os pares concordantes estão localizados nas células abaixo e à direita. Deste modo:
+
+* Célula (1,1): Existem 50 observações. As células concordantes são $(2,2)$ e $(3,2)$. Assim, temos $50 \cdot (25 + 45) = 3500$ pares.
+
+* Célula (2,1): Existem 20 observações. A única célula concordante abaixo e à direita é $(3,2)$. Assim, temos $20 \cdot 45 = 900$ pares. 
+
+* As células da última coluna $(1,2), (2,2), (3,2)$ e as da última linha $(3,1), (3,2)$ não geram novos pares concordantes, pois não possuem células simultaneamente abaixo e à direita.
+
+Portanto, $C = 3500 + 900 = 4400$.
+
+Sobre os pares discordantes: Para identificar esses pares, iniciamos a análise pelas células da coluna mais à direita. Para qualquer célula $(i,j)$, os pares discordantes estão localizados nas células abaixo e à esquerda. Deste modo:
+
+* Célula (1,2): Existem 5 observações. As células discordantes (abaixo e à esquerda) são $(2,1)$ e $(3,1)$. Assim, temos $5 \cdot (20 + 5) = 125$ pares.
+
+* Célula (2,2): Existem 25 observações. A única célula discordante abaixo e à esquerda é $(3,1)$. Assim, temos $25 \cdot 5 = 125$ pares.
+
+* As células da primeira coluna $(1,1), (2,1), (3,1)$ e as da última linha $(3,1), (3,2)$ não geram novos pares discordantes, pois não possuem células simultaneamente abaixo e à esquerda.
+
+Portanto, $D = 125 + 125 = 250$ e
+
+$$\gamma=\frac{4400-250}{4400+250}=0,89$$
+o que indica forte associação.
+
+:::
+
+
+::: {#exr-}
+ Pesquisadores investigaram a relação entre a frequência de atividade física e a autopercepção da saúde mental. Ambas as variáveis são ordinais. Os dados de 150 indivíduos estão sumarizados a seguir:
+ 
+ $$\begin{array}{l|ccc|c}\hline  & \text{Saúde Mental} & &\\ \text{Frequência Física} & \text{1-Baixa} & \text{2-Média} & \text{3-Alta} & \text{Total} \\ \hline\text{1-Rara} & 35 & 10 & 5 & 50 \\ \text{2-Ocasional} & 15 & 25 & 10 & 50 \\ \text{3-Frequente} & 5 & 15 & 30 & 50 \\ \hline \text{Total} & 55 & 50 & 45 & 150 \\ \hline\end{array}$$
+ 
+ a) Identifique o número de pares concordantes ($C$) e discordantes ($D$).
+ 
+ b) Calcule o coeficiente $\gamma$ e discuta se o estilo de vida ativo está associado a uma melhor percepção de saúde mental conforme esta amostra.
+:::
+
+
+
+##  O teste Qui-quadrado para aderência (bondade de ajuste)
 
 \begin{frame}{}
     Exercícios das páginas 237 e 238: 1 e 4 (nota: calcular apenas os coeficientes de Cramér e Phi) 
 \end{frame}
 
-##  O teste Qui-quadrado para aderência (bondade de ajuste)
 \end{frame}
 \endgroup
 
