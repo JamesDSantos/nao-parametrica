@@ -56,7 +56,7 @@ Logo, para $n'$ suficientemente grande,
 $$\frac{T-E(T)}{\sqrt{Var(T)}}\to N(0,1).$$
 A estatística $T$ será utilizada para a construção de vários métodos discutidos aqui. Para a realização de testes exatos, observe que 
 
-$$P(T=t)=\frac{\text{# somas iguais a }t}{\text{#combinações possíveis}}.$$
+$$P(T=t)=\frac{\text{número de somas iguais a }t}{\text{número de combinações possíveis}}.$$
 
 ::: {#exm-}
 Seja $X_1,\ldots,X_5$ uma amostra aleatória. Seja $T=R_1+R_2$. Observe que
@@ -275,57 +275,25 @@ prio3_60m <- c(
 ```
 
 
-## O teste de Kruskal-Wallis
-
-
-:::
-
-\begin{frame}{Exercícios}
 
 Exercícios 1 e 2, página 281
-    
-\end{frame}
 
-%===========================================================
-% Aula 15
-%===========================================================
+## O teste de Kruskal-Wallis
 
+Considere $k$ amostras aleatórias independentes, onde $X_{i,1}, \ldots,X_{i,n_i}$ é a amostra aleatória proveniente da $i$-ésima população.    Seja $F_i(.)$ a função de distribuição da $i$-ésima população. Supondo que as amostras são independentes entre si, queremos testar
 
-\begingroup
-\setbeamertemplate{footline}{}
-\begin{frame}{}
-    \Huge{Aula 15 - O teste de Kruskal-Wallis}
-\end{frame}
-\endgroup
+$$\begin{align*}
+H_0&: F_1(x)=\cdots = F_k(x)\\
+H_1&: F_i(x)\neq F_j(x) \text{ para pelo menos um par }(i,j)
+\end{align*}$$
 
-\begin{frame}{O Teste de Kruskal-Wallis}
-\begin{block}{Os dados}
-    Os dados consistem de $k$ amostras aleatórias independentes, onde $X_{i,1}, \ldots,X_{i,n}$ é a amostra aleatória da $i$-ésima população. Os dados são organizados como segue:
-    
- \begin{center}
-     \begin{tabular}{cccc}
-     Amostra 1 & Amostra 2 & $\cdots$ & Amostra $k$ \\
-        $X_{1,1}$  & $X_{2,1}$ & $\cdots$ & $X_{k,1}$  \\
-        $X_{1,2}$  & $X_{2,2}$ & $\cdots$ & $X_{k,2}$  \\
-        $\vdots$  & $\vdots$ & $\vdots$ & $\vdots$  \\
-        $X_{1,n_1}$  & $X_{2,n_2}$ & $\cdots$ & $X_{k,n_k}$  \\
-          & 
-     \end{tabular}
- \end{center}   
- Construiremos uma amostra de tamanho $N=\sum_{i=1}^k n_i$ com todas as observações. Disto, o posto de $X_{ij}$ será denotado por $R(X_{ij})$. Além disso, a soma dos posto da amostra $i$ será denotada por $R_i$.
-\end{block}
-\end{frame}
+A lógica do teste de Kruskal-Wallis é semelhante ao de Mann-Whitney. Primeiro, sob $H_0$, todas as amostras são provenientes do mesmo modelo. Portanto, podemos combiná-las, formando uma amostra única de tamanho $N=\sum_{i=1}^k n_i$ e encontrar os postos $R_1,\ldots,R_{N}$.  Denotando o posto de $X_{i,j}$ por $R_{i,j}$, teremos que os postos associados a $i$-ésima população são
+$$R_i=\sum_{j=1}^{n_i}R_{i,j}.$$
+Ainda sob $H_0$, tesmo que 
 
-\begin{frame}{}
-\begin{block}{Objetivo do teste}
-   Seja $F_i(.)$ a função de distribuição das variáveis da $i$-ésima amostra. Supondo que as amostras são independentes entre si, queremos testar
-    \begin{align*}
-        H_0&: F_1(x)=\cdots = F_k(x)\\
-        H_1&: F_i(x)\neq F_j(x) \hbox{ para pelo menos um par $(i,j)$ }
-    \end{align*}
-\end{block}
-\end{frame}
-
+$$E\left(\frac{R_i}{n_i}\right)=\frac{N+1}{2}$$
+e
+$$Var\left(\frac{R_i}{n_i}\right)=\frac{(N+1)(N-n_i)}{12}$$
 \begin{frame}{}
     \begin{block}{Estatística de teste e $p$-valor}
     A estatística do teste é
