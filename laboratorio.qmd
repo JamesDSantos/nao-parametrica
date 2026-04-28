@@ -32,7 +32,7 @@ dados <- gsheet2tbl(url)
 
 **Exercício 2:** A dissertação sugere que a percepção de acolhimento social (segurança contra homofobia) pode variar drasticamente dependendo da zona da cidade onde a família reside.
 
-Construa uma tabela de contingência cruzando a variável Zona da Cidade com a escala de Acolhimento e investigue a afirmação. Observação: como a escala Likert tem 5 níveis, para evitar tabelas muito esparsas, agrupe as respostas em duas categorias: "Baixa Satisfação" (níveis 1, 2 e 3) e "Alta Satisfação" (níveis 4 e 5).
+Construa uma tabela de contingência cruzando a variável Zona da Cidade com a escala de Acolhimento e investigue a afirmação..
 
 **Exercício 3:** Queremos investigar se a associação entre a Zona da Cidade e a Satisfação é a mesma para Homens e Mulheres. Monte uma tabela de contingência tripla: Gênero x Zona x Satisfação e analise os diferentes tipos de dependência.
 

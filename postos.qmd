@@ -1,0 +1,963 @@
+# Métodos baseados em postos
+
+## Postos
+
+Seja $X_1,\ldots,X_n$ uma amostra aleatória de escala no \textbf{mínimo ordinal}. Seja $X_{(1)},\ldots,X_{(n)}$ a amostra ordenada. O posto de $X_{(i)}$ é o valor $i$. 
+
+::: {#exm-}
+
+Considere a amostra: 1,2 , 9,3, 4,7 ,10, 6,2 , 3. Então
+
+$$\begin{array}{c|cccccc}
+    \text{Amostra ordenada} & 1,2 & 3 & 4,7 & 6,2 & 9,3 & 10  \\ \hline
+    \text{Postos}& 1 & 2 & 3 & 4 & 5 & 6
+    \end{array}$$
+    
+:::
+
+
+Tradicionalmente, a teoria dos postos assume que as variáveis são contínuas, o que garante a ausência de empates. Contudo, se por ventura dois ou mais valores da amostra são iguais (empates) atribuímos a eles a média dos postos que eles teriam se não houvesse empates. Métodos baseados em postos ainda serão válidos para variáveis aleatórias discretas desde que não existam muitos empates. 
+
+::: {#exm-}
+Considere a amostra: 1,2,2,2,9,4,17,6,2. Então
+
+$$\begin{array}{c|ccccccccc}\hline
+    \text{Amostra ordenada}   & 1 & 2 & 2 & 2 & 2 & 4 & 6 & 9 & 17  \\ \hline
+    \text{Postos (sem correção dos empates)}& 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 \\ \hline
+    \end{array}$$
+
+Antes da correção de empates, o valor 2 recebeu os postos 2,3,4 e 5. Portanto, o posto de 2 é 
+$$\frac{2+3+4+5}{4}=3,5.$$
+Deste modo, teremos
+
+$$\begin{array}{c|ccccccccc}\hline
+    \text{Amostra ordenada}   & 1 & 2 & 2 & 2 & 2 & 4 & 6 & 9 & 17  \\ \hline
+    \text{Postos} & 1&3,5&3,5&3,5&3,5&6&7&8&9  \\ \hline
+    \end{array}$$
+
+:::
+
+
+Seja $X_1,\ldots,X_n$ uma amostra aleatória e sejam $R_1,\ldots,R_n$ seus respectivos postos. Então,
+
+$$P(R_1=r_1,\ldots,R_n=r_n)=\frac{1}{n!}$$
+onde $r_1,\ldots,r_n$ é qualquer permutação do conjunto $\{1,\ldots,n\}$ (observe que empates não são considerados). Note que os postos são estatísticas ancilares (para $F$), uma vez que sua distribuição não depende da distribuição de $X$.
+
+
+Para os postos $R_1,\ldots,R_n$, seja  $T=\sum_{i\in \mathcal{I}}R_i$, onde $I\subset \{1,\ldots,n\}$ possui $n'$ elementos. Então,
+
+$$\begin{align*}
+    E(T)&=\frac{n'(n+1)}{2}\\
+    Var(T)&=\frac{n'(n+1)(n-n')}{12}
+\end{align*}$$
+
+Logo, para $n'$ suficientemente grande,
+
+$$\frac{T-E(T)}{\sqrt{Var(T)}}\to N(0,1).$$
+A estatística $T$ será utilizada para a construção de vários métodos discutidos aqui. Para a realização de testes exatos, observe que 
+
+$$P(T=t)=\frac{\text{# somas iguais a }t}{\text{#combinações possíveis}}.$$
+
+::: {#exm-}
+Seja $X_1,\ldots,X_5$ uma amostra aleatória. Seja $T=R_1+R_2$. Observe que
+existem ${5\choose 2}=10$ subconjuntos possíveis de tamanho 2. O menor valor possíve para $t$ é 3 e o maior é 9.
+
+$$\begin{array}{c|c}\hline
+\text{Subconjunto} & \text{Valor de }t\\ \hline
+\{1,2\} & 3 \\
+\{1,3\} & 4 \\
+\{1,4\} & 5 \\
+\{1,5\} & 6 \\
+\{2,3\} & 5 \\
+\{2,4\} & 6 \\
+\{2,5\} & 7 \\
+\{3,4\} & 7 \\
+\{3,5\} & 8 \\
+\{4,5\} & 9 \\ \hline
+\end{array}$$
+
+logo
+$$P(T=t)=\begin{cases}
+\frac{1}{10},&  t= 3\\
+\frac{1}{10},&  t= 4\\
+\frac{2}{10},&  t= 5\\
+\frac{2}{10},&  t= 6\\
+\frac{2}{10},&  t= 7\\
+\frac{1}{10},&  t= 8\\
+\frac{1}{10},&  t= 9\\
+
+
+\end{cases}$$
+
+:::
+
+
+No exemplo anterior, vimos que $P(T=t)$ pode ser calculado enumerando todos os subconjuntos possívels. Para $n'$ grande, a enumeração de todos os subconjuntos pode ser computacionalmente intensiva. Para esses casos, podemos obter uma amostra de $T$ via simulação.
+
+<div class=alert alert-success>
+**Simulando T**
+
+Para obter uma amostra de tamanho $B$ de $T=\sum_{i\in\mathcal{I}}R_i$, onde $\mathcal{I}$ é um subconjunto dos postos de tamanho $n'$, repita o seguinte procedimento $B$ vezes:
+
+1. Simule um subconjunto, de tamanho $n'$, do conjunto dos postos utilizando uma amostragem aleatória simples sem reposição.
+
+2. Para os postos simulados em 1, calcule $T$
+</div>
+
+
+## O Teste de Mann-Whitney
+
+Seja $X_1,\ldots,X_n$ uma amostra aleatória da população 1 e $Y_1,\ldots,Y_m$ uma amostra aleatória da população 2. Considere que as duas amostras são independentes entre si. 
+
+Temos dois objetivos diferentes. No primeiro, desejamos testar se as populações são iguais, ou seja,
+
+$$\begin{align*}
+        H_0&: F(x)=G(x)\\
+        H_1&: F(x)\neq G(x)
+    \end{align*}$$
+onde $F$ e $G$ são as funções de distribuição das populações 1 e 2, respectivamente. 
+
+No segundo, desejamos determinar se há dominância estocástica. Dizemos que $X$ domina $Y$ se $F(x)<G(x)$. Por exemplo, em finanças, se $X$ e $Y$ são retornos de ativos (como ações) $X$ será mais vantajoso, porque tem maior probabilidade de gerar o mesmo retorno que $Y$. Para testar se $X$ domina $Y$, temos as seguintes hipóteses
+$$\begin{align*}
+        H_0&: F(x)= G(x)\\
+        H_1&: F(x)< G(x)
+    \end{align*}$$
+
+
+Independente do objetivo, no teste de Mann-Whitney as populações são iguais sob $H_0$. Portanto, podemos combinar as observações em um único conjunto de tamanho $N=n+m$ para a atribuição dos postos. Sejam $R_1,\ldots,R_n$ e $R_1',\ldots,R_m'$ os postos atribuídos para $X_1,\ldots,X_n$ e $Y_1,\ldots,Y_m$, respectivamente. A estatística é a soma dos postos de $X$:
+
+$$T=\sum_{i=1}^n R_i.$$
+cuja distribuição foi discutida na seção anterior. Seja $t_{obs}$ o valor observado da estatística $T$. Então:
+
+1. Teste bi-lateral:  para $H_0:F(x)=G(x)$, esperamos que $t_{obs}$ esteja próximo da média, logo,
+        $$p\hbox{-valor}=2\min\{P(T\geq t_{obs}),P(T\leq t_{obs})\}$$
+2. Teste unilateral à esquerda (dominância de $X$): para $H_1:F(x)< G(x)$, esperamos valores elevados para $t_{obs}$, logo,
+        $$p\hbox{-valor}=P(T\geq t_{obs})$$
+
+3. Teste unilateral à direita (dominância de $Y$): para $H_1:F(x)> G(x)$, esperamos valores baixos para $t_{obs}$, logo,
+        $$p\hbox{-valor}=P(T\leq t_{obs})$$
+
+
+<div class='alert alert-success'>
+**Nota histórica.** O teste proposto nessas notas de aula é na verdade o Teste da Soma de Postos de Wilcoxon (1945). Mann e Whitney (1947) utilizam a estatística 
+
+$$U=T-\frac{n(n+1)}{2}.$$
+onde $n(n+1)/2$ é o menor valor que $T$ pode assumir. Deste modo, a estatística $U$ é sempre maior ou igual a 0, sendo que ela é nula se e somente se $X$ tem os menores postos possíveis. Também é possível mostrar que o maior valor possível de $U$ é $m\cdot n$e que $U/n\cdot m$ é uma estimativa para $P(X>Y)$. Mann e Whitney construiram as tabelas de probabilidades de $U$ que ajudaram a popularizar o teste.
+
+Disto, como $T$ e $U$ possuem uma relação linear direta, trata-se do mesmo tese para fins de cálculo de p-valor. Portanto, é possível encontrar na literatura o nome Teste de Wilcoxon-Mann-Whitney.
+</div>
+
+
+::: {#exm-}
+48 estudantes do sexo masculino, dos quais 12 viviam na área rural e 36 na urbana, foram selecionados para um teste. O objetivo é testar se a capacidade física dos alunos da área rural é maior que a da urbana. Cada aluno realizou um teste físico no qual um escore baixo indica baixo desempenho físico. Os dados são apresentados abaixo:
+
+$$\begin{array}{l|ccccccc}\hline
+    \text{Alunos da área} & 2,7  & 4,2  & 5,6  & 6,3  & 7,3  & 9    &    \\
+    \text{rural }(X_i)          & 10,6 & 11,4 & 12,5 & 12,9 & 14,8 & 16,1 &   \\   \hline
+    \text{Alunos da área} & 1,0  & 1,8  & 2,1  & 2,4  & 2,6  & 3,2  & 3,6\\ 
+    \text{urbana }(Y_i)        & 4,0  & 5,0  & 5,6  & 5,6  & 5,9  & 6,1  & 6,2 \\ 
+                   & 6,4  & 6,7  & 6,7  & 7,6  & 7,9  & 8,3  & 9,1 \\
+                   &9,9   & 10,6 &10,6  & 10,6 &11,3  & 11,8 &12,6 \\
+                   &12,7  &14,2  &14,8  & 15,3 &16,0  &16,9  &17,7\\
+                   &18,6   &&&&&& \\ \hline     
+    \end{array}$$
+
+Note que estamos interessados em saber se os escores dos alunos da área rural dominam os da área urbana. Assim, $H_0: F(x)\geq G(x)$. A seguir, organizamos os postos e destacamos com um asterisco aqueles pertencentes aos alunos da área rural.
+
+$$\begin{array}{c|c||c|c||c|c||c|c} \hline
+        \text{Observação} & \text{Posto} & \text{Observação} & \text{Posto} & \text{Observação} & \text{Posto}  & \text{Observação} & \text{Posto}\\ \hline
+        1,0 & 1& 5,6 & 13&8,3& 25&12,6&37\\
+        1,8 & 2& 5,6*& 13*&9*& 26*&12,7&38\\
+        2,1 & 3&5,9& 15&9,1& 27& 12,9* &39*\\
+        2,4 & 4&6,1& 16&9,9& 28&14,2&40\\
+        2,6 & 5&6,2& 17&10,6& 30,5&14,8&40,5\\
+        2,7* &6* &6,3*& 18*&10,6&30,5 & 14,8*&40,5*\\
+        3,2& 7&6,4& 19&10,6& 30,5&15,3&43\\
+        3,6& 8&6,7& 20,5&10,6*& 30,5*&16,0&44\\
+        4,0 &9 &6,7& 20,5&11,3& 33&16,1*&45*\\
+        4,2*& 10*&7,3*& 22*&11,4*& 34*& 16,9&46\\
+        5,0& 11&7,6& 23&11,8& 35&17,7&47\\
+        5,6& 13&7,9& 24& 12,5*  & 36*&  18,6&48\\ \hline
+    \end{array}$$
+    
+
+Teremos que $\sum_{i=1}^{12}R_i=320$. Vamos fazer o teste aproximado. Como
+
+$$Z=\frac{320-\frac{12(48+1)}{2}}{\sqrt{\frac{12(49)(36)}{12}}}=0,619$$
+o $p$-valor do teste é $P(Z>0,6428)=0,26$. Portanto, não há evidências estatísticas suficientes para afirmar que os alunos da área rural possuem desempenho físico superior aos da área urbana.
+:::
+
+::: {#exm-}
+**Continuação.**
+
+No `R`, o teste de Mann-Whitney está implementado na função `wilcox.test(x, y)`, onde `x` e `y` são as amostras observadas. A execução deste teste para o conjunto de dados anterior é apresentada abaixo:
+
+
+```{r}
+rural <- c(2.7, 4.2, 5.6, 6.3, 7.3, 9.0, 10.6, 11.4, 12.5, 12.9, 14.8, 16.1)
+urbana <- c(1.0, 1.8, 2.1, 2.4, 2.6, 3.2, 3.6, 4.0, 5.0, 5.6, 5.6, 5.9, 6.1, 6.2, 
+            6.4, 6.7, 6.7, 7.6, 7.9, 8.3, 9.1, 9.9, 10.6, 10.6, 10.6, 11.3, 11.8, 
+            12.6, 12.7, 14.2, 14.8, 15.3, 16.0, 16.9, 17.7, 18.6)
+
+wilcox.test(rural, urbana, alternative = "greater")
+```
+
+Observações importantes sobre a saída do `R`:
+
+* Estatística `W`: Corresponde à estatística $U$. Note que o valor pode diferir ligeiramente do cálculo manual ($T - \text{mínimo}$) em presença de empates, devido à forma como o algoritmo contabiliza as comparações entre pares.
+
+* Location Shift: A saída menciona um "deslocamento de locação". O teste de Mann-Whitney pode ser interpretado como um teste de igualdade de médias ou medianas, mas essa interpretação exige a suposição adicional de que as populações possuem distribuições com o mesmo formato, diferindo apenas em sua posição central.
+
+* Correção de Continuidade: Por padrão (correct = TRUE), o `R` aplica um ajuste de $0,5$ na estatística de teste para melhorar a aproximação pela distribuição Normal.
+
+* P-valor Exato vs. Assintótico: O `R` tenta calcular o p-valor exato se $n$ e $m$ forem menores que 50 e não houver empates. Havendo empates (como no nosso caso), ele recorre à aproximação normal (assintótica) e emite um aviso.
+
+:::
+
+::: {#exr-}
+**Ativos Petrolíferos (PETR4 vs. PRIO3)**
+
+No mercado financeiro, a comparação entre dois ativos vai além da média de seus preços. Um conceito fundamental é a Dominância Estocástica. Dizemos que a ação $X$ domina a ação $Y$ se, para qualquer nível de retorno, a probabilidade de $X$ entregar um resultado superior é maior. Neste exercício, analisaremos duas gigantes do setor de petróleo na B3: 
+
+* Petrobras (PETR4): uma empresa de economia mista, líder de mercado, cujos retornos são influenciados tanto pelo preço do barril de petróleo quanto por políticas governamentais e distribuição de dividendos.
+
+* Prio (PRIO3): Uma empresa privada focada na revitalização de campos maduros. É considerada uma "ação de crescimento", com retornos geralmente atrelados à eficiência operacional e expansão de produção.
+
+Para avaliar uma ação, utilizamos o retorno percentual, que mede a variação relativa do valor investido, sendo sua expressão dada por
+
+$$R_t = \frac{P_t - P_{t-1}}{P_{t-1}} \times 100$$
+onde $P_t$ é o preço no mês atual e $P_{t-1}$ é o preço no mês anterior. Este indicador reflete o ganho (ou perda) real do investidor em cada período. Abaixo, apresentamos os retornos percentuais mensais calculados de maio de 2025 a abril de 2026:
+
+
+$$\begin{array}{c|c|c} \hline
+\text{Mês} & \text{Retorno PETR4 (\%)} & \text{Retorno PRIO3 (\%)} \\ \hline
+\text{Mai/25} & 3,11  & 1,99  \\
+\text{Jun/25} & 4,38  & 4,12  \\
+\text{Jul/25} & 3,94  & 5,21  \\
+\text{Ago/25} & -2,78 & -2,57 \\
+\text{Set/25} & 1,04  & -0,81 \\
+\text{Out/25} & -5,40 & -8,81 \\
+\text{Nov/25} & 6,79  & 3,82  \\
+\text{Dez/25} & -0,25 & -0,43 \\
+\text{Jan/26} & 22,45 & 11,09 \\
+\text{Fev/26} & 4,17  & 4,11  \\
+\text{Mar/26} & -2,80 & 24,25 \\
+\text{Abr/26} & -2,67 & -2,57 \\ \hline
+\end{array}$$
+
+
+Verifique se a ação da Prio (PRIO3) apresenta dominância estocástica sobre a Petrobras (PETR4) no período analisado  (em termos financeiros, isso significaria que a PRIO3 tem uma tendência sistemática de entregar retornos maiores)
+:::
+
+::: {#exr-}
+**Ativos Petrolíferos (PETR4 vs. PRIO3) - continuado.**
+
+Utilizando o `R` realize a mesma análise do exercício anterior, considerando os retornos dos útlimos 5 anos. Os dados estão disposto abaixo:
+
+```{r}
+# Retornos Mensais PETR4 (Abr/2021 a Abr/2026)
+petr4_60m <- c(
+    8.2, 5.1, -1.5, 4.3, -3.2, 6.7, -2.1, 4.5, 1.2, 12.4, -4.8, 3.9,  # 2021-22
+    -8.5, 7.2, 2.1, -5.6, 1.8, 4.4, -9.2, 10.1, -3.5, 6.2, 1.1, -2.4, # 2022-23
+    5.5, -1.2, 4.8, 3.3, -2.9, 7.1, 0.5, -4.2, 8.8, 2.2, -1.1, 5.7,   # 2023-24
+    3.1, 4.4, 3.9, -2.8, 1.0, -5.4, 6.8, -0.3, 22.5, 4.2, -2.8, -2.7, # 2024-25
+    1.5, 2.8, -1.2, 3.4, 4.1, -2.2, 5.5, 1.8, -0.5, 2.1, 3.3, -2.6    # 2025-26
+)
+
+# Retornos Mensais PRIO3 (Abr/2021 a Abr/2026)
+prio3_60m <- c(
+    12.4, 8.2, -4.1, 10.5, 2.1, -1.8, 15.6, 4.3, 7.8, -2.2, 11.1, 5.5, # 2021-22
+    -5.2, 9.4, 12.1, 3.3, -6.7, 8.9, 14.2, -2.1, 5.6, 9.8, -1.2, 4.4,  # 2022-23
+    8.8, 11.2, -3.5, 6.7, 9.1, -4.4, 12.3, 5.5, -2.1, 8.8, 10.2, 4.5,  # 2023-24
+    2.0, 4.1, 5.2, -2.6, -0.8, -8.8, 3.8, -0.4, 11.1, 4.1, 24.3, -2.6, # 2024-25
+    4.5, 6.2, 3.1, 8.8, -1.1, 12.4, 5.1, 9.9, 3.2, 7.7, 2.1, 5.8       # 2025-26
+)
+```
+
+
+## O teste de Kruskal-Wallis
+
+
+:::
+
+\begin{frame}{Exercícios}
+
+Exercícios 1 e 2, página 281
+    
+\end{frame}
+
+%===========================================================
+% Aula 15
+%===========================================================
+
+
+\begingroup
+\setbeamertemplate{footline}{}
+\begin{frame}{}
+    \Huge{Aula 15 - O teste de Kruskal-Wallis}
+\end{frame}
+\endgroup
+
+\begin{frame}{O Teste de Kruskal-Wallis}
+\begin{block}{Os dados}
+    Os dados consistem de $k$ amostras aleatórias independentes, onde $X_{i,1}, \ldots,X_{i,n}$ é a amostra aleatória da $i$-ésima população. Os dados são organizados como segue:
+    
+ \begin{center}
+     \begin{tabular}{cccc}
+     Amostra 1 & Amostra 2 & $\cdots$ & Amostra $k$ \\
+        $X_{1,1}$  & $X_{2,1}$ & $\cdots$ & $X_{k,1}$  \\
+        $X_{1,2}$  & $X_{2,2}$ & $\cdots$ & $X_{k,2}$  \\
+        $\vdots$  & $\vdots$ & $\vdots$ & $\vdots$  \\
+        $X_{1,n_1}$  & $X_{2,n_2}$ & $\cdots$ & $X_{k,n_k}$  \\
+          & 
+     \end{tabular}
+ \end{center}   
+ Construiremos uma amostra de tamanho $N=\sum_{i=1}^k n_i$ com todas as observações. Disto, o posto de $X_{ij}$ será denotado por $R(X_{ij})$. Além disso, a soma dos posto da amostra $i$ será denotada por $R_i$.
+\end{block}
+\end{frame}
+
+\begin{frame}{}
+\begin{block}{Objetivo do teste}
+   Seja $F_i(.)$ a função de distribuição das variáveis da $i$-ésima amostra. Supondo que as amostras são independentes entre si, queremos testar
+    \begin{align*}
+        H_0&: F_1(x)=\cdots = F_k(x)\\
+        H_1&: F_i(x)\neq F_j(x) \hbox{ para pelo menos um par $(i,j)$ }
+    \end{align*}
+\end{block}
+\end{frame}
+
+\begin{frame}{}
+    \begin{block}{Estatística de teste e $p$-valor}
+    A estatística do teste é
+        $$T=\frac{1}{S^2}\left(\sum_{i=1}^n \frac{R_i^2}{n_i}-\frac{N(N+1)^2}{4}\right),$$
+        onde
+        $$S^2=\frac{1}{N-1}\left(\sum_{i=1}^k\sum_{j=1}^{n_i}R(X_{ij})^2 -\frac{N(N+1)^2}{4}\right)^2.$$
+    e o $p$-valor do teste é
+        $$p\hbox{-valor}=P(T\geq t_{obs}).$$
+        Para grandes amostras, $T\sim\chi^2_{k-1}$.
+     \end{block}
+\end{frame}
+
+\begin{frame}{Distribuição de $T$ sob $H_0$}
+
+A distribuição da estatística de teste pode ser encontrada considerando que existem $n_1!\ldots n_k!/N!$ possibilidades dos postos (sob a hipótese $H_0$).
+
+A origem da estatística do teste é a seguinte. Para testar se as médias de $k$ diferentes populações são iguais, utilizamos a ANOVA para 1 fator de classificação, cuja estatística de teste tem distribuição assintótica qui-quadrado com $k-1$ graus de liberdade. Se trocarmos as variáveis respostas pelos postos, teremos a seguinte estatística
+
+$$(N-1)\frac{\sum_{i=1}^k n_i\left(\frac{R_i}{n_i}-\bar{R}\right)^2}{\sum_{i=1}^k\sum_{j=1}^{n_i}(R(X_{ij})-\bar{R})^2},$$
+onde $\bar{R}$ é a média dos postos. Após algumas manipulações, é possível mostrar que a estatística acima é exatamente $T$. Por isso, este teste também é conhecido como ANOVA não paramétrica.
+\end{frame}
+
+\begin{frame}{Exemplo 1 (este exemplo foi visto na Aula 10)}
+    Quatro métodos para melhoria do crescimento de milho foram aleatoriamente assinalados em um grande número de lotes de terras e a produção por acre de cada lote foi registrada. Os resultados foram:
+
+\begin{center}
+\begin{tabular}{c|l}\hline
+Método & Produção por acre \\ \hline
+1 & 83 89 89 90 91 91 92 94 96   \\
+2 & 81 83 83 84 84 88 89 90 91 91  \\
+3 & 91 93 94 95 96 100 101  \\
+4 & 77 78 79 80 81 81  81 82  \\ \hline
+\end{tabular}    
+\end{center}
+Existe diferença entre os métodos de produção?
+\end{frame}
+
+
+\begin{frame}{}
+    Obtivemos os postos das 34 observações. Em seguida, organizamos os postos por método:
+ 
+ \begin{center}
+     \begin{tabular}{ccccccccc}\hline
+     &\multicolumn{2}{c}{Método 1} &\multicolumn{2}{c}{Método 2}&\multicolumn{2}{c}{Método 3}&\multicolumn{2}{c}{Método 4}\\
+     &Obs. & Posto & Obs. & Posto & Obs. & Posto & Obs. & Posto & \\ \hline
+     &83& 11  &91  &  23& 101& 34& 78&2\\
+&91& 23  &90  &19,5& 100& 33&82&9\\
+&94& 28,5& 81 & 6,5& 91& 23&81&6,5\\
+&89& 17  &83  &11  &93& 37&77&1\\
+&89& 17  &84  &13,5&96& 31,5&79&3\\
+&96& 31,5& 83 &11  &95& 30&81&6,5\\
+&91& 23  &88  &15  & 94& 28.5&80&4\\
+&92& 26  &91  &23  && &81&6,5\\
+&90& 19,5& 89 &17  &&&&\\
+&  &     & 84 &13,5&&&&\\ \hline
+$R_i$ &&196,5&&153&&207&&38,5\\
+$n_i$ &&9&&10&&7&&8 \\
+     \end{tabular}
+ \end{center}   
+\end{frame}
+
+\begin{frame}[fragile]{}
+Com um $t_{obs}=25,46$, encontramos um $p$-valor (utilizando a aproximação qui-quadrado) menor que 0,001. Isto nos leva a rejeitar $H_0$. O comando é \texttt{1-pchisq(25.46,3)}. 
+
+O teste também pode ser realizado com a função \texttt{kruskal.test(x,g)}, onde \textbf{x} representa a amostra e \textbf{g} a população. A implmentação deste exemplo segue abaixo:
+
+\begin{verbatim}
+x< - c(83, 89, 89, 90, 91, 91, 92, 94, 96, 81, 83, 83, 84, 84, 88, 89,
+90, 91, 91, 91, 93, 94, 95, 96, 100, 101, 77, 78, 79, 80, 81, 81, 81,
+82)
+
+metodo <- c( rep(1,9), rep(2,10), rep(3,7), rep(4,8) )
+kruskal.test(x, metodo)
+\end{verbatim}
+e a saída:
+\begin{verbatim}
+Kruskal-Wallis rank sum test
+
+data:  x and metodo
+Kruskal-Wallis chi-squared = 25.629, df = 3, p-value = 1.141e-05
+\end{verbatim}
+\end{frame}
+
+%===========================================================
+% Aula 16
+%===========================================================
+
+
+\begingroup
+\setbeamertemplate{footline}{}
+\begin{frame}{}
+    \Huge{Aula 16 - O teste dos postos quadrados para igualdade de variâncias}
+\end{frame}
+\endgroup
+
+\begin{frame}
+\begin{block}{Dados}
+\begin{itemize}
+    \item Sejam $X_{i,1},\ldots,X_{i,n_i}$, com $i=1,\ldots,k$, $k$ amostras aleatórias independentes. \item Faça $U_{i,j}=|X_{i,j}-\mu_i|$, onde $\mu_i$ é a média do $i$-ésimo modelo. Se $\mu_i$ for desconhecido, assuma que 
+    $$\mu_i=\bar{x}_i=\frac{1}{n_i}\sum_{j=1}^{n_i}X_{i,j}.$$
+    \item Crie uma única amostra com $U_{1,1},\ldots,U_{k,n_k}$, de tamanho $N=\sum_{i=1}^k n_i$. Seja $R(U_{i,j})$ o posto de $U_{i,j}$
+    \end{itemize}
+\end{block}
+
+\end{frame}
+
+\begin{frame}{}
+    \begin{block}{Objetivo}
+       A hipótese deste teste é
+       
+                \begin{align*}
+                &H_0: \hbox{As amostras são identicamente distribuídas (exceto talvez pelas médias)}\\
+                &H_1: \hbox{pelo menos uma das variâncias é diferente das demais}
+                \end{align*}
+       Se $k=2$, também podemos testar
+       
+       \begin{align*}
+                &H_0: \hbox{As amostras são identicamente distribuídas (exceto talvez pelas médias)}\\
+                &H_1: Var(U_1)>Var(U_2)
+        \end{align*}
+        e
+        \begin{align*}
+                &H_0: \hbox{As amostras são identicamente distribuídas (exceto talvez pelas médias)}\\
+                &H_1: Var(U_1)<Var(U_2)
+        \end{align*}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Estatística da teste}
+Se $H_1$ é pelo menos uma das variâncias é diferente das demais, a estatística de teste é
+    $$T_2=\frac{\sum_{i=1}^k \frac{S_i^2}{n_i} - N\bar{S}^2}{\frac{1}{N-1}\left(\sum_{i=1}^k\sum_{j=1}^{n_i}R(U_{ij})^4-N\bar{S}^2\right)},$$
+    onde 
+$$S_i=\sum_{j=1}^{n_i}R(U_{ij})^2,\;\;\hbox{e  }\bar{S}=\frac{1}{N}\sum_{i=1}^kS_i.$$
+Nesse caso, o $p$-valor é $P(T_2>t_{obs})$.
+
+Em caso contrário, a estatística de teste é 
+$$T_1=\sum_{j=1}^nR(U_{1,j})^2$$
+e o $p$-valor para $H_1: Var(U_1)<Var(U_2)$ é $P(T_1<t_{obs})$
+
+\end{frame}
+
+\begin{frame}{Entendendo a estatística de teste}
+Tanto $T_1$ quanto $T_2$ possuem distribuições exatas, calculadas usando a lógica explicada na Aula 14. Quando a amostra é grande o suficiente, 
+$$\frac{T_1-n_1\bar{R^2}}{\sqrt{\frac{n_1n_2}{N(N-1)}\sum_{i=1}^N\left(R_i^2-\bar{R^2}\right)^2}}\approx N(0,1)$$
+onde $\bar{R^2}=\sum_{i=1}^2\sum_{j=1}^{n_i}R(U_{i,j})^2/N$ e $R_1,\ldots,R_N$ são os postos considerando a amostra inteira.
+
+Já a estatística $T_2$ é equivalente aquela mostrada no slide 190, tendo portanto distribuição (assintótica) Qui-quadrado com $k-1$ graus de liberdade.
+\end{frame}
+
+\begin{frame}{Exemplo}
+    Uma empresa de embalagens de alimentos gostaria de ter razoável certeza de que as caixas de
+cereal que ela produz contém, de fato, pelo menos peso de cereal carimbado na parte externa. Para fazer isso, ela deve definir um valor médio por caixa um pouco acima do valor anunciado, pois a inevitável variação causada pela máquina de embalagem às vezes colocará um pouco menos ou um pouco mais de cereal na caixa. Uma máquina com menor variação pouparia o
+dinheiro da empresa porque o valor médio por caixa pode ser ajustado para ser
+mais próximo do valor anunciado.
+\end{frame}
+
+\begin{frame}
+Uma nova máquina está sendo testada para ver se é menos variável que a atual, caso em que será adquirida para substituir a máquina antiga. Várias
+caixas são preenchidas usando a máquina atual e a quantidade em cada
+caixa é medida. O mesmo é feito para a nova máquina para testar:
+
+\begin{itemize}
+    \item $H_0:$ as duas máquinas tem a mesma variabilidade
+    \item $H_1:$ a nova máquina tem menor variância ($Var(U_1)>Var(U_2)$). 
+\end{itemize}
+\end{frame}
+
+\begin{frame}{}
+    As medidas observadas foram
+    \begin{center}
+        \begin{tabular}{l|ccccccc|c}\hline
+                           & \multicolumn{7}{c|}{Medições} & Média amostral\\ \hline
+             Máquina atual &  10,8 & 11,1 & 10,4 & 10,1 & 11,3 &      &      & 10,74\\
+             Máquina nova  &  10,8 & 10,5 & 11   & 10,9 & 10,8 & 10,7 & 10,8 & 10,79\\ \hline
+        \end{tabular}
+    \end{center}
+    e os desvios absolutos são
+    \begin{center}
+        \begin{tabular}{l|ccccccc}\hline
+                           & \multicolumn{7}{c}{Desvios absolutos} \\ \hline
+             Máquina atual &  0,06 & 0,36 & 0,34 & 0,64 & 0,56 &      &      \\
+             Máquina nova  &  0,01 & 0,29 & 0,21 & 0,11 & 0,01 & 0,09 & 0,01 \\ \hline
+        \end{tabular}
+    \end{center}
+\end{frame}
+
+\begin{frame}{}
+    Os postos são
+    \begin{center}
+        \begin{tabular}{l|ccccccc}\hline
+                           & \multicolumn{7}{c}{Postos} \\ \hline
+             Máquina atual &  4 & 10 & 9 & 12 & 11 &      &      \\
+             Máquina nova  &  2 & 8 & 7 & 6 & 2 & 5 & 2 \\ \hline
+        \end{tabular}
+    \end{center}
+    e os postos ao quadrados são
+    \begin{center}
+        \begin{tabular}{l|ccccccc|c}\hline
+                           & \multicolumn{7}{c|}{Postos ao quadrado} & $T_1$\\ \hline
+             Máquina atual &  16 & 100 & 81 & 144 & 121 &      &    462  \\
+             Máquina nova  &  4 & 64 & 49 & 36 & 4 & 25 & 4 &\\ \hline
+        \end{tabular}
+    \end{center}
+    Teremos
+    $$\bar{R^2}=\frac{1}{12}(16+100+\cdots+25+4)=54$$
+    e que
+    $$\frac{1}{11}\sum_{i=1}^{12}(R_i^2-\bar{R^2})^2=(16-54)^2+\cdots+(4-54)^2= 2333,455$$
+\end{frame}
+
+\begin{frame}[fragile]{}
+    Logo, a estatística observada é
+    $$\frac{T_1-n_1\bar{R^2}}{\sqrt{\frac{n_1n_2}{N(N-1)}\sum_{i=1}^N\left(R_i^2-\bar{R^2}\right)^2}}=2,327331$$
+    e o $p$-valor aproximado do teste, calculado por
+    
+    \begin{verbatim}
+    pnorm(2.327331, lower.tail = F)    
+    \end{verbatim}
+    é 0,0099. Portanto, há evidências de que a máquina nova tem menor variância. 
+    
+    
+    \end{frame}
+    
+    
+    \begin{frame}{Exercícios}
+    Página 310, exercícios 1 e 4.
+        
+    \end{frame}
+
+%===========================================================
+% Aula 17
+%===========================================================
+
+
+\begingroup
+\setbeamertemplate{footline}{}
+\begin{frame}{}
+    \Huge{Aula 17 - Coeficiente de correlação de Spearman e o Tau de Kendall }
+\end{frame}
+\endgroup
+
+\begin{frame}{Coeficientes de correlação}
+    \begin{itemize}
+        \item Seja $(X_1,Y_1),\ldots,(X_n,Y_n)$ uma amostra aleatória. 
+        \item Um coeficiente de correlação é uma medida em [-1,1] que assume valores altos sempre que há uma tendência positiva entre $X$ e $Y$ e valores baixos quando há uma tendência negativa. Valores próximos de 0 refletem falta de tendência.
+        \item O coeficiente de correlação de Pearson, um dos mais famosos, é dado por
+        $$\rho=\frac{\sum_{i=1}^n (X_i-\bar{X})(Y_i-\bar{Y})}{\sqrt{\sum_{i=1}^n(X_i-\bar{X})^2\sum_{j=1}^n(Y_j-\bar{Y})^2}}.$$
+        Denotaremos a estatística observada por $r$.
+        \item Embora $r$ possa ser utilizado independente da distribuição de $(X,Y)$, testes e hipóteses ou intervalos de confiança dependem do conhecimento de $F_{X,Y}(x,y)$.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{O coeficiente de correlação de Spearman}
+
+Sejam $R(X_1),\ldots,R(X_n)$ os postos da amostra $X_1,\ldots,X_n$ e sejam $R(Y_1),\ldots,R(Y_n)$, os postos da amostra $Y_1,\ldots,Y_n$. O coeficiente de correlação de Spearman é
+
+$$\rho_{\hbox{spearman}}=\frac{\sum_{i=1}^n R(X_i)R(Y_i)-n\left(\frac{(n+1)}{2}\right)^2}{\sqrt{\left(\sum_{i=1}^n R(X_i)^2-n\left(\frac{n+1}{2}\right)^2\right)\left(\sum_{i=1}^n R(Y_i)^2- n\left(\frac{n+1}{2}\right)^2\right)}}.$$
+
+Trata-se da aplicação direta do coeficiente de Pearson, utilizando $R(X_i)$ e $R(Y_i)$ em vez de $x_i$ e $y_i$.
+\end{frame} 
+
+\begin{frame}{}
+    Podemos testar se o coeficiente de Spearman é igual a zero, contra as alternativas usuais, o que implica que os pares aparentam estar distribuídos ao acaso, sem formar tendência. Teremos
+    
+    \begin{itemize}
+        \item Para $H_0:\rho_{\hbox{spearman}}=0$ contra $H_1:\rho_{\hbox{spearman}}\neq 0$, o p-valor é dado por $2\min\{P(\rho_{\hbox{spearman}}\leq r_{\hbox{spearman}}),P(\rho_{\hbox{spearman}}\geq r_{\hbox{spearman}})\}$
+        
+        \item Para $H_0:\rho_{\hbox{spearman}}\leq0$ contra $H_1:\rho_{\hbox{spearman}}> 0$, o p-valor é dado por $P(\rho_{\hbox{spearman}}\geq r_{\hbox{spearman}})$
+        
+        \item Para $H_0:\rho_{\hbox{spearman}}\geq0$ contra $H_1:\rho_{\hbox{spearman}}< 0$, o p-valor é dado por $P(\rho_{\hbox{spearman}}\leq r_{\hbox{spearman}})$
+    \end{itemize}
+    
+    Vale ressaltar que, como usual, os p-valores podem ser computados de modo exato. Para grandes amostras, vale a aproximação (sob $H_0$)$ \rho_{\hbox{spearman}}\sim N(0,1/(n-1))$.
+\end{frame}
+
+\begin{frame}{Exemplo 17.1}
+ Doze graduados em MBA foram selecionados para medir a relação 
+entre sua pontuação no GMAT, que eles tiraram antes de entrar na graduação
+escola, e sua média de notas (GPA) enquanto eles estavam no programa de MBA. As pontuações do GMAT e seus GPAs são fornecidas abaixo, junto com as classificações e os seus respectivos postos.
+\end{frame}
+
+\begin{frame}{}
+
+\begin{center}
+    \begin{tabular}{cccccc}\hline
+    Estudante & GMAT($X$)& GPA$(Y)$ & $R(X)$ & $R(Y)$  & $(R(X)-R(Y))^2$ \\  \hline
+       1 & 710 & 4 & 12 & 11,5 & 0,25 \\
+       2&	610&	4,0&	9,5&	11,5&	4\\
+3&	640&	3,9&	11&	10&	1\\
+4&	580&	3,8&	8&	9&	1\\
+5&	545&	3,7&	3&	8&	25\\
+6&	560&	3,6&	5&	7&	4\\
+7&	610&	3,5&	9,5&	5&	20,25\\
+8&	530&	3,5&	1&	5&	16\\
+9&	560&	3,5&	5&	5&	0\\
+10&	540&	3,3&	2&	3&	1\\
+11&	570&	3,2&	7&	1,5&	30,25\\
+12&	560&	3,2&	5&	1,5&	12,25\\ \hline
+    \end{tabular}
+\end{center}
+
+\end{frame}
+
+\begin{frame}{}
+Após algumas contas, encontramos $r_{\hbox{spearman}}=0,59$. Seja $H_1$ a hipótese de que o GPA e o GMAT são positivamente correlacionados. Teremos que 
+
+$$p-\hbox{valor}=P(\rho_{\hbox{spearman}}\geq 0,59)\approx 0,025.$$
+
+Portanto, existem evidências de que o GMAT e o GPA são positivamente correlacionados.
+
+\end{frame}
+
+\begin{frame}{Tau de Kendall}
+
+O coeficiente (de correlação) de Kendall é computado da seguinte forma. Primeiro, cada par $(X_i,Y_i)$ é comparado com os demais. 
+\begin{itemize}
+    \item Se $X_i>X_j$ e $Y_i>Y_j$ ou se $X_i<X_j$ e $Y_i<Y_j$, os pares $(X_i,Y_i)$ e $(X_j,Y_j)$ são denominados \textbf{concordantes}. O total de pares concordantes é denotado por $N_c$.
+    
+    \item Se $X_i>X_j$ e $Y_i<Y_j$ ou se $X_i<X_j$ e $Y_i>Y_j$, os pares $(X_i,Y_i)$ e $(X_j,Y_j)$ são denominados \textbf{cdiscordantes}. O total de pares discordantes é denotado por $N_d$.
+    
+    \item O total de comparações que podem ser feitas é ${n\choose 2}=n(n-1)/2$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{}
+O coeficiente de correlação de Kendall é dado por
+$$\tau=\frac{N_c-N_d}{n(n-1)/2}.$$    
+Se todos os pares forem concordantes, então $\tau=1$. Se todos os pares forem discordantes, então $\tau=-1$.
+
+Se $X_i=X_j$ ou $Y_i=Y_j$ então soma-se 1/2 ao número de concordantes e discordantes. A estatística passa a ser
+
+$$\tau=\frac{N_c-N_d}{N_c+N_d}.$$    
+
+Sob a hipótese nula de que a correlação é zero, a estatística $N_c-N_d$ tem distribuição conhecida. Além disso, para $n$ suficientemente grande,
+$$N_c-N_d\approx \hbox{Normal}\left(0,\frac{2(2n+5)}{9n(n-1)}\right)$$
+\end{frame}
+
+\begin{frame}[fragile]{Exemplo 17.1 revisitado}
+
+A função \texttt{cor(x,y, method)} calcula os coeficientes de correlação. O argumento \texttt{method} pode ser \texttt{pearson} (default), \texttt{spearman} ou \texttt{kendall}. Abaixo apresentamos a implementação do Exemplo 17.1, com os coeficientes de Spearman e Kendall:
+
+\begin{verbatim}
+x <- c( 710, 610, 640, 580, 545, 560, 610, 530, 560, 540, 570, 560)
+y <- c(4.0, 4.0, 3.9, 3.8, 3.7, 3.6, 3.5, 3.5, 3.5, 3.3, 3.2, 3.2)
+
+cor(x,y, method = "spearman")
+cor(x,y, method = "kendall")
+\end{verbatim}
+O valor do $\tau$ de Kendall é 0,4390389 e, com um p-valor de $0,02346136$, concluímos que existem evidências de que há um relação positiva entre as notas do GMAT e do GPA.
+\end{frame}
+
+\begin{frame}{Exercícios}
+
+Página 319, exercícios 1 e 2. 
+    
+\end{frame}
+
+%===========================================================
+% Aula 18
+%===========================================================
+
+
+
+\begingroup
+\setbeamertemplate{footline}{}
+\begin{frame}{}
+    \Huge{Aula 18 - Teste de Wilcoxon para postos assinalados}
+\end{frame}
+\endgroup
+
+\begin{frame}{Dados}
+    Seja $(X_1,Y_1), \ldots,(X_{m},Y_{m})$ uma amostra aleatória bivariada (no mínimo intervalar). Seja $C_i=Y_i-X_i$ e sejam $D_1,\ldots,D_n$ a amostra construída com todos os $C_i$ diferentes de zero.
+    
+    Seja $R(|D_i|)$ o posto de $|D_i|$ e sejam
+    $$R_i=\left\{\begin{array}{ll}R(|D_i|)&,\hbox{ se }Y_i>X_i \\ -R(|D_i|)&, \hbox{ se } Y_i<X_i\end{array}\right.$$
+    os postos assinalados
+\end{frame}
+
+\begin{frame}{}
+    Para aplicar o teste, é necessário que $D$ seja simétrica. Se $X$ e $Y$ são contínuas e tem a mesma distribuição, então
+    \begin{align}
+        P(D>0)&=P(Y>X)=P(Y<¨X)=P(D<0)\Rightarrow\\ &P(D>0)+P(D>0)=P(D>0)+P(D<0)=2P(D>0)=1
+    \end{align}    logo $P(D>0)=1/2$, o que implica que $D$ é simétrica. Note que não é necessário que $(X_i,Y_i)$ e $(X_j,Y_j)$ tenham a mesma distribuição, mas $E(D_i)$ deve ser igual a $E(D_j)$ para todo $i$ e $j$.
+\end{frame}
+
+\begin{frame}{Objetivo do teste}
+    Temos as seguintes hipóteses de interesse:
+    
+    \textbf{Two sided:}
+    \begin{align*}
+        H_0&: E(D)=0\;\;(E(X)=E(Y))\\
+        H_1&: E(D)\neq 0
+    \end{align*}
+    \textbf{Lower tailed (less)}
+    \begin{align*}
+        H_0&: E(D)\leq 0\;\;(E(Y)\leq E(X))\\
+        H_1&: E(D)> 0
+    \end{align*}
+    \textbf{Upper tailed (greater)}
+    \begin{align*}
+        H_0&: E(D)\geq 0\;\;(E(Y)\geq E(X))\\
+        H_1&: E(D)< 0
+    \end{align*}
+    Como estamos assumindo a simetria de $D$, esse teste também serve para comparar as medianas de $X$ e $Y$.
+\end{frame}
+
+\begin{frame}{Estatística de teste e p-valores}
+A estatística de teste é a soma dos postos assinalados com sinal positivo, ou seja,
+$$T^+=\sum_{i:R_i>0}R_i.$$
+Para grandes amostras, usamos
+$$T=\frac{\sum_{i=1}^n R_i}{\sqrt{\sum_{j=1}^{n}R_j^2}}$$
+
+Sendo $t_{obs}$ a estatística $T^+$ observada, teremos
+\begin{itemize}
+    \item Se $H_1:E(D)\neq 0$,
+    $p$-valor$=2\min\{P(T^+\geq t_{obs}),P(T^+\leq t_{obs})\}$.
+    
+    \item Se $H_1:E(D)< 0$,
+    $p$-valor$=P(T^+\leq t_{obs})$.
+    
+    \item Se $H_1:E(D)> 0$,
+    $p$-valor$=P(T^+ \geq t_{obs})$.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Distribuição da estatística de teste sob $H_0$}
+
+Sob $H_0$, $0=E(D)$ e a mediana de $D$ é zero. Neste caso, esperamos que metade dos valores de $D$ sejam positivos. Além disso,
+$$P(X_i>Y_i)=P(X_i<Y_i)=1/2.$$
+
+Como todas as configurações dos postos tem a mesma probabilidade de ocorrer e como a probabilidade de cada sinal (+ ou -) é 1/2, podemos encontrar a distribuição da estatística $T^+$.
+
+
+
+\end{frame}
+
+\begin{frame}
+Por exemplo, suponha que $n=3$. Abaixo mostramos todos os postos assinalados possíveis (em parênteses temos o valor de $T^+$)
+{\tiny
+\begin{center}
+        \begin{tabular}{cccc|cccc|cccc|cccc|cccc|cccc}
+             1&2&3&(6)   & 1&3&2&(6)   & 2&1&3&(6)    & 2&3&1&(6)    & 3&1&2&(6)    & 3&2&1&(6)\\
+             1&-2&3&(4)  & 1&-3&2&(3)  & 2&-1&3&(5)   & 2&-3&1&(3)   & 3&-1&2&(5)   & 3&-2&1&(4)\\
+             1&2&-3&(3)  & 1&3&-2&(4)  & 2&1&-3&(3)   & 2&3&-1&(5)   & 3&1&-2&(4)   & 3&2&-1&(5)\\
+             1&-2&-3&(1) & 1&-3&-2&(1) & 2&-1&-3&(2)  & 2&-3&-1&(2)  & 3&-1&-2&(3)  & 3&-2&-1&(3)\\
+             -1&2&3&(5)  & -1&3&2&(5)  & -2&1&3&(4)   & -2&3&1&(4)   & -3&1&2&(3)   & -3&2&1&(3)\\
+             -1&-2&3&(3) & -1&-3&2&(2) & -2&-1&3&(3)  & -2&-3&1&(1)  & -3&-1&2&(2)  & -3&-2&1&(1)\\
+             -1&2&-3&(2) & -1&3&-2&(3) & -2&1&-3&(1)  & -2&3&-1&(3)  & -3&1&-2&(1)  & -3&2&-1&(2)\\
+             -1&-2&-3&(0)& -1&-2&-3&(0)& -2&-1&-3&(0) & -2&-3&-1&(0) & -3&-1&-2&(0) & -3&-2&-1&(0)\\
+        \end{tabular}
+\end{center}
+}
+
+Logo
+$$P(T^+=i)=1/12$$
+para $i\in\{0,1,2,4,5,6\}$ e
+$$P(T^+=3)=7/24$$
+\end{frame}
+
+
+\begin{frame}
+Para $n$ suficientemente grande, sabemos pelo Teorema Central do Limite que
+
+$$\frac{\sum_{i=1}^n R_i-E(\sum_{i=1}R_i)}{\sqrt{Var(\sum_{i=1}^n R_i)}}\rightarrow N(0,1).$$
+Note que $R_i=U_iR(|D_i|)$, onde $P(U_i=1)=P(U_i=-1)=1/2$, com $U_i$ independente de $R(|D_i|)$. Disto,
+$$E(R_i)=E(U_iR(|D_i|))=-1E(R(|D_i|))P(U_i=-1)+E(R(|D_i|))P(U_i=1)=0$$
+Como $Var(R_i)=E(R_i^2)-E(R_i)^2=E(R_i^2)$, teremos que 
+$$\widehat{Var(R_i)}=\frac{1}{n}\sum_{i=1}^n R_i^2$$
+é um estimador para $Var(R_i)$, logo $\sum_{i=1}^n R_i^2$ é um estimador para $Var(\sum_{i=1}^n R_i)$. Assim, combinando o Teorema Central do Limite com o Teorema de Slutsky, teremos 
+
+$$\frac{\sum_{i=1}^n R_i}{\sqrt{\sum_{i=1}^n R_i^2}}\rightarrow N(0,1).$$
+\end{frame}
+
+
+\begin{frame}{Exemplo}
+  Doze pares de gêmeos idênticos participaram de um estudo psicológico com o objetivo de medir 
+a quantidade de agressividade na personalidade do indivíduo. Nosso objetivo é comparar os irmãos um com o outro para ver se o primeiro a nacer tende a ser mais agressivo. Os resultados são apresentados abaixo, onde um escore mais alto indica maior agressividade.  
+\end{frame}
+
+
+\begin{frame}{}
+
+\begin{center}
+\begin{tabular}{c|cccccccccccc}\hline
+Par	          & 1&	2&	3&	4&	5&	6&	7&	8&	9&	10&	11&	12\\ \hline
+1 irmão $(X)$ &	86&	71&	77&	68&	91&	72&	77&	91&	70&	71&	88&	87\\
+2 irmão $(Y)$ &	88&	77&	76&	64&	96&	72&	65&	90&	65&	80&	81&	72\\
+$D_i$         &	2&	6&	-1&	-4&	5&	0&	-12&	-1&	-5&	9&	-7&	-15\\
+Posto de $|D_i|$&	3&	7&	1,5	&4	&5,5 &-		&10	&1,5	&5,5&	9&	8&	11\\
+$R_i$         &3 &	7&	-1,5&	-4&	5,5&	-&	-10&	-1,5&	-5,5&	9&	-8&	-11\\ \hline
+\end{tabular}
+\end{center}
+\end{frame}
+
+\begin{frame}{}
+    As hipóteses são
+    \begin{itemize}
+        \item $H_0:$ o primeiro irmão não tende a ser mais agressivo que o segundo ($E(Y_i)\geq E(X_i)$)
+        \item $H_1:$ o primeiro irmão tende a ser mais agressivo que o segundo $(E(Y_i)<E(X_i))$ 
+    \end{itemize}
+    Com $T=-0,7565$, o $p$-valor aproximado para este teste é 0,2246 (obtido via \texttt{pnorm(-.7565)}). Não há evidências contra a hipótese nula (ou seja, a ordem de nascimento não tem efeito).
+\end{frame}
+
+\begin{frame}[fragile]{}
+Podemos ainda utilizar a função \texttt{wilcox.test(x,y, paired = T)} onde \texttt{x,y} são as amostras. É importante ressaltar que, no \texttt{R}, define-se $D_i=X_i-Y_i$, o que muda o sinal das hipóteses alternativas. Abaixo segue o código em \textt{R}:
+
+\begin{verbatim}
+ x <- c(86,	71,	77,	68,	91,	72,	77,	91,	70,	71,	88,	87)
+ y <- c(88,	77,	76,	64,	96,	72,	65,	90,	65,	80,	81,	72)
+ 
+ wilcox.test(x,y, paired = T, alternative = "greater")
+\end{verbatim}
+e o resultado:
+\begin{verbatim}
+	Wilcoxon signed rank test with continuity correction
+
+data:  x and y
+V = 41.5, p-value = 0.2382
+alternative hypothesis: true location shift is greater than 0
+\end{verbatim}
+\end{frame}
+
+%======================================================
+% Aula 19
+%=======================================================
+
+\begingroup
+\setbeamertemplate{footline}{}
+\begin{frame}{}
+    \Huge{Aula 19 - O teste de Friedman}
+\end{frame}
+\endgroup
+
+\begin{frame}{Dados}
+
+Sejam $X_{i1}\ldots,X_{ik},$, com $i=1,\ldots,b$, $b$ amostras aleatórias mutualmente independentes denominadas blocos. A variável $X_{ij}$, dentro do bloco $i$, está associada a um tratamento $j$. Os blocos são organizados da seguinte forma:
+\begin{center}
+\begin{tabular}{c|cccc}
+          & \multicolumn{4}{c}{Tratamento} & \\
+  Bloco   &  1 & 2 & $\cdots$ & $k$ \\ \hline
+    1     & $X_{11}$ & $X_{12}$ & & $X_{1k}$ \\
+    2     & $X_{21}$ & $X_{22}$ & & $X_{2k}$ \\ 
+    $\cdots$     & $\cdots$ & $\cdots$ & & $\cdots$ \\ 
+    $b$     & $X_{b1}$ & $X_{b2}$ & & $X_{bk}$ \\ 
+\end{tabular}
+\end{center}  
+Vamos assumir independência entre os blocos
+\end{frame}
+
+\begin{frame}{}
+\begin{block}{Objetivo do teste}
+O objetivo é testar $H_0:$ os tratamentos tem efeitos idênticos contra $H_1:$ pelo menos um dos tratamentos difere dos demais.
+\end{block}
+    
+\begin{block}{Estatística de teste}    
+Seja $R(X_{ij})$ o posto, de 1 a $k$, da variável $X_{ij}$ considerando apenas a amostra $X_{i1},\ldots,X_{ik}$ (ou seja, o posto é calculado dentro do bloco). Seja
+$$R_j=\sum_{i=1}^b R(X_{ij})$$
+a soma dos postos relacionados com o tratamento $j$. Friedman sugeriu a seguinte estatística
+$$T_1=\frac{12}{bk(k+1)}\sum_{j=1}^k\left(R_j - \frac{b(k+1)}{2}\right)^2$$
+que teria uma distribuição aproximada $\chi^2_{k-1}$. 
+\end{block}
+\end{frame}
+
+\begin{frame}{Exemplo}
+
+Doze proprietários são selecionados aleatoriamente para participar de um experimento com um viveiro de plantas. 
+Cada proprietário escolheu quatro áreas idênticas em seu quintal e plantou quatro tipos diferentes de gramíneas, uma em cada área. Ao final de um determinado período de tempo, cada proprietário classificou os tipos de grama em ordem de preferência, pesando critérios importantes como despesas, manutenção e conservação exigidas, beleza, robustez, preferência da esposa e assim por diante. A categoria 1 foi atribuída à grama menos preferida e a classificação 4 à favorita. A hipótese nula era que não há diferença nas preferências dos tipos de gramíneas, e a alternativa era que alguns tipos de grama tendem a ser preferidos em relação a outros. Cada um dos 12 blocos consiste em quatro lotes de terreno razoavelmente idênticos, cada um recebendo aproximadamente o mesmo grau de habilidade, porque os quatro lotes são presumivelmente cuidados pelo mesmo proprietário. Os resultados da experiência são os seguintes.
+\end{frame}
+
+\begin{frame}{}
+    \begin{center}
+        \begin{tabular}{c|cccc}\hline
+                         & \multicolumn{4}{c}{Tipo de grama} \\
+             Proprietário&  1 & 2 & 3 & 4  \\ \hline
+             1 & 4 & 3 & 2 & 1 \\
+             2 & 4 & 2 & 3 & 1 \\
+             3 & 3 & 1,5 & 1,5 & 4 \\
+             4 & 3 & 1& 2 & 4 \\
+             5 & 4 & 2 & 1 & 3 \\
+             6 & 2 & 2 & 2 & 4 \\
+             7 & 1 & 3 & 2 & 4 \\
+             8 & 2 & 4 & 1 & 3 \\
+             9 & 3,5 & 1 & 2 & 3,5 \\
+             10& 4 & 1 & 3 & 2 \\
+             11 & 4 & 2 & 3 & 1 \\
+             12 &3,5 & 1 & 2 & 3,5 \\ \hline
+             $R_j$ & 38 & 23,5 & 24,5 & 34  \\ \hline
+        \end{tabular}
+    \end{center}    
+\end{frame}
+
+\begin{frame}[fragile]{}
+    No \texttt{R}, podemos fazer esse teste com os seguintes comandos:
+    
+\begin{verbatim}
+grama1 <- c(4,4,3,3,4,2,1,2,3.5,4,4,3.5)
+grama2 <- c(3,2,1.5,1,2,2,3,4,1,1,2,1)
+grama3 <- c(2,3,1.5,2,1,2,2,1,2,3,3,2)
+grama4 <- c(1,1,4,4,3,4,4,3,3.5,2,1,3.5)
+
+
+dt <- data.frame(grama1, grama2, grama3, grama4)
+dt <- as.matrix(dt)
+
+friedman.test(dt)
+
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{}
+    Por usa vez, a saída do teste é 
+    
+\begin{verbatim}
+	Friedman rank sum test
+
+data:  dt
+Friedman chi-squared = 8.0973, df = 3, p-value =
+0.04404
+\end{verbatim}
+Logo, existem evidências de que pelo menos um tipo de grama tem preferência diferente das demais. Com o comando \texttt{boxplot( dt )} podemos notar que a grama 1 é preferível em relação às gramas 2 e 3.
+\end{frame}
+
+\begin{frame}{}
+    \begin{figure}
+        \centering
+          \includegraphics[scale=.7]{boxplot_grama.png}
+        \caption{Caption}
+        \label{fig:my_label}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Exercício}
+  Página 385, Exercícios 1 e 2 (apenas a letra (a))
+\end{frame}
+
