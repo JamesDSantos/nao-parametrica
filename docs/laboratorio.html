@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>5&nbsp; “Laboratório 1: Satisfação Residencial de Famílias Homoafetivas” – Métodos não paramétricos</title>
+<title>6&nbsp; “Laboratório 1: Satisfação Residencial de Famílias Homoafetivas” – Métodos não paramétricos</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -66,7 +66,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./references.html" rel="next">
-<link href="./tabelas_contingencia.html" rel="prev">
+<link href="./postos.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -119,7 +119,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./laboratorio.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">“Laboratório 1: Satisfação Residencial de Famílias Homoafetivas”</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./laboratorio.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">“Laboratório 1: Satisfação Residencial de Famílias Homoafetivas”</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -178,8 +178,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./postos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Métodos baseados em postos</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./laboratorio.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">“Laboratório 1: Satisfação Residencial de Famílias Homoafetivas”</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">“Laboratório 1: Satisfação Residencial de Famílias Homoafetivas”</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -198,9 +204,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#contexto" id="toc-contexto" class="nav-link active" data-scroll-target="#contexto"><span class="header-section-number">5.1</span> Contexto</a></li>
-  <li><a href="#carregamento-dos-dados" id="toc-carregamento-dos-dados" class="nav-link" data-scroll-target="#carregamento-dos-dados"><span class="header-section-number">5.2</span> Carregamento dos Dados</a></li>
-  <li><a href="#exercícios-propostos" id="toc-exercícios-propostos" class="nav-link" data-scroll-target="#exercícios-propostos"><span class="header-section-number">5.3</span> Exercícios Propostos</a></li>
+  <li><a href="#contexto" id="toc-contexto" class="nav-link active" data-scroll-target="#contexto"><span class="header-section-number">6.1</span> Contexto</a></li>
+  <li><a href="#carregamento-dos-dados" id="toc-carregamento-dos-dados" class="nav-link" data-scroll-target="#carregamento-dos-dados"><span class="header-section-number">6.2</span> Carregamento dos Dados</a></li>
+  <li><a href="#exercícios-propostos" id="toc-exercícios-propostos" class="nav-link" data-scroll-target="#exercícios-propostos"><span class="header-section-number">6.3</span> Exercícios Propostos</a></li>
   </ul>
 </nav>
     </div>
@@ -209,7 +215,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">“Laboratório 1: Satisfação Residencial de Famílias Homoafetivas”</span></h1>
+<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">“Laboratório 1: Satisfação Residencial de Famílias Homoafetivas”</span></h1>
 </div>
 
 
@@ -226,8 +232,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="contexto" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="contexto"><span class="header-section-number">5.1</span> Contexto</h2>
+<section id="contexto" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="contexto"><span class="header-section-number">6.1</span> Contexto</h2>
 <p>Este exercício baseia-se na dissertação de mestrado de <strong>Beatriz da Silva Moreira (2025)</strong>, intitulada <em>“Satisfação Residencial de Famílias Homoafetivas na Cidade de Manaus - AM”</em>, analisado pelo LabEst em 2025. O estudo investigou como o ambiente residencial e social impacta a qualidade de vida dessas famílias.</p>
 <p>O projeto adotou uma abordagem mista. Na etapa quantitativa, foram coletadas respostas de <strong>104 participantes</strong>, focando em:</p>
 <ol type="1">
@@ -236,8 +242,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ol>
 <p>O trabalho completo pode ser consultado no <a href="https://tede.ufam.edu.br/bitstream/tede/11079/6/DISS_BeatrizMoreira_PPGPSI">Repositório da UFAM</a>.</p>
 </section>
-<section id="carregamento-dos-dados" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="carregamento-dos-dados"><span class="header-section-number">5.2</span> Carregamento dos Dados</h2>
+<section id="carregamento-dos-dados" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="carregamento-dos-dados"><span class="header-section-number">6.2</span> Carregamento dos Dados</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">"gsheet"</span>)) <span class="fu">install.packages</span>(<span class="st">"gsheet"</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gsheet)</span>
@@ -246,8 +252,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>dados <span class="ot">&lt;-</span> <span class="fu">gsheet2tbl</span>(url)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="exercícios-propostos" class="level2" data-number="5.3">
-<h2 data-number="5.3" class="anchored" data-anchor-id="exercícios-propostos"><span class="header-section-number">5.3</span> Exercícios Propostos</h2>
+<section id="exercícios-propostos" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="exercícios-propostos"><span class="header-section-number">6.3</span> Exercícios Propostos</h2>
 <p><strong>Exercício 1:</strong> A teoria de satisfação residencial sugere que as pessoas tendem a ser mais satisfeitas com o interior de suas casas (controle privado) do que com o bairro/vizinhança (controle público). Verifique se existe uma diferença significativa entre a satisfação com a residência e a satisfação com o bairro para o mesmo participante.</p>
 <p><strong>Exercício 2:</strong> A dissertação sugere que a percepção de acolhimento social (segurança contra homofobia) pode variar drasticamente dependendo da zona da cidade onde a família reside.</p>
 <p>Construa uma tabela de contingência cruzando a variável Zona da Cidade com a escala de Acolhimento e investigue a afirmação..</p>
@@ -660,8 +666,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./tabelas_contingencia.html" class="pagination-link" aria-label="Tabelas de contingência">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Tabelas de contingência</span></span>
+      <a href="./postos.html" class="pagination-link" aria-label="Métodos baseados em postos">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Métodos baseados em postos</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

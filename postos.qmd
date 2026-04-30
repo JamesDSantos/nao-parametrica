@@ -43,14 +43,27 @@ Seja $X_1,\ldots,X_n$ uma amostra aleatória e sejam $R_1,\ldots,R_n$ seus respe
 $$P(R_1=r_1,\ldots,R_n=r_n)=\frac{1}{n!}$$
 onde $r_1,\ldots,r_n$ é qualquer permutação do conjunto $\{1,\ldots,n\}$ (observe que empates não são considerados). Note que os postos são estatísticas ancilares (para $F$), uma vez que sua distribuição não depende da distribuição de $X$.
 
+O posto $R_i$ tem distribuiçã uniforme discreta no conjunto $\{1,\ldots,n\}$. Portanto,
+$$E(R_i)=\sum_{r=1}^n rP(R_i=r)=\frac{1}{n}\sum_{r=1}^n r=\frac{n+1}{2}.$$
+Além disso, como
+$$E(R_i^2)=\sum_{r=1}^n r^2P(R_i=r)=\frac{1}{n}\sum_{r=1}^n r^2=\frac{(n+1)(2n+1)}{6},$$
+o que implica em
+$$Var(R_i)=\frac{(n+1)(n-1)}{12}.$$
+
+Os postos não são independentes. Para calcular a covariância entre $R_i$ e $R_j$, note que a soma $\sum_{i=1}^n R_i=n(n+1)/2$ é uma constante. Disto, teremos que
+
+$$\begin{align}0&=Var\left(\sum_{i=1}^n R_i\right)=Cov\left(\sum_{u=1}^nR_u,\sum_{v=1^n}R_v\right)=\sum_{i=1}^nVar(R_i)+\sum_{i\neq j}Cov\left(R_i,R_j\right)\\&=\frac{n(n+1)(n-1)}{12}+ n(n-1)Cov(R_i,R_j)\Rightarrow Cov(R_i,R_j)=-\frac{n+1}{12}\end{align}$$
 
 Para os postos $R_1,\ldots,R_n$, seja  $T=\sum_{i\in \mathcal{I}}R_i$, onde $I\subset \{1,\ldots,n\}$ possui $n'$ elementos. Então,
 
 $$\begin{align*}
-    E(T)&=\frac{n'(n+1)}{2}\\
-    Var(T)&=\frac{n'(n+1)(n-n')}{12}
+    E(T)&=\sum_{i\in\mathcal{I}}E(R_i)=\frac{n'(n+1)}{2}
 \end{align*}$$
+e
 
+$$\begin{align*}
+    Var(T)&=\sum_{i\in\mathcal{I}}\sum_{j\in\mathcal{I}}Cov\left(R_i,R_j\right)\\&=n'\frac{(n-1)(n+1)}{12}-n'(n'-1)\frac{n+1}{12}\\&=\frac{n'(n+1)(n-n')}{12}.
+\end{align*}$$
 Logo, para $n'$ suficientemente grande,
 
 $$\frac{T-E(T)}{\sqrt{Var(T)}}\to N(0,1).$$
@@ -94,7 +107,7 @@ $$P(T=t)=\begin{cases}
 
 No exemplo anterior, vimos que $P(T=t)$ pode ser calculado enumerando todos os subconjuntos possívels. Para $n'$ grande, a enumeração de todos os subconjuntos pode ser computacionalmente intensiva. Para esses casos, podemos obter uma amostra de $T$ via simulação.
 
-<div class=alert alert-success>
+<div class='alert alert-success'>
 **Simulando T**
 
 Para obter uma amostra de tamanho $B$ de $T=\sum_{i\in\mathcal{I}}R_i$, onde $\mathcal{I}$ é um subconjunto dos postos de tamanho $n'$, repita o seguinte procedimento $B$ vezes:
@@ -274,7 +287,7 @@ prio3_60m <- c(
 )
 ```
 
-
+:::
 
 Exercícios 1 e 2, página 281
 
@@ -287,59 +300,65 @@ H_0&: F_1(x)=\cdots = F_k(x)\\
 H_1&: F_i(x)\neq F_j(x) \text{ para pelo menos um par }(i,j)
 \end{align*}$$
 
-A lógica do teste de Kruskal-Wallis é semelhante ao de Mann-Whitney. Primeiro, sob $H_0$, todas as amostras são provenientes do mesmo modelo. Portanto, podemos combiná-las, formando uma amostra única de tamanho $N=\sum_{i=1}^k n_i$ e encontrar os postos $R_1,\ldots,R_{N}$.  Denotando o posto de $X_{i,j}$ por $R_{i,j}$, teremos que os postos associados a $i$-ésima população são
-$$R_i=\sum_{j=1}^{n_i}R_{i,j}.$$
-Ainda sob $H_0$, tesmo que 
+A lógica do teste de Kruskal-Wallis é semelhante ao de Mann-Whitney. Primeiro, sob $H_0$, todas as amostras são provenientes do mesmo modelo. Portanto, podemos combiná-las, formando uma amostra única de tamanho $n=\sum_{i=1}^k n_i$ e encontrar os postos $R_1,\ldots,R_{n}$.  Denotando o posto de $X_{i,j}$ por $R_{i,j}$, teremos que a soma dos postos associados a $i$-ésima população é
+$$T_i=\sum_{j=1}^{n_i}R_{i,j}.$$
+Defina $\bar{T}_i=T_i/n_i.$ Ainda sob $H_0$, temos que 
 
-$$E\left(\frac{R_i}{n_i}\right)=\frac{N+1}{2}$$
+$$E\left(\bar{T_i}\right)=\frac{1}{n_i}\sum_{j=1}^{n_i}E(R_{i,j})=\frac{n+1}{2}$$
 e
-$$Var\left(\frac{R_i}{n_i}\right)=\frac{(N+1)(N-n_i)}{12}$$
-\begin{frame}{}
-    \begin{block}{Estatística de teste e $p$-valor}
-    A estatística do teste é
-        $$T=\frac{1}{S^2}\left(\sum_{i=1}^n \frac{R_i^2}{n_i}-\frac{N(N+1)^2}{4}\right),$$
-        onde
-        $$S^2=\frac{1}{N-1}\left(\sum_{i=1}^k\sum_{j=1}^{n_i}R(X_{ij})^2 -\frac{N(N+1)^2}{4}\right)^2.$$
-    e o $p$-valor do teste é
-        $$p\hbox{-valor}=P(T\geq t_{obs}).$$
-        Para grandes amostras, $T\sim\chi^2_{k-1}$.
-     \end{block}
-\end{frame}
+$$Var\left(\bar{T_i}\right)=\frac{1}{n_i^2}Var\left(\sum_{j=1}^{n_i}R_{ij}\right)=\frac{(n+1)(n-n_i)}{12n_i}=\frac{(n+1)}{12}\left(\frac{n}{n_i}-1\right).$$
 
-\begin{frame}{Distribuição de $T$ sob $H_0$}
+Note que, assim como os postos, as estatísiticas $T_1,\ldots,T_k$  não são independentes. A covariância entre $T_i$ e $T_{i'}$ é 
 
-A distribuição da estatística de teste pode ser encontrada considerando que existem $n_1!\ldots n_k!/N!$ possibilidades dos postos (sob a hipótese $H_0$).
+$$\begin{align}Cov(T_i,T_{i'})=\frac{1}{n_i n_{i'}}\sum_{u=1}^{n_i} \sum_{v=1}^{n_{i'}} Cov(R_{i,u},R_{i'v})=-\frac{n+1}{12}\end{align}$$
 
-A origem da estatística do teste é a seguinte. Para testar se as médias de $k$ diferentes populações são iguais, utilizamos a ANOVA para 1 fator de classificação, cuja estatística de teste tem distribuição assintótica qui-quadrado com $k-1$ graus de liberdade. Se trocarmos as variáveis respostas pelos postos, teremos a seguinte estatística
+Como a soma dos postos é $n(n+1)/2$, teremos que
 
-$$(N-1)\frac{\sum_{i=1}^k n_i\left(\frac{R_i}{n_i}-\bar{R}\right)^2}{\sum_{i=1}^k\sum_{j=1}^{n_i}(R(X_{ij})-\bar{R})^2},$$
-onde $\bar{R}$ é a média dos postos. Após algumas manipulações, é possível mostrar que a estatística acima é exatamente $T$. Por isso, este teste também é conhecido como ANOVA não paramétrica.
-\end{frame}
+**Relação 1**
+$$\begin{align}\bar{T}_k&=\frac{1}{n_k}\sum_{j=1}^{n_k}R_{j,k}=\frac{1}{n_k}\left[\frac{n(n+1)}{2}-\sum_{i\neq k}\sum_{j=1}^{n_i}R_{i,j}\right]\\&=\frac{1}{n_k}\left[\frac{n(n+1)}{2}-\sum_{i=1}^{k-1}n_i\bar{T}_i\right]\\&=\frac{n+1}{2}-\frac{1}{n_k}\sum_{i=1}^{k-1}n_i\left(\bar{T}_i-\frac{n+1}{2}\right)\\&\Rightarrow n_k\left(\bar{T}_k-\frac{n+1}{2}\right)=-\sum_{i=1}^{k-1}n_i\left(\bar{T}_i-\frac{n+1}{2}\right).\end{align}.$$
+Disto, $\bar{T}_k$ é completamente especificado dado os demais. Considere o vetor $\boldsymbol{W}=(\bar{T}_1,\ldots,\bar{T}_{k-1})$. Sabemos que
 
-\begin{frame}{Exemplo 1 (este exemplo foi visto na Aula 10)}
-    Quatro métodos para melhoria do crescimento de milho foram aleatoriamente assinalados em um grande número de lotes de terras e a produção por acre de cada lote foi registrada. Os resultados foram:
+$$E(\boldsymbol{W})=\left(\frac{n+1}{2}\right)\boldsymbol{1}_{k-1}$$
+Já a matriz $\Sigma= Var(\boldsymbol{W})$ é composta pelos elementos
+$$\sigma_{ii}=\frac{n+1}{12}\left(\frac{n}{n_i}-1\right)$$
+na diagonal principal e $-(n+1)/12$ nas demais. Portanto,
+$$\Sigma=\frac{n+1}{12}\left(\boldsymbol{d}-\boldsymbol{1}_{k-1}\boldsymbol{1}_{k-1}'\right),$$
+onde $\boldsymbol{d}=n\text{diag}(1/n_1,\ldots,1/n_k)$e, utilizando a fórmula da inversão de Sherman-Morrison, temos
+$$\Sigma^{-1}=\frac{12}{n+1}\left(\frac{1}{n}\text{diag}(\boldsymbol{b})+\frac{\boldsymbol{b}\boldsymbol{b}'}{n_kn}\right),$$
+onde $\boldsymbol{b}'=(n_1,\ldots,n_{k-1})$. Portanto, por consequência direta do Teorema Central do Limite, teremos que
 
-\begin{center}
-\begin{tabular}{c|l}\hline
-Método & Produção por acre \\ \hline
-1 & 83 89 89 90 91 91 92 94 96   \\
-2 & 81 83 83 84 84 88 89 90 91 91  \\
-3 & 91 93 94 95 96 100 101  \\
-4 & 77 78 79 80 81 81  81 82  \\ \hline
-\end{tabular}    
-\end{center}
+$$H=(\boldsymbol{W}-E(\boldsymbol{W}))'\Sigma^{-1}(\boldsymbol{W}-E(\boldsymbol{W}))\sim\chi^2_{k-1}$$
+e esta estatística pode ser utilizada para testar a hipótese nula, rejeitando-a para valores elevados de $H_{obs}$. A estatística $H$ pode ser escrita de modo mais parcimonioso. Após algumas manipulações, pode-se mostrar que 
+
+$$H=\frac{12}{n+1}\left\{\sum_{i=1}^{k-1}\frac{n_i}{n}\left(\bar{T}_i-\frac{n+1}{2}\right)^2+\frac{1}{n_kn}\left[\sum_{i=1}^{k-1}n_i\left(\bar{T}_i-\frac{n+1}{2}\right)\right]^2\right\}.$$
+e, pela Relação 1
+
+$$H=\frac{12}{n+1}\left\{\sum_{i=1}^{k-1}\frac{n_i}{n}\left(\bar{T}_i-\frac{n+1}{2}\right)^2+\frac{n_k}{n}\left(\bar{T}_k-\frac{n+1}{2}\right)^2\right\}.$$
+Portanto,
+$$H=\frac{12}{n+1}\sum_{i=1}^{k}\frac{n_i}{n}\left(\bar{T}_i-\frac{n+1}{2}\right)^2.$$
+
+::: {#exm-}
+**Produção de milho** 
+
+Quatro métodos para melhoria do crescimento de milho foram aleatoriamente assinalados em um grande número de lotes de terras e a produção por acre de cada lote foi registrada. Os resultados foram:
+
+$$\begin{array}{c|l}\hline
+\text{Método} & \text{Produção por acre} \\ \hline
+1 & 83\quad 89\quad 89\quad 90\quad 91\quad 91\quad 92\quad 94\quad 96   \\
+2 & 81\quad 83\quad 83\quad 84\quad 84\quad 88\quad 89\quad 90\quad 91\quad 91  \\
+3 & 91\quad 93\quad 94\quad 95\quad 96\quad 100\quad 101  \\
+4 & 77\quad 78\quad 79\quad 80\quad 81\quad 81\quad  81\quad 82  \\ \hline
+\end{array}$$
+
 Existe diferença entre os métodos de produção?
-\end{frame}
 
 
-\begin{frame}{}
-    Obtivemos os postos das 34 observações. Em seguida, organizamos os postos por método:
+Obtivemos os postos das 34 observações. Em seguida, organizamos os postos por método:
  
- \begin{center}
-     \begin{tabular}{ccccccccc}\hline
-     &\multicolumn{2}{c}{Método 1} &\multicolumn{2}{c}{Método 2}&\multicolumn{2}{c}{Método 3}&\multicolumn{2}{c}{Método 4}\\
-     &Obs. & Posto & Obs. & Posto & Obs. & Posto & Obs. & Posto & \\ \hline
-     &83& 11  &91  &  23& 101& 34& 78&2\\
+$$\begin{array}{c|cc|cc|cc|cc}\hline
+     &\text{Método 1} & &\text{Método 2}& & \text{Método 3}& & \text{Método 4}\\
+     &\text{Obs.} & \text{Posto} &\text{Obs.} & \text{Posto} & \text{Obs.} & \text{Posto}  &\text{Obs.} & \text{Posto} \\ \hline
+&     83& 11  &91  &  23& 101& 34& 78&2\\
 &91& 23  &90  &19,5& 100& 33&82&9\\
 &94& 28,5& 81 & 6,5& 91& 23&81&6,5\\
 &89& 17  &83  &11  &93& 37&77&1\\
@@ -349,40 +368,120 @@ Existe diferença entre os métodos de produção?
 &92& 26  &91  &23  && &81&6,5\\
 &90& 19,5& 89 &17  &&&&\\
 &  &     & 84 &13,5&&&&\\ \hline
-$R_i$ &&196,5&&153&&207&&38,5\\
-$n_i$ &&9&&10&&7&&8 \\
-     \end{tabular}
- \end{center}   
-\end{frame}
-
-\begin{frame}[fragile]{}
-Com um $t_{obs}=25,46$, encontramos um $p$-valor (utilizando a aproximação qui-quadrado) menor que 0,001. Isto nos leva a rejeitar $H_0$. O comando é \texttt{1-pchisq(25.46,3)}. 
-
-O teste também pode ser realizado com a função \texttt{kruskal.test(x,g)}, onde \textbf{x} representa a amostra e \textbf{g} a população. A implmentação deste exemplo segue abaixo:
-
-\begin{verbatim}
-x< - c(83, 89, 89, 90, 91, 91, 92, 94, 96, 81, 83, 83, 84, 84, 88, 89,
-90, 91, 91, 91, 93, 94, 95, 96, 100, 101, 77, 78, 79, 80, 81, 81, 81,
-82)
-
-metodo <- c( rep(1,9), rep(2,10), rep(3,7), rep(4,8) )
-kruskal.test(x, metodo)
-\end{verbatim}
-e a saída:
-\begin{verbatim}
-Kruskal-Wallis rank sum test
-
-data:  x and metodo
-Kruskal-Wallis chi-squared = 25.629, df = 3, p-value = 1.141e-05
-\end{verbatim}
-\end{frame}
-
-%===========================================================
-% Aula 16
-%===========================================================
+T_i &&196,5&&153&&207&&38,5\\
+n_i &&9&&10&&7&&8 \\
+     \end{array}$$
 
 
-\begingroup
+
+Com um $H_{obs}=25,46$, encontramos o $p$-valor  muito baixo, o que nos leva a rejeitar a hipótese nula. Deste modo, pelo menos um dos métodos é diferente dos demais.
+
+Abaixo, apresentamos a resolução deste problema no `R`. A estatística é ligeramente diferente da que encontramos devido ao tratamento dos empates ser diferente.
+
+```{r}
+metodo_1 <- c(83, 91, 94, 89, 89, 96, 91, 92, 90)
+metodo_2 <- c(91, 90, 81, 83, 84, 83, 88, 91, 89, 84)
+metodo_3 <- c(101, 100, 91, 93, 96, 95, 94)
+metodo_4 <- c(78, 82, 81, 77, 79, 81, 80, 81)
+
+obs = c(metodo_1, metodo_2, metodo_3, metodo_4)
+
+metodo <- c( rep('M1',9), rep('M2',10), rep('M3',7), rep('M4',8) )
+kruskal.test(obs, metodo)
+
+```
+
+::: {#exr-dispositivos_ronco} 
+**Eficácia de Dispositivos contra o Ronco**
+
+Um experimento foi realizado para comparar a eficácia de três diferentes dispositivos projetados para reduzir o ronco. Quinze voluntários foram divididos aleatoriamente em três grupos de 5 pessoas cada.
+
+Após o uso, os resultados foram mensurados e todos os 15 escores foram convertidos em postos de 1 a 15, onde o posto 1 indica o resultado mais efetivo (maior redução do ronco).
+
+Os cálculos baseados nos dados do experimento resultaram nas seguintes somas dos postos:
+
+
+* Grupo 1: $T_1=44$ (Posto médio: 8,4)
+
+* Grupo 2: $T_2=60$ (Posto médio: 12,0)
+
+* Grupo 3 (Faixa de queixo): $T_318$ (Posto médio: 3,6)
+
+As populações dos três dispositivos são identicamente distribuídas (não há diferença de eficácia)?
+:::
+
+
+### Teste de Dunn
+
+Ao rejeitar a hipótese nula, o teste de Kruskal-Wallis não indica quais são os grupos discrepantes. Nesse caso, podemos utilizar o teste de Dunn para determinar quais grupos são diferentes.
+
+
+O teste de Dunn nada mais é do que uma aplicação do teste normal, considerando as médias dos postos previamente calculadas no testes de Kruskal-Wallis e considerando que a variância dos postos é constante e igual a $n(n+1)/12$. Nesse caso,  a estatística para a comparação do grupo $i$ contra o $j$ é dada por
+
+$$D_{i,j}=\frac{|\bar{T}_i-\bar{T}_j|}{\sqrt{\frac{n(n+1)}{12}\left(\frac{1}{n_i}+\frac{1}{n_j}\right)}},$$
+onde o erro padrão acima vem da imposição de que o teste a ser utilizado é de o teste normal para duas amostras independentes e o p-valor é calculado por
+$$\text{p-valor}=2P(Z>d_{ij}),$$
+onde $Z\sim\hbox{Normal}(0,1)$. Realizamos então o teste de Dunn para todos os pares de grupos. Em seguida decidimos quais são mais significativos através de um critério de comparação multivariado. Abaixo, explicamos o procedimento Correção de Holm.
+
+<div class='alert alert-success'>
+**Correção de Holm**
+
+A correção de Holm é frequentemente preferida à de Bonferroni por ser uniformemente mais poderosa. Ela funciona de forma sequencial (Step-down):O 
+
+1. Ordenamos os $p$-valores das $k$ comparações do menor para o maior: $p_{(1)} \le p_{(2)} \le \dots \le p_{(m)}$
+
+2. Comparamos cada $p_{(i)}$ com um nível de significância ajustado:$$\alpha_i = \frac{\alpha}{m - i + 1}$$
+
+3. Critério de Parada: Começamos por $p_{(1)}$. Se $p_{(1)} < \frac{\alpha}{m}$, rejeitamos $H_0$ e passamos para $p_{(2)}$. No momento em que um $p$-valor não for significativo, paramos e todas as comparações restantes são consideradas não significativas.
+
+</div>
+
+
+::: {#exm-}
+**Produção de milho revisitado**
+
+O exemplo sobre métodos de produção de milho, testamos que havia diferença significativa entre 4 métodos de produção. Ao aplicar o teste de Kruskall-Wallis, foram encontradas evidências de que pelo menos um dos métodos é diferente dos demais. Vamos aplicar o teste de Dunn para determinar as diferenças.
+
+Abaixo, sumarizamos os principais resultados:
+
+$$\begin{array}{cc|cccc}\hline
+&&\text{Método 1} & \text{Método 2} &\text{Método 3} & \text{Método 4}\\ \hline
+n_i && 9 & 10 & 7 & 8 \\
+\bar{T}_i&&  21,83 & 15,3 & 29,57 &  4,8 \\ \hline
+d_{i,j}\hbox{(p-valores)}&\text{Método 1} & &1,43(0,15) &1,54(0,12) &3,52(0,0004) \\ 
+                         &\text{Método 2} & & & 2,91(0,003) & 2,22(0,026) \\
+                         &\text{Método 3} & & & & 4,8(<0,0001) \\ \hline
+\end{array}$$
+
+Vamos realizar o teste ao nível de 5%. Os p-valores ordenados, o nível de significância ajusta e a decisão são dados abaixo.
+
+$$\begin{array}{c|c|c|c}\hline
+\text{Comparação} & \text{p-valor} & \text{Nível ajustado} & \text{Decisão} \\ \hline
+3,4 & <0,0001 & 0,0083 & \text{rejeitar}\\
+1,4    & 0,0004        & 0,0100 &\text{rejeitar}\\
+2,3    & 0,0030        & 0,0125 &\text{rejeitar}\\
+2,4    & 0,0260        & 0,0166 &\text{não rejeitar}\\
+1,3    & 0,1200        & 0,0250 &\text{não rejeitar}\\
+1,2    & 0,1500        & 0,0500 &\text{não rejeitar}\\
+\end{array}$$
+
+Deste modo, existem diferenças significativas entre os pares (1,4),(3,4) e (2,3). Isto implica que existem evidências de que:
+
+* a produção obtida pelos métodos 1 e 3  é significativamente maior que o método 4.
+
+*  a produção obtida pelo método 3  é significativamente maior que o método 2.
+
+:::
+
+
+::: {#exr-dispositivos_ronco} 
+**Eficácia de Dispositivos contra o Ronco (revisitado)**
+
+Aplique o teste de Dunn para determinar qual(is) pares são discrepantes aos nível de 5% de significância.
+:::
+
+##
+
 \setbeamertemplate{footline}{}
 \begin{frame}{}
     \Huge{Aula 16 - O teste dos postos quadrados para igualdade de variâncias}
@@ -392,7 +491,8 @@ Kruskal-Wallis chi-squared = 25.629, df = 3, p-value = 1.141e-05
 \begin{frame}
 \begin{block}{Dados}
 \begin{itemize}
-    \item Sejam $X_{i,1},\ldots,X_{i,n_i}$, com $i=1,\ldots,k$, $k$ amostras aleatórias independentes. \item Faça $U_{i,j}=|X_{i,j}-\mu_i|$, onde $\mu_i$ é a média do $i$-ésimo modelo. Se $\mu_i$ for desconhecido, assuma que 
+    \item Sejam $X_{i,1},\ldots,X_{i,n_i}$, com $i=1,\ldots,k$, $k$ amostras aleatórias indepe
+    ndentes. \item Faça $U_{i,j}=|X_{i,j}-\mu_i|$, onde $\mu_i$ é a média do $i$-ésimo modelo. Se $\mu_i$ for desconhecido, assuma que 
     $$\mu_i=\bar{x}_i=\frac{1}{n_i}\sum_{j=1}^{n_i}X_{i,j}.$$
     \item Crie uma única amostra com $U_{1,1},\ldots,U_{k,n_k}$, de tamanho $N=\sum_{i=1}^k n_i$. Seja $R(U_{i,j})$ o posto de $U_{i,j}$
     \end{itemize}

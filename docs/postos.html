@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>postos</title>
+<title>5&nbsp; Métodos baseados em postos – Métodos não paramétricos</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -58,18 +58,53 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="postos_files/libs/clipboard/clipboard.min.js"></script>
-<script src="postos_files/libs/quarto-html/quarto.js" type="module"></script>
-<script src="postos_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="postos_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="postos_files/libs/quarto-html/popper.min.js"></script>
-<script src="postos_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="postos_files/libs/quarto-html/anchor.min.js"></script>
-<link href="postos_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="postos_files/libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="postos_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="postos_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="postos_files/libs/bootstrap/bootstrap-9e3ffae467580fdb927a41352e75a2e0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./laboratorio.html" rel="next">
+<link href="./tabelas_contingencia.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-d9ea66fcd6c317012447f26e9c021348.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -101,24 +136,136 @@ window.Quarto = {
 };
 </script>
 
+<link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="fullcontent quarto-light">
+<body class="nav-sidebar floating quarto-light">
 
-<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./postos.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Métodos baseados em postos</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Métodos não paramétricos</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Prefácio</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Métodos não paramétricos</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./fde.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">A função de distribuição empírica</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./teste_do_sinal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">O teste do sinal e suas variações</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tabelas_contingencia.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Tabelas de contingência</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./postos.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Métodos baseados em postos</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./laboratorio.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">“Laboratório 1: Satisfação Residencial de Famílias Homoafetivas”</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#postos" id="toc-postos" class="nav-link active" data-scroll-target="#postos"><span class="header-section-number">5.1</span> Postos</a></li>
+  <li><a href="#o-teste-de-mann-whitney" id="toc-o-teste-de-mann-whitney" class="nav-link" data-scroll-target="#o-teste-de-mann-whitney"><span class="header-section-number">5.2</span> O Teste de Mann-Whitney</a></li>
+  <li><a href="#o-teste-de-kruskal-wallis" id="toc-o-teste-de-kruskal-wallis" class="nav-link" data-scroll-target="#o-teste-de-kruskal-wallis"><span class="header-section-number">5.3</span> O teste de Kruskal-Wallis</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
 <main class="content" id="quarto-document-content">
 
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Métodos baseados em postos</span></h1>
+</div>
 
 
 
-<section id="métodos-baseados-em-postos" class="level1">
-<h1>Métodos baseados em postos</h1>
-<section id="postos" class="level2">
-<h2 class="anchored" data-anchor-id="postos">Postos</h2>
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="postos" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="postos"><span class="header-section-number">5.1</span> Postos</h2>
 <p>Seja <span class="math inline">\(X_1,\ldots,X_n\)</span> uma amostra aleatória de escala no . Seja <span class="math inline">\(X_{(1)},\ldots,X_{(n)}\)</span> a amostra ordenada. O posto de <span class="math inline">\(X_{(i)}\)</span> é o valor <span class="math inline">\(i\)</span>.</p>
 <div id="exm-" class="theorem example">
-<p><span class="theorem-title"><strong>Example 1</strong></span> Considere a amostra: 1,2 , 9,3, 4,7 ,10, 6,2 , 3. Então</p>
+<p><span class="theorem-title"><strong>Example 5.1</strong></span> Considere a amostra: 1,2 , 9,3, 4,7 ,10, 6,2 , 3. Então</p>
 <p><span class="math display">\[\begin{array}{c|cccccc}
     \text{Amostra ordenada} &amp; 1,2 &amp; 3 &amp; 4,7 &amp; 6,2 &amp; 9,3 &amp; 10  \\ \hline
     \text{Postos}&amp; 1 &amp; 2 &amp; 3 &amp; 4 &amp; 5 &amp; 6
@@ -126,7 +273,7 @@ window.Quarto = {
 </div>
 <p>Tradicionalmente, a teoria dos postos assume que as variáveis são contínuas, o que garante a ausência de empates. Contudo, se por ventura dois ou mais valores da amostra são iguais (empates) atribuímos a eles a média dos postos que eles teriam se não houvesse empates. Métodos baseados em postos ainda serão válidos para variáveis aleatórias discretas desde que não existam muitos empates.</p>
 <div id="exm-" class="theorem example">
-<p><span class="theorem-title"><strong>Example 2</strong></span> Considere a amostra: 1,2,2,2,9,4,17,6,2. Então</p>
+<p><span class="theorem-title"><strong>Example 5.2</strong></span> Considere a amostra: 1,2,2,2,9,4,17,6,2. Então</p>
 <p><span class="math display">\[\begin{array}{c|ccccccccc}\hline
     \text{Amostra ordenada}   &amp; 1 &amp; 2 &amp; 2 &amp; 2 &amp; 2 &amp; 4 &amp; 6 &amp; 9 &amp; 17  \\ \hline
     \text{Postos (sem correção dos empates)}&amp; 1 &amp; 2 &amp; 3 &amp; 4 &amp; 5 &amp; 6 &amp; 7 &amp; 8 &amp; 9 \\ \hline
@@ -139,16 +286,20 @@ window.Quarto = {
 </div>
 <p>Seja <span class="math inline">\(X_1,\ldots,X_n\)</span> uma amostra aleatória e sejam <span class="math inline">\(R_1,\ldots,R_n\)</span> seus respectivos postos. Então,</p>
 <p><span class="math display">\[P(R_1=r_1,\ldots,R_n=r_n)=\frac{1}{n!}\]</span> onde <span class="math inline">\(r_1,\ldots,r_n\)</span> é qualquer permutação do conjunto <span class="math inline">\(\{1,\ldots,n\}\)</span> (observe que empates não são considerados). Note que os postos são estatísticas ancilares (para <span class="math inline">\(F\)</span>), uma vez que sua distribuição não depende da distribuição de <span class="math inline">\(X\)</span>.</p>
+<p>O posto <span class="math inline">\(R_i\)</span> tem distribuiçã uniforme discreta no conjunto <span class="math inline">\(\{1,\ldots,n\}\)</span>. Portanto, <span class="math display">\[E(R_i)=\sum_{r=1}^n rP(R_i=r)=\frac{1}{n}\sum_{r=1}^n r=\frac{n+1}{2}.\]</span> Além disso, como <span class="math display">\[E(R_i^2)=\sum_{r=1}^n r^2P(R_i=r)=\frac{1}{n}\sum_{r=1}^n r^2=\frac{(n+1)(2n+1)}{6},\]</span> o que implica em <span class="math display">\[Var(R_i)=\frac{(n+1)(n-1)}{12}.\]</span></p>
+<p>Os postos não são independentes. Para calcular a covariância entre <span class="math inline">\(R_i\)</span> e <span class="math inline">\(R_j\)</span>, note que a soma <span class="math inline">\(\sum_{i=1}^n R_i=n(n+1)/2\)</span> é uma constante. Disto, teremos que</p>
+<p><span class="math display">\[\begin{align}0&amp;=Var\left(\sum_{i=1}^n R_i\right)=Cov\left(\sum_{u=1}^nR_u,\sum_{v=1^n}R_v\right)=\sum_{i=1}^nVar(R_i)+\sum_{i\neq j}Cov\left(R_i,R_j\right)\\&amp;=\frac{n(n+1)(n-1)}{12}+ n(n-1)Cov(R_i,R_j)\Rightarrow Cov(R_i,R_j)=-\frac{n+1}{12}\end{align}\]</span></p>
 <p>Para os postos <span class="math inline">\(R_1,\ldots,R_n\)</span>, seja <span class="math inline">\(T=\sum_{i\in \mathcal{I}}R_i\)</span>, onde <span class="math inline">\(I\subset \{1,\ldots,n\}\)</span> possui <span class="math inline">\(n'\)</span> elementos. Então,</p>
 <p><span class="math display">\[\begin{align*}
-    E(T)&amp;=\frac{n'(n+1)}{2}\\
-    Var(T)&amp;=\frac{n'(n+1)(n-n')}{12}
-\end{align*}\]</span></p>
-<p>Logo, para <span class="math inline">\(n'\)</span> suficientemente grande,</p>
+    E(T)&amp;=\sum_{i\in\mathcal{I}}E(R_i)=\frac{n'(n+1)}{2}
+\end{align*}\]</span> e</p>
+<p><span class="math display">\[\begin{align*}
+    Var(T)&amp;=\sum_{i\in\mathcal{I}}\sum_{j\in\mathcal{I}}Cov\left(R_i,R_j\right)\\&amp;=n'\frac{(n-1)(n+1)}{12}-n'(n'-1)\frac{n+1}{12}\\&amp;=\frac{n'(n+1)(n-n')}{12}.
+\end{align*}\]</span> Logo, para <span class="math inline">\(n'\)</span> suficientemente grande,</p>
 <p><span class="math display">\[\frac{T-E(T)}{\sqrt{Var(T)}}\to N(0,1).\]</span> A estatística <span class="math inline">\(T\)</span> será utilizada para a construção de vários métodos discutidos aqui. Para a realização de testes exatos, observe que</p>
-<p><span class="math display">\[P(T=t)=\frac{\text{# somas iguais a }t}{\text{#combinações possíveis}}.\]</span></p>
+<p><span class="math display">\[P(T=t)=\frac{\text{número de somas iguais a }t}{\text{número de combinações possíveis}}.\]</span></p>
 <div id="exm-" class="theorem example">
-<p><span class="theorem-title"><strong>Example 3</strong></span> Seja <span class="math inline">\(X_1,\ldots,X_5\)</span> uma amostra aleatória. Seja <span class="math inline">\(T=R_1+R_2\)</span>. Observe que existem <span class="math inline">\({5\choose 2}=10\)</span> subconjuntos possíveis de tamanho 2. O menor valor possíve para <span class="math inline">\(t\)</span> é 3 e o maior é 9.</p>
+<p><span class="theorem-title"><strong>Example 5.3</strong></span> Seja <span class="math inline">\(X_1,\ldots,X_5\)</span> uma amostra aleatória. Seja <span class="math inline">\(T=R_1+R_2\)</span>. Observe que existem <span class="math inline">\({5\choose 2}=10\)</span> subconjuntos possíveis de tamanho 2. O menor valor possíve para <span class="math inline">\(t\)</span> é 3 e o maior é 9.</p>
 <p><span class="math display">\[\begin{array}{c|c}\hline
 \text{Subconjunto} &amp; \text{Valor de }t\\ \hline
 \{1,2\} &amp; 3 \\
@@ -177,7 +328,7 @@ logo $$P(T=t)=
 <p>$$</p>
 </div>
 <p>No exemplo anterior, vimos que <span class="math inline">\(P(T=t)\)</span> pode ser calculado enumerando todos os subconjuntos possívels. Para <span class="math inline">\(n'\)</span> grande, a enumeração de todos os subconjuntos pode ser computacionalmente intensiva. Para esses casos, podemos obter uma amostra de <span class="math inline">\(T\)</span> via simulação.</p>
-<div class="alert" data-alert-success="">
+<div class="alert alert-success">
 <p><strong>Simulando T</strong></p>
 <p>Para obter uma amostra de tamanho <span class="math inline">\(B\)</span> de <span class="math inline">\(T=\sum_{i\in\mathcal{I}}R_i\)</span>, onde <span class="math inline">\(\mathcal{I}\)</span> é um subconjunto dos postos de tamanho <span class="math inline">\(n'\)</span>, repita o seguinte procedimento <span class="math inline">\(B\)</span> vezes:</p>
 <ol type="1">
@@ -186,8 +337,8 @@ logo $$P(T=t)=
 </ol>
 </div>
 </section>
-<section id="o-teste-de-mann-whitney" class="level2">
-<h2 class="anchored" data-anchor-id="o-teste-de-mann-whitney">O Teste de Mann-Whitney</h2>
+<section id="o-teste-de-mann-whitney" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="o-teste-de-mann-whitney"><span class="header-section-number">5.2</span> O Teste de Mann-Whitney</h2>
 <p>Seja <span class="math inline">\(X_1,\ldots,X_n\)</span> uma amostra aleatória da população 1 e <span class="math inline">\(Y_1,\ldots,Y_m\)</span> uma amostra aleatória da população 2. Considere que as duas amostras são independentes entre si.</p>
 <p>Temos dois objetivos diferentes. No primeiro, desejamos testar se as populações são iguais, ou seja,</p>
 <p><span class="math display">\[\begin{align*}
@@ -211,7 +362,7 @@ logo $$P(T=t)=
 <p>Disto, como <span class="math inline">\(T\)</span> e <span class="math inline">\(U\)</span> possuem uma relação linear direta, trata-se do mesmo tese para fins de cálculo de p-valor. Portanto, é possível encontrar na literatura o nome Teste de Wilcoxon-Mann-Whitney.</p>
 </div>
 <div id="exm-" class="theorem example">
-<p><span class="theorem-title"><strong>Example 4</strong></span> 48 estudantes do sexo masculino, dos quais 12 viviam na área rural e 36 na urbana, foram selecionados para um teste. O objetivo é testar se a capacidade física dos alunos da área rural é maior que a da urbana. Cada aluno realizou um teste físico no qual um escore baixo indica baixo desempenho físico. Os dados são apresentados abaixo:</p>
+<p><span class="theorem-title"><strong>Example 5.4</strong></span> 48 estudantes do sexo masculino, dos quais 12 viviam na área rural e 36 na urbana, foram selecionados para um teste. O objetivo é testar se a capacidade física dos alunos da área rural é maior que a da urbana. Cada aluno realizou um teste físico no qual um escore baixo indica baixo desempenho físico. Os dados são apresentados abaixo:</p>
 <p><span class="math display">\[\begin{array}{l|ccccccc}\hline
     \text{Alunos da área} &amp; 2,7  &amp; 4,2  &amp; 5,6  &amp; 6,3  &amp; 7,3  &amp; 9    &amp;    \\
     \text{rural }(X_i)          &amp; 10,6 &amp; 11,4 &amp; 12,5 &amp; 12,9 &amp; 14,8 &amp; 16,1 &amp;   \\   \hline
@@ -242,7 +393,7 @@ logo $$P(T=t)=
 <p><span class="math display">\[Z=\frac{320-\frac{12(48+1)}{2}}{\sqrt{\frac{12(49)(36)}{12}}}=0,619\]</span> o <span class="math inline">\(p\)</span>-valor do teste é <span class="math inline">\(P(Z&gt;0,6428)=0,26\)</span>. Portanto, não há evidências estatísticas suficientes para afirmar que os alunos da área rural possuem desempenho físico superior aos da área urbana.</p>
 </div>
 <div id="exm-" class="theorem example">
-<p><span class="theorem-title"><strong>Example 5</strong></span> <strong>Continuação.</strong></p>
+<p><span class="theorem-title"><strong>Example 5.5</strong></span> <strong>Continuação.</strong></p>
 <p>No <code>R</code>, o teste de Mann-Whitney está implementado na função <code>wilcox.test(x, y)</code>, onde <code>x</code> e <code>y</code> são as amostras observadas. A execução deste teste para o conjunto de dados anterior é apresentada abaixo:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>rural <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">2.7</span>, <span class="fl">4.2</span>, <span class="fl">5.6</span>, <span class="fl">6.3</span>, <span class="fl">7.3</span>, <span class="fl">9.0</span>, <span class="fl">10.6</span>, <span class="fl">11.4</span>, <span class="fl">12.5</span>, <span class="fl">12.9</span>, <span class="fl">14.8</span>, <span class="fl">16.1</span>)</span>
@@ -273,7 +424,7 @@ alternative hypothesis: true location shift is greater than 0</code></pre>
 </ul>
 </div>
 <div id="exr-" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 1</strong></span> <strong>Ativos Petrolíferos (PETR4 vs.&nbsp;PRIO3)</strong></p>
+<p><span class="theorem-title"><strong>Exercise 5.1</strong></span> <strong>Ativos Petrolíferos (PETR4 vs.&nbsp;PRIO3)</strong></p>
 <p>No mercado financeiro, a comparação entre dois ativos vai além da média de seus preços. Um conceito fundamental é a Dominância Estocástica. Dizemos que a ação <span class="math inline">\(X\)</span> domina a ação <span class="math inline">\(Y\)</span> se, para qualquer nível de retorno, a probabilidade de <span class="math inline">\(X\)</span> entregar um resultado superior é maior. Neste exercício, analisaremos duas gigantes do setor de petróleo na B3:</p>
 <ul>
 <li><p>Petrobras (PETR4): uma empresa de economia mista, líder de mercado, cujos retornos são influenciados tanto pelo preço do barril de petróleo quanto por políticas governamentais e distribuição de dividendos.</p></li>
@@ -299,7 +450,7 @@ alternative hypothesis: true location shift is greater than 0</code></pre>
 <p>Verifique se a ação da Prio (PRIO3) apresenta dominância estocástica sobre a Petrobras (PETR4) no período analisado (em termos financeiros, isso significaria que a PRIO3 tem uma tendência sistemática de entregar retornos maiores)</p>
 </div>
 <div id="exr-" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 2</strong></span> <strong>Ativos Petrolíferos (PETR4 vs.&nbsp;PRIO3) - continuado.</strong></p>
+<p><span class="theorem-title"><strong>Exercise 5.2</strong></span> <strong>Ativos Petrolíferos (PETR4 vs.&nbsp;PRIO3) - continuado.</strong></p>
 <p>Utilizando o <code>R</code> realize a mesma análise do exercício anterior, considerando os retornos dos útlimos 5 anos. Os dados estão disposto abaixo:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Retornos Mensais PETR4 (Abr/2021 a Abr/2026)</span></span>
@@ -320,17 +471,135 @@ alternative hypothesis: true location shift is greater than 0</code></pre>
 <span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    <span class="fl">4.5</span>, <span class="fl">6.2</span>, <span class="fl">3.1</span>, <span class="fl">8.8</span>, <span class="sc">-</span><span class="fl">1.1</span>, <span class="fl">12.4</span>, <span class="fl">5.1</span>, <span class="fl">9.9</span>, <span class="fl">3.2</span>, <span class="fl">7.7</span>, <span class="fl">2.1</span>, <span class="fl">5.8</span>       <span class="co"># 2025-26</span></span>
 <span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+</div>
 <p>Exercícios 1 e 2, página 281</p>
-<section id="o-teste-de-kruskal-wallis" class="level2">
-<h2 class="anchored" data-anchor-id="o-teste-de-kruskal-wallis">O teste de Kruskal-Wallis</h2>
+</section>
+<section id="o-teste-de-kruskal-wallis" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="o-teste-de-kruskal-wallis"><span class="header-section-number">5.3</span> O teste de Kruskal-Wallis</h2>
 <p>Considere <span class="math inline">\(k\)</span> amostras aleatórias independentes, onde <span class="math inline">\(X_{i,1}, \ldots,X_{i,n_i}\)</span> é a amostra aleatória proveniente da <span class="math inline">\(i\)</span>-ésima população. Seja <span class="math inline">\(F_i(.)\)</span> a função de distribuição da <span class="math inline">\(i\)</span>-ésima população. Supondo que as amostras são independentes entre si, queremos testar</p>
 <p><span class="math display">\[\begin{align*}
 H_0&amp;: F_1(x)=\cdots = F_k(x)\\
 H_1&amp;: F_i(x)\neq F_j(x) \text{ para pelo menos um par }(i,j)
 \end{align*}\]</span></p>
-<p>A lógica do teste de Kruskal-Wallis é semelhante ao de Mann-Whitney. Primeiro, sob <span class="math inline">\(H_0\)</span>, todas as amostras são provenientes do mesmo modelo. Portanto, podemos combiná-las, formando uma amostra única de tamanho <span class="math inline">\(N=\sum_{i=1}^k n_i\)</span> e encontrar os postos <span class="math inline">\(R_1,\ldots,R_{N}\)</span>. Denotando o posto de <span class="math inline">\(X_{i,j}\)</span> por <span class="math inline">\(R_{i,j}\)</span>, teremos que os postos associados a <span class="math inline">\(i\)</span>-ésima população são <span class="math display">\[R_i=\sum_{j=1}^{n_i}R_{i,j}.\]</span> Ainda sob <span class="math inline">\(H_0\)</span>, tesmo que</p>
-<span class="math display">\[E\left(\frac{R_i}{n_i}\right)=\frac{n_i+1}{2}\]</span> e <span class="math display">\[Var\left(\frac{R_i}{n_i}\right)=\]</span>
-<p>%=========================================================== % Aula 16 %===========================================================</p>
+<p>A lógica do teste de Kruskal-Wallis é semelhante ao de Mann-Whitney. Primeiro, sob <span class="math inline">\(H_0\)</span>, todas as amostras são provenientes do mesmo modelo. Portanto, podemos combiná-las, formando uma amostra única de tamanho <span class="math inline">\(n=\sum_{i=1}^k n_i\)</span> e encontrar os postos <span class="math inline">\(R_1,\ldots,R_{n}\)</span>. Denotando o posto de <span class="math inline">\(X_{i,j}\)</span> por <span class="math inline">\(R_{i,j}\)</span>, teremos que a soma dos postos associados a <span class="math inline">\(i\)</span>-ésima população é <span class="math display">\[T_i=\sum_{j=1}^{n_i}R_{i,j}.\]</span> Defina <span class="math inline">\(\bar{T}_i=T_i/n_i.\)</span> Ainda sob <span class="math inline">\(H_0\)</span>, temos que</p>
+<p><span class="math display">\[E\left(\bar{T_i}\right)=\frac{1}{n_i}\sum_{j=1}^{n_i}E(R_{i,j})=\frac{n+1}{2}\]</span> e <span class="math display">\[Var\left(\bar{T_i}\right)=\frac{1}{n_i^2}Var\left(\sum_{j=1}^{n_i}R_{ij}\right)=\frac{(n+1)(n-n_i)}{12n_i}=\frac{(n+1)}{12}\left(\frac{n}{n_i}-1\right).\]</span></p>
+<p>Note que, assim como os postos, as estatísiticas <span class="math inline">\(T_1,\ldots,T_k\)</span> não são independentes. A covariância entre <span class="math inline">\(T_i\)</span> e <span class="math inline">\(T_{i'}\)</span> é</p>
+<p><span class="math display">\[\begin{align}Cov(T_i,T_{i'})=\frac{1}{n_i n_{i'}}\sum_{u=1}^{n_i} \sum_{v=1}^{n_{i'}} Cov(R_{i,u},R_{i'v})=-\frac{n+1}{12}\end{align}\]</span></p>
+<p>Como a soma dos postos é <span class="math inline">\(n(n+1)/2\)</span>, teremos que</p>
+<p><strong>Relação 1</strong> <span class="math display">\[\begin{align}\bar{T}_k&amp;=\frac{1}{n_k}\sum_{j=1}^{n_k}R_{j,k}=\frac{1}{n_k}\left[\frac{n(n+1)}{2}-\sum_{i\neq k}\sum_{j=1}^{n_i}R_{i,j}\right]\\&amp;=\frac{1}{n_k}\left[\frac{n(n+1)}{2}-\sum_{i=1}^{k-1}n_i\bar{T}_i\right]\\&amp;=\frac{n+1}{2}-\frac{1}{n_k}\sum_{i=1}^{k-1}n_i\left(\bar{T}_i-\frac{n+1}{2}\right)\\&amp;\Rightarrow n_k\left(\bar{T}_k-\frac{n+1}{2}\right)=-\sum_{i=1}^{k-1}n_i\left(\bar{T}_i-\frac{n+1}{2}\right).\end{align}.\]</span> Disto, <span class="math inline">\(\bar{T}_k\)</span> é completamente especificado dado os demais. Considere o vetor <span class="math inline">\(\boldsymbol{W}=(\bar{T}_1,\ldots,\bar{T}_{k-1})\)</span>. Sabemos que</p>
+<p><span class="math display">\[E(\boldsymbol{W})=\left(\frac{n+1}{2}\right)\boldsymbol{1}_{k-1}\]</span> Já a matriz <span class="math inline">\(\Sigma= Var(\boldsymbol{W})\)</span> é composta pelos elementos <span class="math display">\[\sigma_{ii}=\frac{n+1}{12}\left(\frac{n}{n_i}-1\right)\]</span> na diagonal principal e <span class="math inline">\(-(n+1)/12\)</span> nas demais. Portanto, <span class="math display">\[\Sigma=\frac{n+1}{12}\left(\boldsymbol{d}-\boldsymbol{1}_{k-1}\boldsymbol{1}_{k-1}'\right),\]</span> onde <span class="math inline">\(\boldsymbol{d}=n\text{diag}(1/n_1,\ldots,1/n_k)\)</span>e, utilizando a fórmula da inversão de Sherman-Morrison, temos <span class="math display">\[\Sigma^{-1}=\frac{12}{n+1}\left(\frac{1}{n}\text{diag}(\boldsymbol{b})+\frac{\boldsymbol{b}\boldsymbol{b}'}{n_kn}\right),\]</span> onde <span class="math inline">\(\boldsymbol{b}'=(n_1,\ldots,n_{k-1})\)</span>. Portanto, por consequência direta do Teorema Central do Limite, teremos que</p>
+<p><span class="math display">\[H=(\boldsymbol{W}-E(\boldsymbol{W}))'\Sigma^{-1}(\boldsymbol{W}-E(\boldsymbol{W}))\sim\chi^2_{k-1}\]</span> e esta estatística pode ser utilizada para testar a hipótese nula, rejeitando-a para valores elevados de <span class="math inline">\(H_{obs}\)</span>. A estatística <span class="math inline">\(H\)</span> pode ser escrita de modo mais parcimonioso. Após algumas manipulações, pode-se mostrar que</p>
+<p><span class="math display">\[H=\frac{12}{n+1}\left\{\sum_{i=1}^{k-1}\frac{n_i}{n}\left(\bar{T}_i-\frac{n+1}{2}\right)^2+\frac{1}{n_kn}\left[\sum_{i=1}^{k-1}n_i\left(\bar{T}_i-\frac{n+1}{2}\right)\right]^2\right\}.\]</span> e, pela Relação 1</p>
+<p><span class="math display">\[H=\frac{12}{n+1}\left\{\sum_{i=1}^{k-1}\frac{n_i}{n}\left(\bar{T}_i-\frac{n+1}{2}\right)^2+\frac{n_k}{n}\left(\bar{T}_k-\frac{n+1}{2}\right)^2\right\}.\]</span> Portanto, <span class="math display">\[H=\frac{12}{n+1}\sum_{i=1}^{k}\frac{n_i}{n}\left(\bar{T}_i-\frac{n+1}{2}\right)^2.\]</span></p>
+<div id="exm-" class="theorem example">
+<p><span class="theorem-title"><strong>Example 5.7</strong></span> <strong>Produção de milho</strong></p>
+<p>Quatro métodos para melhoria do crescimento de milho foram aleatoriamente assinalados em um grande número de lotes de terras e a produção por acre de cada lote foi registrada. Os resultados foram:</p>
+<p><span class="math display">\[\begin{array}{c|l}\hline
+\text{Método} &amp; \text{Produção por acre} \\ \hline
+1 &amp; 83\quad 89\quad 89\quad 90\quad 91\quad 91\quad 92\quad 94\quad 96   \\
+2 &amp; 81\quad 83\quad 83\quad 84\quad 84\quad 88\quad 89\quad 90\quad 91\quad 91  \\
+3 &amp; 91\quad 93\quad 94\quad 95\quad 96\quad 100\quad 101  \\
+4 &amp; 77\quad 78\quad 79\quad 80\quad 81\quad 81\quad  81\quad 82  \\ \hline
+\end{array}\]</span></p>
+<p>Existe diferença entre os métodos de produção?</p>
+<p>Obtivemos os postos das 34 observações. Em seguida, organizamos os postos por método:</p>
+<p><span class="math display">\[\begin{array}{c|cc|cc|cc|cc}\hline
+     &amp;\text{Método 1} &amp; &amp;\text{Método 2}&amp; &amp; \text{Método 3}&amp; &amp; \text{Método 4}\\
+     &amp;\text{Obs.} &amp; \text{Posto} &amp;\text{Obs.} &amp; \text{Posto} &amp; \text{Obs.} &amp; \text{Posto}  &amp;\text{Obs.} &amp; \text{Posto} \\ \hline
+&amp;     83&amp; 11  &amp;91  &amp;  23&amp; 101&amp; 34&amp; 78&amp;2\\
+&amp;91&amp; 23  &amp;90  &amp;19,5&amp; 100&amp; 33&amp;82&amp;9\\
+&amp;94&amp; 28,5&amp; 81 &amp; 6,5&amp; 91&amp; 23&amp;81&amp;6,5\\
+&amp;89&amp; 17  &amp;83  &amp;11  &amp;93&amp; 37&amp;77&amp;1\\
+&amp;89&amp; 17  &amp;84  &amp;13,5&amp;96&amp; 31,5&amp;79&amp;3\\
+&amp;96&amp; 31,5&amp; 83 &amp;11  &amp;95&amp; 30&amp;81&amp;6,5\\
+&amp;91&amp; 23  &amp;88  &amp;15  &amp; 94&amp; 28.5&amp;80&amp;4\\
+&amp;92&amp; 26  &amp;91  &amp;23  &amp;&amp; &amp;81&amp;6,5\\
+&amp;90&amp; 19,5&amp; 89 &amp;17  &amp;&amp;&amp;&amp;\\
+&amp;  &amp;     &amp; 84 &amp;13,5&amp;&amp;&amp;&amp;\\ \hline
+T_i &amp;&amp;196,5&amp;&amp;153&amp;&amp;207&amp;&amp;38,5\\
+n_i &amp;&amp;9&amp;&amp;10&amp;&amp;7&amp;&amp;8 \\
+     \end{array}\]</span></p>
+<p>Com um <span class="math inline">\(H_{obs}=25,46\)</span>, encontramos o <span class="math inline">\(p\)</span>-valor muito baixo, o que nos leva a rejeitar a hipótese nula. Deste modo, pelo menos um dos métodos é diferente dos demais.</p>
+<p>Abaixo, apresentamos a resolução deste problema no <code>R</code>. A estatística é ligeramente diferente da que encontramos devido ao tratamento dos empates ser diferente.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>metodo_1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">83</span>, <span class="dv">91</span>, <span class="dv">94</span>, <span class="dv">89</span>, <span class="dv">89</span>, <span class="dv">96</span>, <span class="dv">91</span>, <span class="dv">92</span>, <span class="dv">90</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>metodo_2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">91</span>, <span class="dv">90</span>, <span class="dv">81</span>, <span class="dv">83</span>, <span class="dv">84</span>, <span class="dv">83</span>, <span class="dv">88</span>, <span class="dv">91</span>, <span class="dv">89</span>, <span class="dv">84</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>metodo_3 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">101</span>, <span class="dv">100</span>, <span class="dv">91</span>, <span class="dv">93</span>, <span class="dv">96</span>, <span class="dv">95</span>, <span class="dv">94</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>metodo_4 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">78</span>, <span class="dv">82</span>, <span class="dv">81</span>, <span class="dv">77</span>, <span class="dv">79</span>, <span class="dv">81</span>, <span class="dv">80</span>, <span class="dv">81</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>obs <span class="ot">=</span> <span class="fu">c</span>(metodo_1, metodo_2, metodo_3, metodo_4)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>metodo <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="fu">rep</span>(<span class="st">'M1'</span>,<span class="dv">9</span>), <span class="fu">rep</span>(<span class="st">'M2'</span>,<span class="dv">10</span>), <span class="fu">rep</span>(<span class="st">'M3'</span>,<span class="dv">7</span>), <span class="fu">rep</span>(<span class="st">'M4'</span>,<span class="dv">8</span>) )</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="fu">kruskal.test</span>(obs, metodo)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Kruskal-Wallis rank sum test
+
+data:  obs and metodo
+Kruskal-Wallis chi-squared = 25.629, df = 3, p-value = 1.141e-05</code></pre>
+</div>
+</div>
+<div id="exr-dispositivos_ronco" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 5.3</strong></span> <strong>Eficácia de Dispositivos contra o Ronco</strong></p>
+<p>Um experimento foi realizado para comparar a eficácia de três diferentes dispositivos projetados para reduzir o ronco. Quinze voluntários foram divididos aleatoriamente em três grupos de 5 pessoas cada.</p>
+<p>Após o uso, os resultados foram mensurados e todos os 15 escores foram convertidos em postos de 1 a 15, onde o posto 1 indica o resultado mais efetivo (maior redução do ronco).</p>
+<p>Os cálculos baseados nos dados do experimento resultaram nas seguintes somas dos postos:</p>
+<ul>
+<li><p>Grupo 1: <span class="math inline">\(T_1=44\)</span> (Posto médio: 8,4)</p></li>
+<li><p>Grupo 2: <span class="math inline">\(T_2=60\)</span> (Posto médio: 12,0)</p></li>
+<li><p>Grupo 3 (Faixa de queixo): <span class="math inline">\(T_318\)</span> (Posto médio: 3,6)</p></li>
+</ul>
+<p>As populações dos três dispositivos são identicamente distribuídas (não há diferença de eficácia)?</p>
+</div>
+<section id="teste-de-dunn" class="level3" data-number="5.3.1">
+<h3 data-number="5.3.1" class="anchored" data-anchor-id="teste-de-dunn"><span class="header-section-number">5.3.1</span> Teste de Dunn</h3>
+<p>Ao rejeitar a hipótese nula, o teste de Kruskal-Wallis não indica quais são os grupos discrepantes. Nesse caso, podemos utilizar o teste de Dunn para determinar quais grupos são diferentes.</p>
+<p>O teste de Dunn nada mais é do que uma aplicação do teste normal, considerando as médias dos postos previamente calculadas no testes de Kruskal-Wallis e considerando que a variância dos postos é constante e igual a <span class="math inline">\(n(n+1)/12\)</span>. Nesse caso, a estatística para a comparação do grupo <span class="math inline">\(i\)</span> contra o <span class="math inline">\(j\)</span> é dada por</p>
+<p><span class="math display">\[D_{i,j}=\frac{|\bar{T}_i-\bar{T}_j|}{\sqrt{\frac{n(n+1)}{12}\left(\frac{1}{n_i}+\frac{1}{n_j}\right)}},\]</span> onde o erro padrão acima vem da imposição de que o teste a ser utilizado é de o teste normal para duas amostras independentes e o p-valor é calculado por <span class="math display">\[\text{p-valor}=2P(Z&gt;d_{ij}),\]</span> onde <span class="math inline">\(Z\sim\hbox{Normal}(0,1)\)</span>. Realizamos então o teste de Dunn para todos os pares de grupos. Em seguida decidimos quais são mais significativos através de um critério de comparação multivariado. Abaixo, explicamos o procedimento Correção de Holm.</p>
+<div class="alert alert-success">
+<p><strong>Correção de Holm</strong></p>
+<p>A correção de Holm é frequentemente preferida à de Bonferroni por ser uniformemente mais poderosa. Ela funciona de forma sequencial (Step-down):O</p>
+<ol type="1">
+<li><p>Ordenamos os <span class="math inline">\(p\)</span>-valores das <span class="math inline">\(k\)</span> comparações do menor para o maior: <span class="math inline">\(p_{(1)} \le p_{(2)} \le \dots \le p_{(m)}\)</span></p></li>
+<li><p>Comparamos cada <span class="math inline">\(p_{(i)}\)</span> com um nível de significância ajustado:<span class="math display">\[\alpha_i = \frac{\alpha}{m - i + 1}\]</span></p></li>
+<li><p>Critério de Parada: Começamos por <span class="math inline">\(p_{(1)}\)</span>. Se <span class="math inline">\(p_{(1)} &lt; \frac{\alpha}{m}\)</span>, rejeitamos <span class="math inline">\(H_0\)</span> e passamos para <span class="math inline">\(p_{(2)}\)</span>. No momento em que um <span class="math inline">\(p\)</span>-valor não for significativo, paramos e todas as comparações restantes são consideradas não significativas.</p></li>
+</ol>
+</div>
+<div id="exm-" class="theorem example">
+<p><span class="theorem-title"><strong>Example 5.6</strong></span> <strong>Produção de milho revisitado</strong></p>
+<p>O exemplo sobre métodos de produção de milho, testamos que havia diferença significativa entre 4 métodos de produção. Ao aplicar o teste de Kruskall-Wallis, foram encontradas evidências de que pelo menos um dos métodos é diferente dos demais. Vamos aplicar o teste de Dunn para determinar as diferenças.</p>
+<p>Abaixo, sumarizamos os principais resultados:</p>
+<p><span class="math display">\[\begin{array}{cc|cccc}\hline
+&amp;&amp;\text{Método 1} &amp; \text{Método 2} &amp;\text{Método 3} &amp; \text{Método 4}\\ \hline
+n_i &amp;&amp; 9 &amp; 10 &amp; 7 &amp; 8 \\
+\bar{T}_i&amp;&amp;  21,83 &amp; 15,3 &amp; 29,57 &amp;  4,8 \\ \hline
+d_{i,j}\hbox{(p-valores)}&amp;\text{Método 1} &amp; &amp;1,43(0,15) &amp;1,54(0,12) &amp;3,52(0,0004) \\
+                         &amp;\text{Método 2} &amp; &amp; &amp; 2,91(0,003) &amp; 2,22(0,026) \\
+                         &amp;\text{Método 3} &amp; &amp; &amp; &amp; 4,8(&lt;0,0001) \\ \hline
+\end{array}\]</span></p>
+<p>Vamos realizar o teste ao nível de 5%. Os p-valores ordenados, o nível de significância ajusta e a decisão são dados abaixo.</p>
+<p><span class="math display">\[\begin{array}{c|c|c|c}\hline
+\text{Comparação} &amp; \text{p-valor} &amp; \text{Nível ajustado} &amp; \text{Decisão} \\ \hline
+3,4 &amp; &lt;0,0001 &amp; 0,0083 &amp; \text{rejeitar}\\
+1,4    &amp; 0,0004        &amp; 0,0100 &amp;\text{rejeitar}\\
+2,3    &amp; 0,0030        &amp; 0,0125 &amp;\text{rejeitar}\\
+2,4    &amp; 0,0260        &amp; 0,0166 &amp;\text{não rejeitar}\\
+1,3    &amp; 0,1200        &amp; 0,0250 &amp;\text{não rejeitar}\\
+1,2    &amp; 0,1500        &amp; 0,0500 &amp;\text{não rejeitar}\\
+\end{array}\]</span></p>
+<p>Deste modo, existem diferenças significativas entre os pares (1,4),(3,4) e (2,3). Isto implica que existem evidências de que:</p>
+<ul>
+<li><p>a produção obtida pelos métodos 1 e 3 é significativamente maior que o método 4.</p></li>
+<li><p>a produção obtida pelo método 3 é significativamente maior que o método 2.</p></li>
+</ul>
+</div>
+<div id="exr-dispositivos_ronco" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 5.4</strong></span> <strong>Eficácia de Dispositivos contra o Ronco (revisitado)</strong></p>
+<p>Aplique o teste de Dunn para determinar qual(is) pares são discrepantes aos nível de 5% de significância.</p>
+</div>
+</section>
+<section id="section" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="section"><span class="header-section-number">5.4</span> </h2>
 <pre><code>\begin{frame}{Exercícios}
 Página 310, exercícios 1 e 4.
     
@@ -338,13 +607,13 @@ Página 310, exercícios 1 e 4.
 <p>%=========================================================== % Aula 17 %===========================================================</p>
 <p>%=========================================================== % Aula 18 %===========================================================</p>
 <p>%====================================================== % Aula 19 %=======================================================</p>
+
+
 </section>
 </div>
 </section>
-</section>
 
-</main>
-<!-- /main column -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
@@ -745,6 +1014,18 @@ Página 310, exercícios 1 e 4.
     }
   });
   </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./tabelas_contingencia.html" class="pagination-link" aria-label="Tabelas de contingência">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Tabelas de contingência</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./laboratorio.html" class="pagination-link" aria-label="&quot;Laboratório 1: Satisfação Residencial de Famílias Homoafetivas&quot;">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">“Laboratório 1: Satisfação Residencial de Famílias Homoafetivas”</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
 </div> <!-- /content -->
 
 

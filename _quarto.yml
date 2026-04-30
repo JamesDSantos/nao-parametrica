@@ -12,6 +12,7 @@ book:
     - fde.qmd
     - teste_do_sinal.qmd
     - tabelas_contingencia.qmd
+    - postos.qmd
     - laboratorio.qmd
     - references.qmd
 
