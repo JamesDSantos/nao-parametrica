@@ -492,7 +492,7 @@ H_1&amp;: F_i(x)\neq F_j(x) \text{ para pelo menos um par }(i,j)
 <p><span class="math display">\[H=\frac{12}{n+1}\left\{\sum_{i=1}^{k-1}\frac{n_i}{n}\left(\bar{T}_i-\frac{n+1}{2}\right)^2+\frac{1}{n_kn}\left[\sum_{i=1}^{k-1}n_i\left(\bar{T}_i-\frac{n+1}{2}\right)\right]^2\right\}.\]</span> e, pela Relação 1</p>
 <p><span class="math display">\[H=\frac{12}{n+1}\left\{\sum_{i=1}^{k-1}\frac{n_i}{n}\left(\bar{T}_i-\frac{n+1}{2}\right)^2+\frac{n_k}{n}\left(\bar{T}_k-\frac{n+1}{2}\right)^2\right\}.\]</span> Portanto, <span class="math display">\[H=\frac{12}{n+1}\sum_{i=1}^{k}\frac{n_i}{n}\left(\bar{T}_i-\frac{n+1}{2}\right)^2.\]</span></p>
 <div id="exm-" class="theorem example">
-<p><span class="theorem-title"><strong>Example 5.7</strong></span> <strong>Produção de milho</strong></p>
+<p><span class="theorem-title"><strong>Example 5.8</strong></span> <strong>Produção de milho</strong></p>
 <p>Quatro métodos para melhoria do crescimento de milho foram aleatoriamente assinalados em um grande número de lotes de terras e a produção por acre de cada lote foi registrada. Os resultados foram:</p>
 <p><span class="math display">\[\begin{array}{c|l}\hline
 \text{Método} &amp; \text{Produção por acre} \\ \hline
@@ -598,15 +598,99 @@ d_{i,j}\hbox{(p-valores)}&amp;\text{Método 1} &amp; &amp;1,43(0,15) &amp;1,54(0
 <p>Aplique o teste de Dunn para determinar qual(is) pares são discrepantes aos nível de 5% de significância.</p>
 </div>
 </section>
-<section id="section" class="level2" data-number="5.4">
-<h2 data-number="5.4" class="anchored" data-anchor-id="section"><span class="header-section-number">5.4</span> </h2>
+<section id="teste-de-wilcoxon-para-postos-assinalados" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="teste-de-wilcoxon-para-postos-assinalados"><span class="header-section-number">5.4</span> Teste de Wilcoxon para postos assinalados</h2>
+<p>Seja <span class="math inline">\((X_1,Y_1), \ldots,(X_{m},Y_{m})\)</span> uma amostra aleatória de variáveis contínuas. Seja <span class="math inline">\(D_i=X_i-Y_i\)</span>. Assuma que <span class="math inline">\(D_1,\ldots,D_n\)</span> é simétrica em torno da mediana <span class="math inline">\(\theta\)</span>. No teste de Wilcoxon para postos assinalados, estamos interessados em testar <span class="math inline">\(H_0:\theta=0\)</span> contra as alternativas usuais para testes bilateral e unilaterais.</p>
+<p>Para tanto, sejam <span class="math inline">\(R_1,\ldots,R_n\)</span> os postos de <span class="math inline">\(|D_1|,\ldots,|D_n|\)</span> e sejam <span class="math display">\[S_i=\left\{\begin{array}{ll}1&amp;,\hbox{ se }X_i&gt;Y_i \\ -1&amp;, \hbox{ se } X_i&lt;Y_i\end{array}\right.\]</span> os sinais de cada par. Os postos assinalados são dados por <span class="math inline">\(S_iR_i\)</span>. Sob a hipótese nula, os sinais tem probabilidade 1/2 e, deste modo, esperamos que a soma dos postos com sinais positivos esteja próxima dos demais. Portanto, definimos a estatística de teste <span class="math display">\[W^+=\sum_{i:D_i&gt;0}R_i.\]</span></p>
+<p>Valores elevados de <span class="math inline">\(W^+\)</span> dão evidências de que postos maiores são atribuídos a <span class="math inline">\(X\)</span>, que por sua vez dão suporte para <span class="math inline">\(H_1:\theta&gt;0\)</span>.</p>
+<p>É possível encontrar uma expressão para <span class="math inline">\(P(W^+=w)\)</span> sob <span class="math inline">\(H_0\)</span>, mas esse cálculo se torna proibitivo para <span class="math inline">\(n\)</span> razoavelmente grande, uma vez que devemos calcular <span class="math inline">\(2^n\)</span> combinações de sinais. O p-valor pode ser aproximado via Método de Monte Carlo.</p>
+<div class="alert alert-success">
+<p><strong>Simulação de <span class="math inline">\(W^+\)</span></strong></p>
+<p>Considere os postos fixos <span class="math inline">\(1, 2, \dots, n\)</span>. Para <span class="math inline">\(i=1,\ldots,B\)</span>:</p>
+<ol type="1">
+<li><p>Gere <span class="math inline">\(n\)</span> variáveis de Bernoulli(1/2) independentes <span class="math inline">\(S_j \in \{0, 1\}\)</span></p></li>
+<li><p>Calcule a estatística simulada: <span class="math inline">\(w_i = \sum_{j=1}^{n} jS_j\)</span>.</p></li>
+</ol>
+</div>
+<p>Vamos apresentar uma alternativa para a distribuição de <span class="math inline">\(W^+\)</span> para grandes amostras. Primeiro, note que sob <span class="math inline">\(H_0\)</span>, <span class="math display">\[U=\sum_{i=1}^n I_{S_i&gt;0}(i)\sim\hbox{Binomial}\left(n,\frac{1}{2}\right),\]</span> logo <span class="math display">\[\begin{align}E(U)&amp;=\frac{n}{2}\\ Var(U)&amp;=\frac{n}{4}\\E(U^2)&amp;=\frac{n(n+1)}{4}\end{align}\]</span> Para grandes amostras, note que</p>
+<p><span class="math display">\[\begin{align}E(W^+)&amp;=E\left(\sum_{i:S_i&gt;0}R_i\right)=E\left[E\left(\sum_{i:S_i&gt;0}R_i|S_1,\ldots,S_n\right)\right]\\&amp;=E\left[\sum_{i:S_i&gt;0}\frac{n+1}{2}\right]=\frac{n+1}{2}E\left[\sum_{i=1}^n I_{S_i&gt;0}(i)\right]\\&amp;=\frac{n+1}{2}E(U)=\frac{n(n+1)}{4}\end{align}\]</span> e</p>
+<p><span class="math display">\[\begin{align}Var(W^+)&amp;=
+Var\left(\sum_{i:S_i&gt;0}R_i\right)\\&amp;=
+E\left[Var\left(\sum_{i:S_i&gt;0}R_i|S_1,\ldots,S_n\right)\right]+Var\left[E\left(\sum_{i:S_i&gt;0}R_i|S_1,\ldots,S_n\right)\right]\\&amp;=
+E\left[\frac{n+1}{12}\left(\sum_{i=1}^n I_{S_i&gt;0}(i)\right)\left(n-\sum_{i=1}^n I_{S_i&gt;0}(i)\right)\right]+Var\left[\frac{n+1}{2}\sum_{i=1}^n I_{S_i&gt;0}(i)\right]\\&amp;=\frac{(n+1)}{12}E\left[nU-U^2\right]+\frac{(n+1)^2}{4}Var[U]\\
+&amp;=\frac{n(n+1)(2n+1)}{24}
+\end{align}\]</span></p>
+<p>logo, sob <span class="math inline">\(H_0\)</span></p>
+<p><span class="math display">\[Z=\frac{ W^+ -\frac{n(n+1)}{4}}{\sqrt{n(n+1)(2n+1)/24}}\sim\hbox{Normal}(0,1).\]</span></p>
+<div class="alert laert-success">
+<p><strong>Sobre empates.</strong> Caso <span class="math inline">\(D_i=0\)</span>, recomenda-se excluir a observação. Essa prática é justificável por se considerar que <span class="math inline">\(D_1,\ldots,D_n\)</span> são variáveis contínuas e empates existem apenas por erros de medida. Caso o número de empates seja substancial, esse teste não é recomendável.</p>
+</div>
+<div id="exm-" class="theorem example">
+<p><span class="theorem-title"><strong>Example 5.7</strong></span> Doze pares de gêmeos idênticos participaram de um estudo psicológico com o objetivo de medir a quantidade de agressividade na personalidade do indivíduo. Nosso objetivo é comparar os irmãos um com o outro para ver se o primeiro a nascer tende a ser mais agressivo. Os resultados são apresentados abaixo, onde um escore mais alto indica maior agressividade.</p>
+<p><span class="math display">\[\begin{array}{c|cccccccccccc}\hline
+\hbox{Par}            &amp; 1&amp;  2&amp;  3&amp;  4&amp;  5&amp;  6&amp;  7&amp;  8&amp;  9&amp;  10&amp; 11&amp; 12\\ \hline
+\text{1o irmão } (X) &amp;  86&amp; 71&amp; 77&amp; 68&amp; 91&amp; 72&amp; 77&amp; 91&amp; 70&amp; 71&amp; 88&amp; 87\\
+\text{2o irmão } (Y) &amp;  88&amp; 77&amp; 76&amp; 64&amp; 96&amp; 72&amp; 65&amp; 90&amp; 65&amp; 80&amp; 81&amp; 72\\
+D_i         &amp;   -2&amp; -6&amp; 1&amp;  4&amp;  -5&amp; 0&amp;  12&amp; 1&amp;  5&amp;  -9&amp; 7&amp;  15\\
+|D_i| &amp; 2 &amp; 6 &amp; 1 &amp; 4 &amp; 5 &amp; - &amp; 12 &amp; 1 &amp; 5 &amp; 9 &amp; 7 &amp; 15  \\
+R_i&amp;    3&amp;  7&amp;  1,5 &amp;4  &amp;5,5 &amp;-     &amp;10 &amp;1,5    &amp;5,5&amp;   9&amp;  8&amp;  11\\
+S_iR_i         &amp;-3 &amp;    -7&amp; 1,5&amp;    4&amp;  -5,5&amp;   -&amp;  10&amp; 1,5&amp;    5,5&amp;    -9&amp; 8&amp;  11\\ \hline
+\end{array}\]</span></p>
+<p>As hipóteses são</p>
+<ul>
+<li><p><span class="math inline">\(H_0:\)</span> não há diferença na agressividade (<span class="math inline">\(\theta=0\)</span>)</p></li>
+<li><p><span class="math inline">\(H_1:\)</span> o primeiro irmão tende a ser mais agressivo que o segundo <span class="math inline">\((\theta&gt;0)\)</span></p></li>
+</ul>
+<p>Observamos <span class="math inline">\(w^+=41,5\)</span>, ou ainda <span class="math display">\[z=\frac{41,5-33}{\sqrt{126,5}}=0,755.\]</span> O p-valor aproximado é <span class="math display">\[P(Z&gt;0,755)\approx 0,225.\]</span> Não há evidências contra a hipótese nula (ou seja, a ordem de nascimento não tem efeito).</p>
+<p>Podemos ainda utilizar a função <code>wilcox.test(x,y, paired = T)</code>. Abaixo segue o código em :</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a> x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">86</span>, <span class="dv">71</span>, <span class="dv">77</span>, <span class="dv">68</span>, <span class="dv">91</span>, <span class="dv">72</span>, <span class="dv">77</span>, <span class="dv">91</span>, <span class="dv">70</span>, <span class="dv">71</span>, <span class="dv">88</span>, <span class="dv">87</span>) <span class="co"># 1o irmão</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a> y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">88</span>, <span class="dv">77</span>, <span class="dv">76</span>, <span class="dv">64</span>, <span class="dv">96</span>, <span class="dv">72</span>, <span class="dv">65</span>, <span class="dv">90</span>, <span class="dv">65</span>, <span class="dv">80</span>, <span class="dv">81</span>, <span class="dv">72</span>) <span class="co"># 2o irmão</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a> <span class="fu">wilcox.test</span>(x,y, <span class="at">paired =</span> T, <span class="at">alternative =</span> <span class="st">"greater"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wilcox.test.default(x, y, paired = T, alternative = "greater"): não
+é possível computar o valor de p exato com o de desempate</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wilcox.test.default(x, y, paired = T, alternative = "greater"): não
+é possível computar o valor-p exato com zeros</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Wilcoxon signed rank test with continuity correction
+
+data:  x and y
+V = 41.5, p-value = 0.2382
+alternative hypothesis: true location shift is greater than 0</code></pre>
+</div>
+</div>
+</div>
+<div id="exr-ansiedade_infantil" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 5.5</strong></span> <strong>Eficácia de Orientação Profissional na Ansiedade Infantil</strong></p>
+<p>Um pesquisador deseja verificar se a ansiedade de crianças que passarão por cirurgia é reduzida após uma explicação profissional. O nível de ansiedade foi medido em uma escala de 1 a 7 antes e depois da orientação para 10 crianças.</p>
+<p><span class="math display">\[\begin{array}{l|cccccccccc} \hline \hbox{Criança} &amp; 1 &amp; 2 &amp; 3 &amp; 4 &amp; 5 &amp; 6 &amp; 7 &amp; 8 &amp; 9 &amp; 10 \\ \hline \hbox{Antes} (X) &amp; 5 &amp; 6 &amp; 6 &amp; 7 &amp; 6 &amp; 5 &amp; 4 &amp; 4 &amp; 3 &amp; 3 \\ \hbox{Depois} (Y) &amp; 5 &amp; 6 &amp; 3 &amp; 3 &amp; 4 &amp; 2 &amp; 2 &amp; 5 &amp; 6 &amp; 4 \\ \hline \end{array}\]</span></p>
+<ol type="1">
+<li><p>Formule as hipóteses nula e a alternativa, considerando que se espera uma redução nos escores</p></li>
+<li><p>Utilizando o teste de Wilcoxon para postos assinalados, teste a hipótese ao nível de 5% de significância.</p></li>
+</ol>
+</div>
+<div id="exr-seguranca_industrial" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 5.6</strong></span> <strong>Programa de Segurança e Acidentes em Plantas Industriais</strong></p>
+<p>Uma empresa implementou um programa de segurança em oito de suas unidades e registrou o número de horas-homem perdidas por acidentes em um mês antes e um mês depois da implementação . <span class="math display">\[\begin{array}{l|cccccccc} \hline \hbox{Unidade} &amp; 1 &amp; 2 &amp; 3 &amp; 4 &amp; 5 &amp; 6 &amp; 7 &amp; 8 \\ \hline \hbox{Antes} &amp; 126 &amp; 131 &amp; 153 &amp; 125 &amp; 119 &amp; 102 &amp; 116 &amp; 163 \\ \hbox{Depois} &amp; 120 &amp; 126 &amp; 152 &amp; 129 &amp; 102 &amp; 105 &amp; 100 &amp; 175 \\ \hline \end{array}\]</span></p>
+<p>Assuma que a distribuição das diferenças é simétrica, pressuposto necessário para o teste de Wilcoxon. Teste a eficácia do programa na redução de horas perdidas, ao nível de 5% de significância.</p>
+</div>
+<div id="exr-precos_imoveis" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 5.7</strong></span> <strong>Dinâmica Mensal do Preço de Imóveis</strong></p>
+<p>Um analista econômico coletou o índice de preços de imóveis de uma região durante todos os meses de dois anos consecutivos para verificar se houve alteração significativa no mercado . <span class="math display">\[\begin{array}{l|cccccccccccc} \hline \hbox{Mês} &amp; \hbox{Jan} &amp; \hbox{Fev} &amp; \hbox{Mar} &amp; \hbox{Abr} &amp; \hbox{Mai} &amp; \hbox{Jun} &amp; \hbox{Jul} &amp; \hbox{Ago} &amp; \hbox{Set} &amp; \hbox{Out} &amp; \hbox{Nov} &amp; \hbox{Dez} \\ \hline \hbox{Ano 1} &amp; 572 &amp; 572 &amp; 578 &amp; 591 &amp; 601 &amp; 606 &amp; 602 &amp; 600 &amp; 602 &amp; 604 &amp; 602 &amp; 598 \\ \hbox{Ano 2} &amp; 593 &amp; 588 &amp; 586 &amp; 581 &amp; 576 &amp; 568 &amp; 560 &amp; 555 &amp; 553 &amp; 560 &amp; 566 &amp; 571 \\ \hline \end{array}\]</span></p>
+<p>Utilize o teste bilateral de Wilcoxon para postos assinlados ao nível de significância de 1% para concluir se os preços mudaram entre os dois anos.</p>
+</div>
 <pre><code>\begin{frame}{Exercícios}
 Página 310, exercícios 1 e 4.
     
 \end{frame}</code></pre>
 <p>%=========================================================== % Aula 17 %===========================================================</p>
 <p>%=========================================================== % Aula 18 %===========================================================</p>
-<p>%====================================================== % Aula 19 %=======================================================</p>
 
 
 </section>
