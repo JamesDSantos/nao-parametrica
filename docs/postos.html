@@ -235,7 +235,13 @@ window.Quarto = {
   <ul>
   <li><a href="#postos" id="toc-postos" class="nav-link active" data-scroll-target="#postos"><span class="header-section-number">5.1</span> Postos</a></li>
   <li><a href="#o-teste-de-mann-whitney" id="toc-o-teste-de-mann-whitney" class="nav-link" data-scroll-target="#o-teste-de-mann-whitney"><span class="header-section-number">5.2</span> O Teste de Mann-Whitney</a></li>
-  <li><a href="#o-teste-de-kruskal-wallis" id="toc-o-teste-de-kruskal-wallis" class="nav-link" data-scroll-target="#o-teste-de-kruskal-wallis"><span class="header-section-number">5.3</span> O teste de Kruskal-Wallis</a></li>
+  <li><a href="#o-teste-de-kruskal-wallis" id="toc-o-teste-de-kruskal-wallis" class="nav-link" data-scroll-target="#o-teste-de-kruskal-wallis"><span class="header-section-number">5.3</span> O teste de Kruskal-Wallis</a>
+  <ul class="collapse">
+  <li><a href="#teste-de-dunn" id="toc-teste-de-dunn" class="nav-link" data-scroll-target="#teste-de-dunn"><span class="header-section-number">5.3.1</span> Teste de Dunn</a></li>
+  </ul></li>
+  <li><a href="#teste-de-wilcoxon-para-postos-assinalados" id="toc-teste-de-wilcoxon-para-postos-assinalados" class="nav-link" data-scroll-target="#teste-de-wilcoxon-para-postos-assinalados"><span class="header-section-number">5.4</span> Teste de Wilcoxon para postos assinalados</a></li>
+  <li><a href="#o-teste-de-friedman" id="toc-o-teste-de-friedman" class="nav-link" data-scroll-target="#o-teste-de-friedman"><span class="header-section-number">5.5</span> O teste de Friedman</a></li>
+  <li><a href="#o-teste-dos-postos-quadrados-para-igualdade-de-variâncias" id="toc-o-teste-dos-postos-quadrados-para-igualdade-de-variâncias" class="nav-link" data-scroll-target="#o-teste-dos-postos-quadrados-para-igualdade-de-variâncias"><span class="header-section-number">5.6</span> O teste dos postos quadrados para igualdade de variâncias*</a></li>
   </ul>
 </nav>
     </div>
@@ -492,7 +498,7 @@ H_1&amp;: F_i(x)\neq F_j(x) \text{ para pelo menos um par }(i,j)
 <p><span class="math display">\[H=\frac{12}{n+1}\left\{\sum_{i=1}^{k-1}\frac{n_i}{n}\left(\bar{T}_i-\frac{n+1}{2}\right)^2+\frac{1}{n_kn}\left[\sum_{i=1}^{k-1}n_i\left(\bar{T}_i-\frac{n+1}{2}\right)\right]^2\right\}.\]</span> e, pela Relação 1</p>
 <p><span class="math display">\[H=\frac{12}{n+1}\left\{\sum_{i=1}^{k-1}\frac{n_i}{n}\left(\bar{T}_i-\frac{n+1}{2}\right)^2+\frac{n_k}{n}\left(\bar{T}_k-\frac{n+1}{2}\right)^2\right\}.\]</span> Portanto, <span class="math display">\[H=\frac{12}{n+1}\sum_{i=1}^{k}\frac{n_i}{n}\left(\bar{T}_i-\frac{n+1}{2}\right)^2.\]</span></p>
 <div id="exm-" class="theorem example">
-<p><span class="theorem-title"><strong>Example 5.8</strong></span> <strong>Produção de milho</strong></p>
+<p><span class="theorem-title"><strong>Example 5.6</strong></span> <strong>Produção de milho</strong></p>
 <p>Quatro métodos para melhoria do crescimento de milho foram aleatoriamente assinalados em um grande número de lotes de terras e a produção por acre de cada lote foi registrada. Os resultados foram:</p>
 <p><span class="math display">\[\begin{array}{c|l}\hline
 \text{Método} &amp; \text{Produção por acre} \\ \hline
@@ -539,6 +545,7 @@ data:  obs and metodo
 Kruskal-Wallis chi-squared = 25.629, df = 3, p-value = 1.141e-05</code></pre>
 </div>
 </div>
+</div>
 <div id="exr-dispositivos_ronco" class="theorem exercise">
 <p><span class="theorem-title"><strong>Exercise 5.3</strong></span> <strong>Eficácia de Dispositivos contra o Ronco</strong></p>
 <p>Um experimento foi realizado para comparar a eficácia de três diferentes dispositivos projetados para reduzir o ronco. Quinze voluntários foram divididos aleatoriamente em três grupos de 5 pessoas cada.</p>
@@ -566,7 +573,7 @@ Kruskal-Wallis chi-squared = 25.629, df = 3, p-value = 1.141e-05</code></pre>
 </ol>
 </div>
 <div id="exm-" class="theorem example">
-<p><span class="theorem-title"><strong>Example 5.6</strong></span> <strong>Produção de milho revisitado</strong></p>
+<p><span class="theorem-title"><strong>Example 5.7</strong></span> <strong>Produção de milho revisitado</strong></p>
 <p>O exemplo sobre métodos de produção de milho, testamos que havia diferença significativa entre 4 métodos de produção. Ao aplicar o teste de Kruskall-Wallis, foram encontradas evidências de que pelo menos um dos métodos é diferente dos demais. Vamos aplicar o teste de Dunn para determinar as diferenças.</p>
 <p>Abaixo, sumarizamos os principais resultados:</p>
 <p><span class="math display">\[\begin{array}{cc|cccc}\hline
@@ -598,6 +605,7 @@ d_{i,j}\hbox{(p-valores)}&amp;\text{Método 1} &amp; &amp;1,43(0,15) &amp;1,54(0
 <p>Aplique o teste de Dunn para determinar qual(is) pares são discrepantes aos nível de 5% de significância.</p>
 </div>
 </section>
+</section>
 <section id="teste-de-wilcoxon-para-postos-assinalados" class="level2" data-number="5.4">
 <h2 data-number="5.4" class="anchored" data-anchor-id="teste-de-wilcoxon-para-postos-assinalados"><span class="header-section-number">5.4</span> Teste de Wilcoxon para postos assinalados</h2>
 <p>Seja <span class="math inline">\((X_1,Y_1), \ldots,(X_{m},Y_{m})\)</span> uma amostra aleatória de variáveis contínuas. Seja <span class="math inline">\(D_i=X_i-Y_i\)</span>. Assuma que <span class="math inline">\(D_1,\ldots,D_n\)</span> é simétrica em torno da mediana <span class="math inline">\(\theta\)</span>. No teste de Wilcoxon para postos assinalados, estamos interessados em testar <span class="math inline">\(H_0:\theta=0\)</span> contra as alternativas usuais para testes bilateral e unilaterais.</p>
@@ -626,7 +634,7 @@ E\left[\frac{n+1}{12}\left(\sum_{i=1}^n I_{S_i&gt;0}(i)\right)\left(n-\sum_{i=1}
 <p><strong>Sobre empates.</strong> Caso <span class="math inline">\(D_i=0\)</span>, recomenda-se excluir a observação. Essa prática é justificável por se considerar que <span class="math inline">\(D_1,\ldots,D_n\)</span> são variáveis contínuas e empates existem apenas por erros de medida. Caso o número de empates seja substancial, esse teste não é recomendável.</p>
 </div>
 <div id="exm-" class="theorem example">
-<p><span class="theorem-title"><strong>Example 5.7</strong></span> Doze pares de gêmeos idênticos participaram de um estudo psicológico com o objetivo de medir a quantidade de agressividade na personalidade do indivíduo. Nosso objetivo é comparar os irmãos um com o outro para ver se o primeiro a nascer tende a ser mais agressivo. Os resultados são apresentados abaixo, onde um escore mais alto indica maior agressividade.</p>
+<p><span class="theorem-title"><strong>Example 5.8</strong></span> Doze pares de gêmeos idênticos participaram de um estudo psicológico com o objetivo de medir a quantidade de agressividade na personalidade do indivíduo. Nosso objetivo é comparar os irmãos um com o outro para ver se o primeiro a nascer tende a ser mais agressivo. Os resultados são apresentados abaixo, onde um escore mais alto indica maior agressividade.</p>
 <p><span class="math display">\[\begin{array}{c|cccccccccccc}\hline
 \hbox{Par}            &amp; 1&amp;  2&amp;  3&amp;  4&amp;  5&amp;  6&amp;  7&amp;  8&amp;  9&amp;  10&amp; 11&amp; 12\\ \hline
 \text{1o irmão } (X) &amp;  86&amp; 71&amp; 77&amp; 68&amp; 91&amp; 72&amp; 77&amp; 91&amp; 70&amp; 71&amp; 88&amp; 87\\
@@ -685,6 +693,116 @@ alternative hypothesis: true location shift is greater than 0</code></pre>
 <p>Um analista econômico coletou o índice de preços de imóveis de uma região durante todos os meses de dois anos consecutivos para verificar se houve alteração significativa no mercado . <span class="math display">\[\begin{array}{l|cccccccccccc} \hline \hbox{Mês} &amp; \hbox{Jan} &amp; \hbox{Fev} &amp; \hbox{Mar} &amp; \hbox{Abr} &amp; \hbox{Mai} &amp; \hbox{Jun} &amp; \hbox{Jul} &amp; \hbox{Ago} &amp; \hbox{Set} &amp; \hbox{Out} &amp; \hbox{Nov} &amp; \hbox{Dez} \\ \hline \hbox{Ano 1} &amp; 572 &amp; 572 &amp; 578 &amp; 591 &amp; 601 &amp; 606 &amp; 602 &amp; 600 &amp; 602 &amp; 604 &amp; 602 &amp; 598 \\ \hbox{Ano 2} &amp; 593 &amp; 588 &amp; 586 &amp; 581 &amp; 576 &amp; 568 &amp; 560 &amp; 555 &amp; 553 &amp; 560 &amp; 566 &amp; 571 \\ \hline \end{array}\]</span></p>
 <p>Utilize o teste bilateral de Wilcoxon para postos assinlados ao nível de significância de 1% para concluir se os preços mudaram entre os dois anos.</p>
 </div>
+</section>
+<section id="o-teste-de-friedman" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="o-teste-de-friedman"><span class="header-section-number">5.5</span> O teste de Friedman</h2>
+<p>Considere uma matriz de dados <span class="math inline">\(X_{n \times k}\)</span>, onde <span class="math inline">\(n\)</span> é o número de blocos (linhas) e <span class="math inline">\(k\)</span> é o número de tratamentos (colunas), conforme o modelo abaixo.</p>
+<p><span class="math display">\[\begin{array}{c|cccc}
+          &amp; \text{Tratamento} &amp; \\
+  \text{Bloco}   &amp;  1 &amp; 2 &amp; \cdots &amp; k \\ \hline
+    1     &amp; X_{11} &amp; X_{12} &amp; &amp; X_{1k} \\
+    2     &amp; X_{21} &amp; X_{22} &amp; &amp; X_{2k} \\
+    \cdots     &amp; \cdots &amp; \cdots &amp; &amp; \cdots \\
+  b     &amp; X_{b1} &amp; X_{b2} &amp; &amp; X_{bk} \\
+\end{array}\]</span></p>
+<p>O modelo assume que</p>
+<p><span class="math display">\[X_{ij} = \mu + \beta_i + \tau_j + \epsilon_{ij}\]</span> onde <span class="math inline">\(\beta_i\)</span> é o efeito do bloco e <span class="math inline">\(\tau_j\)</span> o efeito do tratamento. Vamos assumir também independência entre os blocos.</p>
+<p>O objetivo do teste de Friedman é testar</p>
+<ul>
+<li><span class="math inline">\(H_0:\tau_1=\cdots=\tau_k\)</span></li>
+<li><span class="math inline">\(H_1:\tau_i\neq \tau_j\)</span> para pelo menos um par <span class="math inline">\((i,j)\)</span>..</li>
+</ul>
+<p>Defina <span class="math inline">\(R_{ij}\)</span> como o posto de <span class="math inline">\(X_{ij}\)</span> considerando apenas o bloco <span class="math inline">\(i\)</span> (ou seja, o posto é calculado dentro do bloco). Seja <span class="math display">\[R_j=\sum_{i=1}^b R_{ij}\]</span> a soma dos postos relacionados com o tratamento <span class="math inline">\(j\)</span>. Sob a hipótese nula, <span class="math inline">\(R_1,\ldots,R_k\)</span> são identicamente distribuídos. Como</p>
+<p><span class="math display">\[E(R_j)=\sum_{i=1}^b E(R_{ij})=b\frac{(k+1)}{2}\]</span> e</p>
+<p><span class="math display">\[Var(R_j)=Var\left(\sum_{i=1}^b R_{ij}\right)=\sum_{i=1}^bVar(R_{ij})=\frac{b(k+1)(k-1)}{12}\]</span> Observe que <span class="math inline">\(R_1,\ldots,R_k\)</span> são identicamente distribuídos, mas não independentes. De fato, se conhecemos <span class="math inline">\(\sum_{j=1}^{k-1}R_j\)</span>, então sabemos que <span class="math display">\[R_k=b\frac{k(k+1)}{2}-\sum_{j=1}^{k-1}R_j\]</span> Pois <span class="math display">\[\sum_{j=1}^kR_j=\sum_{j=1}^k\sum_{i=1}^bR_{ij}=b\frac{k(k+1)}{2}.\]</span> Disto, <span class="math display">\[\begin{align}0&amp;=Var\left(\sum_{j=1}^kR_j\right)\\&amp;=kVar(R_1)+k(k-1)Cov(R_i,R_j)\Rightarrow Cov(R_i,R_j)=-\frac{b(k+1)}{12}\end{align}\]</span> Portanto, o vetor <span class="math inline">\(\textbf{R}=(R_1,\ldots,R_{k-1})\)</span> tem média <span class="math display">\[E(\textbf{R})=b\frac{k+1}{2}\textbf{1}_{k-1}\]</span> e <span class="math display">\[Var(\textbf{R})=\frac{b(k+1)}{12}\left[k\textbf{I}_{k-1}-\textbf{1}_{k-1}\textbf{1}_{k-1}'\right]\]</span> logo, a estatística <span class="math inline">\(Q\)</span> do teste de Friedman é dada por <span class="math display">\[Q=(\textbf{R}-E(\textbf{R}))'Var(\textbf{R})^{-1}(\textbf{R}-E(\textbf{R}))\approx \chi^2_{k-1}\]</span></p>
+<p>Vamos encontrar uma expressão mais parcimoniosa para <span class="math inline">\(Q\)</span>. Pela fórmula de Sherman-Morrison,</p>
+<p><span class="math display">\[Var(\textbf{R})^{-1} = \frac{12}{bk(k+1)} \left[ \textbf{I}_{k-1} + \textbf{1}_{k-1}\textbf{1}_{k-1}' \right]\]</span> Notando que <span class="math inline">\(bk=n\)</span>, temos <span class="math display">\[\begin{align}Q&amp;=\frac{12}{n(k+1)}\left\{\sum_{j=1}^{k-1}\left[R_j-b\frac{(k+1)}{2}\right]^2+\left[\sum_{j=1}^{k-1}R_j-b\frac{(k+1)}{2}\right]^2\right\}\\&amp;=\frac{12}{n(k+1)}\sum_{j=1}^{k}\left[R_j-b\frac{(k+1)}{2}\right]^2\end{align}\]</span></p>
+<div id="exm-" class="theorem example">
+<p><span class="theorem-title"><strong>Example 5.9</strong></span> Doze produtores rurais são selecionados aleatoriamente para participar de um experimento com um viveiro de plantas. Cada proprietário escolheu quatro áreas idênticas em seu quintal e plantou quatro tipos diferentes de gramíneas, uma em cada área. Ao final de um determinado período de tempo, cada proprietário classificou os tipos de grama em ordem de preferência, pesando critérios importantes como despesas, manutenção e conservação exigidas, beleza, robustez, preferência da esposa e assim por diante. A categoria 1 foi atribuída à grama menos preferida e a classificação 4 à favorita. A hipótese nula era que não há diferença nas preferências dos tipos de gramíneas, e a alternativa era que alguns tipos de grama tendem a ser preferidos em relação a outros. Cada um dos 12 blocos consiste em quatro lotes de terreno razoavelmente idênticos, cada um recebendo aproximadamente o mesmo grau de habilidade, porque os quatro lotes são presumivelmente cuidados pelo mesmo proprietário. Os resultados da experiência são os seguintes.</p>
+<p><span class="math display">\[\begin{array}{c|cccc}\hline
+                         &amp; \text{Tipo de grama} \\
+             \text{Proprietário}&amp;  1 &amp; 2 &amp; 3 &amp; 4  \\ \hline
+             1 &amp; 4 &amp; 3 &amp; 2 &amp; 1 \\
+             2 &amp; 4 &amp; 2 &amp; 3 &amp; 1 \\
+             3 &amp; 3 &amp; 1,5 &amp; 1,5 &amp; 4 \\
+             4 &amp; 3 &amp; 1&amp; 2 &amp; 4 \\
+             5 &amp; 4 &amp; 2 &amp; 1 &amp; 3 \\
+             6 &amp; 2 &amp; 2 &amp; 2 &amp; 4 \\
+             7 &amp; 1 &amp; 3 &amp; 2 &amp; 4 \\
+             8 &amp; 2 &amp; 4 &amp; 1 &amp; 3 \\
+             9 &amp; 3,5 &amp; 1 &amp; 2 &amp; 3,5 \\
+             10&amp; 4 &amp; 1 &amp; 3 &amp; 2 \\
+             11 &amp; 4 &amp; 2 &amp; 3 &amp; 1 \\
+             12 &amp;3,5 &amp; 1 &amp; 2 &amp; 3,5 \\ \hline
+             R_j &amp; 38 &amp; 23,5 &amp; 24,5 &amp; 34  \\ \hline
+        \end{array}\]</span></p>
+<p>Após algumas operações, concluímos que <span class="math inline">\(Q_{obs}=7,625\)</span> e <span class="math display">\[P(Q&gt;Q_{obs})\approx0,054,\]</span> não existindo evidências contra <span class="math inline">\(H_0\)</span> ao nível de 5% de significância.</p>
+<p>No <code>R</code>, podemos fazer esse teste com os seguintes comandos:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>grama1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="fl">3.5</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="fl">3.5</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>grama2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">2</span>,<span class="fl">1.5</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">1</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>grama3 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="fl">1.5</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">2</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>grama4 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="fl">3.5</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="fl">3.5</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>dt <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(grama1, grama2, grama3, grama4)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>dt <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(dt)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(dt) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">'grama 1'</span>,<span class="st">'grama 2'</span>,<span class="st">'grama 3'</span>,<span class="st">'grama 4'</span> )</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="fu">friedman.test</span>(dt)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Friedman rank sum test
+
+data:  dt
+Friedman chi-squared = 8.0973, df = 3, p-value = 0.04404</code></pre>
+</div>
+</div>
+<p>Observe que tanto a estatística de teste quanto o p-valor se alteraram. Isto ocorre porque o <code>R</code> aplica uma correção na variância por causa dos empates.</p>
+</div>
+<p>###Teste de Conover</p>
+<p>Quando o teste de Friedman rejeita a hipótese nula de que todos os tratamentos são idênticos, torna-se necessário identificar quais pares de tratamentos apresentam diferenças significativas. O procedimento de Conover é preferível ao teste de Dunn neste contexto, pois utiliza a variância residual do experimento em blocos, sendo mais poderoso para detectar diferenças em delineamentos pareados.</p>
+<p>A estatística de teste para comparar os tratamentos <span class="math inline">\(j\)</span> e <span class="math inline">\(l\)</span> é baseada na distribuição <span class="math inline">\(t\)</span> de Student</p>
+<p><span class="math display">\[T_{j,l} = \frac{|\bar{R}_j - \bar{R}_l|}{\sqrt{\frac{b(k-1)}{b-1} \left[ \frac{\sum R_{ij}^2 - b \frac{k(k+1)^2}{4}}{b(k-1)} \right] \left( \frac{1}{b} + \frac{1}{b} \right)}} \approx \frac{|\bar{R}_j - \bar{R}_l|}{\sqrt{\frac{2(b \cdot S^2 - Q)}{b(k-1)(b-1)}}}\]</span> onde <span class="math inline">\(b\)</span> é o número de blocos, <span class="math inline">\(k\)</span> o número de tratamentos, <span class="math inline">\(\bar{R}_j\)</span> a média dos postos do tratamento <span class="math inline">\(j\)</span> e <span class="math inline">\(Q\)</span> a estatística de Friedman observada. Sob <span class="math inline">\(H_0\)</span>, esta estatística segue uma distribuição <span class="math inline">\(t\)</span> com <span class="math inline">\((b-1)(k-1)\)</span> graus de liberdade.</p>
+<div id="exm-" class="theorem example">
+<p><span class="theorem-title"><strong>Example 5.10</strong></span> <strong>Eficácia de Formulações Analgésicas</strong></p>
+<p>Um laboratório deseja comparar o tempo de alívio (em minutos) de quatro formulações de analgésicos (<span class="math inline">\(A, B, C, D\)</span>). Para controlar a variabilidade individual na percepção da dor e metabolismo, 10 voluntários (blocos) foram selecionados. Cada voluntário testou as quatro drogas em ocasiões distintas (ordem aleatória). Os dados foram convertidos em postos dentro de cada bloco.</p>
+<p>O teste de Friedman resultou em <span class="math inline">\(Q_{obs} = 15,6\)</span> (<span class="math inline">\(p &lt; 0,01\)</span>), indicando diferença entre as drogas. As médias dos postos (<span class="math inline">\(\bar{R}_j\)</span>) foram A: 3,8; B: 2,5; C: 2,3; D: 1,4.</p>
+<p>Considerando que os graus de liberdade são <span class="math inline">\((10-1)(4-1) = 27\)</span>, e um erro padrão para a diferença de <span class="math inline">\(0,45\)</span>, aplicamos a Correção de Holm.</p>
+<p><span class="math display">\[\begin{array}{c|c|c|c|c|c} \hline
+\text{Par } (j,l) &amp; |\bar{R}_j - \bar{R}l| &amp; t &amp; p\text{-valor} &amp; \alpha_i = \frac{0,05}{6-i+1} &amp; \text{Decisão} \\ \hline
+A \text{ vs } D &amp; 2,4 &amp; 5,33 &amp; &lt;0,001 &amp; 0,0083 &amp; \text{Rejeitar } H_0 \\
+A \text{ vs } C &amp; 1,5 &amp; 3,33 &amp; 0,003 &amp; 0,0100 &amp; \text{Rejeitar } H_0 \\
+A \text{ vs } B &amp; 1,3 &amp; 2,89 &amp; 0,007 &amp; 0,0125 &amp; \text{Rejeitar } H_0 \\
+B \text{ vs } D &amp; 1,1 &amp; 2,44 &amp; 0,021 &amp; 0,0167 &amp; \text{Não Rejeitar*} \\
+C \text{ vs } D &amp; 0,9 &amp; 2,00 &amp; 0,055 &amp; 0,0250 &amp; \text{Não Rejeitar} \\
+B \text{ vs } C &amp; 0,2 &amp; 0,44 &amp; 0,663 &amp; 0,0500 &amp; \text{Não Rejeitar} \\ \hline
+\end{array}\]</span></p>
+<p>*Nota: No procedimento de Holm, uma vez que um p-valor falha em ser menor que o nível ajustado (C vs D), todas as hipóteses subsequentes de maior p-valor são aceitas automaticamente.</p>
+<p>Deste modo, existem diferenças significativas entre os pares (A,D), (A,C) e (A,B). Isto implica que existem evidências de que:</p>
+<p>A formulação A apresenta um tempo de alívio significativamente superior às formulações B, C e D.</p>
+<p>Não foi possível detectar diferença significativa entre as formulações B, C e D, embora a formulação D apresente a menor média de postos (menor tempo de alívio).</p>
+</div>
+<div id="exr-" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 5.8</strong></span> <strong>Desempenho de Pneus e Desgaste</strong></p>
+<p>Uma transportadora testou quatro marcas de pneus (A, B, C, D) em seis de seus caminhões (blocos). Cada caminhão utilizou um pneu de cada marca em diferentes eixos para medir o desgaste após 10.000 km. Os postos de desgaste dentro de cada caminhão (1 = menor desgaste) são apresentados abaixo.</p>
+<p><span class="math display">\[\begin{array}{c|cccc}\hline
+\text{Caminhão} &amp; A &amp; B &amp; C &amp; D \\ \hline
+1               &amp; 3 &amp; 4 &amp; 2 &amp; 1 \\
+2               &amp; 4 &amp; 3 &amp; 2 &amp; 1 \\
+3               &amp; 4 &amp; 2 &amp; 3 &amp; 1 \\
+4               &amp; 3 &amp; 1 &amp; 2 &amp; 4 \\
+5               &amp; 4 &amp; 2 &amp; 1 &amp; 3 \\
+6               &amp; 2 &amp; 4 &amp; 3 &amp; 1 \\ \hline
+\bar{R}_j &amp; 3,33 &amp; 2,67 &amp; 2,17 &amp; 1,83 \\ \hline\end{array}\]</span></p>
+<ol type="a">
+<li><p>Calcule a estatística de Friedman <span class="math inline">\(Q\)</span>.</p></li>
+<li><p>Ao nível de 5%, existe diferença entre as marcas?</p></li>
+<li><p>Caso exista, aplique o teste de Conover com correção de Holm para identificar quais marcas diferem entre si.</p></li>
+</ol>
+</div>
+</section>
+<section id="o-teste-dos-postos-quadrados-para-igualdade-de-variâncias" class="level2" data-number="5.6">
+<h2 data-number="5.6" class="anchored" data-anchor-id="o-teste-dos-postos-quadrados-para-igualdade-de-variâncias"><span class="header-section-number">5.6</span> O teste dos postos quadrados para igualdade de variâncias*</h2>
 <pre><code>\begin{frame}{Exercícios}
 Página 310, exercícios 1 e 4.
     
@@ -693,8 +811,6 @@ Página 310, exercícios 1 e 4.
 <p>%=========================================================== % Aula 18 %===========================================================</p>
 
 
-</section>
-</div>
 </section>
 
 </main> <!-- /main -->

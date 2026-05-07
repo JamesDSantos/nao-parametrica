@@ -372,8 +372,6 @@ T_i &&196,5&&153&&207&&38,5\\
 n_i &&9&&10&&7&&8 \\
      \end{array}$$
 
-
-
 Com um $H_{obs}=25,46$, encontramos o $p$-valor  muito baixo, o que nos leva a rejeitar a hipótese nula. Deste modo, pelo menos um dos métodos é diferente dos demais.
 
 Abaixo, apresentamos a resolução deste problema no `R`. A estatística é ligeramente diferente da que encontramos devido ao tratamento dos empates ser diferente.
@@ -390,6 +388,7 @@ metodo <- c( rep('M1',9), rep('M2',10), rep('M3',7), rep('M4',8) )
 kruskal.test(obs, metodo)
 
 ```
+:::
 
 ::: {#exr-dispositivos_ronco} 
 **Eficácia de Dispositivos contra o Ronco**
@@ -598,12 +597,170 @@ Utilize o teste bilateral de Wilcoxon para postos assinlados ao nível de signif
 :::
 
 
+## O teste de Friedman
 
-\setbeamertemplate{footline}{}
-\begin{frame}{}
-    \Huge{Aula 16 - O teste dos postos quadrados para igualdade de variâncias}
-\end{frame}
-\endgroup
+Considere uma matriz de dados $X_{n \times k}$, onde $n$ é o número de blocos (linhas) e $k$ é o número de tratamentos (colunas), conforme o modelo abaixo.
+
+
+$$\begin{array}{c|cccc}
+          & \text{Tratamento} & \\
+  \text{Bloco}   &  1 & 2 & \cdots & k \\ \hline
+    1     & X_{11} & X_{12} & & X_{1k} \\
+    2     & X_{21} & X_{22} & & X_{2k} \\ 
+    \cdots     & \cdots & \cdots & & \cdots \\ 
+  b     & X_{b1} & X_{b2} & & X_{bk} \\ 
+\end{array}$$
+
+O modelo assume que
+
+$$X_{ij} = \mu + \beta_i + \tau_j + \epsilon_{ij}$$
+onde $\beta_i$ é o efeito do bloco e $\tau_j$ o efeito do tratamento. Vamos assumir também independência entre os blocos.
+
+O objetivo do teste de Friedman é testar 
+
+* $H_0:\tau_1=\cdots=\tau_k$ 
+* $H_1:\tau_i\neq \tau_j$ para pelo menos um par $(i,j)$..
+
+Defina $R_{ij}$ como o posto de $X_{ij}$ considerando apenas o bloco $i$ (ou seja, o posto é calculado dentro do bloco). Seja
+$$R_j=\sum_{i=1}^b R_{ij}$$
+a soma dos postos relacionados com o tratamento $j$. Sob a hipótese nula, $R_1,\ldots,R_k$ são identicamente distribuídos. Como
+
+$$E(R_j)=\sum_{i=1}^b E(R_{ij})=b\frac{(k+1)}{2}$$
+e
+
+$$Var(R_j)=Var\left(\sum_{i=1}^b R_{ij}\right)=\sum_{i=1}^bVar(R_{ij})=\frac{b(k+1)(k-1)}{12}$$
+Observe que $R_1,\ldots,R_k$ são identicamente distribuídos, mas não independentes. De fato, se conhecemos $\sum_{j=1}^{k-1}R_j$, então sabemos que 
+$$R_k=b\frac{k(k+1)}{2}-\sum_{j=1}^{k-1}R_j$$
+Pois 
+$$\sum_{j=1}^kR_j=\sum_{j=1}^k\sum_{i=1}^bR_{ij}=b\frac{k(k+1)}{2}.$$
+Disto,
+$$\begin{align}0&=Var\left(\sum_{j=1}^kR_j\right)\\&=kVar(R_1)+k(k-1)Cov(R_i,R_j)\Rightarrow Cov(R_i,R_j)=-\frac{b(k+1)}{12}\end{align}$$
+Portanto, o vetor $\textbf{R}=(R_1,\ldots,R_{k-1})$ tem média
+$$E(\textbf{R})=b\frac{k+1}{2}\textbf{1}_{k-1}$$
+e
+$$Var(\textbf{R})=\frac{b(k+1)}{12}\left[k\textbf{I}_{k-1}-\textbf{1}_{k-1}\textbf{1}_{k-1}'\right]$$
+logo, a estatística $Q$ do teste de Friedman é dada por
+$$Q=(\textbf{R}-E(\textbf{R}))'Var(\textbf{R})^{-1}(\textbf{R}-E(\textbf{R}))\approx \chi^2_{k-1}$$
+
+Vamos encontrar uma expressão mais parcimoniosa para $Q$. Pela fórmula de Sherman-Morrison,
+
+$$Var(\textbf{R})^{-1} = \frac{12}{bk(k+1)} \left[ \textbf{I}_{k-1} + \textbf{1}_{k-1}\textbf{1}_{k-1}' \right]$$
+Notando que $bk=n$, temos
+$$\begin{align}Q&=\frac{12}{n(k+1)}\left\{\sum_{j=1}^{k-1}\left[R_j-b\frac{(k+1)}{2}\right]^2+\left[\sum_{j=1}^{k-1}R_j-b\frac{(k+1)}{2}\right]^2\right\}\\&=\frac{12}{n(k+1)}\sum_{j=1}^{k}\left[R_j-b\frac{(k+1)}{2}\right]^2\end{align}$$
+
+::: {#exm-}
+
+Doze produtores rurais são selecionados aleatoriamente para participar de um experimento com um viveiro de plantas. 
+Cada proprietário escolheu quatro áreas idênticas em seu quintal e plantou quatro tipos diferentes de gramíneas, uma em cada área. Ao final de um determinado período de tempo, cada proprietário classificou os tipos de grama em ordem de preferência, pesando critérios importantes como despesas, manutenção e conservação exigidas, beleza, robustez, preferência da esposa e assim por diante. A categoria 1 foi atribuída à grama menos preferida e a classificação 4 à favorita. A hipótese nula era que não há diferença nas preferências dos tipos de gramíneas, e a alternativa era que alguns tipos de grama tendem a ser preferidos em relação a outros. Cada um dos 12 blocos consiste em quatro lotes de terreno razoavelmente idênticos, cada um recebendo aproximadamente o mesmo grau de habilidade, porque os quatro lotes são presumivelmente cuidados pelo mesmo proprietário. Os resultados da experiência são os seguintes.
+
+
+$$\begin{array}{c|cccc}\hline
+                         & \text{Tipo de grama} \\
+             \text{Proprietário}&  1 & 2 & 3 & 4  \\ \hline
+             1 & 4 & 3 & 2 & 1 \\
+             2 & 4 & 2 & 3 & 1 \\
+             3 & 3 & 1,5 & 1,5 & 4 \\
+             4 & 3 & 1& 2 & 4 \\
+             5 & 4 & 2 & 1 & 3 \\
+             6 & 2 & 2 & 2 & 4 \\
+             7 & 1 & 3 & 2 & 4 \\
+             8 & 2 & 4 & 1 & 3 \\
+             9 & 3,5 & 1 & 2 & 3,5 \\
+             10& 4 & 1 & 3 & 2 \\
+             11 & 4 & 2 & 3 & 1 \\
+             12 &3,5 & 1 & 2 & 3,5 \\ \hline
+             R_j & 38 & 23,5 & 24,5 & 34  \\ \hline
+        \end{array}$$
+      
+Após algumas operações, concluímos que $Q_{obs}=7,625$ e
+$$P(Q>Q_{obs})\approx0,054,$$
+não existindo evidências contra $H_0$ ao nível de 5% de significância.
+
+No `R`, podemos fazer esse teste com os seguintes comandos:
+    
+```{r}
+grama1 <- c(4,4,3,3,4,2,1,2,3.5,4,4,3.5)
+grama2 <- c(3,2,1.5,1,2,2,3,4,1,1,2,1)
+grama3 <- c(2,3,1.5,2,1,2,2,1,2,3,3,2)
+grama4 <- c(1,1,4,4,3,4,4,3,3.5,2,1,3.5)
+
+
+dt <- data.frame(grama1, grama2, grama3, grama4)
+dt <- as.matrix(dt)
+colnames(dt) <- c('grama 1','grama 2','grama 3','grama 4' )
+friedman.test(dt)
+
+```
+Observe que tanto a estatística de teste quanto o p-valor se alteraram. Isto ocorre porque o `R` aplica uma correção na variância por causa dos empates.
+:::
+
+
+
+
+###Teste de Conover 
+
+Quando o teste de Friedman rejeita a hipótese nula de que todos os tratamentos são idênticos, torna-se necessário identificar quais pares de tratamentos apresentam diferenças significativas. O procedimento de Conover é preferível ao teste de Dunn neste contexto, pois utiliza a variância residual do experimento em blocos, sendo mais poderoso para detectar diferenças em delineamentos pareados.
+
+A estatística de teste para comparar os tratamentos $j$ e $l$ é baseada na distribuição $t$ de Student
+
+$$T_{j,l} = \frac{|\bar{R}_j - \bar{R}_l|}{\sqrt{\frac{b(k-1)}{b-1} \left[ \frac{\sum R_{ij}^2 - b \frac{k(k+1)^2}{4}}{b(k-1)} \right] \left( \frac{1}{b} + \frac{1}{b} \right)}} \approx \frac{|\bar{R}_j - \bar{R}_l|}{\sqrt{\frac{2(b \cdot S^2 - Q)}{b(k-1)(b-1)}}}$$
+onde $b$ é o número de blocos, $k$ o número de tratamentos, $\bar{R}_j$ a média dos postos do tratamento $j$ e $Q$ a estatística de Friedman observada. Sob $H_0$, esta estatística segue uma distribuição $t$ com $(b-1)(k-1)$ graus de liberdade.
+
+::: {#exm-}
+**Eficácia de Formulações Analgésicas**
+
+Um laboratório deseja comparar o tempo de alívio (em minutos) de quatro formulações de analgésicos ($A, B, C, D$). Para controlar a variabilidade individual na percepção da dor e metabolismo, 10 voluntários (blocos) foram selecionados. Cada voluntário testou as quatro drogas em ocasiões distintas (ordem aleatória). Os dados foram convertidos em postos dentro de cada bloco. 
+
+O teste de Friedman resultou em $Q_{obs} = 15,6$ ($p < 0,01$), indicando diferença entre as drogas. As médias dos postos ($\bar{R}_j$) foram A: 3,8; B: 2,5; C: 2,3; D: 1,4.
+
+Considerando que os graus de liberdade são $(10-1)(4-1) = 27$, e um erro padrão para a diferença de $0,45$, aplicamos a Correção de Holm.
+
+$$\begin{array}{c|c|c|c|c|c} \hline
+\text{Par } (j,l) & |\bar{R}_j - \bar{R}l| & t & p\text{-valor} & \alpha_i = \frac{0,05}{6-i+1} & \text{Decisão} \\ \hline
+A \text{ vs } D & 2,4 & 5,33 & <0,001 & 0,0083 & \text{Rejeitar } H_0 \\
+A \text{ vs } C & 1,5 & 3,33 & 0,003 & 0,0100 & \text{Rejeitar } H_0 \\
+A \text{ vs } B & 1,3 & 2,89 & 0,007 & 0,0125 & \text{Rejeitar } H_0 \\
+B \text{ vs } D & 1,1 & 2,44 & 0,021 & 0,0167 & \text{Não Rejeitar*} \\
+C \text{ vs } D & 0,9 & 2,00 & 0,055 & 0,0250 & \text{Não Rejeitar} \\
+B \text{ vs } C & 0,2 & 0,44 & 0,663 & 0,0500 & \text{Não Rejeitar} \\ \hline
+\end{array}$$
+
+*Nota: No procedimento de Holm, uma vez que um p-valor falha em ser menor que o nível ajustado (C vs D), todas as hipóteses subsequentes de maior p-valor são aceitas automaticamente.
+
+Deste modo, existem diferenças significativas entre os pares (A,D), (A,C) e (A,B). Isto implica que existem evidências de que:
+
+A formulação A apresenta um tempo de alívio significativamente superior às formulações B, C e D.
+
+Não foi possível detectar diferença significativa entre as formulações B, C e D, embora a formulação D apresente a menor média de postos (menor tempo de alívio).
+
+
+:::
+
+::: {#exr-}
+**Desempenho de Pneus e Desgaste**
+
+Uma transportadora testou quatro marcas de pneus (A, B, C, D) em seis de seus caminhões (blocos). Cada caminhão utilizou um pneu de cada marca em diferentes eixos para medir o desgaste após 10.000 km. Os postos de desgaste dentro de cada caminhão (1 = menor desgaste) são apresentados abaixo.
+
+$$\begin{array}{c|cccc}\hline
+\text{Caminhão} & A & B & C & D \\ \hline
+1               & 3 & 4 & 2 & 1 \\
+2               & 4 & 3 & 2 & 1 \\
+3               & 4 & 2 & 3 & 1 \\
+4               & 3 & 1 & 2 & 4 \\
+5               & 4 & 2 & 1 & 3 \\
+6               & 2 & 4 & 3 & 1 \\ \hline
+\bar{R}_j & 3,33 & 2,67 & 2,17 & 1,83 \\ \hline\end{array}$$
+
+a) Calcule a estatística de Friedman $Q$.
+
+b) Ao nível de 5%, existe diferença entre as marcas?
+
+c) Caso exista, aplique o teste de Conover com correção de Holm para identificar quais marcas diferem entre si.
+:::
+
+
+
+##    O teste dos postos quadrados para igualdade de variâncias*
 
 \begin{frame}
 \begin{block}{Dados}
@@ -871,113 +1028,4 @@ Página 319, exercícios 1 e 2.
 % Aula 18
 %===========================================================
 
-
-\begingroup
-\setbeamertemplate{footline}{}
-\begin{frame}{}
-    \Huge{Aula 19 - O teste de Friedman}
-\end{frame}
-\endgroup
-
-\begin{frame}{Dados}
-
-Sejam $X_{i1}\ldots,X_{ik},$, com $i=1,\ldots,b$, $b$ amostras aleatórias mutualmente independentes denominadas blocos. A variável $X_{ij}$, dentro do bloco $i$, está associada a um tratamento $j$. Os blocos são organizados da seguinte forma:
-\begin{center}
-\begin{tabular}{c|cccc}
-          & \multicolumn{4}{c}{Tratamento} & \\
-  Bloco   &  1 & 2 & $\cdots$ & $k$ \\ \hline
-    1     & $X_{11}$ & $X_{12}$ & & $X_{1k}$ \\
-    2     & $X_{21}$ & $X_{22}$ & & $X_{2k}$ \\ 
-    $\cdots$     & $\cdots$ & $\cdots$ & & $\cdots$ \\ 
-    $b$     & $X_{b1}$ & $X_{b2}$ & & $X_{bk}$ \\ 
-\end{tabular}
-\end{center}  
-Vamos assumir independência entre os blocos
-\end{frame}
-
-\begin{frame}{}
-\begin{block}{Objetivo do teste}
-O objetivo é testar $H_0:$ os tratamentos tem efeitos idênticos contra $H_1:$ pelo menos um dos tratamentos difere dos demais.
-\end{block}
-    
-\begin{block}{Estatística de teste}    
-Seja $R(X_{ij})$ o posto, de 1 a $k$, da variável $X_{ij}$ considerando apenas a amostra $X_{i1},\ldots,X_{ik}$ (ou seja, o posto é calculado dentro do bloco). Seja
-$$R_j=\sum_{i=1}^b R(X_{ij})$$
-a soma dos postos relacionados com o tratamento $j$. Friedman sugeriu a seguinte estatística
-$$T_1=\frac{12}{bk(k+1)}\sum_{j=1}^k\left(R_j - \frac{b(k+1)}{2}\right)^2$$
-que teria uma distribuição aproximada $\chi^2_{k-1}$. 
-\end{block}
-\end{frame}
-
-\begin{frame}{Exemplo}
-
-Doze proprietários são selecionados aleatoriamente para participar de um experimento com um viveiro de plantas. 
-Cada proprietário escolheu quatro áreas idênticas em seu quintal e plantou quatro tipos diferentes de gramíneas, uma em cada área. Ao final de um determinado período de tempo, cada proprietário classificou os tipos de grama em ordem de preferência, pesando critérios importantes como despesas, manutenção e conservação exigidas, beleza, robustez, preferência da esposa e assim por diante. A categoria 1 foi atribuída à grama menos preferida e a classificação 4 à favorita. A hipótese nula era que não há diferença nas preferências dos tipos de gramíneas, e a alternativa era que alguns tipos de grama tendem a ser preferidos em relação a outros. Cada um dos 12 blocos consiste em quatro lotes de terreno razoavelmente idênticos, cada um recebendo aproximadamente o mesmo grau de habilidade, porque os quatro lotes são presumivelmente cuidados pelo mesmo proprietário. Os resultados da experiência são os seguintes.
-\end{frame}
-
-\begin{frame}{}
-    \begin{center}
-        \begin{tabular}{c|cccc}\hline
-                         & \multicolumn{4}{c}{Tipo de grama} \\
-             Proprietário&  1 & 2 & 3 & 4  \\ \hline
-             1 & 4 & 3 & 2 & 1 \\
-             2 & 4 & 2 & 3 & 1 \\
-             3 & 3 & 1,5 & 1,5 & 4 \\
-             4 & 3 & 1& 2 & 4 \\
-             5 & 4 & 2 & 1 & 3 \\
-             6 & 2 & 2 & 2 & 4 \\
-             7 & 1 & 3 & 2 & 4 \\
-             8 & 2 & 4 & 1 & 3 \\
-             9 & 3,5 & 1 & 2 & 3,5 \\
-             10& 4 & 1 & 3 & 2 \\
-             11 & 4 & 2 & 3 & 1 \\
-             12 &3,5 & 1 & 2 & 3,5 \\ \hline
-             $R_j$ & 38 & 23,5 & 24,5 & 34  \\ \hline
-        \end{tabular}
-    \end{center}    
-\end{frame}
-
-\begin{frame}[fragile]{}
-    No \texttt{R}, podemos fazer esse teste com os seguintes comandos:
-    
-\begin{verbatim}
-grama1 <- c(4,4,3,3,4,2,1,2,3.5,4,4,3.5)
-grama2 <- c(3,2,1.5,1,2,2,3,4,1,1,2,1)
-grama3 <- c(2,3,1.5,2,1,2,2,1,2,3,3,2)
-grama4 <- c(1,1,4,4,3,4,4,3,3.5,2,1,3.5)
-
-
-dt <- data.frame(grama1, grama2, grama3, grama4)
-dt <- as.matrix(dt)
-
-friedman.test(dt)
-
-\end{verbatim}
-\end{frame}
-
-\begin{frame}[fragile]{}
-    Por usa vez, a saída do teste é 
-    
-\begin{verbatim}
-	Friedman rank sum test
-
-data:  dt
-Friedman chi-squared = 8.0973, df = 3, p-value =
-0.04404
-\end{verbatim}
-Logo, existem evidências de que pelo menos um tipo de grama tem preferência diferente das demais. Com o comando \texttt{boxplot( dt )} podemos notar que a grama 1 é preferível em relação às gramas 2 e 3.
-\end{frame}
-
-\begin{frame}{}
-    \begin{figure}
-        \centering
-          \includegraphics[scale=.7]{boxplot_grama.png}
-        \caption{Caption}
-        \label{fig:my_label}
-    \end{figure}
-\end{frame}
-
-\begin{frame}{Exercício}
-  Página 385, Exercícios 1 e 2 (apenas a letra (a))
-\end{frame}
 
