@@ -229,7 +229,7 @@ Considere a hipótese $H_0:\theta=\theta_0$ contra $H_1:\theta\neq\theta_0$. Sej
 
 
 ::: {#exm-}
-Um modelo de forno de micro-ondas foi projetado para emitir um nível de radiação de no máximo 0,15. Deseja-se testar se um lote desses micro-ondas apresenta um excesso de radiação prejudicial, definido como uma mediana maior que o limite de segurança de 0,15. a mediana da radiação emitida por esses fornos é condizente com esse valor. Foram realizadas as seguintes medidas:
+Um modelo de forno de micro-ondas foi projetado para emitir um nível de radiação de no máximo 0,15. Deseja-se testar se um lote desses micro-ondas apresenta um excesso de radiação prejudicial, definido como uma mediana maior que o limite de segurança de 0,15. A mediana da radiação emitida por esses fornos é condizente com esse valor. Foram realizadas as seguintes medidas:
 
 $$\begin{array}{cccccccccc}
 0,09& 0,18& 0,10& 0,05& 0,12& 0,40& 0,10& 0,05& 0,03& 0,20\\
