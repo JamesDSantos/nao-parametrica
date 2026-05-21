@@ -1,0 +1,140 @@
+# Tópicos em regressão não paramétrica
+
+Sejam $(Y_1,\boldsymbol{x}_1'),\ldots,(Y_n,\boldsymbol{x'}_n)$ vetores aleatórios independentes. Denominamos por regressão o problema de obter
+$r(\boldsymbol{x})=E[Y|\boldsymbol{x}]$. Nesse contexto, a variável $Y$ é denominada resposta e $\boldsymbol{x}'$ é denominado vetor de regressoras. No problema de regressão linear, temos, para $i=1,\ldots,n$ 
+
+$$r(\boldsymbol{x}_i)=E[Y|\boldsymbol{x}_i]=\sum_{j=1}^q \beta_j x_{i,j}.$$
+Ao assumir que $\hat{y}_i=y_i$ é uma estimativa para $E[Y_i|\boldsymbol{x}_i]$, pode-se estimar $\beta_1,\ldots,\beta_q$ minimizando
+$$\sum_{i=1}^n\left(y_i-\sum_{j=1}^q\beta_jx_{i,j}\right)^2.$$
+Esse é o problema conhecido como mínimos quadrados, um dos primeiros métodos de estimação, criado por Lagrange no começo do século XIX. Por não assumir uma distribuição com o conhecimento dos parâmetros, esse método é semi-paramétrico.
+
+Estamos interessados na estrutura mais geral, ou seja
+
+$$E[Y|\boldsymbol{x}]=r(\boldsymbol{x}),$$
+no qual $r(.)$ é desconhecida. Ao estimar $r(\boldsymbol{x})$ por $\hat{r}_n(\boldsymbol{x})$, podemos avaliar o ajuste pelos mínimos quadrados calculados por validação cruzada
+
+$$\sum_{i=1}^n(y_i-\hat{r}_{-i}(x_i))^2,$$
+onde $\hat{r}_{-i}$ é a estimativa não paramétrica de $y_i$ calculada removendo a $i$-ésima unidade amostral.
+
+## Regressão de núcleo de Nadaraya-Watson
+
+### Regressão simples
+
+Sejam $(Y_1,x_1),\ldots,(Y_n,x_n)$ variáveis aleatórias independentes onde 
+$$Y_i=r(x_i)+\varepsilon_i,$$
+com $E[\varepsilon_i]=0$ e $Var[\varepsilon_i]=\sigma^2$, ou seja
+
+$$r(x)=E[Y|x]=\int y f(y|x)dy=\frac{\int yf(x,y)dy}{f(x)}$$
+Podemos estimar $r(x)$ realizando duas estimativas via método do núcleo. Primeiro, estimamos
+
+$$\hat{f}_n(x)=\frac{1}{n}\sum_{i=1}^n \frac{1}{h_X}k\left(\frac{x-x_i}{h_X}\right).$$
+Em seguida, estimamos $f(x,y)$ utilizando um núcleo com densidades independentes, como dado abaixo
+
+$$\hat{f}_n(x,y)=\frac{1}{n}\sum_{i=1}^n \frac{1}{h_Xh_Y}k\left(\frac{x-x_i}{h_X}\right)k\left(\frac{y-y_i}{h_Y}\right).$$
+Portanto, a integral $\int yf(x,y)dy$ é estimada por
+
+$$\begin{align}\int y\hat{f}_n(x,y)dy&=\frac{1}{n}\sum_{i=1}^{n}\frac{1}{h_X}k\left(\frac{x-x_i}{h_Y}\right)\int y\frac{1}{h_Y}k\left(\frac{y-y_i}{h_Y}\right)dy\\&=\frac{1}{n}\sum_{i=1}^ny_ik\left(\frac{x-x_i}{h_X}\right)\end{align}$$
+logo, $r(x)$ é estimada por
+
+$$\hat{r}(x)=\sum_{i=1}^n y_iw(x),$$
+onde
+
+$$w(x)=\sum_{i=1}^n\frac{y_ik\left(\frac{x-x_i}{h_X}\right)}{\sum_{i=1}^n k\left(\frac{x-x_i}{h_X}\right)}.$$
+
+Para encontrar $h_X$, minimizamos os quadrados dos erros por validação cruzada
+
+$$\hat{J}(h)=\sum_{i=1}^n \left(y_i-\hat{r}_{-i}(x_i)\right)^2,$$
+onde $\hat{r}_{-i}$ é o estimador de Nadaraya-Watson calculado sem a $i$-ésima observação.
+
+::: {#exm-}
+Os dados abaixo, disponíveis no pacote `np`, se referem a uma amostra aleatória retirada do censo canadense de 1971 de homens com o mesmo nível de educação. As variávels são a idade  (`age`) e o logaritmo do salário (`logwage`).
+
+```{r}
+# install.package('np')
+require(np)
+
+data(cps71, package = "np")
+dados <- cps71[, c("logwage", "age")]
+plot( dados$age, dados$logwage , xlab= 'Idade', ylab='Log-salário')
+```
+
+O pacote `np` possui diversos métodos de regressão com núcleos implementados para a função `pnpregbw`, que retorna $h_X$ e ajusta o modelo. Ao colocar seu argumento `regtype='lc'`, estamos realizando a regressão de Nadaraya-Watson. Já o argumento `bwmethod` indica o método de escolha da banda, sendo a minimização dos quadrados dos erros por validação cruzada o padrão.
+
+```{r}
+options(np.messages = FALSE)
+# Seleção do comprimento da banda
+bw <- npregbw(logwage ~ age, data = dados, regtype = "lc")
+summary(bw)
+
+# ajusta a regressão
+fit <- npreg(bws = bw, data = dados)
+summary(fit)
+
+## Gráfico do ajuste.
+plot( fit, plot.errors.method = "bootstrap" )
+```
+
+Para obter o valor de $r(x)$ para um $x$ qualquer, utilizamos a função `predict`.
+
+```{r}
+# verificando o log-salário médio para alguém de 50 anos
+age <- 50
+novo <- data.frame(age)
+
+predict(fit, newdata= novo )
+```
+:::
+
+
+### Regressão múltipla
+
+A estensão multivariada (para mais regressoras) é imediata. Observe que
+
+$$E[Y|\boldsymbol{x}]=\frac{\int yf(y,\boldsymbol{x})dy}{f(\boldsymbol{x})}$$
+Portanto, basta realizar a estimação não paramétrica das entidades envolvidas. Considerando que existem $q$ variáveis regressoras, a estimação não paramétrica de $f(\boldsymbol{x})$ é realizada a partir do núcleo formado por $q$ densidades independentes, ou seja
+
+$$\hat{f}_n(\boldsymbol{x})=\frac{1}{n}\sum_{i=1}^n \prod_{j=1}^q\frac{1}{h_j}k\left(\frac{x_j-x_{i,j}}{h_j}\right)$$
+e, de modo análogo,
+
+$$\hat{f}_n(y,\boldsymbol{x})=\frac{1}{n}\sum_{i=1}^n\frac{1}{h_Y}k\left(\frac{y-y_{i}}{h_Y}\right) \prod_{j=1}^q\frac{1}{h_j}k\left(\frac{x_j-x_{i,j}}{h_j}\right)$$
+o que implica que a integral $\int y f(y,\boldsymbol{x})dy$ pode ser estimada por
+
+$$\begin{align}\int y\hat{f}_n(y,\boldsymbol{x})dy&=\frac{1}{n}\sum_{i=1}^n\left[\int\frac{y}{h_Y}k\left(\frac{y-y_{i}}{h_Y}\right)dy\right] \prod_{j=1}^q\frac{1}{h_j}k\left(\frac{x_j-x_{i,j}}{h_j}\right)\\&=\frac{1}{n}\sum_{i=1}^ny_i \prod_{j=1}^q\frac{1}{h_j}k\left(\frac{x_j-x_{i,j}}{h_j}\right)\end{align}$$
+e
+$$E[Y|\boldsymbol{x}]=\sum_{i=1}^n y_iw(\boldsymbol{x}),$$
+onde
+$$w(\boldsymbol{x})=\frac{\prod_{j=1}^q k\left(\frac{x_j-x_{i,j}}{h_j}\right)}{\sum_{i=1}^n \prod_{j=1}^q k\left(\frac{x_j-x_{i,j}}{h_j}\right)}$$
+De modo análogo ao caso univariado, encontramos $h_1,\ldots,h_q$, minimizando a soma dos quadrados dos erros por validação cruzada
+
+$$\hat{J}(\boldsymbol{h})=\sum_{i=1}^n \left(y_i-\hat{r}_{-i}(\boldsymbol{x}_i)\right)^2,$$
+onde $\hat{r}_{-i}$ é a estimativa de Nadaraya-Watson ajustada sem a $i$-ésima unidade amostral.
+
+::: {#exm-}
+O exemplo ilustra a regressão de Nadaraya-Watson (constante local) para prever o comprimento da sépala (Sepal.Length) usando duas regressoras do banco iris. Inicialmente, a função npregbw() calcula as larguras de banda ótimas por validação cruzada, equilibrando o viés e a variância de forma automatizada. Em seguida, o modelo é ajustado com a função npreg(), que estima a superfície não-paramétrica por meio de médias ponderadas locais. Por fim, o gráfico de diagnóstico confronta os valores reais com os preditos pelo Kernel, revelando uma forte aderência dos pontos à linha de referência de 45 graus, o que comprova a alta eficácia e o poder preditivo do estimador.
+
+```{r}
+pairs(iris)
+options(np.messages = FALSE)
+
+# Seleção do comprimento da banda
+bw <- npregbw(Sepal.Length ~ Sepal.Width + Petal.Length , data = iris, regtype = "lc")
+summary(bw)
+
+# ajusta a regressão
+fit <- npreg(bws = bw, data = iris)
+
+# toma os valores preditos
+iris$predito <- fitted(fit)
+# gráficos:
+# Gráfico de diagnóstico: Real vs Predito
+plot(iris$Sepal.Length, iris$predito,
+     xlab = "Sepal.Length Real", ylab = "Sepal.Length Predito pelo Kernel",
+     main = "Valores Reais vs. Ajustados",
+     pch = 19, col = "darkgreen")
+
+# Adiciona uma linha de referência de 45 graus (Ajuste Perfeito)
+abline(a = 0, b = 1, col = "red", lwd = 2)
+```
+:::
+
+

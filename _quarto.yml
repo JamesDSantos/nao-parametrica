@@ -13,6 +13,8 @@ book:
     - teste_do_sinal.qmd
     - tabelas_contingencia.qmd
     - postos.qmd
+    - densidades.qmd
+    - regressao.qmd
     - laboratorio.qmd
     - references.qmd
 
