@@ -250,6 +250,8 @@ window.Quarto = {
   <li><a href="#regressão-simples" id="toc-regressão-simples" class="nav-link" data-scroll-target="#regressão-simples"><span class="header-section-number">7.1.1</span> Regressão simples</a></li>
   <li><a href="#regressão-múltipla" id="toc-regressão-múltipla" class="nav-link" data-scroll-target="#regressão-múltipla"><span class="header-section-number">7.1.2</span> Regressão múltipla</a></li>
   </ul></li>
+  <li><a href="#splines" id="toc-splines" class="nav-link" data-scroll-target="#splines"><span class="header-section-number">7.2</span> Splines</a></li>
+  <li><a href="#método-de-suavização-do-gráfico-de-dispersão" id="toc-método-de-suavização-do-gráfico-de-dispersão" class="nav-link" data-scroll-target="#método-de-suavização-do-gráfico-de-dispersão"><span class="header-section-number">7.3</span> Método de suavização do gráfico de dispersão</a></li>
   </ul>
 </nav>
     </div>
@@ -276,7 +278,47 @@ window.Quarto = {
 
 
 <p>Sejam <span class="math inline">\((Y_1,\boldsymbol{x}_1'),\ldots,(Y_n,\boldsymbol{x'}_n)\)</span> vetores aleatórios independentes. Denominamos por regressão o problema de obter <span class="math inline">\(r(\boldsymbol{x})=E[Y|\boldsymbol{x}]\)</span>. Nesse contexto, a variável <span class="math inline">\(Y\)</span> é denominada resposta e <span class="math inline">\(\boldsymbol{x}'\)</span> é denominado vetor de regressoras. No problema de regressão linear, temos, para <span class="math inline">\(i=1,\ldots,n\)</span></p>
-<p><span class="math display">\[r(\boldsymbol{x}_i)=E[Y|\boldsymbol{x}_i]=\sum_{j=1}^q \beta_j x_{i,j}.\]</span> Ao assumir que <span class="math inline">\(\hat{y}_i=y_i\)</span> é uma estimativa para <span class="math inline">\(E[Y_i|\boldsymbol{x}_i]\)</span>, pode-se estimar <span class="math inline">\(\beta_1,\ldots,\beta_q\)</span> minimizando <span class="math display">\[\sum_{i=1}^n\left(y_i-\sum_{j=1}^q\beta_jx_{i,j}\right)^2.\]</span> Esse é o problema conhecido como mínimos quadrados, um dos primeiros métodos de estimação, criado por Lagrange no começo do século XIX. Por não assumir uma distribuição com o conhecimento dos parâmetros, esse método é semi-paramétrico.</p>
+<p><span class="math display">\[r(\boldsymbol{x}_i)=E[Y|\boldsymbol{x}_i]=\sum_{j=1}^q \beta_j x_{i,j}.\]</span> Ao assumir que <span class="math inline">\(\hat{y}_i=y_i\)</span> é uma estimativa para <span class="math inline">\(E[Y_i|\boldsymbol{x}_i]\)</span>, pode-se estimar <span class="math inline">\(\beta_1,\ldots,\beta_q\)</span> encontrando <span class="math inline">\(\hat{\beta}_1,\ldots,\hat{\beta}_k\)</span> que minimizam <span class="math display">\[\sum_{i=1}^n( y_i-\hat{y}_i)^2=\sum_{i=1}^n\left(y_i-\sum_{j=1}^q\hat{\beta}_jx_{i,j}\right)^2.\]</span> Esse é o problema conhecido como método dos mínimos quadrados, um dos primeiros métodos de estimação, criado por Lagrange no começo do século XIX. Por não assumir uma distribuição com o conhecimento dos parâmetros, esse método é semi-paramétrico. Ao fazer <span class="math inline">\(\boldsymbol{y}'=(y_1,\ldots,y_n)\)</span> e <span class="math inline">\(\boldsymbol{X}'=(\boldsymbol{x}_1,\ldots,\boldsymbol{x}_n)\)</span>, temos que</p>
+<p><span class="math display">\[\sum_{i=1}^n( y_i-\hat{y}_i)^2=(\boldsymbol{y}-\boldsymbol{X}\hat{\boldsymbol{\beta}})'(\boldsymbol{y}-\boldsymbol{X}\hat{\boldsymbol{\beta}}),\]</span> cuja minimização é dada por <span class="math display">\[\hat{\boldsymbol{\beta}}=(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{X}\boldsymbol{y}.\]</span></p>
+<div id="exm-" class="theorem example">
+<p><span class="theorem-title"><strong>Example 7.1</strong></span> O banco <code>mtcars</code> possui 32 medidas de automóveis. Estamos interessados em relacionar as variáveis regressoras <strong>peso</strong> (<code>wt</code>) e <strong>número de cilindros</strong> (<code>cyl</code>) com a variável <strong>milhas por galão</strong> (<code>mpg</code>). Observando os diagramas de dispersão abaixo, temos motivos para pensar em um modelo linear.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>( mtcars[,<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">6</span>)])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="regressao_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Utilizamos a função <code>lm</code> que ajusta o modelo de regressão linear. Seu argumento principal é <code>mpg ~ wt + cyl</code>, o que implica no modelo</p>
+<p><span class="math display">\[r(x)=\hat{\beta}_0+\hat{\beta}_1\text{peso}+\hat{\beta}_2\text{no. cilindros}\]</span> A função <code>coefficients</code> armazena os valores estimados para <span class="math inline">\(\beta_0,\beta_1,\beta_2\)</span>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>( mpg <span class="sc">~</span> wt <span class="sc">+</span> cyl, <span class="at">data =</span> mtcars)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="fu">coefficients</span>(mod)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>beta</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept)          wt         cyl 
+  39.686261   -3.190972   -1.507795 </code></pre>
+</div>
+</div>
+<p>A função <code>predict</code> apresenta o valor de <span class="math inline">\(\hat{r}(.)\)</span>. Abaixo, apresentamos a relação entre peso e milhas por galão obseervada e predita.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>( mtcars<span class="sc">$</span>wt, mtcars<span class="sc">$</span>mpg, <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">col =</span><span class="st">'seagreen'</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>reg <span class="ot">&lt;-</span> <span class="fu">data.frame</span>( <span class="at">wt =</span> mtcars<span class="sc">$</span>wt, <span class="at">cyl =</span> mtcars<span class="sc">$</span>cyl)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(mod, reg)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(mtcars<span class="sc">$</span>wt, pred, <span class="at">col =</span> <span class="dv">2</span>, <span class="at">pch =</span> <span class="dv">16</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">'topright'</span>, <span class="fu">c</span>(<span class="st">'Observado'</span>,<span class="st">'Predito'</span>), <span class="at">col=</span><span class="fu">c</span>(<span class="st">'seagreen'</span>,<span class="dv">2</span>), <span class="at">pch=</span><span class="dv">16</span>, <span class="at">bty=</span><span class="st">'n'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="regressao_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
 <p>Estamos interessados na estrutura mais geral, ou seja</p>
 <p><span class="math display">\[E[Y|\boldsymbol{x}]=r(\boldsymbol{x}),\]</span> no qual <span class="math inline">\(r(.)\)</span> é desconhecida. Ao estimar <span class="math inline">\(r(\boldsymbol{x})\)</span> por <span class="math inline">\(\hat{r}_n(\boldsymbol{x})\)</span>, podemos avaliar o ajuste pelos mínimos quadrados calculados por validação cruzada</p>
 <p><span class="math display">\[\sum_{i=1}^n(y_i-\hat{r}_{-i}(x_i))^2,\]</span> onde <span class="math inline">\(\hat{r}_{-i}\)</span> é a estimativa não paramétrica de <span class="math inline">\(y_i\)</span> calculada removendo a <span class="math inline">\(i\)</span>-ésima unidade amostral.</p>
@@ -294,10 +336,10 @@ window.Quarto = {
 <p>Para encontrar <span class="math inline">\(h_X\)</span>, minimizamos os quadrados dos erros por validação cruzada</p>
 <p><span class="math display">\[\hat{J}(h)=\sum_{i=1}^n \left(y_i-\hat{r}_{-i}(x_i)\right)^2,\]</span> onde <span class="math inline">\(\hat{r}_{-i}\)</span> é o estimador de Nadaraya-Watson calculado sem a <span class="math inline">\(i\)</span>-ésima observação.</p>
 <div id="exm-" class="theorem example">
-<p><span class="theorem-title"><strong>Example 7.1</strong></span> Os dados abaixo, disponíveis no pacote <code>np</code>, se referem a uma amostra aleatória retirada do censo canadense de 1971 de homens com o mesmo nível de educação. As variávels são a idade (<code>age</code>) e o logaritmo do salário (<code>logwage</code>).</p>
+<p><span class="theorem-title"><strong>Example 7.2</strong></span> Os dados abaixo, disponíveis no pacote <code>np</code>, se referem a uma amostra aleatória retirada do censo canadense de 1971 de homens com o mesmo nível de educação. As variávels são a idade (<code>age</code>) e o logaritmo do salário (<code>logwage</code>).</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.package('np')</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(np)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.package('np')</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(np)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Carregando pacotes exigidos: np</code></pre>
 </div>
@@ -309,23 +351,23 @@ window.Quarto = {
 Examples and guides at https://jeffreyracine.github.io/gallery/
 See also vignette("np_getting_started", package = "np")</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(cps71, <span class="at">package =</span> <span class="st">"np"</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>dados <span class="ot">&lt;-</span> cps71[, <span class="fu">c</span>(<span class="st">"logwage"</span>, <span class="st">"age"</span>)]</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>( dados<span class="sc">$</span>age, dados<span class="sc">$</span>logwage , <span class="at">xlab=</span> <span class="st">'Idade'</span>, <span class="at">ylab=</span><span class="st">'Log-salário'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(cps71, <span class="at">package =</span> <span class="st">"np"</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>dados <span class="ot">&lt;-</span> cps71[, <span class="fu">c</span>(<span class="st">"logwage"</span>, <span class="st">"age"</span>)]</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>( dados<span class="sc">$</span>age, dados<span class="sc">$</span>logwage , <span class="at">xlab=</span> <span class="st">'Idade'</span>, <span class="at">ylab=</span><span class="st">'Log-salário'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="regressao_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="regressao_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>O pacote <code>np</code> possui diversos métodos de regressão com núcleos implementados para a função <code>pnpregbw</code>, que retorna <span class="math inline">\(h_X\)</span> e ajusta o modelo. Ao colocar seu argumento <code>regtype='lc'</code>, estamos realizando a regressão de Nadaraya-Watson. Já o argumento <code>bwmethod</code> indica o método de escolha da banda, sendo a minimização dos quadrados dos erros por validação cruzada o padrão.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">np.messages =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Seleção do comprimento da banda</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>bw <span class="ot">&lt;-</span> <span class="fu">npregbw</span>(logwage <span class="sc">~</span> age, <span class="at">data =</span> dados, <span class="at">regtype =</span> <span class="st">"lc"</span>)</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(bw)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">np.messages =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Seleção do comprimento da banda</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>bw <span class="ot">&lt;-</span> <span class="fu">npregbw</span>(logwage <span class="sc">~</span> age, <span class="at">data =</span> dados, <span class="at">regtype =</span> <span class="st">"lc"</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(bw)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Regression Data (205 observations, 1 variable(s)):
@@ -341,11 +383,11 @@ Exp. Var. Name: age Bandwidth: 1.892158 Scale Factor: 0.4487743
 
 Continuous Kernel Type: Second-Order Gaussian
 No. Continuous Explanatory Vars.: 1
-Estimation Time: 0.22 seconds</code></pre>
+Estimation Time: 0.33 seconds</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ajusta a regressão</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">npreg</span>(<span class="at">bws =</span> bw, <span class="at">data =</span> dados)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ajusta a regressão</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">npreg</span>(<span class="at">bws =</span> bw, <span class="at">data =</span> dados)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Regression Data: 205 training points, in 1 variable(s)
@@ -359,25 +401,25 @@ R-squared: 0.3108675
 
 Continuous Kernel Type: Second-Order Gaussian
 No. Continuous Explanatory Vars.: 1
-Estimation Time: 0.24 seconds (optim 0.22s, fit 0.02s)</code></pre>
+Estimation Time: 0.35 seconds (optim 0.33s, fit 0.02s)</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Gráfico do ajuste.</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>( fit, <span class="at">plot.errors.method =</span> <span class="st">"bootstrap"</span> )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Gráfico do ajuste.</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>( fit, <span class="at">plot.errors.method =</span> <span class="st">"bootstrap"</span> )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="regressao_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="regressao_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>Para obter o valor de <span class="math inline">\(r(x)\)</span> para um <span class="math inline">\(x\)</span> qualquer, utilizamos a função <code>predict</code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># verificando o log-salário médio para alguém de 50 anos</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>age <span class="ot">&lt;-</span> <span class="dv">50</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>novo <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(age)</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(fit, <span class="at">newdata=</span> novo )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># verificando o log-salário médio para alguém de 50 anos</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>age <span class="ot">&lt;-</span> <span class="dv">50</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>novo <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(age)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(fit, <span class="at">newdata=</span> novo )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 13.76822</code></pre>
 </div>
@@ -393,21 +435,21 @@ Estimation Time: 0.24 seconds (optim 0.22s, fit 0.02s)</code></pre>
 <p><span class="math display">\[\begin{align}\int y\hat{f}_n(y,\boldsymbol{x})dy&amp;=\frac{1}{n}\sum_{i=1}^n\left[\int\frac{y}{h_Y}k\left(\frac{y-y_{i}}{h_Y}\right)dy\right] \prod_{j=1}^q\frac{1}{h_j}k\left(\frac{x_j-x_{i,j}}{h_j}\right)\\&amp;=\frac{1}{n}\sum_{i=1}^ny_i \prod_{j=1}^q\frac{1}{h_j}k\left(\frac{x_j-x_{i,j}}{h_j}\right)\end{align}\]</span> e <span class="math display">\[E[Y|\boldsymbol{x}]=\sum_{i=1}^n y_iw(\boldsymbol{x}),\]</span> onde <span class="math display">\[w(\boldsymbol{x})=\frac{\prod_{j=1}^q k\left(\frac{x_j-x_{i,j}}{h_j}\right)}{\sum_{i=1}^n \prod_{j=1}^q k\left(\frac{x_j-x_{i,j}}{h_j}\right)}\]</span> De modo análogo ao caso univariado, encontramos <span class="math inline">\(h_1,\ldots,h_q\)</span>, minimizando a soma dos quadrados dos erros por validação cruzada</p>
 <p><span class="math display">\[\hat{J}(\boldsymbol{h})=\sum_{i=1}^n \left(y_i-\hat{r}_{-i}(\boldsymbol{x}_i)\right)^2,\]</span> onde <span class="math inline">\(\hat{r}_{-i}\)</span> é a estimativa de Nadaraya-Watson ajustada sem a <span class="math inline">\(i\)</span>-ésima unidade amostral.</p>
 <div id="exm-" class="theorem example">
-<p><span class="theorem-title"><strong>Example 7.2</strong></span> O exemplo ilustra a regressão de Nadaraya-Watson (constante local) para prever o comprimento da sépala (Sepal.Length) usando duas regressoras do banco iris. Inicialmente, a função npregbw() calcula as larguras de banda ótimas por validação cruzada, equilibrando o viés e a variância de forma automatizada. Em seguida, o modelo é ajustado com a função npreg(), que estima a superfície não-paramétrica por meio de médias ponderadas locais. Por fim, o gráfico de diagnóstico confronta os valores reais com os preditos pelo Kernel, revelando uma forte aderência dos pontos à linha de referência de 45 graus, o que comprova a alta eficácia e o poder preditivo do estimador.</p>
+<p><span class="theorem-title"><strong>Example 7.3</strong></span> O exemplo ilustra a regressão de Nadaraya-Watson (constante local) para prever o comprimento da sépala (Sepal.Length) usando duas regressoras do banco iris. Inicialmente, a função npregbw() calcula as larguras de banda ótimas por validação cruzada, equilibrando o viés e a variância de forma automatizada. Em seguida, o modelo é ajustado com a função npreg(), que estima a superfície não-paramétrica por meio de médias ponderadas locais. Por fim, o gráfico de diagnóstico confronta os valores reais com os preditos pelo Kernel, revelando uma forte aderência dos pontos à linha de referência de 45 graus, o que comprova a alta eficácia e o poder preditivo do estimador.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(iris)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(iris)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="regressao_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="regressao_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">np.messages =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Seleção do comprimento da banda</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>bw <span class="ot">&lt;-</span> <span class="fu">npregbw</span>(Sepal.Length <span class="sc">~</span> Sepal.Width <span class="sc">+</span> Petal.Length , <span class="at">data =</span> iris, <span class="at">regtype =</span> <span class="st">"lc"</span>)</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(bw)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">np.messages =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Seleção do comprimento da banda</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>bw <span class="ot">&lt;-</span> <span class="fu">npregbw</span>(Sepal.Length <span class="sc">~</span> Sepal.Width <span class="sc">+</span> Petal.Length , <span class="at">data =</span> iris, <span class="at">regtype =</span> <span class="st">"lc"</span>)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(bw)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Regression Data (150 observations, 2 variable(s)):
@@ -424,34 +466,252 @@ Exp. Var. Name: Petal.Length Bandwidth: 0.2225359 Scale Factor: 0.2905787
 
 Continuous Kernel Type: Second-Order Gaussian
 No. Continuous Explanatory Vars.: 2
-Estimation Time: 0.67 seconds</code></pre>
+Estimation Time: 1.24 seconds</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ajusta a regressão</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">npreg</span>(<span class="at">bws =</span> bw, <span class="at">data =</span> iris)</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># toma os valores preditos</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>iris<span class="sc">$</span>predito <span class="ot">&lt;-</span> <span class="fu">fitted</span>(fit)</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co"># gráficos:</span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Gráfico de diagnóstico: Real vs Predito</span></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(iris<span class="sc">$</span>Sepal.Length, iris<span class="sc">$</span>predito,</span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Sepal.Length Real"</span>, <span class="at">ylab =</span> <span class="st">"Sepal.Length Predito pelo Kernel"</span>,</span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Valores Reais vs. Ajustados"</span>,</span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>     <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">"darkgreen"</span>)</span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Adiciona uma linha de referência de 45 graus (Ajuste Perfeito)</span></span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a =</span> <span class="dv">0</span>, <span class="at">b =</span> <span class="dv">1</span>, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ajusta a regressão</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">npreg</span>(<span class="at">bws =</span> bw, <span class="at">data =</span> iris)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># toma os valores preditos</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>iris<span class="sc">$</span>predito <span class="ot">&lt;-</span> <span class="fu">fitted</span>(fit)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="co"># gráficos:</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Gráfico de diagnóstico: Real vs Predito</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(iris<span class="sc">$</span>Sepal.Length, iris<span class="sc">$</span>predito,</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Sepal.Length Real"</span>, <span class="at">ylab =</span> <span class="st">"Sepal.Length Predito pelo Kernel"</span>,</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Valores Reais vs. Ajustados"</span>,</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>     <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">"darkgreen"</span>)</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Adiciona uma linha de referência de 45 graus (Ajuste Perfeito)</span></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a =</span> <span class="dv">0</span>, <span class="at">b =</span> <span class="dv">1</span>, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="regressao_files/figure-html/unnamed-chunk-4-2.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="regressao_files/figure-html/unnamed-chunk-7-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># valores preditos usando a regressora Sepal width:</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>xreg <span class="ot">=</span> <span class="fu">data.frame</span>(iris<span class="sc">$</span>Sepal.Width, iris<span class="sc">$</span>Petal.Length)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">=</span> <span class="fu">predict</span>( bw, xreg)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(iris<span class="sc">$</span>Sepal.Width , iris<span class="sc">$</span>Sepal.Length)</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(xreg<span class="sc">$</span>iris.Sepal.Width, pred<span class="sc">$</span>mean, <span class="at">pch =</span> <span class="dv">16</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="regressao_files/figure-html/unnamed-chunk-7-3.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 </div>
-
-
 </section>
+</section>
+<section id="splines" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="splines"><span class="header-section-number">7.2</span> Splines</h2>
+<p>Abaixo, apresentamos um conjunto de dados simulado, no qual são apresentados a verdadeira regressão (<span class="math inline">\(r(x)=3\sin(x)\)</span>, em cinza) e a reta de regressão linear estimada, ou seja <span class="math display">\[\hat{r}(x)=\hat{\beta}_0+\hat{\beta}_1x\]</span></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="regressao_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Podemos obter uma aproximação melhor, separando o conjunto de dados em duas partes e ajustando uma regressão linear para cada conjunto. Seja <span class="math inline">\(\xi\)</span> o valor de <span class="math inline">\(x\)</span> que particiona os valores (tal valor será denominado <strong>nó</strong>). Teremos então o seguinte modelo de regressão</p>
+<p><span class="math display">\[r(x)=E[Y|x=x]=\begin{cases}\beta_0+\beta_1x,&amp;x&lt;\xi\\ \beta_2+\beta_3x,&amp;x\geq \xi.\end{cases}\]</span> Como <span class="math inline">\(r(x)\)</span> é contínua, é necessário ter <span class="math display">\[\beta_0+\beta_1\xi=\beta_2+\beta_3\xi\Rightarrow \beta_2-\beta_0=-(\beta_3-\beta_1)\xi.\]</span></p>
+<p>Note que <span class="math display">\[\begin{align}r(x)&amp;=[\beta_0+\beta_1 x]I_{(-\infty,\xi)}(x)+[\beta_2+\beta_3 x]I_{[\xi,\infty)}(x)\\&amp;=[\beta_0+\beta_1 x]\left(1-I_{[\xi,\infty)}(x)\right)+[\beta_2+\beta_3 x]I_{[\xi,\infty)}(x)\\&amp;=
+\beta_0+\beta_1x+[\beta_2-\beta_0+(\beta_3-\beta_1)x]I_{[\xi,\infty)}(x)\\&amp;=\beta_0+\beta_1x+\underbrace{(\beta_3-\beta_1)}_{\theta}(x-\xi)I_{[\xi,\infty)}(x),\end{align}\]</span> e, como <span class="math inline">\(I_{[\xi,\infty)}(x)=I_{[0,\infty)}(x-\xi)\)</span>, definindo <span class="math display">\[(x-\xi)_+=(x-\xi)I_{[\xi,\infty)}(x),\]</span> temos que o modelo de regressão proposto pode ser reescrito como <span class="math display">\[r(x)=\beta_0+\beta_1x+\theta(x-\xi)_+\]</span> A expressão acima é denominada spline de ordem 2 e a estimação de seus coeficientes é realizada como em um modelo de regressão tradicional. Abaixo, mostramos o spline de ordem 2 ajustado considerando a mediana como nó.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="regressao_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>De modo semelhante ao que foi discutido, podemos definir o spline de ordem 3, também conhecido como cúbico, dado por</p>
+<p><span class="math display">\[r(x)=\beta_0+\beta_1x +\beta_2x^2+\theta(x-\xi)_+^2.\]</span> Abaixo, apresentamos o spline cúbico ajustado.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="regressao_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Em geral, é difícil distinguir a olho nu a diferença entre splines de ordem maior. Todavia, pode-se definir um spline de ordem <span class="math inline">\(M\)</span>, com <span class="math inline">\(M=1,2,\ldots\)</span> por <span class="math display">\[r(x)=\sum_{j=0}^{M-1}\beta_jx^{j}+\theta(x-\xi)_+^{M-1}.\]</span> Além disso, mais nós podem ser acrescentados, produzindo o modelo</p>
+<p><span class="math display">\[r(x)=\sum_{j=0}^{M-1}\beta_jx^{j}+\sum_{k=1}^K\theta_k(x-\xi_k)_+^{M-1}.\]</span></p>
+<div id="exm-" class="theorem example">
+<p><span class="theorem-title"><strong>Example 7.4</strong></span> Abaixo, revisitamos o banco de dados <code>mtcars</code>, agora considerando a relação entre a regressora potência (<code>hp</code>) e a resposta milhas por galão (<code>mpg</code>). Observe a relação não linear entre as duas variáveis</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mtcars<span class="sc">$</span>hp, mtcars<span class="sc">$</span>mpg)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="regressao_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>A função <code>spline</code>, do pacote <code>stats</code> ajusta o spline cúbico. Contudo, o pacote <code>splines</code> permite mais flexibilidade. Neste pacote, a matriz de regressão do spline de ordem <span class="math inline">\(M\)</span> é construída a partir da função <code>bs(x, degree, knots)</code>, onde <code>degree</code> é a ordem (sendo o cúbico o padrão) e <code>knots</code> é um vetor de nós. Vamos utilizar os quartis como nós.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(splines)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Carregando pacotes exigidos: splines</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mtcars<span class="sc">$</span>hp, mtcars<span class="sc">$</span>mpg)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>( mpg <span class="sc">~</span> <span class="fu">bs</span>(hp), <span class="at">data =</span> mtcars)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>xhp <span class="ot">=</span> <span class="fu">seq</span>( <span class="fu">min</span>(mtcars<span class="sc">$</span>hp), <span class="fu">max</span>(mtcars<span class="sc">$</span>hp),<span class="at">length.out =</span><span class="dv">50</span>)</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">=</span> <span class="fu">predict</span>(mod, <span class="fu">data.frame</span>( <span class="at">hp =</span> xhp))</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>( xhp, pred, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="regressao_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Vamos adicionar uma banda de confiança, utilizando para isso a função <code>predict</code> para retornar o erro padrão do modelo.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">=</span> <span class="fu">predict</span>(mod, <span class="fu">data.frame</span>( <span class="at">hp =</span> xhp), <span class="at">se.fit =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>banda_inf <span class="ot">&lt;-</span> pred<span class="sc">$</span>fit <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> pred<span class="sc">$</span>se.fit</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>banda_sup <span class="ot">&lt;-</span> pred<span class="sc">$</span>fit <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> pred<span class="sc">$</span>se.fit</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mtcars<span class="sc">$</span>hp, mtcars<span class="sc">$</span>mpg, <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">col =</span> <span class="st">'tomato'</span>,</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">'Milhas por galão'</span>,<span class="at">xlab =</span> <span class="st">'Potência'</span>)</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="fu">polygon</span>( <span class="fu">c</span>(xhp, xhp[<span class="dv">50</span><span class="sc">:</span><span class="dv">1</span>]),</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>         <span class="fu">c</span>(banda_inf, banda_sup[<span class="dv">50</span><span class="sc">:</span><span class="dv">1</span>]), <span class="at">col =</span> <span class="fu">alpha</span>(<span class="st">'orange'</span>, .<span class="dv">3</span>))</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>( xhp, pred<span class="sc">$</span>fit, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="regressao_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<p>Para o caso multivariado, podemos definir para cada variável regressora a função</p>
+<p><span class="math display">\[h_l(x_l)=\sum_{j=0}^{M-1}\beta_{j,l}x_{l}^{j}+\sum_{k=1}^K\theta_{k,l}(x_l-\xi_k)_+^{M-1}.\]</span> e em seguida definir</p>
+<p><span class="math display">\[r(\boldsymbol{x})=\sum_{l=1}^q h_l(x_l).\]</span> ::: {#exm-}</p>
+<p>Revisitamos mais uma vez o banco de dados <code>mtcars</code>. Vamos ajustar o modelo de regressão spline cubico para predizer a variável <code>mpg</code> pelas variáveis <code>hp</code>e <code>wt</code>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(splines)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">=</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> <span class="fu">bs</span>(hp)<span class="sc">+</span> <span class="fu">bs</span>(wt), <span class="at">data =</span> mtcars)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = mpg ~ bs(hp) + bs(wt), data = mtcars)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.2200 -1.6188 -0.0881  1.1621  4.6491 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   34.588      1.598  21.644  &lt; 2e-16 ***
+bs(hp)1      -10.582      4.304  -2.458  0.02123 *  
+bs(hp)2       -8.514      3.792  -2.245  0.03383 *  
+bs(hp)3       -9.686      2.872  -3.373  0.00243 ** 
+bs(wt)1      -12.794      4.576  -2.796  0.00980 ** 
+bs(wt)2       -9.159      3.912  -2.341  0.02748 *  
+bs(wt)3      -14.225      2.564  -5.548  9.1e-06 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 2.134 on 25 degrees of freedom
+Multiple R-squared:  0.8989,    Adjusted R-squared:  0.8747 
+F-statistic: 37.06 on 6 and 25 DF,  p-value: 2.905e-11</code></pre>
+</div>
+</div>
+<p>Abaixo, apresentamos o ajuste da potência fixando o peso nos quartis.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(scales)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(splines)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>xhp <span class="ot">=</span> <span class="fu">seq</span>(<span class="fu">min</span>(mtcars<span class="sc">$</span>hp),<span class="fu">max</span>(mtcars<span class="sc">$</span>hp), <span class="at">length.out =</span> <span class="dv">50</span>)</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 25%</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>xreg <span class="ot">=</span> <span class="fu">data.frame</span>( <span class="at">hp =</span> xhp,</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>                   <span class="at">wt =</span> <span class="fu">quantile</span>(mtcars<span class="sc">$</span>wt,.<span class="dv">25</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in data.frame(hp = xhp, wt = quantile(mtcars$wt, 0.25)): nomes de
+linhas foram encontrados em uma variável curta e foram descartados</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">=</span> <span class="fu">predict</span>(mod, xreg, <span class="at">se.fit =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>sup <span class="ot">=</span> pred<span class="sc">$</span>fit <span class="sc">+</span> <span class="fl">1.96</span><span class="sc">*</span>pred<span class="sc">$</span>se.fit</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>inf <span class="ot">=</span> pred<span class="sc">$</span>fit <span class="sc">-</span> <span class="fl">1.96</span><span class="sc">*</span>pred<span class="sc">$</span>se.fit</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(xhp,pred<span class="sc">$</span>fit, <span class="at">type =</span> <span class="st">'l'</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">10</span>,<span class="dv">30</span>))</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a><span class="fu">polygon</span>( <span class="fu">c</span>(xhp, xhp[<span class="dv">50</span><span class="sc">:</span><span class="dv">1</span>]),</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>         <span class="fu">c</span>(inf, sup[<span class="dv">50</span><span class="sc">:</span><span class="dv">1</span>]), <span class="at">col =</span> <span class="fu">alpha</span>(<span class="st">'orange'</span>,.<span class="dv">3</span>))</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 50%</span></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>xreg <span class="ot">=</span> <span class="fu">data.frame</span>( <span class="at">hp =</span> xhp,</span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>                   <span class="at">wt =</span> <span class="fu">quantile</span>(mtcars<span class="sc">$</span>wt,.<span class="dv">5</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in data.frame(hp = xhp, wt = quantile(mtcars$wt, 0.5)): nomes de linhas
+foram encontrados em uma variável curta e foram descartados</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">=</span> <span class="fu">predict</span>(mod, xreg, <span class="at">se.fit =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>sup <span class="ot">=</span> pred<span class="sc">$</span>fit <span class="sc">+</span> <span class="fl">1.96</span><span class="sc">*</span>pred<span class="sc">$</span>se.fit</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>inf <span class="ot">=</span> pred<span class="sc">$</span>fit <span class="sc">-</span> <span class="fl">1.96</span><span class="sc">*</span>pred<span class="sc">$</span>se.fit</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(xhp,pred<span class="sc">$</span>fit, <span class="at">type =</span> <span class="st">'l'</span>)</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="fu">polygon</span>( <span class="fu">c</span>(xhp, xhp[<span class="dv">50</span><span class="sc">:</span><span class="dv">1</span>]),</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>         <span class="fu">c</span>(inf, sup[<span class="dv">50</span><span class="sc">:</span><span class="dv">1</span>]), <span class="at">col =</span> <span class="fu">alpha</span>(<span class="st">'tomato'</span>,.<span class="dv">3</span>))</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a><span class="co">#  75%</span></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>xreg <span class="ot">=</span> <span class="fu">data.frame</span>( <span class="at">hp =</span> xhp,</span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>                   <span class="at">wt =</span> <span class="fu">quantile</span>(mtcars<span class="sc">$</span>wt,.<span class="dv">25</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in data.frame(hp = xhp, wt = quantile(mtcars$wt, 0.25)): nomes de
+linhas foram encontrados em uma variável curta e foram descartados</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">=</span> <span class="fu">predict</span>(mod, xreg, <span class="at">se.fit =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>sup <span class="ot">=</span> pred<span class="sc">$</span>fit <span class="sc">+</span> <span class="fl">1.96</span><span class="sc">*</span>pred<span class="sc">$</span>se.fit</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>inf <span class="ot">=</span> pred<span class="sc">$</span>fit <span class="sc">-</span> <span class="fl">1.96</span><span class="sc">*</span>pred<span class="sc">$</span>se.fit</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(xhp,pred<span class="sc">$</span>fit, <span class="at">type =</span> <span class="st">'l'</span>)</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="fu">polygon</span>( <span class="fu">c</span>(xhp, xhp[<span class="dv">50</span><span class="sc">:</span><span class="dv">1</span>]),</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>         <span class="fu">c</span>(inf, sup[<span class="dv">50</span><span class="sc">:</span><span class="dv">1</span>]), <span class="at">col =</span> <span class="fu">alpha</span>(<span class="st">'cyan'</span>,.<span class="dv">3</span>))</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">'topright'</span>,<span class="fu">c</span>(<span class="st">'25%'</span>,<span class="st">'50%'</span>,<span class="st">'75%'</span>), <span class="at">bty =</span> <span class="st">'n'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="regressao_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>:::</p>
+</section>
+<section id="método-de-suavização-do-gráfico-de-dispersão" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="método-de-suavização-do-gráfico-de-dispersão"><span class="header-section-number">7.3</span> Método de suavização do gráfico de dispersão</h2>
+<p>No método de suavização do gráfico de dispersão, deseja-se estimar a função de regressão <span class="math inline">\(r(x)=E(y|x)\)</span> a partir da coleção de observações <span class="math inline">\((y_1,x_1),\ldots,(y_n,x_n)\)</span>, para um valor qualquer de <span class="math inline">\(x\)</span>.</p>
+<p>A estimativa <span class="math inline">\(\hat{r}_n\)</span> para um ponto específico <span class="math inline">\(x'\)</span> é calculada considerando os seguintes passos:</p>
+<ol type="1">
+<li><p>Fixe um valor inteiro positivo <span class="math inline">\(q \leq n\)</span> (onde a razão <span class="math inline">\(q/n\)</span> determina a janela de suavização ou span).</p></li>
+<li><p>Dentro do conjunto <span class="math inline">\(x_1,\ldots,x_n,\)</span> encontre os <span class="math inline">\(q\)</span> valores mais próximos de <span class="math inline">\(x'\)</span> (via distância euclidiana). Denote este conjunto de vizinhança por <span class="math inline">\(\mathcal{V}\)</span> e denote por <span class="math inline">\(d\)</span> a maior distância encontrada entre <span class="math inline">\(x'\)</span> e os pontos de <span class="math inline">\(\mathcal{V}\)</span>.</p></li>
+<li><p>Para cada <span class="math inline">\(x_i\)</span> (<span class="math inline">\(i = 1, \ldots, n\)</span>), defina o peso tricúbico associado por:<span class="math display">\[v_i(x')=\left\{\begin{array}{ll}\left(1-\left| \frac{x_i-x'}{d}\right|^3\right)^3&amp;,\;\;\hbox{se }|x_j-x'|\leq d\\ 0,&amp;\hbox{caso contrário}\end{array}\right.\]</span> Dessa forma, valores próximos de <span class="math inline">\(x'\)</span> receberão peso máximo e valores afastados receberão menor peso ou zero.</p></li>
+<li><p>Ajuste um modelo de regressão polinomial ponderado locais de grau <span class="math inline">\(p\)</span> (geralmente <span class="math inline">\(p=1\)</span> ou <span class="math inline">\(p=2\)</span>), minimizando a soma de quadrados ponderada</p></li>
+</ol>
+<p><span class="math display">\[\sum_{i=1}^n v_i(x')\left(y_i - \sum_{j=0}^p \beta_j x_i^j\right)^2\]</span></p>
+<ol start="5" type="1">
+<li>Estime o valor da regressão no ponto <span class="math inline">\(x'\)</span> por</li>
+</ol>
+<p><span class="math display">\[\hat{r}_n(x')=\sum_{j=0}^p \hat{\beta}_j (x')^j \]</span></p>
+<p>Considere que <span class="math inline">\(p=0\)</span>. Então, devemos encontrar <span class="math inline">\(\beta_0\)</span> que minimiza</p>
+<p><span class="math display">\[\sum_{i=1}^n v_i(x')\left(y_i - \beta_0\right)^2\]</span> Ao derivar a função em <span class="math inline">\(\beta_0\)</span> e igual a zero, obtemos</p>
+<p><span class="math display">\[\sum_{i=1}^n v_i(x')(y_i-\beta_0)=0\]</span> e o ponto de mínimo é dado por <span class="math display">\[\hat{\beta}_0(x')=\sum_{i=1}^n y_i\frac{v_i(x')}{\sum_{i=1}^n v_i(x')},\]</span> algo muito próximo do estimador de Nadarya-Watson..</p>
+
+
 </section>
 
 </main> <!-- /main -->

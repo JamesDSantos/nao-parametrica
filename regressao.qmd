@@ -4,9 +4,45 @@ Sejam $(Y_1,\boldsymbol{x}_1'),\ldots,(Y_n,\boldsymbol{x'}_n)$ vetores aleatóri
 $r(\boldsymbol{x})=E[Y|\boldsymbol{x}]$. Nesse contexto, a variável $Y$ é denominada resposta e $\boldsymbol{x}'$ é denominado vetor de regressoras. No problema de regressão linear, temos, para $i=1,\ldots,n$ 
 
 $$r(\boldsymbol{x}_i)=E[Y|\boldsymbol{x}_i]=\sum_{j=1}^q \beta_j x_{i,j}.$$
-Ao assumir que $\hat{y}_i=y_i$ é uma estimativa para $E[Y_i|\boldsymbol{x}_i]$, pode-se estimar $\beta_1,\ldots,\beta_q$ minimizando
-$$\sum_{i=1}^n\left(y_i-\sum_{j=1}^q\beta_jx_{i,j}\right)^2.$$
-Esse é o problema conhecido como mínimos quadrados, um dos primeiros métodos de estimação, criado por Lagrange no começo do século XIX. Por não assumir uma distribuição com o conhecimento dos parâmetros, esse método é semi-paramétrico.
+Ao assumir que $\hat{y}_i=y_i$ é uma estimativa para $E[Y_i|\boldsymbol{x}_i]$, pode-se estimar $\beta_1,\ldots,\beta_q$ encontrando $\hat{\beta}_1,\ldots,\hat{\beta}_k$ que minimizam
+$$\sum_{i=1}^n( y_i-\hat{y}_i)^2=\sum_{i=1}^n\left(y_i-\sum_{j=1}^q\hat{\beta}_jx_{i,j}\right)^2.$$
+Esse é o problema conhecido como método dos mínimos quadrados, um dos primeiros métodos de estimação, criado por Lagrange no começo do século XIX. Por não assumir uma distribuição com o conhecimento dos parâmetros, esse método é semi-paramétrico. Ao fazer $\boldsymbol{y}'=(y_1,\ldots,y_n)$ e $\boldsymbol{X}'=(\boldsymbol{x}_1,\ldots,\boldsymbol{x}_n)$, temos que
+
+$$\sum_{i=1}^n( y_i-\hat{y}_i)^2=(\boldsymbol{y}-\boldsymbol{X}\hat{\boldsymbol{\beta}})'(\boldsymbol{y}-\boldsymbol{X}\hat{\boldsymbol{\beta}}),$$
+cuja minimização é dada por
+$$\hat{\boldsymbol{\beta}}=(\boldsymbol{X}'\boldsymbol{X})^{-1}\boldsymbol{X}\boldsymbol{y}.$$
+
+::: {#exm-}
+O banco `mtcars` possui 32 medidas de automóveis. Estamos interessados em relacionar as variáveis regressoras **peso** (`wt`)  e **número de cilindros** (`cyl`) com a variável **milhas por galão**  (`mpg`). Observando os diagramas de dispersão abaixo, temos motivos para pensar em um modelo linear.
+
+```{r}
+pairs( mtcars[,c(1,2,6)])
+```
+
+Utilizamos a função `lm` que ajusta o modelo de regressão linear. Seu argumento principal é
+`mpg ~ wt + cyl`, o que implica no modelo
+
+$$r(x)=\hat{\beta}_0+\hat{\beta}_1\text{peso}+\hat{\beta}_2\text{no. cilindros}$$
+A função `coefficients` armazena os valores estimados para $\beta_0,\beta_1,\beta_2$.
+
+
+```{r}
+mod <- lm( mpg ~ wt + cyl, data = mtcars)
+beta <- coefficients(mod)
+beta
+```
+
+A função `predict` apresenta o valor de $\hat{r}(.)$. Abaixo, apresentamos a relação entre peso e milhas por galão obseervada e predita.
+
+```{r}
+plot( mtcars$wt, mtcars$mpg, pch = 16, col ='seagreen')
+reg <- data.frame( wt = mtcars$wt, cyl = mtcars$cyl)
+pred <- predict(mod, reg)
+points(mtcars$wt, pred, col = 2, pch = 16)
+legend('topright', c('Observado','Predito'), col=c('seagreen',2), pch=16, bty='n')
+```
+:::
+
 
 Estamos interessados na estrutura mais geral, ou seja
 
@@ -15,6 +51,7 @@ no qual $r(.)$ é desconhecida. Ao estimar $r(\boldsymbol{x})$ por $\hat{r}_n(\b
 
 $$\sum_{i=1}^n(y_i-\hat{r}_{-i}(x_i))^2,$$
 onde $\hat{r}_{-i}$ é a estimativa não paramétrica de $y_i$ calculada removendo a $i$-ésima unidade amostral.
+
 
 ## Regressão de núcleo de Nadaraya-Watson
 
@@ -134,7 +171,215 @@ plot(iris$Sepal.Length, iris$predito,
 
 # Adiciona uma linha de referência de 45 graus (Ajuste Perfeito)
 abline(a = 0, b = 1, col = "red", lwd = 2)
+
+# valores preditos usando a regressora Sepal width:
+xreg = data.frame(iris$Sepal.Width, iris$Petal.Length)
+pred = predict( bw, xreg)
+
+plot(iris$Sepal.Width , iris$Sepal.Length)
+points(xreg$iris.Sepal.Width, pred$mean, pch = 16)
+
 ```
 :::
 
+## Splines
 
+Abaixo, apresentamos um conjunto de dados simulado, no qual são apresentados a verdadeira regressão ($r(x)=3\sin(x)$, em cinza) e a reta de regressão linear estimada, ou seja
+$$\hat{r}(x)=\hat{\beta}_0+\hat{\beta}_1x$$
+
+
+```{r echo = FALSE}
+set.seed(123)
+x = runif(100,-1,pi)
+y= 3*sin(x)+rnorm(100)
+plot(x,y)
+mod = lm(y~x)
+theta = coefficients(mod)
+abline(a = theta[1], b = theta[2] ,lwd=2)
+curve(3*sin(x),add=T, col= 'gray',lwd = 2)
+```
+Podemos obter uma aproximação melhor, separando o conjunto de dados em duas partes e ajustando uma regressão linear para cada conjunto. Seja $\xi$ o valor de $x$ que particiona os valores (tal valor será denominado **nó**). Teremos então o seguinte modelo de regressão
+
+$$r(x)=E[Y|x=x]=\begin{cases}\beta_0+\beta_1x,&x<\xi\\ \beta_2+\beta_3x,&x\geq \xi.\end{cases}$$
+Como $r(x)$ é contínua, é necessário ter
+$$\beta_0+\beta_1\xi=\beta_2+\beta_3\xi\Rightarrow \beta_2-\beta_0=-(\beta_3-\beta_1)\xi.$$
+
+Note que
+$$\begin{align}r(x)&=[\beta_0+\beta_1 x]I_{(-\infty,\xi)}(x)+[\beta_2+\beta_3 x]I_{[\xi,\infty)}(x)\\&=[\beta_0+\beta_1 x]\left(1-I_{[\xi,\infty)}(x)\right)+[\beta_2+\beta_3 x]I_{[\xi,\infty)}(x)\\&=
+\beta_0+\beta_1x+[\beta_2-\beta_0+(\beta_3-\beta_1)x]I_{[\xi,\infty)}(x)\\&=\beta_0+\beta_1x+\underbrace{(\beta_3-\beta_1)}_{\theta}(x-\xi)I_{[\xi,\infty)}(x),\end{align}$$
+e, como $I_{[\xi,\infty)}(x)=I_{[0,\infty)}(x-\xi)$, definindo
+$$(x-\xi)_+=(x-\xi)I_{[\xi,\infty)}(x),$$
+temos que o modelo de regressão proposto pode ser reescrito como 
+$$r(x)=\beta_0+\beta_1x+\theta(x-\xi)_+$$
+A expressão acima é denominada spline de ordem 2 e a estimação de seus coeficientes é realizada como em um modelo de regressão tradicional. Abaixo, mostramos o spline de ordem 2 ajustado considerando a mediana como nó.
+
+```{r echo = FALSE}
+set.seed(123)
+x = runif(100,-1,pi)
+y= 3*sin(x)+rnorm(100)
+plot(x,y)
+m = median(x)
+x_sp = (x-m)*ifelse(x>m,1,0)
+mod = lm(y~x+x_sp)
+theta = coefficients(mod)
+curva_aux = function(x) theta[1]+theta[2]*x+theta[3]*(x-m)*ifelse(x>m,1,0)
+curve(3*sin(x),add=T, col= 'gray',lwd = 2)
+curve( curva_aux(x),add=T, lwd =2)
+```
+
+De modo semelhante ao que foi discutido, podemos definir o spline de ordem 3, também conhecido como cúbico, dado por
+
+$$r(x)=\beta_0+\beta_1x +\beta_2x^2+\theta(x-\xi)_+^2.$$
+Abaixo, apresentamos o spline cúbico ajustado.
+
+```{r echo = FALSE}
+set.seed(123)
+x = runif(100,-1,pi)
+y= 3*sin(x)+rnorm(100)
+plot(x,y)
+m = median(x)
+x_sp = ((x-m)^2)*ifelse(x>m,1,0)
+mod = lm(y~x+I(x^2)+x_sp)
+theta = coefficients(mod)
+curva_aux = function(x) theta[1]+theta[2]*x+theta[3]*x^2 +theta[4]*((x-m)^2)*ifelse(x>m,1,0)
+curve(3*sin(x),add=T, col= 'gray',lwd = 2)
+curve( curva_aux(x),add=T, lwd =2)
+```
+Em geral, é difícil distinguir a olho nu a diferença entre splines de ordem maior. Todavia, pode-se definir um spline de ordem $M$, com $M=1,2,\ldots$ por
+$$r(x)=\sum_{j=0}^{M-1}\beta_jx^{j}+\theta(x-\xi)_+^{M-1}.$$
+Além disso, mais nós podem ser acrescentados, produzindo o modelo
+
+$$r(x)=\sum_{j=0}^{M-1}\beta_jx^{j}+\sum_{k=1}^K\theta_k(x-\xi_k)_+^{M-1}.$$
+
+::: {#exm-}
+
+Abaixo, revisitamos o banco de dados `mtcars`, agora considerando a relação entre a regressora  potência (`hp`) e a resposta milhas por galão (`mpg`).  Observe a relação não linear entre as duas variáveis
+
+```{r}
+plot(mtcars$hp, mtcars$mpg)
+```
+
+A função `spline`, do pacote `stats` ajusta o spline cúbico. Contudo, o pacote `splines` permite mais flexibilidade. Neste pacote, a matriz de regressão do spline de ordem $M$ é construída a partir da função `bs(x, degree, knots)`, onde `degree` é a ordem (sendo o cúbico o padrão) e `knots` é um vetor de nós. Vamos utilizar os quartis como nós.
+
+```{r}
+require(splines)
+plot(mtcars$hp, mtcars$mpg)
+mod <- lm( mpg ~ bs(hp), data = mtcars)
+xhp = seq( min(mtcars$hp), max(mtcars$hp),length.out =50)
+pred = predict(mod, data.frame( hp = xhp))
+lines( xhp, pred, lwd = 2)
+```
+
+Vamos adicionar uma banda de confiança, utilizando para isso a função `predict` para retornar o erro padrão do modelo.
+
+```{r}
+library(scales)
+pred = predict(mod, data.frame( hp = xhp), se.fit = TRUE)
+
+banda_inf <- pred$fit - 1.96 * pred$se.fit
+banda_sup <- pred$fit + 1.96 * pred$se.fit
+
+plot(mtcars$hp, mtcars$mpg, pch = 16, col = 'tomato',
+     ylab = 'Milhas por galão',xlab = 'Potência')
+polygon( c(xhp, xhp[50:1]),
+         c(banda_inf, banda_sup[50:1]), col = alpha('orange', .3))
+lines( xhp, pred$fit, lwd = 2)
+
+
+```
+:::
+
+Para o caso multivariado, podemos definir para cada variável regressora a função
+
+$$h_l(x_l)=\sum_{j=0}^{M-1}\beta_{j,l}x_{l}^{j}+\sum_{k=1}^K\theta_{k,l}(x_l-\xi_k)_+^{M-1}.$$
+e em seguida definir
+
+$$r(\boldsymbol{x})=\sum_{l=1}^q h_l(x_l).$$
+::: {#exm-}
+
+Revisitamos mais uma vez o banco de dados `mtcars`. Vamos ajustar o modelo de regressão spline cubico para predizer a variável `mpg` pelas variáveis `hp`e `wt`.
+
+
+```{r}
+require(splines)
+mod = lm(mpg ~ bs(hp)+ bs(wt), data = mtcars)
+summary(mod)
+```
+
+Abaixo, apresentamos o ajuste da potência fixando o peso nos quartis.
+
+```{r}
+require(scales)
+require(splines)
+xhp = seq(min(mtcars$hp),max(mtcars$hp), length.out = 50)
+# 25%
+xreg = data.frame( hp = xhp,
+                   wt = quantile(mtcars$wt,.25))
+pred = predict(mod, xreg, se.fit = TRUE)
+sup = pred$fit + 1.96*pred$se.fit
+inf = pred$fit - 1.96*pred$se.fit
+
+plot(xhp,pred$fit, type = 'l', ylim = c(10,30))
+polygon( c(xhp, xhp[50:1]),
+         c(inf, sup[50:1]), col = alpha('orange',.3))
+
+# 50%
+xreg = data.frame( hp = xhp,
+                   wt = quantile(mtcars$wt,.5))
+pred = predict(mod, xreg, se.fit = TRUE)
+sup = pred$fit + 1.96*pred$se.fit
+inf = pred$fit - 1.96*pred$se.fit
+
+lines(xhp,pred$fit, type = 'l')
+polygon( c(xhp, xhp[50:1]),
+         c(inf, sup[50:1]), col = alpha('tomato',.3))
+
+#  75%
+xreg = data.frame( hp = xhp,
+                   wt = quantile(mtcars$wt,.25))
+pred = predict(mod, xreg, se.fit = TRUE)
+sup = pred$fit + 1.96*pred$se.fit
+inf = pred$fit - 1.96*pred$se.fit
+
+lines(xhp,pred$fit, type = 'l')
+polygon( c(xhp, xhp[50:1]),
+         c(inf, sup[50:1]), col = alpha('cyan',.3))
+
+legend('topright',c('25%','50%','75%'), bty = 'n')
+
+```
+
+:::
+
+
+
+## Método de suavização do gráfico de dispersão
+
+No método de suavização do gráfico de dispersão, deseja-se estimar a função de regressão $r(x)=E(y|x)$ a partir da coleção de observações $(y_1,x_1),\ldots,(y_n,x_n)$, para um valor qualquer de $x$.
+
+A estimativa $\hat{r}_n$ para um ponto específico $x'$ é calculada considerando os seguintes passos:
+
+1. Fixe um valor inteiro positivo $q \leq n$ (onde a razão $q/n$ determina a janela de suavização ou span). 
+
+2. Dentro do conjunto $x_1,\ldots,x_n,$ encontre os $q$ valores mais próximos de $x'$ (via distância euclidiana). Denote este conjunto de vizinhança por $\mathcal{V}$ e denote por $d$ a maior distância encontrada entre $x'$ e os pontos de $\mathcal{V}$.
+
+3. Para cada $x_i$ ($i = 1, \ldots, n$), defina o peso tricúbico associado por:$$v_i(x')=\left\{\begin{array}{ll}\left(1-\left| \frac{x_i-x'}{d}\right|^3\right)^3&,\;\;\hbox{se }|x_j-x'|\leq d\\ 0,&\hbox{caso contrário}\end{array}\right.$$
+Dessa forma, valores próximos de $x'$ receberão peso máximo e valores afastados receberão menor peso ou zero.
+
+4. Ajuste um modelo de regressão polinomial ponderado locais de grau $p$ (geralmente $p=1$ ou $p=2$), minimizando a soma de quadrados ponderada
+
+$$\sum_{i=1}^n v_i(x')\left(y_i - \sum_{j=0}^p \beta_j x_i^j\right)^2$$
+
+5. Estime o valor da regressão no ponto $x'$ por
+
+$$\hat{r}_n(x')=\sum_{j=0}^p \hat{\beta}_j (x')^j $$
+
+Considere que $p=0$. Então, devemos encontrar $\beta_0$ que minimiza
+
+$$\sum_{i=1}^n v_i(x')\left(y_i - \beta_0\right)^2$$
+Ao derivar a função em $\beta_0$ e igual a zero, obtemos
+
+$$\sum_{i=1}^n v_i(x')(y_i-\beta_0)=0$$
+e o ponto de mínimo é dado por
+$$\hat{\beta}_0(x')=\sum_{i=1}^n y_i\frac{v_i(x')}{\sum_{i=1}^n v_i(x')},$$
+algo muito próximo do estimador de Nadarya-Watson.. 
