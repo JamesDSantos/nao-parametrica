@@ -91,3 +91,68 @@ As variáveis são
 **Problema 3**. Para as mesmas colmeias (identificadas pela variável sigla), comparou-se a produção no Pico da Safra (Janeiro) e no Período de Entressafra (Julho). A produção de uma mesma colmeia muda significativamente entre esses dois meses específicos?
 
 **Problema 4**. Imagine que selecionamos 10 colmeias e medimos sua produção em 4 momentos do ano (Janeiro, Abril, Julho e Outubro). Queremos saber se o fator "Tempo" altera o ranking de produção das colmeias. Há um efeito de tratamento (mês) sobre a produção, considerando que as mesmas unidades foram medidas repetidamente?
+
+## Laboratório 3
+
+
+### Laboratório 3: Modelagem Não-Paramétrica de Acidentes Botrópicos na Região Metropolitana de Manaus
+
+### Contexto
+
+Este exercício baseia-se no relatório técnico de **Melyssa Oliveira Gomes (2025)**, intitulado *"Influência da urbanização na incidência de acidentes botrópicos na Região Metropolitana de Manaus"*, desenvolvido em parceria com o LabEst.
+
+O estudo original investigou como diferentes tipos de cobertura do solo (floresta, área urbana, agropecuária e corpos d'água) afetam a frequência de ataques de serpentes do gênero *Bothrops* (jararacas).
+
+Nas análises preliminares da pesquisa, os Modelos Lineares Generalizados (GLMs) tradicionais apresentaram limitações de ajuste e forte suspeita de relações não-lineares. Neste laboratório, adotaremos uma abordagem de **suavização e regressão não-paramétrica** para modelar o comportamento dessas relações sem impor uma forma funcional rígida aos dados.
+
+O código abaixo vai gerar o banco denominado `dados2`.
+
+```{r}
+url <- 'https://docs.google.com/spreadsheets/d/1PTDJmXQ8Tld92zGooIOqf_zRor2H97yk/edit?usp=sharing&ouid=115254923269412177857&rtpof=true&sd=true'
+require(gsheet)
+dados <- gsheet2tbl(url)
+dados$agropecuaria <- as.numeric(dados$agropecuaria)
+dados$agua <- as.numeric(dados$agua)
+dados$urbano <- as.numeric(dados$urbano)
+dados$floresta <- as.numeric(dados$floresta)
+dados$botrops_100mil <- as.numeric(dados$botrops_100mil)
+
+dados2 <- subset( dados, select = c('botrops_n','municipio','agropecuaria','urbano','agua','floresta'))
+
+dados2$totalAreas <- dados2$agropecuaria +
+dados2$urbano+
+dados2$floresta+
+dados2$agua
+
+logit = function(x) log(x/(1-x))
+
+dados2$lagro <- logit(dados2$agropecuaria/dados2$totalAreas)
+dados2$lurb <- logit(dados2$urbano/dados2$totalAreas)
+dados2$lagu <- logit(dados2$agua/dados2$totalAreas)
+dados2$lflo <- logit(dados2$floresta/dados2$totalAreas)
+
+```
+
+As quatro variáveis originais de cobertura foram calculadas em km$^2$. Cada uma foi dividida pela soma das demais, sendo portanto consideradas como percentuais de contribuição (ou seja, as soma das quatro equivale a 1, ou 100$%). Em seguida, foi aplicada a transformação logit.  O banco `dados2` possui as  variáveis de cobertura já transformadas e as demais de interesse:
+
+* `municipio`: Identificador da localidade da Região Metropolitana de Manaus. 
+
+* `botrops_n`: Número de acidentes registrados com o gênero Bothrops.
+
+* `lflo`:  logit do percentual de cobertura florestal na localidade.
+
+* `lurb`:  logit do percentual de área urbana consolidada
+
+* `lagua`:  logit do percentual da bacia hidrográfica consolidada
+
+* `lagro`:  logit do percentual de área destinada à atividades do agronegócio.
+
+
+Exercícios:
+
+1. Explore as relações entre o número de acidentes com jararacas e as variáveis de cobertura utilizando a regressão de Nadarya-Watson (analise uma regressora de cada vez).
+
+2. Proponha uma alternativa ao modelo proposto anteriormente, considerando splines cúbicos
+(analise uma regressora de cada vez)
+
+3. Faça uma análise multivariada utilizando splines cúbicos e analise o valor predito do número de ataques considerando as regressoras ao pares.

@@ -106,6 +106,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -225,6 +254,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#preparação-do-ambiente" id="toc-preparação-do-ambiente" class="nav-link" data-scroll-target="#preparação-do-ambiente"><span class="header-section-number">8.1.2</span> Preparação do Ambiente</a></li>
   <li><a href="#exercícios-propostos-1" id="toc-exercícios-propostos-1" class="nav-link" data-scroll-target="#exercícios-propostos-1"><span class="header-section-number">8.1.3</span> Exercícios Propostos</a></li>
   </ul></li>
+  <li><a href="#laboratório-3" id="toc-laboratório-3" class="nav-link" data-scroll-target="#laboratório-3"><span class="header-section-number">8.2</span> Laboratório 3</a>
+  <ul class="collapse">
+  <li><a href="#laboratório-3-modelagem-não-paramétrica-de-acidentes-botrópicos-na-região-metropolitana-de-manaus" id="toc-laboratório-3-modelagem-não-paramétrica-de-acidentes-botrópicos-na-região-metropolitana-de-manaus" class="nav-link" data-scroll-target="#laboratório-3-modelagem-não-paramétrica-de-acidentes-botrópicos-na-região-metropolitana-de-manaus"><span class="header-section-number">8.2.1</span> Laboratório 3: Modelagem Não-Paramétrica de Acidentes Botrópicos na Região Metropolitana de Manaus</a></li>
+  <li><a href="#contexto-2" id="toc-contexto-2" class="nav-link" data-scroll-target="#contexto-2"><span class="header-section-number">8.2.2</span> Contexto</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -315,6 +349,58 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><strong>Problema 2</strong>. Valores mais baixos podem indicar maior pureza orgânica. Os dados foram coletados em três locais diferentes da Amazônia. O local de coleta influencia a composição mineral (variável Cinzas)?</p>
 <p><strong>Problema 3</strong>. Para as mesmas colmeias (identificadas pela variável sigla), comparou-se a produção no Pico da Safra (Janeiro) e no Período de Entressafra (Julho). A produção de uma mesma colmeia muda significativamente entre esses dois meses específicos?</p>
 <p><strong>Problema 4</strong>. Imagine que selecionamos 10 colmeias e medimos sua produção em 4 momentos do ano (Janeiro, Abril, Julho e Outubro). Queremos saber se o fator “Tempo” altera o ranking de produção das colmeias. Há um efeito de tratamento (mês) sobre a produção, considerando que as mesmas unidades foram medidas repetidamente?</p>
+</section>
+</section>
+<section id="laboratório-3" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="laboratório-3"><span class="header-section-number">8.2</span> Laboratório 3</h2>
+<section id="laboratório-3-modelagem-não-paramétrica-de-acidentes-botrópicos-na-região-metropolitana-de-manaus" class="level3" data-number="8.2.1">
+<h3 data-number="8.2.1" class="anchored" data-anchor-id="laboratório-3-modelagem-não-paramétrica-de-acidentes-botrópicos-na-região-metropolitana-de-manaus"><span class="header-section-number">8.2.1</span> Laboratório 3: Modelagem Não-Paramétrica de Acidentes Botrópicos na Região Metropolitana de Manaus</h3>
+</section>
+<section id="contexto-2" class="level3" data-number="8.2.2">
+<h3 data-number="8.2.2" class="anchored" data-anchor-id="contexto-2"><span class="header-section-number">8.2.2</span> Contexto</h3>
+<p>Este exercício baseia-se no relatório técnico de <strong>Melyssa Oliveira Gomes (2025)</strong>, intitulado <em>“Influência da urbanização na incidência de acidentes botrópicos na Região Metropolitana de Manaus”</em>, desenvolvido em parceria com o LabEst.</p>
+<p>O estudo original investigou como diferentes tipos de cobertura do solo (floresta, área urbana, agropecuária e corpos d’água) afetam a frequência de ataques de serpentes do gênero <em>Bothrops</em> (jararacas).</p>
+<p>Nas análises preliminares da pesquisa, os Modelos Lineares Generalizados (GLMs) tradicionais apresentaram limitações de ajuste e forte suspeita de relações não-lineares. Neste laboratório, adotaremos uma abordagem de <strong>suavização e regressão não-paramétrica</strong> para modelar o comportamento dessas relações sem impor uma forma funcional rígida aos dados.</p>
+<p>O código abaixo vai gerar o banco denominado <code>dados2</code>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">'https://docs.google.com/spreadsheets/d/1PTDJmXQ8Tld92zGooIOqf_zRor2H97yk/edit?usp=sharing&amp;ouid=115254923269412177857&amp;rtpof=true&amp;sd=true'</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(gsheet)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>dados <span class="ot">&lt;-</span> <span class="fu">gsheet2tbl</span>(url)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>dados<span class="sc">$</span>agropecuaria <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(dados<span class="sc">$</span>agropecuaria)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>dados<span class="sc">$</span>agua <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(dados<span class="sc">$</span>agua)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>dados<span class="sc">$</span>urbano <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(dados<span class="sc">$</span>urbano)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>dados<span class="sc">$</span>floresta <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(dados<span class="sc">$</span>floresta)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>dados<span class="sc">$</span>botrops_100mil <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(dados<span class="sc">$</span>botrops_100mil)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>dados2 <span class="ot">&lt;-</span> <span class="fu">subset</span>( dados, <span class="at">select =</span> <span class="fu">c</span>(<span class="st">'botrops_n'</span>,<span class="st">'municipio'</span>,<span class="st">'agropecuaria'</span>,<span class="st">'urbano'</span>,<span class="st">'agua'</span>,<span class="st">'floresta'</span>))</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>dados2<span class="sc">$</span>totalAreas <span class="ot">&lt;-</span> dados2<span class="sc">$</span>agropecuaria <span class="sc">+</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>dados2<span class="sc">$</span>urbano<span class="sc">+</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>dados2<span class="sc">$</span>floresta<span class="sc">+</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>dados2<span class="sc">$</span>agua</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>logit <span class="ot">=</span> <span class="cf">function</span>(x) <span class="fu">log</span>(x<span class="sc">/</span>(<span class="dv">1</span><span class="sc">-</span>x))</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>dados2<span class="sc">$</span>lagro <span class="ot">&lt;-</span> <span class="fu">logit</span>(dados2<span class="sc">$</span>agropecuaria<span class="sc">/</span>dados2<span class="sc">$</span>totalAreas)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>dados2<span class="sc">$</span>lurb <span class="ot">&lt;-</span> <span class="fu">logit</span>(dados2<span class="sc">$</span>urbano<span class="sc">/</span>dados2<span class="sc">$</span>totalAreas)</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>dados2<span class="sc">$</span>lagu <span class="ot">&lt;-</span> <span class="fu">logit</span>(dados2<span class="sc">$</span>agua<span class="sc">/</span>dados2<span class="sc">$</span>totalAreas)</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>dados2<span class="sc">$</span>lflo <span class="ot">&lt;-</span> <span class="fu">logit</span>(dados2<span class="sc">$</span>floresta<span class="sc">/</span>dados2<span class="sc">$</span>totalAreas)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>As quatro variáveis originais de cobertura foram calculadas em km<span class="math inline">\(^2\)</span>. Cada uma foi dividida pela soma das demais, sendo portanto consideradas como percentuais de contribuição (ou seja, as soma das quatro equivale a 1, ou 100$%). Em seguida, foi aplicada a transformação logit. O banco <code>dados2</code> possui as variáveis de cobertura já transformadas e as demais de interesse:</p>
+<ul>
+<li><p><code>municipio</code>: Identificador da localidade da Região Metropolitana de Manaus.</p></li>
+<li><p><code>botrops_n</code>: Número de acidentes registrados com o gênero Bothrops.</p></li>
+<li><p><code>lflo</code>: logit do percentual de cobertura florestal na localidade.</p></li>
+<li><p><code>lurb</code>: logit do percentual de área urbana consolidada</p></li>
+<li><p><code>lagua</code>: logit do percentual da bacia hidrográfica consolidada</p></li>
+<li><p><code>lagro</code>: logit do percentual de área destinada à atividades do agronegócio.</p></li>
+</ul>
+<p>Exercícios:</p>
+<ol type="1">
+<li><p>Explore as relações entre o número de acidentes com jararacas e as variáveis de cobertura utilizando a regressão de Nadarya-Watson (analise uma regressora de cada vez).</p></li>
+<li><p>Proponha uma alternativa ao modelo proposto anteriormente, considerando splines cúbicos (analise uma regressora de cada vez)</p></li>
+<li><p>Faça uma análise multivariada utilizando splines cúbicos e analise o valor predito do número de ataques considerando as regressoras ao pares.</p></li>
+</ol>
 
 
 </section>
