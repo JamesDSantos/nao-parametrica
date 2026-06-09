@@ -2,13 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.25">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>6&nbsp; Estimação de densidades – Métodos não paramétricos</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -69,15 +72,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="./postos.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-d9ea66fcd6c317012447f26e9c021348.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-12eeb4b20e9f5a2b0bfc604bfaf942bb.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -107,7 +109,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -161,9 +163,7 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
-      <a href="./index.html" class="sidebar-logo-link">
-      </a>
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Métodos não paramétricos</a> 
     </div>
@@ -254,6 +254,7 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#método-o-núcleo-multivariado" id="toc-método-o-núcleo-multivariado" class="nav-link" data-scroll-target="#método-o-núcleo-multivariado"><span class="header-section-number">6.2.1</span> Método o núcleo multivariado</a></li>
   </ul></li>
+  <li><a href="#maldição-da-dimensionalidade" id="toc-maldição-da-dimensionalidade" class="nav-link" data-scroll-target="#maldição-da-dimensionalidade"><span class="header-section-number">6.3</span> Maldição da dimensionalidade</a></li>
   </ul>
 </nav>
     </div>
@@ -454,7 +455,8 @@ attr(,"class")
 <p><span class="math display">\[\hat{f}_n(x)=\frac{1}{n}\sum_{i=1}^n \frac{1}{2h}I_{(-1,1)}\left(\frac{x-x_i}{h}\right)\]</span> ou ainda, fazendo <span class="math display">\[w(x)=\begin{cases}\frac{1}{2},&amp; \text{ se }|x|&lt;1\\0,&amp;\text{ caso contrário}\end{cases}\]</span> teremos que</p>
 <p><span class="math display">\[\hat{f}_n(x)=\frac{1}{n}\sum_{i=1}^n \frac{1}{h}w\left(\frac{x-x_i}{h}\right)\]</span> O estimador acima pode ser visto como uma generalização do histograma, pois ainda utiliza frequências relativas, mas está livre da escolha dos intervalos. Contudo, devido a natureza de <span class="math inline">\(w(x)\)</span>, a estimativa obtida ainda é uma função degrau. Podemos alterar isso trocando <span class="math inline">\(w(x)\)</span> por uma função núcleo.</p>
 <p>Para os devidos fins deste capítulo, uma função núcleo é qualquer densidade suave definida na reta com média zero e variância finita. Denotando tal densidade por <span class="math inline">\(k(x)\)</span>, o estimador via método do núcleo é definido por</p>
-<p><span class="math display">\[\hat{f}_n(x)=\frac{1}{n}\sum_{i=1}^n \frac{1}{h}k\left(\frac{x-x_i}{h}\right)\]</span> onde <span class="math inline">\(h\)</span> é denominado comprimento da banda. Diferente do historgrama, essa função é sempre contínua. Seja <span class="math inline">\(\sigma^2\)</span> a variância do núcleo. Então</p>
+<p><span class="math display">\[\hat{f}_n(x)=\frac{1}{n}\sum_{i=1}^n \frac{1}{h}k\left(\frac{x-x_i}{h}\right)\]</span> onde <span class="math inline">\(h\)</span> é denominado comprimento da banda. Diferente do histograma, essa função é sempre contínua.</p>
+<p>Seja <span class="math inline">\(\sigma^2\)</span> a variância do núcleo. Então</p>
 <p><span class="math display">\[\begin{align}E\left[\hat{f}_n(x)\right]&amp;=\frac{1}{h}\int k\left(\frac{x-y}{h}\right)f(y)dy,\;\;\text{ fazendo }z=(x-y)/h,\\&amp;=\int k(z)f(x-zh)dz,\;\;\text{aproximando }f(x-zh)\text{ em torno de }z=0,\\&amp;\approx\int k(z)\left[f(x)-hzf'(x)+\frac{z^2 h^2}{2}f''(x)\right]dz\\&amp;=f(x)+\frac{h^2}{2}f''(x)\sigma^2
 \end{align}\]</span> o que implica que <span class="math inline">\(\hat{f}_n(x)\)</span> é viciado, com o vício indo para zero quando <span class="math inline">\(h\to 0\)</span>. Por outro lado, é possível mostrar que</p>
 <p><span class="math display">\[Var[\hat{f}_n(x)]\approx \frac{f(x)}{nh}\int k(x)^2dx.\]</span> o que mostra que não é possível obter um estimador não viciado sem uma variância infinita. Portanto, assim como no histograma, <span class="math inline">\(h\)</span> é uma escolha entre o balanço de vício de variância. Pode-se escolher <span class="math inline">\(h\)</span> como o valor que minimiza o risco via validação cruzada, isto é,</p>
@@ -510,9 +512,30 @@ attr(,"class")
 </div>
 </div>
 </div>
-
-
 </section>
+</section>
+<section id="maldição-da-dimensionalidade" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="maldição-da-dimensionalidade"><span class="header-section-number">6.3</span> Maldição da dimensionalidade</h2>
+<p>Neste capítulo, apresentamos os estimadores de histograma e o método do núcleo. Ambos são baseados no número de pontos dentro de uma vizinhança.</p>
+<p>Considere, então, que <span class="math inline">\(X \sim \mathcal{N}(0,1)\)</span> e seja <span class="math inline">\(A = (-1/2, 1/2)\)</span> (ou seja, <span class="math inline">\(P(A) \approx 0,4\)</span>). O número esperado de pontos dentro de <span class="math inline">\(A\)</span> é <span class="math inline">\(n \cdot 0,4\)</span>. Portanto, para ter em média 5 pontos nessa região, é necessária uma amostra de tamanho pelo menos 13.</p>
+<p>Suponha agora que <span class="math inline">\(\boldsymbol{X} = (X_1, X_2)\)</span> é um vetor aleatório com <span class="math inline">\(X_1, X_2\)</span> independentes e com distribuição <span class="math inline">\(\mathcal{N}(0,1)\)</span>, e seja <span class="math inline">\(A_2 = \{X_1 \in A, X_2 \in A\}\)</span>. Portanto, o número médio de pontos em <span class="math inline">\(A_2\)</span> é <span class="math inline">\(n \cdot 0,4^2\)</span>, sendo necessária uma amostra de tamanho 32 para se ter, em média, 5 pontos nessa região.</p>
+<p>Para um vetor aleatório <span class="math inline">\(\boldsymbol{X} = (X_1, \ldots, X_q)\)</span>, onde <span class="math inline">\(X_i \sim \mathcal{N}(0,1)\)</span> são variáveis independentes, teremos que o número médio de pontos em <span class="math inline">\(A_q = \cap_{i=1}^q \{X_i \in A\}\)</span> é dado por <span class="math inline">\(n \cdot 0,4^q\)</span>. Assim, torna-se necessária uma amostra de tamanho <span class="math inline">\(n = 5 / 0,4^q\)</span> para obter, em média, cinco pontos em <span class="math inline">\(A_q\)</span>.</p>
+<p>Observe que, mesmo sendo <span class="math inline">\(A_q\)</span> uma região de extrema importância (região de maior densidade), ela tende a ter baixa frequência devido ao comportamento explosivo do volume amostral com o aumento da dimensão. A tabela abaixo apresenta o tamanho de amostra necessário para se obter, em média, 5 pontos dentro de <span class="math inline">\(A_q\)</span>.</p>
+<p><span class="math display">\[\begin{array}{c|c}\hline
+\text{Dimensão} &amp;\text{Tamanho da amostra}\\ \hline
+1 &amp; 13\\
+2 &amp; 32 \\
+3 &amp; 78 \\
+4 &amp; 196 \\
+5 &amp; 489 \\
+6 &amp; 1.221 \\
+7 &amp; 3.052 \\
+8 &amp; 7.630 \\
+9 &amp; 18.074 \\
+10 &amp; 47.684 \\ \hline
+\end{array}\]</span></p>
+
+
 </section>
 
 </main> <!-- /main -->

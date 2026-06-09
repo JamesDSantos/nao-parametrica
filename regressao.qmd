@@ -41,6 +41,7 @@ pred <- predict(mod, reg)
 points(mtcars$wt, pred, col = 2, pch = 16)
 legend('topright', c('Observado','Predito'), col=c('seagreen',2), pch=16, bty='n')
 ```
+
 :::
 
 
@@ -182,6 +183,8 @@ points(xreg$iris.Sepal.Width, pred$mean, pch = 16)
 ```
 :::
 
+Embora a regressão de Nadarya-Watson tenha a flexibilidade necessária para modelar o comportamentos não lineares, na prática ela sofre o problema da maldição da dimensionalidade explicada no capítulo anterior. 
+
 ## Splines
 
 Abaixo, apresentamos um conjunto de dados simulado, no qual são apresentados a verdadeira regressão ($r(x)=3\sin(x)$, em cinza) e a reta de regressão linear estimada, ou seja
@@ -291,10 +294,10 @@ lines( xhp, pred$fit, lwd = 2)
 
 Para o caso multivariado, podemos definir para cada variável regressora a função
 
-$$h_l(x_l)=\sum_{j=0}^{M-1}\beta_{j,l}x_{l}^{j}+\sum_{k=1}^K\theta_{k,l}(x_l-\xi_k)_+^{M-1}.$$
+$$g_m(x)=\sum_{j=0}^{M-1}\beta_{j,m}x^{j}+\sum_{k=1}^K\theta_{k,l}(x-\xi_k)_+^{M-1}.$$
 e em seguida definir
 
-$$r(\boldsymbol{x})=\sum_{l=1}^q h_l(x_l).$$
+$$r(\boldsymbol{x})=\sum_{m=1}^q g_m(x_m).$$
 ::: {#exm-}
 
 Revisitamos mais uma vez o banco de dados `mtcars`. Vamos ajustar o modelo de regressão spline cubico para predizer a variável `mpg` pelas variáveis `hp`e `wt`.
@@ -351,9 +354,310 @@ legend('topright',c('25%','50%','75%'), bty = 'n')
 
 :::
 
+É importante notar que o modelo aditivo utilizando splines proposto não sofre o mesmo problema da regressão de Nadarya-Watson com o número de regressoras, uma vez que o aumento da complexidade é linear. Entretanto, esse modelo ignora a complexidade da estrutura conjunta das regressoras. 
+
+## Regressão por Busca de Projeção (Projection Pursuit Regression) 
+
+Seja $(Y_1,\boldsymbol{x}^T_1),\ldots,(Y_n,\boldsymbol{x}_n^T)$ uma amostra de variáveis independentes, onde $\boldsymbol{x}^T$ é um vetor comprimento $q$ contendo as variáveis regressoras. Vimos anteriormente que a regressão $r(\boldsymbol{x})=E(Y|\boldsymbol{X}=\boldsymbol{x})$ pode ser estimada por um modelo aditivo,
+
+$$\hat{r}(\boldsymbol{x})=\sum_{j=1}^q g_j(x_j)+\varepsilon$$
+onde $g_j$ é um spline definido a partir da $j$-ésima variável regressora. Uma das críticas os splines está no fato de que a variabilidade conjunta das regressoras não é considerada. Uma alternativa para esse problema seria o modelo de regressão por busca de projeção, dada por
+
+$$\begin{align} \hat{r} (\boldsymbol{x})&=\sum_{m=1}^Mg_m(\boldsymbol{z}_m)\\&\boldsymbol{z}_m=\boldsymbol{w}^T_m\boldsymbol{x},\end{align}$$
+onde as funções $g_m(.)$, denominadas funções de crista, são funções suaves que devem ser estimadas (utilizando splines, por exemplo). Tais funções são definidas sob as projeções unidimensionais $\boldsymbol{z}_1,\ldots,\boldsymbol{z}_M$. Como procuramos pelos pesos $\boldsymbol{w}_m$ que ajustam o modelo, isso justifica o nome "busca de projeção". O vetor de pesos tem o objetivo exclusivo de apontar a direção do eixo de projeção   
+
+::: {#exm-}
+Para ilustrar a flexibilidade do modelo de regressão por busca de projeção, considere o seguinte modelo de regressão não linear
+
+$$E(Y|\boldsymbol{X}=(x_1,x_2))=x_1x_2$$
+Esse modelo pode ser obtido a partir das seguintes funções de crista:
+
+$$\begin{align}g_1(\boldsymbol{z}_1)&=\frac{1}{4}\left(x_1+x_2\right)^2\\g_2(\boldsymbol{z}_1)&=-\frac{1}{4}\left(x_1-x_2\right)^2\end{align}$$
+ou seja, 
+$$E(Y|\boldsymbol{X}=\boldsymbol{x})=g_1(\boldsymbol{w}^T_1\boldsymbol{x})+g_2(\boldsymbol{w}^T_2\boldsymbol{x}),$$
+onde $\boldsymbol{w}^T_1=(1,1)$ e $\boldsymbol{w}^T_2=(1,-1)$. Produtos de ordem maior podem ser representados de modo similar. 
+:::
+
+De fato, um modelo de regressão por busca de projeção pode aproximar qualquer função contínua para $M$ grande o suficiente, estando dentro da classe dos modelos conhecidos como aproximadores universais. Entretanto, como as regressoras entram no modelo como projeções, a interpretação do modelo ajustado é em geral complexa. Portanto, um modelo de regressão por busca de projeção é mais útil para problemas de predição.
+
+O ajuste deste modelo procura pelos pesos $\boldsymbol{w}_1,\cdots,\boldsymbol{w}_m$ e funções de crista $g_1(.),\ldots,g_m(.)$ que minimizam o erro quadrático
+
+$$\sum_{i=1}^n[y_i-\sum_{m=1}^M g_m(\boldsymbol{w}_m^T\boldsymbol{x}_i)]^2.$$
+O processo numérico de minização consiste em repetir me iniciar com um vetor de pesos (obtidos, por exemplo, via componentes principais) e seguir os seguintes passos:
+
+1. Estimar $g_1,\ldots,g_M$ a partir de $\boldsymbol{w}_1^T\boldsymbol{x},\ldots,\boldsymbol{w}_1^T\boldsymbol{x}$
+
+2. Para $m=1,\ldots, M$, estimar $\boldsymbol{w}_m$ minimizando 
+
+$$\sum_{i=1}^n [y_i- g_m(\boldsymbol{w}_m^T\boldsymbol{x})-\sum_{j\neq m}g_j(\boldsymbol{w}_j^T\boldsymbol{x})]^2$$
+::: {#exm-}
+Utilizando o banco `mtcars`, isolamos a variável dependente mpg (Milhas por Galão) e as regressoras cyl (Cilindros), hp (Cavalos de Força) e wt (Peso em mil libras).
+
+```{r}
+dados <- mtcars[, c("mpg", "cyl", "hp", "wt")]
+```
+
+O objetivo é capturar interações não-lineares e não-aditivas globais sem sofrer com a maldição da dimensionalidade, já que o PPR estima as direções de projeção $\boldsymbol{w}_m$ otimizando visualizações unidimensionais.
+
+A função `ppr`  o `R` implementa o algoritmo de Friedman e Stuetzle (1981). O processo alterna entre a estimação das funções de suavização (via splines ou o original supersmoother) e a atualização das direções de projeção por mínimos quadrados quasi-Newton. Abaixo, mostramos como obter o ajuste com dois termos de projeção, utilizand splines.
+
+```{r}
+mod <- ppr(mpg ~ cyl + hp + wt, 
+                  data = dados, 
+                  nterms = 2,  
+                  sm.method = "spline")
+
+```
+
+Ao executar o `summary`, o `R` retorna os coeficientes de projeção $\boldsymbol{w}$ (na saída, é o termo `alpha`). 
+
+```{r}
+summary(mod)
+```
+A primeira projeção é dada por
+$$-0,26\cdot \text{cilindros}-0,015\cdot \text{potência}-0,96\cdot \text{peso}$$
+Isso implica que valores que essa componente possui uma relação inversa com o número de cilindros, a potência e o peso. Deste modo, quando maiores forem os valores dessas regressoras, menores serão os valores da primeiro projeção.
+ Já a segunda é dada por
+$$-0,57\cdot \text{cilindros}+0,02\cdot \text{potência}-0,81\cdot \text{peso}$$
+Para carros com o mesmo peso e número de cilindros, essa projeção aumenta com o aumento da potência, sendo portanto uma variável relacioada à calbração do motor.
 
 
-## Método de suavização do gráfico de dispersão
+No sumário hà os termor $\beta_1$ e $\beta_2$. Na formulação original, o modelo era dado por
+$$\sum_{n=1}^M \beta_mg_m(\boldsymbol{w}_m^T\boldsymbol{x}),$$
+sendo considerado hoje em dia redundante. Independente disso, $\beta_1$ e $\beta_2$ representam os pesos das funções de crista. Portanto, para fins de interpretação, a primeira projeção tem maior relevância. 
+
+Por último, o sumário apresenta os graus de liberdade equivalentes das funções de crista. Na prática, esse valor mensura a complexidade e a flexibilidade geométrica de cada função. Graus de liberdade próximos de 2 implicam um comportamento aproximadamente linear para a projeção correspondente. Didaticamente, o valor dos graus de liberdade subtraído de uma unidade ($df - 1$) pode ser interpretado como o grau do polinômio cuja flexibilidade mais se assemelha à da função de crista estimada.
+
+Abaixo, calcumos o erro quadrático médio do modelo e o $R^2$.
+
+```{r}
+predicoes <- predict(mod, newdata = dados)
+
+# Métricas de Performance: EQM e R²
+eqm <- mean((dados$mpg - predicoes)^2)
+r_quadrado <- 1 - (sum((dados$mpg - predicoes)^2) / sum((dados$mpg - mean(dados$mpg))^2))
+
+cat("Erro Quadrático Médio (EQM):", round(eqm, 4), "\n")
+cat("Coeficiente de Determinação (R²):", round(r_quadrado, 4), "\n")
+```
+
+Por último, apresentamos as funções de crista estimadas para as duas projeções.
+
+```{r}
+par(mfrow = c(1, 2))
+plot(mod, ask = FALSE, main = "Termo Projetado")
+```
+
+Cada gráfico gerado representa a função $g_m$. O eixo horizontal mostra o valor da projeção $\boldsymbol{w}_m^T X$ e o eixo vertical mostra a contribuição parcial para a predição de `mpg`. Desvios significativos de uma linha reta justificam empiricamente o uso deste modelo sobre a regressão linear múltipla tradicional para este conjunto de dados.
+:::
+
+
+## Redes neurais com camada única
+
+Seja $(Y_1,\boldsymbol{x}^T_1),\ldots,(Y_n,\boldsymbol{x}_n^T)$ uma amostra de variáveis independentes, onde $\boldsymbol{x}^T$ é um vetor comprimento $q$ contendo as variáveis regressoras. 
+
+O modelo de um neurônio, que é a base de uma rede neural (artifical) é dado apresentado no seguinte diagrama
+
+```{mermaid}
+%%| fig-cap: "Diagrama Estrutural de um Neurônio Estatístico Aplicado ao PPR (Sem Bias Interno)"
+%%| label: fig-neuronio
+graph LR
+    %% Nós de Entrada
+    subgraph Entrada [Variáveis de Entrada]
+        X1["X₁ (Regressor 1)"]
+        X2["X₂ (Regressor 2)"]
+        Xp["Xₚ (Regressor p)"]
+    end
+
+    %% Nós de Operação
+    subgraph Neuronio [Estrutura do Neurônio]
+        Juncao((Σ))
+        Ativac[["Função de Crista: g(·)"]]
+    end
+
+    %% Saída
+    Y["Resposta (Y)"]
+
+    %% Conexões com os Pesos
+    X1 -- "w₁" --> Juncao
+    X2 -- "w₂" --> Juncao
+    Xp -- "wₚ" --> Juncao
+
+    %% Fluxo Interno e Saída
+    Juncao -- "Argumento Projetado<br>(αᵀX)" --> Ativac
+    Ativac --> Y
+
+    %% Estilização para fins didáticos
+    style Juncao fill:#f9f,stroke:#333,stroke-width:2px
+    style Ativac fill:#bbf,stroke:#333,stroke-width:2px
+    style Entrada fill:#fff,stroke:#fff
+    style Neuronio fill:#f5f5f5,stroke:#999,stroke-dasharray: 5 5
+```    
+ou, de modo simplificado,
+
+
+```{mermaid}
+%%| fig-cap: "Grafo de Fluxo de Sinal (SFG) de um Neurônio Estatístico sem Bias"
+%%| label: fig-sfg-neuronio
+graph LR
+    %% Nós de Variáveis (Sinais)
+    X1((X₁))
+    X2((X₂))
+    Xp((Xₚ))
+    
+    %% Nó de Acumulação (Soma dos Sinais)
+    Soma(("Z"))
+    
+    %% Nó de Saída
+    Y((Y))
+
+    %% Ramos Direcionados com Ganhos (Pesos)
+    X1 -- "w₁" --> Soma
+    X2 -- "w₂" --> Soma
+    Xp -- "wₚ" --> Soma
+
+    %% Ramo de Transformação Não-Linear
+    Soma -- "g(·)" --> Y
+
+    %% Estilização Clássica de Grafos de Sinais (Nós Simples e Limpos)
+    style X1 fill:#fff,stroke:#333,stroke-width:1.5px
+    style X2 fill:#fff,stroke:#333,stroke-width:1.5px
+    style Xp fill:#fff,stroke:#333,stroke-width:1.5px
+    style Soma fill:#fff,stroke:#333,stroke-width:2px
+    style Y fill:#fff,stroke:#333,stroke-width:2px
+```
+
+Matematicamente, um neurônio é descrito como
+
+$$\begin{align}y&=g(\boldsymbol{z})+\varepsilon\\&\boldsymbol{z}=\boldsymbol{w}^T\boldsymbol{x}\end{align}$$
+Portanto, o neurônio é equivalente ao modelo de regressão de busca por projeção com uma componente. 
+
+Contudo, o modelo do neurônio tende a ser mais simples, uma vez que a função $g(z)$, denominada função de ativação, é escolhida pelo usuário, sendo a função sigmóide 
+
+$$g(z)=\frac{1}{1+e^{-z}}.$$
+uma escolha comum. O nome função de ativação se deve ao fato de que esta função está restrita oa intervalo [0,1], implicando na ativação ou não do neurônio. 
+
+Uma rede neural é construída com $M$ neurônios, ou seja
+
+
+$$\begin{align}y&=\sum_{m=1}^Mg(\boldsymbol{z}_m)+\varepsilon\\&\boldsymbol{z}_m=\boldsymbol{w}^T_m\boldsymbol{x}\end{align}$$
+Observe que a rede neural troca a complexidade da estimação de $g_m$ por uma função simples $g(.)$. Como consequência, enquanto que o número de componentes em um modelo de regressão por busca de projeção tem $M$ entre 2 e 5, uma rede neural costuma ter entre 20 e 100 neurônios. Abaixo, apresentamos uma rede neural com dois neurônios.
+
+```{mermaid}
+%%| fig-cap: "Grafo de Fluxo de Sinal (SFG) de uma Rede Neural com Dois Neurônios sem Bias"
+%%| label: fig-sfg-dois-neuronios
+graph LR
+    %% Nós de Entrada (Sinais das Covariáveis)
+    X1((X₁))
+    X2((X₂))
+    Xp((Xₚ))
+    
+    %% Nós Intermediários (Junções Aditivas dos Neurônios)
+    Z1(("Z₁"))
+    Z2(("Z₂"))
+    
+    %% Nó de Resposta Final
+    Y((Y))
+
+    %% Fluxo para o Neurônio 1
+    X1 -- "w₁₁" --> Z1
+    X2 -- "w₂₁" --> Z1
+    Xp -- "wₚ₁" --> Z1
+
+    %% Fluxo para o Neurônio 2
+    X1 -- "w₁₂" --> Z2
+    X2 -- "w₂₂" --> Z2
+    Xp -- "wₚ₂" --> Z2
+
+    %% Ramos de Transformação Funcional Simples e Somatório Final
+    Z1 -- "g(·)" --> Y
+    Z2 -- "g(·)" --> Y
+
+    %% Estilização do Grafo
+    style X1 fill:#fff,stroke:#333,stroke-width:1.5px
+    style X2 fill:#fff,stroke:#333,stroke-width:1.5px
+    style Xp fill:#fff,stroke:#333,stroke-width:1.5px
+    style Z1 fill:#fff,stroke:#333,stroke-width:2px
+    style Z2 fill:#fff,stroke:#333,stroke-width:2px
+    style Y fill:#fff,stroke:#333,stroke-width:2px
+```
+
+
+::: {#exm-}
+Utilizando o mesmo banco mtcars, isolamos a variável dependente mpg (Milhas por Galão) e as regressoras cyl (Cilindros), hp (Cavalos de Força) e wt (Peso em mil libras). Diferente de outros modelos de regressão, as redes neurais precisam que as variáveis regressoras sejam padronizadas.
+
+```{r}
+dados <- mtcars[, c("mpg", "cyl", "hp", "wt")]
+dados[, c("cyl", "hp", "wt")] <- scale(dados[, c("cyl", "hp", "wt")])
+```
+
+O objetivo é capturar as mesmas interações globais substituindo as funções de crista flexíveis do PPR por uma combinação de múltiplos neurônios de formato fixo, utilizando a função sigmoide.
+
+A função `nnet` do pacote de mesmo nome implementa redes neurais feedforward clássicas via algoritmo de otimização BFGS (Quasi-Newton). Diferente do PPR, os pesos de uma rede neural são inicializados aleatoriamente. Ajustaremos uma rede com 2 neurônios na camada oculta (size = 2).
+
+```{r}
+library(nnet)
+set.seed(123) # Garante a reprodutibilidade dos pesos iniciais
+
+mod_nn <- nnet(mpg ~ cyl + hp + wt, 
+               data = dados, 
+               size = 2,          # M = 2 neurônios na camada oculta
+               linout = TRUE,     # Ativa a função de ativação linear na saída (Regressão)
+               trace = FALSE)
+```
+
+
+Ao executar o comando `summary`, o R retorna a arquitetura da rede e a lista com todos os pesos sinápticos estimados ($w$). Na saída do pacote nnet, as conexões da camada de entrada para a oculta são denotadas por i1->h1 (entrada 1 para neurônio oculto 1), e as da oculta para a saída por h1->o (neurônio oculto 1 para nó de saída).
+
+```{r}
+summary(mod_nn)
+```
+Podemos extrair a matriz de pesos brutos diretamente do objeto:
+```{r}
+pesos <- mod_nn$wts
+w_neuronio1 <- pesos[2:4]
+w_neuronio2 <- pesos[6:8]
+names(w_neuronio1) <- names(w_neuronio2) <- c("cyl", "hp", "wt")
+
+print(w_neuronio1)
+print(w_neuronio2)
+```
+Abaixo, calculamos o erro quadrático médio do modelo e o $R^2$ para fins de comparação com o PPR.
+
+```{r}
+predicoes_nn <- predict(mod_nn, newdata = dados)
+
+# Métricas de Performance: EQM e R²
+eqm_nn <- mean((dados$mpg - predicoes_nn)^2)
+r_quadrado_nn <- 1 - (sum((dados$mpg - predicoes_nn)^2) / sum((dados$mpg - mean(dados$mpg))^2))
+
+cat("Erro Quadrático Médio (EQM):", round(eqm_nn, 4), "\n")
+cat("Coeficiente de Determinação (R²):", round(r_quadrado_nn, 4), "\n")
+```
+
+Para visualizar o comportamento dos neurônios de forma análoga às funções de crista do PPR, geramos os gráficos de dispersão do argumento projetado $\boldsymbol{w}_m^T \boldsymbol{x}$ contra a resposta parcial que entra na combinação de saída.
+
+```{r}
+z1_grade <- seq(min(z1), max(z1), length.out = 100)
+z2_grade <- seq(min(z2), max(z2), length.out = 100)
+
+g_z1_grade <- 1 / (1 + exp(-z1_grade))
+g_z2_grade <- 1 / (1 + exp(-z2_grade))
+
+par(mfrow = c(1, 2))
+
+plot(z1_grade, g_z1_grade, type = "l", col = "blue", lwd = 2,
+     xlab = "w1ᵀX", ylab = "g(z1)", main = "g() neurônio 1")
+rug(z1)
+
+plot(z2_grade, g_z2_grade, type = "l", col = "red", lwd = 2,
+     xlab = "w2ᵀX", ylab = "g(z2)", main = "g() neurônio 2")
+rug(z2)
+```
+
+:::
+
+## Método de suavização do gráfico de dispersão (LOESS)*
 
 No método de suavização do gráfico de dispersão, deseja-se estimar a função de regressão $r(x)=E(y|x)$ a partir da coleção de observações $(y_1,x_1),\ldots,(y_n,x_n)$, para um valor qualquer de $x$.
 

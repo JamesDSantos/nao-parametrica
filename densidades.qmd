@@ -152,7 +152,9 @@ O estimador acima pode ser visto como uma generalização do histograma, pois ai
 Para os devidos fins deste capítulo, uma função núcleo é qualquer densidade suave definida na reta com média zero e variância finita. Denotando tal densidade por $k(x)$, o estimador via método do núcleo é definido por 
 
 $$\hat{f}_n(x)=\frac{1}{n}\sum_{i=1}^n \frac{1}{h}k\left(\frac{x-x_i}{h}\right)$$
-onde $h$ é denominado comprimento da banda. Diferente do historgrama, essa função é sempre contínua. Seja $\sigma^2$ a variância do núcleo. Então
+onde $h$ é denominado comprimento da banda. Diferente do histograma, essa função é sempre contínua. 
+
+Seja $\sigma^2$ a variância do núcleo. Então
 
 $$\begin{align}E\left[\hat{f}_n(x)\right]&=\frac{1}{h}\int k\left(\frac{x-y}{h}\right)f(y)dy,\;\;\text{ fazendo }z=(x-y)/h,\\&=\int k(z)f(x-zh)dz,\;\;\text{aproximando }f(x-zh)\text{ em torno de }z=0,\\&\approx\int k(z)\left[f(x)-hzf'(x)+\frac{z^2 h^2}{2}f''(x)\right]dz\\&=f(x)+\frac{h^2}{2}f''(x)\sigma^2
 \end{align}$$
@@ -206,4 +208,28 @@ plot(densidade, display = "image")
 ```
 :::
 
+## Maldição da dimensionalidade
 
+Neste capítulo, apresentamos os estimadores de histograma e o método do núcleo. Ambos são baseados no número de pontos dentro de uma vizinhança. 
+
+Considere, então, que $X \sim \mathcal{N}(0,1)$ e seja $A = (-1/2, 1/2)$ (ou seja, $P(A) \approx 0,4$). O número esperado de pontos dentro de $A$ é $n \cdot 0,4$. Portanto, para ter em média 5 pontos nessa região, é necessária uma amostra de tamanho pelo menos 13.
+
+Suponha agora que $\boldsymbol{X} = (X_1, X_2)$ é um vetor aleatório com $X_1, X_2$ independentes e com distribuição $\mathcal{N}(0,1)$, e seja $A_2 = \{X_1 \in A, X_2 \in A\}$. Portanto, o número médio de pontos em $A_2$ é $n \cdot 0,4^2$, sendo necessária uma amostra de tamanho 32 para se ter, em média, 5 pontos nessa região.
+
+Para um vetor aleatório $\boldsymbol{X} = (X_1, \ldots, X_q)$, onde $X_i \sim \mathcal{N}(0,1)$ são variáveis independentes, teremos que o número médio de pontos em $A_q = \cap_{i=1}^q \{X_i \in A\}$ é dado por $n \cdot 0,4^q$. Assim, torna-se necessária uma amostra de tamanho $n = 5 / 0,4^q$ para obter, em média, cinco pontos em $A_q$.
+
+Observe que, mesmo sendo $A_q$ uma região de extrema importância (região de maior densidade), ela tende a ter baixa frequência devido ao comportamento explosivo do volume amostral com o aumento da dimensão. A tabela abaixo apresenta o tamanho de amostra necessário para se obter, em média, 5 pontos dentro de $A_q$.
+
+$$\begin{array}{c|c}\hline
+\text{Dimensão} &\text{Tamanho da amostra}\\ \hline
+1 & 13\\
+2 & 32 \\
+3 & 78 \\
+4 & 196 \\
+5 & 489 \\
+6 & 1.221 \\
+7 & 3.052 \\
+8 & 7.630 \\
+9 & 18.074 \\
+10 & 47.684 \\ \hline
+\end{array}$$
