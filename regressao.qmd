@@ -147,7 +147,9 @@ De modo análogo ao caso univariado, encontramos $h_1,\ldots,h_q$, minimizando a
 $$\hat{J}(\boldsymbol{h})=\sum_{i=1}^n \left(y_i-\hat{r}_{-i}(\boldsymbol{x}_i)\right)^2,$$
 onde $\hat{r}_{-i}$ é a estimativa de Nadaraya-Watson ajustada sem a $i$-ésima unidade amostral.
 
+
 ::: {#exm-}
+
 O exemplo ilustra a regressão de Nadaraya-Watson (constante local) para prever o comprimento da sépala (Sepal.Length) usando duas regressoras do banco iris. Inicialmente, a função npregbw() calcula as larguras de banda ótimas por validação cruzada, equilibrando o viés e a variância de forma automatizada. Em seguida, o modelo é ajustado com a função npreg(), que estima a superfície não-paramétrica por meio de médias ponderadas locais. Por fim, o gráfico de diagnóstico confronta os valores reais com os preditos pelo Kernel, revelando uma forte aderência dos pontos à linha de referência de 45 graus, o que comprova a alta eficácia e o poder preditivo do estimador.
 
 ```{r}
@@ -181,9 +183,11 @@ plot(iris$Sepal.Width , iris$Sepal.Length)
 points(xreg$iris.Sepal.Width, pred$mean, pch = 16)
 
 ```
+
 :::
 
-Embora a regressão de Nadarya-Watson tenha a flexibilidade necessária para modelar o comportamentos não lineares, na prática ela sofre o problema da maldição da dimensionalidade explicada no capítulo anterior. 
+Embora a regressão de Nadarya-Watson tenha a flexibilidade necessária para modelar o comportamentos não lineares, na prática ela sofre o problema da maldição da dimensionalidade explicada no capítulo anterior.
+
 
 ## Splines
 
@@ -290,6 +294,7 @@ lines( xhp, pred$fit, lwd = 2)
 
 
 ```
+
 :::
 
 Para o caso multivariado, podemos definir para cada variável regressora a função
@@ -298,6 +303,8 @@ $$g_m(x)=\sum_{j=0}^{M-1}\beta_{j,m}x^{j}+\sum_{k=1}^K\theta_{k,l}(x-\xi_k)_+^{M
 e em seguida definir
 
 $$r(\boldsymbol{x})=\sum_{m=1}^q g_m(x_m).$$
+
+
 ::: {#exm-}
 
 Revisitamos mais uma vez o banco de dados `mtcars`. Vamos ajustar o modelo de regressão spline cubico para predizer a variável `mpg` pelas variáveis `hp`e `wt`.
@@ -309,7 +316,7 @@ mod = lm(mpg ~ bs(hp)+ bs(wt), data = mtcars)
 summary(mod)
 ```
 
-Abaixo, apresentamos o ajuste da potência fixando o peso nos quartis.
+Abaixo, apresentamos o ajuste da potência fixando o peso nos quartis, com bandas de confiança de 90%.
 
 ```{r}
 require(scales)
@@ -319,8 +326,8 @@ xhp = seq(min(mtcars$hp),max(mtcars$hp), length.out = 50)
 xreg = data.frame( hp = xhp,
                    wt = quantile(mtcars$wt,.25))
 pred = predict(mod, xreg, se.fit = TRUE)
-sup = pred$fit + 1.96*pred$se.fit
-inf = pred$fit - 1.96*pred$se.fit
+sup = pred$fit + 1.64*pred$se.fit
+inf = pred$fit - 1.64*pred$se.fit
 
 plot(xhp,pred$fit, type = 'l', ylim = c(10,30))
 polygon( c(xhp, xhp[50:1]),
@@ -330,8 +337,8 @@ polygon( c(xhp, xhp[50:1]),
 xreg = data.frame( hp = xhp,
                    wt = quantile(mtcars$wt,.5))
 pred = predict(mod, xreg, se.fit = TRUE)
-sup = pred$fit + 1.96*pred$se.fit
-inf = pred$fit - 1.96*pred$se.fit
+sup = pred$fit + 1.64*pred$se.fit
+inf = pred$fit - 1.64*pred$se.fit
 
 lines(xhp,pred$fit, type = 'l')
 polygon( c(xhp, xhp[50:1]),
@@ -339,10 +346,10 @@ polygon( c(xhp, xhp[50:1]),
 
 #  75%
 xreg = data.frame( hp = xhp,
-                   wt = quantile(mtcars$wt,.25))
+                   wt = quantile(mtcars$wt,.75))
 pred = predict(mod, xreg, se.fit = TRUE)
-sup = pred$fit + 1.96*pred$se.fit
-inf = pred$fit - 1.96*pred$se.fit
+sup = pred$fit + 1.64*pred$se.fit
+inf = pred$fit - 1.64*pred$se.fit
 
 lines(xhp,pred$fit, type = 'l')
 polygon( c(xhp, xhp[50:1]),
@@ -367,6 +374,7 @@ $$\begin{align} \hat{r} (\boldsymbol{x})&=\sum_{m=1}^Mg_m(\boldsymbol{z}_m)\\&\b
 onde as funções $g_m(.)$, denominadas funções de crista, são funções suaves que devem ser estimadas (utilizando splines, por exemplo). Tais funções são definidas sob as projeções unidimensionais $\boldsymbol{z}_1,\ldots,\boldsymbol{z}_M$. Como procuramos pelos pesos $\boldsymbol{w}_m$ que ajustam o modelo, isso justifica o nome "busca de projeção". O vetor de pesos tem o objetivo exclusivo de apontar a direção do eixo de projeção   
 
 ::: {#exm-}
+
 Para ilustrar a flexibilidade do modelo de regressão por busca de projeção, considere o seguinte modelo de regressão não linear
 
 $$E(Y|\boldsymbol{X}=(x_1,x_2))=x_1x_2$$
@@ -376,6 +384,7 @@ $$\begin{align}g_1(\boldsymbol{z}_1)&=\frac{1}{4}\left(x_1+x_2\right)^2\\g_2(\bo
 ou seja, 
 $$E(Y|\boldsymbol{X}=\boldsymbol{x})=g_1(\boldsymbol{w}^T_1\boldsymbol{x})+g_2(\boldsymbol{w}^T_2\boldsymbol{x}),$$
 onde $\boldsymbol{w}^T_1=(1,1)$ e $\boldsymbol{w}^T_2=(1,-1)$. Produtos de ordem maior podem ser representados de modo similar. 
+
 :::
 
 De fato, um modelo de regressão por busca de projeção pode aproximar qualquer função contínua para $M$ grande o suficiente, estando dentro da classe dos modelos conhecidos como aproximadores universais. Entretanto, como as regressoras entram no modelo como projeções, a interpretação do modelo ajustado é em geral complexa. Portanto, um modelo de regressão por busca de projeção é mais útil para problemas de predição.
@@ -391,6 +400,7 @@ O processo numérico de minização consiste em repetir me iniciar com um vetor 
 
 $$\sum_{i=1}^n [y_i- g_m(\boldsymbol{w}_m^T\boldsymbol{x})-\sum_{j\neq m}g_j(\boldsymbol{w}_j^T\boldsymbol{x})]^2$$
 ::: {#exm-}
+
 Utilizando o banco `mtcars`, isolamos a variável dependente mpg (Milhas por Galão) e as regressoras cyl (Cilindros), hp (Cavalos de Força) e wt (Peso em mil libras).
 
 ```{r}
@@ -449,6 +459,7 @@ plot(mod, ask = FALSE, main = "Termo Projetado")
 ```
 
 Cada gráfico gerado representa a função $g_m$. O eixo horizontal mostra o valor da projeção $\boldsymbol{w}_m^T X$ e o eixo vertical mostra a contribuição parcial para a predição de `mpg`. Desvios significativos de uma linha reta justificam empiricamente o uso deste modelo sobre a regressão linear múltipla tradicional para este conjunto de dados.
+
 :::
 
 
@@ -638,8 +649,8 @@ cat("Coeficiente de Determinação (R²):", round(r_quadrado_nn, 4), "\n")
 Para visualizar o comportamento dos neurônios de forma análoga às funções de crista do PPR, geramos os gráficos de dispersão do argumento projetado $\boldsymbol{w}_m^T \boldsymbol{x}$ contra a resposta parcial que entra na combinação de saída.
 
 ```{r}
-z1_grade <- seq(min(z1), max(z1), length.out = 100)
-z2_grade <- seq(min(z2), max(z2), length.out = 100)
+z1_grade <- seq(-20, 20, length.out = 100)
+z2_grade <- seq(-20, 20, length.out = 100)
 
 g_z1_grade <- 1 / (1 + exp(-z1_grade))
 g_z2_grade <- 1 / (1 + exp(-z2_grade))
@@ -648,11 +659,11 @@ par(mfrow = c(1, 2))
 
 plot(z1_grade, g_z1_grade, type = "l", col = "blue", lwd = 2,
      xlab = "w1ᵀX", ylab = "g(z1)", main = "g() neurônio 1")
-rug(z1)
+#rug(z1)
 
 plot(z2_grade, g_z2_grade, type = "l", col = "red", lwd = 2,
      xlab = "w2ᵀX", ylab = "g(z2)", main = "g() neurônio 2")
-rug(z2)
+#rug(z2)
 ```
 
 :::

@@ -1,6 +1,6 @@
-## Exercícios de laboratório
+# Exercícios de laboratório
 
-###"Laboratório 1: Satisfação Residencial de Famílias Homoafetivas"
+## Laboratório 1: Satisfação Residencial de Famílias Homoafetivas
 
 ### Contexto
 
@@ -92,10 +92,7 @@ As variáveis são
 
 **Problema 4**. Imagine que selecionamos 10 colmeias e medimos sua produção em 4 momentos do ano (Janeiro, Abril, Julho e Outubro). Queremos saber se o fator "Tempo" altera o ranking de produção das colmeias. Há um efeito de tratamento (mês) sobre a produção, considerando que as mesmas unidades foram medidas repetidamente?
 
-## Laboratório 3
-
-
-### Laboratório 3: Modelagem Não-Paramétrica de Acidentes Botrópicos na Região Metropolitana de Manaus
+## Laboratório 3: Modelagem Não-Paramétrica de Acidentes Botrópicos na Região Metropolitana de Manaus
 
 ### Contexto
 
@@ -156,3 +153,57 @@ Exercícios:
 (analise uma regressora de cada vez)
 
 3. Faça uma análise multivariada utilizando splines cúbicos e analise o valor predito do número de ataques considerando as regressoras ao pares.
+
+## Laboratório 4: Análise Química de Óleos Essenciais da Amazônia
+
+### Contexto 
+
+Pesquisadores do Departamento de Química da Universidade Federal do Amazonas (UFAM) submeteram um projeto de pesquisa ao Laboratório de Estatística (LabEst/ICE) com o objetivo de investigar os fatores que influenciam a composição química e a concentração de óleos essenciais extraídos de folhas de espécies vegetais das famílias *Lauraceae* e *Annonaceae*.
+
+Sabe-se que, além de fatores genéticos, as condições ecológicas e sazonais afetam diretamente o metabolismo secundário das plantas, alterando o rendimento e o perfil dos constituintes voláteis (metabólitos de grande valor terapêutico, farmacológico e industrial).  
+
+### Estrutura do Banco de Dados 
+
+O arquivo contendo as informações coletadas pelos pesquisadores possui a seguinte organização:
+
+* 1ª Coluna (Constituinte): Identifica o nome do composto químico (metabólito secundário) detectado na análise por espectrometria de massa (ex: a-pinene, safrol, 1,8-cineole, etc.).  
+
+* Demais Colunas (18 colunas): Representam as amostras resultantes do cruzamento de diferentes condições experimentais. O cabeçalho de cada coluna segue o padrão de codificação EHL, composto por três caracteres:  
+
+  * E (Estação Climática): V para Verão ou I para Inverno.  H (Horário da Coleta): 6 para 6h, 12 para 12h ou 18 para 18h.  
+  * L (Localidade da Coleta): Q para Igarapé do Querosene, P para Igarapé do Piaba ou C para uma Área Cultivada.  
+  Exemplo: A coluna V12P indica a concentração dos constituintes químicos na amostra coletada no Verão, às 12h, no Igarapé do Piaba.
+  
+  Utilize o bloco de código abaixo para importar o conjunto de dados.
+  
+```{r}
+library(gsheet)
+url <- 'https://docs.google.com/spreadsheets/d/1dfbHGC_4bFmUJdT97tNIumbSWUcwX_WEqbVPF8n6wUQ/edit?usp=sharing'
+dados <- gsheet2tbl(url)
+dados <- data.frame(dados)
+# resolvendo problemas com transformações de números em texto
+for(j in 2:19) dados[,j] <- as.numeric(dados[,j])
+```
+
+### Problema
+
+Os químicos suspeitam fortemente que as flutuações sazonais ao longo do ano exercem uma influência drástica no metabolismo geral da planta , afetando quase todos os compostos produzidos. Explore os dados e teste essa hipótese.
+
+## Laboratório 5: Sazonalidade e Modelagem Temporal em Espécies de Lauraceae
+
+### Contexto
+Pesquisadores do Departamento de Química e do Laboratório de Cromatografia da Universidade Federal do Amazonas (UFAM) submeteram ao LabEst um estudo sobre a variação na composição química do óleo essencial extraído das folhas da espécie Endlicheria bracteolata (da família Lauraceae), uma planta nativa da região amazônica. O objetivo principal do projeto foi mapear como os fatores climáticos e o padrão sazonal da Amazônia (estratificado ao longo dos meses do ano) influenciam a concentração e o rendimento dos constituintes químicos voláteis da planta (como o b-caryophyllene, b-bourbonene, entre outros). Infelizmente, devido a problemas operacionais na coleta, as observações referentes ao mês de outubro foram perdidas, gerando uma lacuna temporal que precisa ser considerada na análise.
+
+### Estrutura do Banco de Dados e Tratamento Inicial
+
+O banco de dados original possui os 63 tipos de constituintes observados dispostos nas linhas e o acompanhamento de suas concentrações mensais nas colunas. Para que os dados reflitam adequadamente o comportamento multivariado e temporal, realize passos de preparação:
+
+Filtragem: Identifique e remova do banco de dados os constituintes considerados insignificantes para o estudo da variação sazonal (aqueles que apresentaram valor zero em todos os meses monitorados).
+
+Padronização: Como compostos majoritários e minoritários possuem ordens de grandeza muito distintas, cada constituinte restante deve ser padronizado (subtraindo a sua respectiva média e dividindo pelo seu desvio padrão).
+
+### Problema
+
+Verifique se há evidências de comportamento sazonal.
+
+
