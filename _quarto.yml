@@ -15,6 +15,7 @@ book:
     - postos.qmd
     - densidades.qmd
     - regressao.qmd
+    - aderencia.qmd
     - laboratorio.qmd
     - references.qmd
 

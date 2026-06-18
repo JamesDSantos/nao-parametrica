@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>8&nbsp; Exercícios de laboratório – Métodos não paramétricos</title>
+<title>9&nbsp; Exercícios de laboratório – Métodos não paramétricos</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -69,7 +69,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./references.html" rel="next">
-<link href="./regressao.html" rel="prev">
+<link href="./aderencia.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -150,7 +150,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./laboratorio.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Exercícios de laboratório</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./laboratorio.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Exercícios de laboratório</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -225,8 +225,14 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./aderencia.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Teste de Aderência</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./laboratorio.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Exercícios de laboratório</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Exercícios de laboratório</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -245,33 +251,39 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#laboratório-1-satisfação-residencial-de-famílias-homoafetivas" id="toc-laboratório-1-satisfação-residencial-de-famílias-homoafetivas" class="nav-link active" data-scroll-target="#laboratório-1-satisfação-residencial-de-famílias-homoafetivas"><span class="header-section-number">8.1</span> Laboratório 1: Satisfação Residencial de Famílias Homoafetivas</a>
+  <li><a href="#laboratório-1-satisfação-residencial-de-famílias-homoafetivas" id="toc-laboratório-1-satisfação-residencial-de-famílias-homoafetivas" class="nav-link active" data-scroll-target="#laboratório-1-satisfação-residencial-de-famílias-homoafetivas"><span class="header-section-number">9.1</span> Laboratório 1: Satisfação Residencial de Famílias Homoafetivas</a>
   <ul class="collapse">
-  <li><a href="#contexto" id="toc-contexto" class="nav-link" data-scroll-target="#contexto"><span class="header-section-number">8.1.1</span> Contexto</a></li>
-  <li><a href="#carregamento-dos-dados" id="toc-carregamento-dos-dados" class="nav-link" data-scroll-target="#carregamento-dos-dados"><span class="header-section-number">8.1.2</span> Carregamento dos Dados</a></li>
-  <li><a href="#exercícios-propostos" id="toc-exercícios-propostos" class="nav-link" data-scroll-target="#exercícios-propostos"><span class="header-section-number">8.1.3</span> Exercícios Propostos</a></li>
+  <li><a href="#contexto" id="toc-contexto" class="nav-link" data-scroll-target="#contexto"><span class="header-section-number">9.1.1</span> Contexto</a></li>
+  <li><a href="#carregamento-dos-dados" id="toc-carregamento-dos-dados" class="nav-link" data-scroll-target="#carregamento-dos-dados"><span class="header-section-number">9.1.2</span> Carregamento dos Dados</a></li>
+  <li><a href="#exercícios-propostos" id="toc-exercícios-propostos" class="nav-link" data-scroll-target="#exercícios-propostos"><span class="header-section-number">9.1.3</span> Exercícios Propostos</a></li>
   </ul></li>
-  <li><a href="#laboratório-2-análise-da-produção-de-própolis-amazônica" id="toc-laboratório-2-análise-da-produção-de-própolis-amazônica" class="nav-link" data-scroll-target="#laboratório-2-análise-da-produção-de-própolis-amazônica"><span class="header-section-number">8.2</span> Laboratório 2: Análise da Produção de Própolis Amazônica</a>
+  <li><a href="#laboratório-2-análise-da-produção-de-própolis-amazônica" id="toc-laboratório-2-análise-da-produção-de-própolis-amazônica" class="nav-link" data-scroll-target="#laboratório-2-análise-da-produção-de-própolis-amazônica"><span class="header-section-number">9.2</span> Laboratório 2: Análise da Produção de Própolis Amazônica</a>
   <ul class="collapse">
-  <li><a href="#contexto-1" id="toc-contexto-1" class="nav-link" data-scroll-target="#contexto-1"><span class="header-section-number">8.2.1</span> Contexto</a></li>
-  <li><a href="#preparação-do-ambiente" id="toc-preparação-do-ambiente" class="nav-link" data-scroll-target="#preparação-do-ambiente"><span class="header-section-number">8.2.2</span> Preparação do Ambiente</a></li>
-  <li><a href="#exercícios-propostos-1" id="toc-exercícios-propostos-1" class="nav-link" data-scroll-target="#exercícios-propostos-1"><span class="header-section-number">8.2.3</span> Exercícios Propostos</a></li>
+  <li><a href="#contexto-1" id="toc-contexto-1" class="nav-link" data-scroll-target="#contexto-1"><span class="header-section-number">9.2.1</span> Contexto</a></li>
+  <li><a href="#preparação-do-ambiente" id="toc-preparação-do-ambiente" class="nav-link" data-scroll-target="#preparação-do-ambiente"><span class="header-section-number">9.2.2</span> Preparação do Ambiente</a></li>
+  <li><a href="#exercícios-propostos-1" id="toc-exercícios-propostos-1" class="nav-link" data-scroll-target="#exercícios-propostos-1"><span class="header-section-number">9.2.3</span> Exercícios Propostos</a></li>
   </ul></li>
-  <li><a href="#laboratório-3-modelagem-não-paramétrica-de-acidentes-botrópicos-na-região-metropolitana-de-manaus" id="toc-laboratório-3-modelagem-não-paramétrica-de-acidentes-botrópicos-na-região-metropolitana-de-manaus" class="nav-link" data-scroll-target="#laboratório-3-modelagem-não-paramétrica-de-acidentes-botrópicos-na-região-metropolitana-de-manaus"><span class="header-section-number">8.3</span> Laboratório 3: Modelagem Não-Paramétrica de Acidentes Botrópicos na Região Metropolitana de Manaus</a>
+  <li><a href="#laboratório-3-modelagem-não-paramétrica-de-acidentes-botrópicos-na-região-metropolitana-de-manaus" id="toc-laboratório-3-modelagem-não-paramétrica-de-acidentes-botrópicos-na-região-metropolitana-de-manaus" class="nav-link" data-scroll-target="#laboratório-3-modelagem-não-paramétrica-de-acidentes-botrópicos-na-região-metropolitana-de-manaus"><span class="header-section-number">9.3</span> Laboratório 3: Modelagem Não-Paramétrica de Acidentes Botrópicos na Região Metropolitana de Manaus</a>
   <ul class="collapse">
-  <li><a href="#contexto-2" id="toc-contexto-2" class="nav-link" data-scroll-target="#contexto-2"><span class="header-section-number">8.3.1</span> Contexto</a></li>
+  <li><a href="#contexto-2" id="toc-contexto-2" class="nav-link" data-scroll-target="#contexto-2"><span class="header-section-number">9.3.1</span> Contexto</a></li>
   </ul></li>
-  <li><a href="#laboratório-4-análise-química-de-óleos-essenciais-da-amazônia" id="toc-laboratório-4-análise-química-de-óleos-essenciais-da-amazônia" class="nav-link" data-scroll-target="#laboratório-4-análise-química-de-óleos-essenciais-da-amazônia"><span class="header-section-number">8.4</span> Laboratório 4: Análise Química de Óleos Essenciais da Amazônia</a>
+  <li><a href="#laboratório-4-análise-química-de-óleos-essenciais-da-amazônia" id="toc-laboratório-4-análise-química-de-óleos-essenciais-da-amazônia" class="nav-link" data-scroll-target="#laboratório-4-análise-química-de-óleos-essenciais-da-amazônia"><span class="header-section-number">9.4</span> Laboratório 4: Análise Química de Óleos Essenciais da Amazônia</a>
   <ul class="collapse">
-  <li><a href="#contexto-3" id="toc-contexto-3" class="nav-link" data-scroll-target="#contexto-3"><span class="header-section-number">8.4.1</span> Contexto</a></li>
-  <li><a href="#estrutura-do-banco-de-dados" id="toc-estrutura-do-banco-de-dados" class="nav-link" data-scroll-target="#estrutura-do-banco-de-dados"><span class="header-section-number">8.4.2</span> Estrutura do Banco de Dados</a></li>
-  <li><a href="#problema" id="toc-problema" class="nav-link" data-scroll-target="#problema"><span class="header-section-number">8.4.3</span> Problema</a></li>
+  <li><a href="#contexto-3" id="toc-contexto-3" class="nav-link" data-scroll-target="#contexto-3"><span class="header-section-number">9.4.1</span> Contexto</a></li>
+  <li><a href="#estrutura-do-banco-de-dados" id="toc-estrutura-do-banco-de-dados" class="nav-link" data-scroll-target="#estrutura-do-banco-de-dados"><span class="header-section-number">9.4.2</span> Estrutura do Banco de Dados</a></li>
+  <li><a href="#problema" id="toc-problema" class="nav-link" data-scroll-target="#problema"><span class="header-section-number">9.4.3</span> Problema</a></li>
   </ul></li>
-  <li><a href="#laboratório-5-sazonalidade-e-modelagem-temporal-em-espécies-de-lauraceae" id="toc-laboratório-5-sazonalidade-e-modelagem-temporal-em-espécies-de-lauraceae" class="nav-link" data-scroll-target="#laboratório-5-sazonalidade-e-modelagem-temporal-em-espécies-de-lauraceae"><span class="header-section-number">8.5</span> Laboratório 5: Sazonalidade e Modelagem Temporal em Espécies de Lauraceae</a>
+  <li><a href="#laboratório-5-avaliação-do-impacto-de-contaminação-por-hidrocarbonetos" id="toc-laboratório-5-avaliação-do-impacto-de-contaminação-por-hidrocarbonetos" class="nav-link" data-scroll-target="#laboratório-5-avaliação-do-impacto-de-contaminação-por-hidrocarbonetos"><span class="header-section-number">9.5</span> Laboratório 5: Avaliação do Impacto de Contaminação por Hidrocarbonetos</a>
   <ul class="collapse">
-  <li><a href="#contexto-4" id="toc-contexto-4" class="nav-link" data-scroll-target="#contexto-4"><span class="header-section-number">8.5.1</span> Contexto</a></li>
-  <li><a href="#estrutura-do-banco-de-dados-e-tratamento-inicial" id="toc-estrutura-do-banco-de-dados-e-tratamento-inicial" class="nav-link" data-scroll-target="#estrutura-do-banco-de-dados-e-tratamento-inicial"><span class="header-section-number">8.5.2</span> Estrutura do Banco de Dados e Tratamento Inicial</a></li>
-  <li><a href="#problema-1" id="toc-problema-1" class="nav-link" data-scroll-target="#problema-1"><span class="header-section-number">8.5.3</span> Problema</a></li>
+  <li><a href="#contexto-4" id="toc-contexto-4" class="nav-link" data-scroll-target="#contexto-4"><span class="header-section-number">9.5.1</span> Contexto</a></li>
+  </ul></li>
+  <li><a href="#estrutura-dos-dados-no-r" id="toc-estrutura-dos-dados-no-r" class="nav-link" data-scroll-target="#estrutura-dos-dados-no-r"><span class="header-section-number">9.6</span> Estrutura dos Dados no R</a></li>
+  <li><a href="#problema-1" id="toc-problema-1" class="nav-link" data-scroll-target="#problema-1"><span class="header-section-number">9.7</span> Problema</a></li>
+  <li><a href="#laboratório-6-sazonalidade-e-modelagem-temporal-em-espécies-de-lauraceae" id="toc-laboratório-6-sazonalidade-e-modelagem-temporal-em-espécies-de-lauraceae" class="nav-link" data-scroll-target="#laboratório-6-sazonalidade-e-modelagem-temporal-em-espécies-de-lauraceae"><span class="header-section-number">9.8</span> Laboratório 6: Sazonalidade e Modelagem Temporal em Espécies de Lauraceae</a>
+  <ul class="collapse">
+  <li><a href="#contexto-5" id="toc-contexto-5" class="nav-link" data-scroll-target="#contexto-5"><span class="header-section-number">9.8.1</span> Contexto</a></li>
+  <li><a href="#estrutura-do-banco-de-dados-e-tratamento-inicial" id="toc-estrutura-do-banco-de-dados-e-tratamento-inicial" class="nav-link" data-scroll-target="#estrutura-do-banco-de-dados-e-tratamento-inicial"><span class="header-section-number">9.8.2</span> Estrutura do Banco de Dados e Tratamento Inicial</a></li>
+  <li><a href="#problema-2" id="toc-problema-2" class="nav-link" data-scroll-target="#problema-2"><span class="header-section-number">9.8.3</span> Problema</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -281,7 +293,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Exercícios de laboratório</span></h1>
+<h1 class="title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Exercícios de laboratório</span></h1>
 </div>
 
 
@@ -298,10 +310,10 @@ window.Quarto = {
 </header>
 
 
-<section id="laboratório-1-satisfação-residencial-de-famílias-homoafetivas" class="level2" data-number="8.1">
-<h2 data-number="8.1" class="anchored" data-anchor-id="laboratório-1-satisfação-residencial-de-famílias-homoafetivas"><span class="header-section-number">8.1</span> Laboratório 1: Satisfação Residencial de Famílias Homoafetivas</h2>
-<section id="contexto" class="level3" data-number="8.1.1">
-<h3 data-number="8.1.1" class="anchored" data-anchor-id="contexto"><span class="header-section-number">8.1.1</span> Contexto</h3>
+<section id="laboratório-1-satisfação-residencial-de-famílias-homoafetivas" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="laboratório-1-satisfação-residencial-de-famílias-homoafetivas"><span class="header-section-number">9.1</span> Laboratório 1: Satisfação Residencial de Famílias Homoafetivas</h2>
+<section id="contexto" class="level3" data-number="9.1.1">
+<h3 data-number="9.1.1" class="anchored" data-anchor-id="contexto"><span class="header-section-number">9.1.1</span> Contexto</h3>
 <p>Este exercício baseia-se na dissertação de mestrado de <strong>Beatriz da Silva Moreira (2025)</strong>, intitulada <em>“Satisfação Residencial de Famílias Homoafetivas na Cidade de Manaus - AM”</em>, analisado pelo LabEst em 2025. O estudo investigou como o ambiente residencial e social impacta a qualidade de vida dessas famílias.</p>
 <p>O projeto adotou uma abordagem mista. Na etapa quantitativa, foram coletadas respostas de <strong>104 participantes</strong>, focando em:</p>
 <ol type="1">
@@ -310,8 +322,8 @@ window.Quarto = {
 </ol>
 <p>O trabalho completo pode ser consultado no <a href="https://tede.ufam.edu.br/bitstream/tede/11079/6/DISS_BeatrizMoreira_PPGPSI">Repositório da UFAM</a>.</p>
 </section>
-<section id="carregamento-dos-dados" class="level3" data-number="8.1.2">
-<h3 data-number="8.1.2" class="anchored" data-anchor-id="carregamento-dos-dados"><span class="header-section-number">8.1.2</span> Carregamento dos Dados</h3>
+<section id="carregamento-dos-dados" class="level3" data-number="9.1.2">
+<h3 data-number="9.1.2" class="anchored" data-anchor-id="carregamento-dos-dados"><span class="header-section-number">9.1.2</span> Carregamento dos Dados</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">"gsheet"</span>)) <span class="fu">install.packages</span>(<span class="st">"gsheet"</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gsheet)</span>
@@ -320,8 +332,8 @@ window.Quarto = {
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>dados <span class="ot">&lt;-</span> <span class="fu">gsheet2tbl</span>(url)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="exercícios-propostos" class="level3" data-number="8.1.3">
-<h3 data-number="8.1.3" class="anchored" data-anchor-id="exercícios-propostos"><span class="header-section-number">8.1.3</span> Exercícios Propostos</h3>
+<section id="exercícios-propostos" class="level3" data-number="9.1.3">
+<h3 data-number="9.1.3" class="anchored" data-anchor-id="exercícios-propostos"><span class="header-section-number">9.1.3</span> Exercícios Propostos</h3>
 <p><strong>Exercício 1:</strong> A teoria de satisfação residencial sugere que as pessoas tendem a ser mais satisfeitas com o interior de suas casas (controle privado) do que com o bairro/vizinhança (controle público). Verifique se existe uma diferença significativa entre a satisfação com a residência e a satisfação com o bairro para o mesmo participante.</p>
 <p><strong>Exercício 2:</strong> A dissertação sugere que a percepção de acolhimento social (segurança contra homofobia) pode variar drasticamente dependendo da zona da cidade onde a família reside.</p>
 <p>Construa uma tabela de contingência cruzando a variável Zona da Cidade com a escala de Acolhimento e investigue a afirmação..</p>
@@ -329,15 +341,15 @@ window.Quarto = {
 <p><strong>Exercício 4.</strong> Procure por outras associações entre as variáveis de satisfação e as sócio-econômicas.</p>
 </section>
 </section>
-<section id="laboratório-2-análise-da-produção-de-própolis-amazônica" class="level2" data-number="8.2">
-<h2 data-number="8.2" class="anchored" data-anchor-id="laboratório-2-análise-da-produção-de-própolis-amazônica"><span class="header-section-number">8.2</span> Laboratório 2: Análise da Produção de Própolis Amazônica</h2>
-<section id="contexto-1" class="level3" data-number="8.2.1">
-<h3 data-number="8.2.1" class="anchored" data-anchor-id="contexto-1"><span class="header-section-number">8.2.1</span> Contexto</h3>
+<section id="laboratório-2-análise-da-produção-de-própolis-amazônica" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="laboratório-2-análise-da-produção-de-própolis-amazônica"><span class="header-section-number">9.2</span> Laboratório 2: Análise da Produção de Própolis Amazônica</h2>
+<section id="contexto-1" class="level3" data-number="9.2.1">
+<h3 data-number="9.2.1" class="anchored" data-anchor-id="contexto-1"><span class="header-section-number">9.2.1</span> Contexto</h3>
 <p>Este laboratório utiliza dados reais do relatório técnico de <strong>Monique Emanuela (2025)</strong> sobre a produção de própolis por abelhas sem ferrão (<em>Duckeola ghilianii</em> e <em>Frieseomelitta longipes</em>).</p>
 <p>O objetivo é aplicar métodos baseados em <strong>postos</strong> para responder a perguntas fundamentais sobre a produção, pureza e sazonalidade, sem assumir a normalidade dos dados.</p>
 </section>
-<section id="preparação-do-ambiente" class="level3" data-number="8.2.2">
-<h3 data-number="8.2.2" class="anchored" data-anchor-id="preparação-do-ambiente"><span class="header-section-number">8.2.2</span> Preparação do Ambiente</h3>
+<section id="preparação-do-ambiente" class="level3" data-number="9.2.2">
+<h3 data-number="9.2.2" class="anchored" data-anchor-id="preparação-do-ambiente"><span class="header-section-number">9.2.2</span> Preparação do Ambiente</h3>
 <p>A pesquisadora acompanhou durante um ano a produção de própolis por duas espécies de abelhas sem ferrão nativas da Amazônia em diversas colméias. As coletas foram realizadas nos meses de outubro e dezembro de 2024 e março, maio, julho e setembro de 2025.</p>
 <p>O banco de dados pode ser baixado com o seguinte comando no R. Nota: a colméia na linha 33 perdeu a abelha rainha e por isso não houve coleta de própolis. Ela foi substituída por outra de dimensões análogas na mesma propriedade da anterior.</p>
 <div class="cell">
@@ -359,18 +371,18 @@ window.Quarto = {
 <li><p>COLETA: fase da coleta, variando de 1 a 6.</p></li>
 </ul>
 </section>
-<section id="exercícios-propostos-1" class="level3" data-number="8.2.3">
-<h3 data-number="8.2.3" class="anchored" data-anchor-id="exercícios-propostos-1"><span class="header-section-number">8.2.3</span> Exercícios Propostos</h3>
+<section id="exercícios-propostos-1" class="level3" data-number="9.2.3">
+<h3 data-number="9.2.3" class="anchored" data-anchor-id="exercícios-propostos-1"><span class="header-section-number">9.2.3</span> Exercícios Propostos</h3>
 <p><strong>Problema 1</strong>. O pesquisador deseja saber se a espécie <strong>Duckeola ghilianii</strong> é mais produtiva que a <strong>Frieseomelitta longipes</strong>, independente da época do ano. Considere que cada coleta foi feita em colmeias distintas para este corte de análise. Existe diferença significativa no Peso (g) da própolis entre as duas espécies?</p>
 <p><strong>Problema 2</strong>. Valores mais baixos podem indicar maior pureza orgânica. Os dados foram coletados em três locais diferentes da Amazônia. O local de coleta influencia a composição mineral (variável Cinzas)?</p>
 <p><strong>Problema 3</strong>. Para as mesmas colmeias (identificadas pela variável sigla), comparou-se a produção no Pico da Safra (Janeiro) e no Período de Entressafra (Julho). A produção de uma mesma colmeia muda significativamente entre esses dois meses específicos?</p>
 <p><strong>Problema 4</strong>. Imagine que selecionamos 10 colmeias e medimos sua produção em 4 momentos do ano (Janeiro, Abril, Julho e Outubro). Queremos saber se o fator “Tempo” altera o ranking de produção das colmeias. Há um efeito de tratamento (mês) sobre a produção, considerando que as mesmas unidades foram medidas repetidamente?</p>
 </section>
 </section>
-<section id="laboratório-3-modelagem-não-paramétrica-de-acidentes-botrópicos-na-região-metropolitana-de-manaus" class="level2" data-number="8.3">
-<h2 data-number="8.3" class="anchored" data-anchor-id="laboratório-3-modelagem-não-paramétrica-de-acidentes-botrópicos-na-região-metropolitana-de-manaus"><span class="header-section-number">8.3</span> Laboratório 3: Modelagem Não-Paramétrica de Acidentes Botrópicos na Região Metropolitana de Manaus</h2>
-<section id="contexto-2" class="level3" data-number="8.3.1">
-<h3 data-number="8.3.1" class="anchored" data-anchor-id="contexto-2"><span class="header-section-number">8.3.1</span> Contexto</h3>
+<section id="laboratório-3-modelagem-não-paramétrica-de-acidentes-botrópicos-na-região-metropolitana-de-manaus" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="laboratório-3-modelagem-não-paramétrica-de-acidentes-botrópicos-na-região-metropolitana-de-manaus"><span class="header-section-number">9.3</span> Laboratório 3: Modelagem Não-Paramétrica de Acidentes Botrópicos na Região Metropolitana de Manaus</h2>
+<section id="contexto-2" class="level3" data-number="9.3.1">
+<h3 data-number="9.3.1" class="anchored" data-anchor-id="contexto-2"><span class="header-section-number">9.3.1</span> Contexto</h3>
 <p>Este exercício baseia-se no relatório técnico de <strong>Melyssa Oliveira Gomes (2025)</strong>, intitulado <em>“Influência da urbanização na incidência de acidentes botrópicos na Região Metropolitana de Manaus”</em>, desenvolvido em parceria com o LabEst.</p>
 <p>O estudo original investigou como diferentes tipos de cobertura do solo (floresta, área urbana, agropecuária e corpos d’água) afetam a frequência de ataques de serpentes do gênero <em>Bothrops</em> (jararacas).</p>
 <p>Nas análises preliminares da pesquisa, os Modelos Lineares Generalizados (GLMs) tradicionais apresentaram limitações de ajuste e forte suspeita de relações não-lineares. Neste laboratório, adotaremos uma abordagem de <strong>suavização e regressão não-paramétrica</strong> para modelar o comportamento dessas relações sem impor uma forma funcional rígida aos dados.</p>
@@ -416,15 +428,15 @@ window.Quarto = {
 </ol>
 </section>
 </section>
-<section id="laboratório-4-análise-química-de-óleos-essenciais-da-amazônia" class="level2" data-number="8.4">
-<h2 data-number="8.4" class="anchored" data-anchor-id="laboratório-4-análise-química-de-óleos-essenciais-da-amazônia"><span class="header-section-number">8.4</span> Laboratório 4: Análise Química de Óleos Essenciais da Amazônia</h2>
-<section id="contexto-3" class="level3" data-number="8.4.1">
-<h3 data-number="8.4.1" class="anchored" data-anchor-id="contexto-3"><span class="header-section-number">8.4.1</span> Contexto</h3>
+<section id="laboratório-4-análise-química-de-óleos-essenciais-da-amazônia" class="level2" data-number="9.4">
+<h2 data-number="9.4" class="anchored" data-anchor-id="laboratório-4-análise-química-de-óleos-essenciais-da-amazônia"><span class="header-section-number">9.4</span> Laboratório 4: Análise Química de Óleos Essenciais da Amazônia</h2>
+<section id="contexto-3" class="level3" data-number="9.4.1">
+<h3 data-number="9.4.1" class="anchored" data-anchor-id="contexto-3"><span class="header-section-number">9.4.1</span> Contexto</h3>
 <p>Pesquisadores do Departamento de Química da Universidade Federal do Amazonas (UFAM) submeteram um projeto de pesquisa ao Laboratório de Estatística (LabEst/ICE) com o objetivo de investigar os fatores que influenciam a composição química e a concentração de óleos essenciais extraídos de folhas de espécies vegetais das famílias <em>Lauraceae</em> e <em>Annonaceae</em>.</p>
 <p>Sabe-se que, além de fatores genéticos, as condições ecológicas e sazonais afetam diretamente o metabolismo secundário das plantas, alterando o rendimento e o perfil dos constituintes voláteis (metabólitos de grande valor terapêutico, farmacológico e industrial).</p>
 </section>
-<section id="estrutura-do-banco-de-dados" class="level3" data-number="8.4.2">
-<h3 data-number="8.4.2" class="anchored" data-anchor-id="estrutura-do-banco-de-dados"><span class="header-section-number">8.4.2</span> Estrutura do Banco de Dados</h3>
+<section id="estrutura-do-banco-de-dados" class="level3" data-number="9.4.2">
+<h3 data-number="9.4.2" class="anchored" data-anchor-id="estrutura-do-banco-de-dados"><span class="header-section-number">9.4.2</span> Estrutura do Banco de Dados</h3>
 <p>O arquivo contendo as informações coletadas pelos pesquisadores possui a seguinte organização:</p>
 <ul>
 <li><p>1ª Coluna (Constituinte): Identifica o nome do composto químico (metabólito secundário) detectado na análise por espectrometria de massa (ex: a-pinene, safrol, 1,8-cineole, etc.).</p></li>
@@ -446,25 +458,53 @@ Exemplo: A coluna V12P indica a concentração dos constituintes químicos na am
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">19</span>) dados[,j] <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(dados[,j])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="problema" class="level3" data-number="8.4.3">
-<h3 data-number="8.4.3" class="anchored" data-anchor-id="problema"><span class="header-section-number">8.4.3</span> Problema</h3>
+<section id="problema" class="level3" data-number="9.4.3">
+<h3 data-number="9.4.3" class="anchored" data-anchor-id="problema"><span class="header-section-number">9.4.3</span> Problema</h3>
 <p>Os químicos suspeitam fortemente que as flutuações sazonais ao longo do ano exercem uma influência drástica no metabolismo geral da planta , afetando quase todos os compostos produzidos. Explore os dados e teste essa hipótese.</p>
 </section>
 </section>
-<section id="laboratório-5-sazonalidade-e-modelagem-temporal-em-espécies-de-lauraceae" class="level2" data-number="8.5">
-<h2 data-number="8.5" class="anchored" data-anchor-id="laboratório-5-sazonalidade-e-modelagem-temporal-em-espécies-de-lauraceae"><span class="header-section-number">8.5</span> Laboratório 5: Sazonalidade e Modelagem Temporal em Espécies de Lauraceae</h2>
-<section id="contexto-4" class="level3" data-number="8.5.1">
-<h3 data-number="8.5.1" class="anchored" data-anchor-id="contexto-4"><span class="header-section-number">8.5.1</span> Contexto</h3>
+<section id="laboratório-5-avaliação-do-impacto-de-contaminação-por-hidrocarbonetos" class="level2" data-number="9.5">
+<h2 data-number="9.5" class="anchored" data-anchor-id="laboratório-5-avaliação-do-impacto-de-contaminação-por-hidrocarbonetos"><span class="header-section-number">9.5</span> Laboratório 5: Avaliação do Impacto de Contaminação por Hidrocarbonetos</h2>
+<section id="contexto-4" class="level3" data-number="9.5.1">
+<h3 data-number="9.5.1" class="anchored" data-anchor-id="contexto-4"><span class="header-section-number">9.5.1</span> Contexto</h3>
+<p>Uma equipe de pesquisadores em Ciências Ambientais buscou a consultoria do Laboratório de Estatística (LabEst/UFAM) para analisar dados oriundos de um experimento biológico controlado. O objetivo principal do estudo consistiu em avaliar o impacto da exposição à contaminação ambiental (especificamente por compostos de petróleo e derivados) na resposta fisiológica ou taxa de sobrevivência microbiana em amostras ecológicas.</p>
+<p>O experimento foi dividido em duas condições de monitoramento:</p>
+<ol type="1">
+<li><p>Amostras expostas apenas ao poluente de controle básico (PCL).</p></li>
+<li><p>Amostras expostas à ação combinada do poluente com um agente mitigador local (PCL + JUCA).</p></li>
+</ol>
+<p>Durante a triagem laboratorial inicial, os pesquisadores constataram que algumas placas de teste sofreram contaminação biológica externa (ruído experimental). Esses resultados espúrios foram descartados pela equipe do LabEst, resultando em um banco de dados com tamanhos amostrais ligeiramente diferentes entre os dois grupos.</p>
+</section>
+</section>
+<section id="estrutura-dos-dados-no-r" class="level2" data-number="9.6">
+<h2 data-number="9.6" class="anchored" data-anchor-id="estrutura-dos-dados-no-r"><span class="header-section-number">9.6</span> Estrutura dos Dados no R</h2>
+<p>As duas séries de dados numéricos resultantes (já limpas e corrigidas após a filtragem de contaminações) são dadas a seguir</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Grupo 1: Apenas Poluente de Controle (n = 8)</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>pcl <span class="ot">&lt;-</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">6</span> <span class="sc">*</span> <span class="fu">c</span>(<span class="dv">20</span>, <span class="dv">25</span>, <span class="dv">25</span>, <span class="dv">15</span>, <span class="dv">5</span>, <span class="dv">30</span>, <span class="dv">45</span>, <span class="dv">50</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Grupo 2: Ação Combinada com Agente Mitigador (n = 7)</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>pcl_juca <span class="ot">&lt;-</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">6</span> <span class="sc">*</span> <span class="fu">c</span>(<span class="dv">25</span>, <span class="dv">35</span>, <span class="dv">70</span>, <span class="dv">30</span>, <span class="dv">15</span>, <span class="dv">70</span>, <span class="dv">25</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="problema-1" class="level2" data-number="9.7">
+<h2 data-number="9.7" class="anchored" data-anchor-id="problema-1"><span class="header-section-number">9.7</span> Problema</h2>
+<p>Os pesquisadores desejam testar a hipótese de que a inclusão do agente de mitigação provocou uma mudança estatisticamente significativa na média das respostas em comparação ao poluente isolado. Realize uma análise explortória e teste a hipótese de pesquisa.</p>
+</section>
+<section id="laboratório-6-sazonalidade-e-modelagem-temporal-em-espécies-de-lauraceae" class="level2" data-number="9.8">
+<h2 data-number="9.8" class="anchored" data-anchor-id="laboratório-6-sazonalidade-e-modelagem-temporal-em-espécies-de-lauraceae"><span class="header-section-number">9.8</span> Laboratório 6: Sazonalidade e Modelagem Temporal em Espécies de Lauraceae</h2>
+<section id="contexto-5" class="level3" data-number="9.8.1">
+<h3 data-number="9.8.1" class="anchored" data-anchor-id="contexto-5"><span class="header-section-number">9.8.1</span> Contexto</h3>
 <p>Pesquisadores do Departamento de Química e do Laboratório de Cromatografia da Universidade Federal do Amazonas (UFAM) submeteram ao LabEst um estudo sobre a variação na composição química do óleo essencial extraído das folhas da espécie Endlicheria bracteolata (da família Lauraceae), uma planta nativa da região amazônica. O objetivo principal do projeto foi mapear como os fatores climáticos e o padrão sazonal da Amazônia (estratificado ao longo dos meses do ano) influenciam a concentração e o rendimento dos constituintes químicos voláteis da planta (como o b-caryophyllene, b-bourbonene, entre outros). Infelizmente, devido a problemas operacionais na coleta, as observações referentes ao mês de outubro foram perdidas, gerando uma lacuna temporal que precisa ser considerada na análise.</p>
 </section>
-<section id="estrutura-do-banco-de-dados-e-tratamento-inicial" class="level3" data-number="8.5.2">
-<h3 data-number="8.5.2" class="anchored" data-anchor-id="estrutura-do-banco-de-dados-e-tratamento-inicial"><span class="header-section-number">8.5.2</span> Estrutura do Banco de Dados e Tratamento Inicial</h3>
+<section id="estrutura-do-banco-de-dados-e-tratamento-inicial" class="level3" data-number="9.8.2">
+<h3 data-number="9.8.2" class="anchored" data-anchor-id="estrutura-do-banco-de-dados-e-tratamento-inicial"><span class="header-section-number">9.8.2</span> Estrutura do Banco de Dados e Tratamento Inicial</h3>
 <p>O banco de dados original possui os 63 tipos de constituintes observados dispostos nas linhas e o acompanhamento de suas concentrações mensais nas colunas. Para que os dados reflitam adequadamente o comportamento multivariado e temporal, realize passos de preparação:</p>
 <p>Filtragem: Identifique e remova do banco de dados os constituintes considerados insignificantes para o estudo da variação sazonal (aqueles que apresentaram valor zero em todos os meses monitorados).</p>
 <p>Padronização: Como compostos majoritários e minoritários possuem ordens de grandeza muito distintas, cada constituinte restante deve ser padronizado (subtraindo a sua respectiva média e dividindo pelo seu desvio padrão).</p>
 </section>
-<section id="problema-1" class="level3" data-number="8.5.3">
-<h3 data-number="8.5.3" class="anchored" data-anchor-id="problema-1"><span class="header-section-number">8.5.3</span> Problema</h3>
+<section id="problema-2" class="level3" data-number="9.8.3">
+<h3 data-number="9.8.3" class="anchored" data-anchor-id="problema-2"><span class="header-section-number">9.8.3</span> Problema</h3>
 <p>Verifique se há evidências de comportamento sazonal.</p>
 
 
@@ -874,8 +914,8 @@ Exemplo: A coluna V12P indica a concentração dos constituintes químicos na am
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./regressao.html" class="pagination-link" aria-label="Tópicos em regressão não paramétrica">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Tópicos em regressão não paramétrica</span></span>
+      <a href="./aderencia.html" class="pagination-link" aria-label="Teste de Aderência">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Teste de Aderência</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

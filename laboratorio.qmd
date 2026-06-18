@@ -189,7 +189,38 @@ for(j in 2:19) dados[,j] <- as.numeric(dados[,j])
 
 Os químicos suspeitam fortemente que as flutuações sazonais ao longo do ano exercem uma influência drástica no metabolismo geral da planta , afetando quase todos os compostos produzidos. Explore os dados e teste essa hipótese.
 
-## Laboratório 5: Sazonalidade e Modelagem Temporal em Espécies de Lauraceae
+## Laboratório 5: Avaliação do Impacto de Contaminação por Hidrocarbonetos
+
+
+### Contexto
+
+Uma equipe de pesquisadores em Ciências Ambientais buscou a consultoria do Laboratório de Estatística (LabEst/UFAM) para analisar dados oriundos de um experimento biológico controlado. O objetivo principal do estudo consistiu em avaliar o impacto da exposição à contaminação ambiental (especificamente por compostos de petróleo e derivados) na resposta fisiológica ou taxa de sobrevivência microbiana em amostras ecológicas.
+
+O experimento foi dividido em duas condições de monitoramento:
+
+1. Amostras expostas apenas ao poluente de controle básico (PCL).
+
+2. Amostras expostas à ação combinada do poluente com um agente mitigador local (PCL + JUCA).
+
+Durante a triagem laboratorial inicial, os pesquisadores constataram que algumas placas de teste sofreram contaminação biológica externa (ruído experimental). Esses resultados espúrios foram descartados pela equipe do LabEst, resultando em um banco de dados com tamanhos amostrais ligeiramente diferentes entre os dois grupos.
+
+## Estrutura dos Dados no R
+
+As duas séries de dados numéricos resultantes (já limpas e corrigidas após a filtragem de contaminações) são dadas a seguir
+
+```{r}
+# Grupo 1: Apenas Poluente de Controle (n = 8)
+pcl <- 10^6 * c(20, 25, 25, 15, 5, 30, 45, 50)
+
+# Grupo 2: Ação Combinada com Agente Mitigador (n = 7)
+pcl_juca <- 10^6 * c(25, 35, 70, 30, 15, 70, 25)
+```
+
+## Problema
+
+Os pesquisadores desejam testar a hipótese de que a inclusão do agente de mitigação provocou uma mudança estatisticamente significativa na média das respostas em comparação ao poluente isolado. Realize uma análise explortória e teste a hipótese de pesquisa.
+
+## Laboratório 6: Sazonalidade e Modelagem Temporal em Espécies de Lauraceae
 
 ### Contexto
 Pesquisadores do Departamento de Química e do Laboratório de Cromatografia da Universidade Federal do Amazonas (UFAM) submeteram ao LabEst um estudo sobre a variação na composição química do óleo essencial extraído das folhas da espécie Endlicheria bracteolata (da família Lauraceae), uma planta nativa da região amazônica. O objetivo principal do projeto foi mapear como os fatores climáticos e o padrão sazonal da Amazônia (estratificado ao longo dos meses do ano) influenciam a concentração e o rendimento dos constituintes químicos voláteis da planta (como o b-caryophyllene, b-bourbonene, entre outros). Infelizmente, devido a problemas operacionais na coleta, as observações referentes ao mês de outubro foram perdidas, gerando uma lacuna temporal que precisa ser considerada na análise.
