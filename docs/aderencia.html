@@ -397,7 +397,17 @@ X-squared = 0.25, df = 1, p-value = 0.6171</code></pre>
 <h2 data-number="8.2" class="anchored" data-anchor-id="o-teste-de-kolmogorov-smirnov"><span class="header-section-number">8.2</span> O teste de Kolmogorov-Smirnov</h2>
 <p>Seja <span class="math inline">\(X_1,\ldots,X_n\)</span> uma amostra aleatória de um modelo contínuo. Seja <span class="math inline">\(H_0: X\sim F_0\)</span>. Considere o módulo da seguinte diferença:</p>
 <p><span class="math display">\[|\hat{F}_n(x)-F_0(x)|\]</span> Se o modelo <span class="math inline">\(F_0\)</span> é adequado, então <span class="math inline">\(U(x)\)</span> deve ser pequena para todo <span class="math inline">\(x\)</span>. A estatística do teste de Kolmogorov-Smirnov é baseada no maior valor desta diferença, sendo dada por</p>
-<p><span class="math display">\[D_n=\sup_x |\hat{F}_n(x)-F_0(x)|.\]</span> A lógica é simples: se a maior das diferenças é baixa, então todas as diferenças são baixas. Na prática, são calculadas as estatísticas</p>
+<p><span class="math display">\[D_n=\sup_x |\hat{F}_n(x)-F_0(x)|.\]</span> A lógica é simples: se a maior das diferenças é baixa, então todas as diferenças são baixas. A figura abaixo ilustra o conceito.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="aderencia_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Na prática, são calculadas as estatísticas</p>
 <p><span class="math display">\[\begin{align}D_+&amp;=\sup_x(\hat{F}_n(x)-F_0(x))\\ D_-&amp;=\sup_x(F_0(x)-\hat{F}_n(x))\end{align}\]</span> sendo <span class="math inline">\(D_n=\max\{D_+,D_-\}\)</span>. Para apresentar a vantagem deste teste, vamos considerar apenas a estatística <span class="math inline">\(D_+\)</span>. Observe que</p>
 <p><span class="math display">\[\begin{align}\hat{F}_n(x)-F_0(x)=\sum_{i=1}^n \frac{1}{n}I_{(-\infty,x]}(x_{(i)})-F_0(x)\end{align}\]</span> Defina <span class="math inline">\(x_{(n+1)}=+\infty\)</span>. Para <span class="math inline">\(x\in[x_{(i)},x_{(i+1)})\)</span>, teremos <span class="math display">\[\hat{F}_n(x)-F_0(x)=\frac{i}{n}-F_0(x),\]</span> e, como <span class="math inline">\(-F_0(x)\)</span> é monótona decrescente, teremos <span class="math display">\[\sup_{x\in[x_{(i)},x_{(i+1)})}\hat{F}_n(x)-F_0(x)=\frac{i}{n}-F_0(x_{(i)}).\]</span> Portanto, <span class="math display">\[\begin{align}D_+&amp;=\sup_{x}(\hat{F}_n(x)-F_0(x))=\max_{1\leq i\leq n}\sup_{x\in[x_{(i)},x_{(i+1)})}\left(\frac{i}{n}-F_0(x)\right)\\&amp;=\max_{1\leq i\leq n}\left(\frac{i}{n}-F_0(x_{(i)})\right)\end{align}.\]</span> logo, <span class="math inline">\(D_+\)</span> depende apenas de <span class="math inline">\(X_{(1)},\ldots,X_{(n)}\)</span>. Sob <span class="math inline">\(H_0\)</span>, é fato que <span class="math inline">\(F(X_{(i)})\)</span> tem distribuição Beta(<span class="math inline">\(i,n-i+1\)</span>), o que permite o cálculo do p-valor.</p>
 <div id="exm-" class="theorem example">
@@ -426,7 +436,17 @@ alternative hypothesis: two-sided</code></pre>
 <p><span class="math display">\[W^2 = n \int_{-\infty}^{\infty} [\hat{F}_n(x) - F_0(x)]^2 \psi(x) f_0(x)dx,\]</span></p>
 <p>onde <span class="math inline">\(f_0(x)\)</span> é a função densidade de <span class="math inline">\(F_0\)</span> e <span class="math inline">\(\psi(x)\)</span> é denominada função de peso, cujo objetivo é determinar qual parte da distribuição receberá mais atenção do teste. Note que a lógica do teste permanece a mesma: a hipótese nula é rejeitada para valores elevados de <span class="math inline">\(W\)</span>.</p>
 <p>O teste de Anderson-Darling é um teste dentro desta classe que utiliza <span class="math display">\[\phi(x)=\frac{1}{F_0(x)(1-F_0(x))},\]</span> gerando a estatística</p>
-<p><span class="math display">\[A^2=n\int_{-\infty}^\infty \frac{[\hat{F}_n(x)-F_0(x)]^2}{F_0(x)(1-F_0(x))}f_0(x)dx\]</span> Note que <span class="math inline">\(\phi(x)\)</span> tem o formado de U, mostrando que esse teste é mais rigoroso no comportamento nas caudas da distribuição. A estatística <span class="math inline">\(A^2\)</span> possui uma vantagem computacional. Observe que, se <span class="math inline">\(x\in[x_{i},x_{(i+1)})\)</span> então <span class="math inline">\(\hat{F}_n(x)=i/n\)</span>. Seja <span class="math inline">\(x_{(0)}=-\infty\)</span>. Então,</p>
+<p><span class="math display">\[A^2=n\int_{-\infty}^\infty \frac{[\hat{F}_n(x)-F_0(x)]^2}{F_0(x)(1-F_0(x))}f_0(x)dx\]</span> Note que <span class="math inline">\(\phi(x)\)</span> tem o formado de U, mostrando que esse teste é mais rigoroso no comportamento nas caudas da distribuição. A figura abaixo ajuda a entender o conceito desta estatística.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="aderencia_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>A estatística <span class="math inline">\(A^2\)</span> possui uma vantagem computacional. Observe que, se <span class="math inline">\(x\in[x_{i},x_{(i+1)})\)</span> então <span class="math inline">\(\hat{F}_n(x)=i/n\)</span>. Seja <span class="math inline">\(x_{(0)}=-\infty\)</span>. Então,</p>
 <p><span class="math display">\[\begin{align}A^2&amp;=n\int_{-\infty}^\infty \frac{[\hat{F}_n(x)-F_0(x)]^2}{F_0(x)(1-F_0(x))}f_0(x)dx\\&amp;=n\sum_{i=0}^n \int_{x_{(i)}}^{x_{(i+1)}}\frac{\left[\frac{i}{n}-F_0(x)\right]^2}{F_0(x)(1-F_0(x))}f_0(x)dx. \end{align}\]</span></p>
 <p>Considerando a transformação <span class="math inline">\(u=F_0(x)\)</span> (o que implica em <span class="math inline">\(u=F_0^{-1}(x)\)</span>, snedo <span class="math inline">\(u_{(i)}=F^{-1}_0(x_{(i)})\)</span> o quantil <span class="math inline">\(i\)</span>) na integral acima, teremos</p>
 <p><span class="math display">\[\begin{align}A^2&amp;=n\sum_{i=0}^n \int_{x_{(i)}}^{x_{(i+1)}}\frac{\left[\frac{i}{n}-F_0(x)\right]^2}{F_0(x)(1-F_0(x))}f_0(x)dx\\&amp;=n\sum_{i=0}^n \int_{u_{(i)}}^{u_{(i+1)}}\frac{\left[\frac{i}{n}-u\right]^2}{u(1-u)}du\\ \end{align}\]</span> e, como <span class="math display">\[\int \frac{(a-u)^2}{u(1-u)}du=a^2\log|u|-\left(a-1\right)^2\log |1-x|-x+\text{constante}\]</span> teremos que, após algumas operações, e substituindo <span class="math inline">\(u_{(i)}\)</span> por <span class="math inline">\(F_0(x_{(i)}),\)</span> teremos</p>
@@ -456,7 +476,7 @@ An = Inf, p-value = 4.762e-06</code></pre>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="aderencia_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="aderencia_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -472,6 +492,15 @@ An = Inf, p-value = 4.762e-06</code></pre>
 <p><span class="math display">\[\hat{\sigma}^2_{reg}\propto \left(\sum_{i=1}^n a_iX_{(i)}\right)^2,\]</span> onde <span class="math inline">\(a_i\)</span> é função de <span class="math inline">\(m_i\)</span> e da matriz de covariância das estatística de ordem da normal. Por outro lado, sabemos que <span class="math inline">\(\sigma\)</span> é bem estimado pela variância amostral, ou seja,</p>
 <p><span class="math display">\[\hat{\sigma}\propto \sum_{i=1}^n(X_i-\bar{X})^2.\]</span> A estatística do teste de Shapiro-Wilk é dada por <span class="math display">\[W=\frac{\left(\sum_{i=1}^n a_iX_{(i)}\right)^2}{\sum_{i=1}^n(X_i-\bar{X})^2},\]</span> e pode-se provar que <span class="math inline">\(W\in[0,1]\)</span>. Se os dados forem normais, então as duas estimativas de <span class="math inline">\(\sigma^2\)</span> estarão próximas e <span class="math inline">\(W\approx 1\)</span>. Caso contrário, a estimativa <span class="math inline">\(\hat{\sigma}^2_{Reg}\)</span> colapsa, subestimando a variânica. Portanto, valores pequenos de <span class="math inline">\(W\)</span> rejeitam a normalidade.</p>
 <p>Sob <span class="math inline">\(H_0\)</span>, a distribuição de <span class="math inline">\(W\)</span> não depende de <span class="math inline">\(\mu\)</span> e <span class="math inline">\(\sigma\)</span> e ela foi tabulada pelo Método de Monte Carlo para <span class="math inline">\(n\leq 50\)</span>. Para <span class="math inline">\(n\)</span> entre 50 e 5.000, Royston mostrou que existem transformações de <span class="math inline">\(W\)</span> que se aproximam da normal padrão.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="aderencia_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 <div id="exm-" class="theorem example">
 <p><span class="theorem-title"><strong>Example 8.5</strong></span> A base de dados abaixo mostra o peso, em gramas de 37.439 recém-nascidos no Amazonas no ano de 2022.</p>
 <div class="cell">
@@ -497,7 +526,7 @@ W = 0.99375, p-value = 0.2513</code></pre>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="aderencia_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="aderencia_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>

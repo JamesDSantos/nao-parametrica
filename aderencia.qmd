@@ -117,7 +117,69 @@ $$|\hat{F}_n(x)-F_0(x)|$$
 Se o modelo $F_0$ é adequado, então $U(x)$ deve ser pequena para todo $x$. A estatística do teste de Kolmogorov-Smirnov é baseada no maior valor desta diferença, sendo dada por
 
 $$D_n=\sup_x |\hat{F}_n(x)-F_0(x)|.$$
-A lógica é simples: se a maior das diferenças é baixa, então todas as diferenças são baixas. Na prática, são calculadas as estatísticas
+A lógica é simples: se a maior das diferenças é baixa, então todas as diferenças são baixas. A figura abaixo ilustra o conceito.
+
+
+```{r echo = FALSE}
+# 1. Gerar dados hipotéticos e ordenar (essencial para a FDAE)
+set.seed(42)
+n <- 20
+dados <- sort(rnorm(n, mean = 2, sd = 1))
+
+# 2. Criar as funções acumuladas
+fda_empirica <- ecdf(dados)
+x_suave <- seq(min(dados) - 1, max(dados) + 1, length.out = 500)
+fda_teorica <- pnorm(x_suave, mean = 2, sd = 1)
+
+# 3. Plotar a FDA Teórica (Linha Contínua)
+plot(x_suave, fda_teorica, type = "l", col = "blue", lwd = 2,
+     main = "Conceito do Teste de Kolmogorov-Smirnov",
+     xlab = "Valores de X", ylab = "F(x) Acumulada",
+     panel.first = grid())
+
+# 4. Adicionar a FDA Empírica (Função Degrau)
+plot(fda_empirica, add = TRUE, verticals = TRUE, 
+     col.points = "black", col.hor = "black", col.vert = "black",
+     pch = 16, lwd = 1.5)
+
+# --- ENCONTRANDO O SUPREMO (Dn) PARA O GRÁFICO ---
+# Calculando as distâncias verticais nos degraus
+y_anterior <- (0:(n-1))/n
+y_posterior <- (1:n)/n
+f_teorico_nos_pontos <- pnorm(dados, mean = 2, sd = 1)
+
+d_mais <- y_posterior - f_teorico_nos_pontos
+d_menos <- f_teorico_nos_pontos - y_anterior
+max_d <- max(c(d_mais, d_menos))
+
+# Identificando o ponto exato da maior divergência
+if (max(d_mais) >= max(d_menos)) {
+  idx <- which.max(d_mais)
+  x_out <- dados[idx]
+  y_emp <- y_posterior[idx]
+  y_teo <- f_teorico_nos_pontos[idx]
+} else {
+  idx <- which.max(d_menos)
+  x_out <- dados[idx]
+  y_emp <- y_anterior[idx]
+  y_teo <- f_teorico_nos_pontos[idx]
+}
+
+# 5. Desenhar a seta vermelha indicando o Dn (O Supremo)
+arrows(x0 = x_out, y0 = y_emp, x1 = x_out, y1 = y_teo, 
+       code = 3, col = "red", lwd = 3, length = 0.1)
+
+# 6. Adicionar textos Informativos e Legenda
+text(x_out + 1, (y_emp + y_teo)/2, labels = expression(D[n] == "Supremo"), col = "red", font = 2)
+
+legend("topleft", 
+       legend = c("FDA Teórica Fo(x)", "FDA Empírica Fn(x)", "Distância Máxima (Dn)"),
+       col = c("blue", "black", "red"), 
+       lwd = c(2, 1.5, 3), lty = c(1, 1, 1), bty='n')
+```
+
+
+Na prática, são calculadas as estatísticas
 
 $$\begin{align}D_+&=\sup_x(\hat{F}_n(x)-F_0(x))\\ D_-&=\sup_x(F_0(x)-\hat{F}_n(x))\end{align}$$
 sendo $D_n=\max\{D_+,D_-\}$. Para apresentar a vantagem deste teste, vamos considerar apenas a estatística $D_+$. Observe que
@@ -155,7 +217,63 @@ $$\phi(x)=\frac{1}{F_0(x)(1-F_0(x))},$$
 gerando a estatística
 
 $$A^2=n\int_{-\infty}^\infty \frac{[\hat{F}_n(x)-F_0(x)]^2}{F_0(x)(1-F_0(x))}f_0(x)dx$$
-Note que $\phi(x)$ tem o formado de U, mostrando que esse teste é mais rigoroso no comportamento nas caudas da distribuição. A estatística $A^2$ possui uma vantagem computacional. Observe que, se $x\in[x_{i},x_{(i+1)})$ então $\hat{F}_n(x)=i/n$. Seja $x_{(0)}=-\infty$. Então,
+Note que $\phi(x)$ tem o formado de U, mostrando que esse teste é mais rigoroso no comportamento nas caudas da distribuição. A figura abaixo ajuda a entender o conceito desta estatística.
+
+```{r echo = FALSE}
+# 1. Gerar dados hipotéticos e ordenar
+set.seed(42)
+n <- 25
+dados <- sort(rnorm(n, mean = 2, sd = 1))
+
+# 2. Criar as funções acumuladas para o suporte dos dados
+fda_empirica <- ecdf(dados)
+x_suave <- seq(min(dados) - 0.5, max(dados) + 0.5, length.out = 1000)
+fda_teorica <- pnorm(x_suave, mean = 2, sd = 1)
+
+# 3. Plotar a FDA Teórica
+plot(x_suave, fda_teorica, type = "l", col = "blue", lwd = 2.5,
+     main = "Conceito do Teste de Anderson-Darling (A²)",
+     xlab = "Valores de X", ylab = "F(x) Acumulada",
+     panel.first = grid())
+
+# 4. Adicionar a FDA Empírica (Função Degrau)
+plot(fda_empirica, add = TRUE, verticals = TRUE, 
+     col.points = "black", col.hor = "black", col.vert = "black",
+     pch = 16, lwd = 1.5)
+
+# 5. Sombrear as áreas de erro, destacando o peso nas caudas
+# Para fins didáticos, vamos desenhar várias linhas verticais cinzas/vermelhas
+# que representam a integração de todas as distâncias quadráticas.
+x_amostra <- dados
+for(i in 1:n) {
+  x_i <- x_amostra[i]
+  y_teo <- pnorm(x_i, mean = 2, sd = 1)
+  y_emp_inf <- (i-1)/n
+  y_emp_sup <- i/n
+  
+  # Define a cor baseada na posição: caudas ganham destaque (Vermelho)
+  # devido ao peso da função de bacia do Anderson-Darling
+  cor_linha <- if(i <= 3 || i >= (n-2)) "red" else "gray70"
+  largura_linha <- if(i <= 3 || i >= (n-2)) 2 else 1
+  
+  # Desenha a distância vertical integrável
+  lines(c(x_i, x_i), c(y_teo, y_emp_sup), col = cor_linha, lwd = largura_linha)
+}
+
+# 6. Adicionar anotações didáticas
+text(min(dados) + 0.2, 0.25, labels = "Cauda Esquerda:\nPeso Amplificado", col = "red", font = 2, cex = 0.8)
+text(max(dados) - 0.2, 0.75, labels = "Cauda Direita:\nPeso Amplificado", col = "red", font = 2, cex = 0.8)
+text(2, 0.43, labels = "Centro:\nPeso Mínimo", col = "gray40", font = 2, cex = 0.8)
+
+legend("topleft", 
+       legend = c("FDA Teórica Fo(x)", "FDA Empírica Fn(x)", "Erros nas Caudas (Peso Alto)", "Erros no Centro (Peso Baixo)"),
+       col = c("blue", "black", "red", "gray70"), 
+       lwd = c(2.5, 1.5, 2, 1), bty='n')
+
+```
+
+
+A estatística $A^2$ possui uma vantagem computacional. Observe que, se $x\in[x_{i},x_{(i+1)})$ então $\hat{F}_n(x)=i/n$. Seja $x_{(0)}=-\infty$. Então,
 
 $$\begin{align}A^2&=n\int_{-\infty}^\infty \frac{[\hat{F}_n(x)-F_0(x)]^2}{F_0(x)(1-F_0(x))}f_0(x)dx\\&=n\sum_{i=0}^n \int_{x_{(i)}}^{x_{(i+1)}}\frac{\left[\frac{i}{n}-F_0(x)\right]^2}{F_0(x)(1-F_0(x))}f_0(x)dx. \end{align}$$
 
@@ -204,6 +322,47 @@ $$W=\frac{\left(\sum_{i=1}^n a_iX_{(i)}\right)^2}{\sum_{i=1}^n(X_i-\bar{X})^2},$
 e pode-se provar que $W\in[0,1]$. Se os dados forem normais, então as duas estimativas de $\sigma^2$ estarão próximas e $W\approx 1$. Caso contrário, a estimativa $\hat{\sigma}^2_{Reg}$ colapsa, subestimando a variânica. Portanto, valores pequenos de $W$ rejeitam a normalidade. 
 
 Sob $H_0$, a distribuição de $W$ não depende de $\mu$ e $\sigma$ e ela foi tabulada pelo Método de Monte Carlo para  $n\leq 50$. Para $n$ entre 50 e 5.000, Royston  mostrou que existem transformações de $W$ que se aproximam da normal padrão.  
+
+
+```{r echo = FALSE}
+# 1. Gerar dados reais ligeiramente desviados da normalidade (para fins didáticos)
+set.seed(15)
+n <- 30
+dados <- sort(rchisq(n, df = 4)) # Usando qui-quadrado para gerar uma leve assimetria
+
+# 2. Calcular os quantis teóricos normais esperados (m_i)
+# O R calcula as aproximações dos valores esperados das estatísticas de ordem
+m_i <- qnorm((1:n - 0.375) / (n + 0.25)) 
+
+# 3. Ajustar a reta de regressão teórica ideal (Mínimos Quadrados)
+modelo_reta <- lm(dados ~ m_i)
+
+# 4. Plotar o Q-Q Plot de Shapiro-Wilk
+plot(m_i, dados, type = "n",
+     main = "Conceito do Teste de Shapiro-Wilk (W)",
+     xlab = "Quantis Teóricos Normais Padrão (m_i)", 
+     ylab = "Estatísticas de Ordem Observadas (X_(i))",
+     panel.first = grid(), ylim = c(-2,14))
+
+# Reta de referência ideal (Se os dados fossem perfeitamente normais)
+abline(modelo_reta, col = "blue", lwd = 2.5)
+
+# 5. Desenhar os resíduos (as distâncias até a reta que reduzem o valor de W)
+pontos_previstos <- predict(modelo_reta)
+for(i in 1:n) {
+  # Desenha linhas verticais vermelhas mostrando o desvio da linearidade
+  lines(c(m_i[i], m_i[i]), c(dados[i], pontos_previstos[i]), col = "red", lwd = 1.5)
+}
+
+# 6. Plotar os pontos observados por cima
+points(m_i, dados, pch = 21, bg = "white", col = "black", cex = 1.2, lwd = 1.5)
+
+# 7. Legenda explicativa
+legend("topleft", 
+       legend = c("Reta de Correlação Ideal", "Dados Observados X_(i)", "Desvios de Linearidade (Reduzem W)"),
+       col = c("blue", "black", "red"), 
+       lwd = c(2.5, NA, 1.5), pch = c(NA, 21, NA), pt.bg = "white", bty = 'n')
+```
 
 ::: {#exm-}
 A base de dados abaixo mostra o peso, em gramas de 37.439 recém-nascidos no Amazonas no ano de 2022.
