@@ -385,3 +385,5 @@ library(car)
 qqPlot(peso[1:300], 'norm')
 ```
 :::
+
+

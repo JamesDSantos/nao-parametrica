@@ -276,14 +276,20 @@ window.Quarto = {
   <li><a href="#laboratório-5-avaliação-do-impacto-de-contaminação-por-hidrocarbonetos" id="toc-laboratório-5-avaliação-do-impacto-de-contaminação-por-hidrocarbonetos" class="nav-link" data-scroll-target="#laboratório-5-avaliação-do-impacto-de-contaminação-por-hidrocarbonetos"><span class="header-section-number">9.5</span> Laboratório 5: Avaliação do Impacto de Contaminação por Hidrocarbonetos</a>
   <ul class="collapse">
   <li><a href="#contexto-4" id="toc-contexto-4" class="nav-link" data-scroll-target="#contexto-4"><span class="header-section-number">9.5.1</span> Contexto</a></li>
+  <li><a href="#estrutura-dos-dados-no-r" id="toc-estrutura-dos-dados-no-r" class="nav-link" data-scroll-target="#estrutura-dos-dados-no-r"><span class="header-section-number">9.5.2</span> Estrutura dos Dados no R</a></li>
+  <li><a href="#problema-1" id="toc-problema-1" class="nav-link" data-scroll-target="#problema-1"><span class="header-section-number">9.5.3</span> Problema</a></li>
   </ul></li>
-  <li><a href="#estrutura-dos-dados-no-r" id="toc-estrutura-dos-dados-no-r" class="nav-link" data-scroll-target="#estrutura-dos-dados-no-r"><span class="header-section-number">9.6</span> Estrutura dos Dados no R</a></li>
-  <li><a href="#problema-1" id="toc-problema-1" class="nav-link" data-scroll-target="#problema-1"><span class="header-section-number">9.7</span> Problema</a></li>
-  <li><a href="#laboratório-6-sazonalidade-e-modelagem-temporal-em-espécies-de-lauraceae" id="toc-laboratório-6-sazonalidade-e-modelagem-temporal-em-espécies-de-lauraceae" class="nav-link" data-scroll-target="#laboratório-6-sazonalidade-e-modelagem-temporal-em-espécies-de-lauraceae"><span class="header-section-number">9.8</span> Laboratório 6: Sazonalidade e Modelagem Temporal em Espécies de Lauraceae</a>
+  <li><a href="#laboratório-6-análise-de-equidade-na-distribuição-de-bolsas-de-iniciação-científica-pibic" id="toc-laboratório-6-análise-de-equidade-na-distribuição-de-bolsas-de-iniciação-científica-pibic" class="nav-link" data-scroll-target="#laboratório-6-análise-de-equidade-na-distribuição-de-bolsas-de-iniciação-científica-pibic"><span class="header-section-number">9.6</span> Laboratório 6: Análise de Equidade na Distribuição de Bolsas de Iniciação Científica (PIBIC)</a>
   <ul class="collapse">
-  <li><a href="#contexto-5" id="toc-contexto-5" class="nav-link" data-scroll-target="#contexto-5"><span class="header-section-number">9.8.1</span> Contexto</a></li>
-  <li><a href="#estrutura-do-banco-de-dados-e-tratamento-inicial" id="toc-estrutura-do-banco-de-dados-e-tratamento-inicial" class="nav-link" data-scroll-target="#estrutura-do-banco-de-dados-e-tratamento-inicial"><span class="header-section-number">9.8.2</span> Estrutura do Banco de Dados e Tratamento Inicial</a></li>
-  <li><a href="#problema-2" id="toc-problema-2" class="nav-link" data-scroll-target="#problema-2"><span class="header-section-number">9.8.3</span> Problema</a></li>
+  <li><a href="#contexto-5" id="toc-contexto-5" class="nav-link" data-scroll-target="#contexto-5"><span class="header-section-number">9.6.1</span> Contexto</a></li>
+  <li><a href="#estrutura-do-banco-de-dados-1" id="toc-estrutura-do-banco-de-dados-1" class="nav-link" data-scroll-target="#estrutura-do-banco-de-dados-1"><span class="header-section-number">9.6.2</span> Estrutura do Banco de Dados:</a></li>
+  <li><a href="#problemas-propostos" id="toc-problemas-propostos" class="nav-link" data-scroll-target="#problemas-propostos"><span class="header-section-number">9.6.3</span> Problemas Propostos</a></li>
+  </ul></li>
+  <li><a href="#laboratório-6-sazonalidade-e-modelagem-temporal-em-espécies-de-lauraceae" id="toc-laboratório-6-sazonalidade-e-modelagem-temporal-em-espécies-de-lauraceae" class="nav-link" data-scroll-target="#laboratório-6-sazonalidade-e-modelagem-temporal-em-espécies-de-lauraceae"><span class="header-section-number">9.7</span> Laboratório 6: Sazonalidade e Modelagem Temporal em Espécies de Lauraceae</a>
+  <ul class="collapse">
+  <li><a href="#contexto-6" id="toc-contexto-6" class="nav-link" data-scroll-target="#contexto-6"><span class="header-section-number">9.7.1</span> Contexto</a></li>
+  <li><a href="#estrutura-do-banco-de-dados-e-tratamento-inicial" id="toc-estrutura-do-banco-de-dados-e-tratamento-inicial" class="nav-link" data-scroll-target="#estrutura-do-banco-de-dados-e-tratamento-inicial"><span class="header-section-number">9.7.2</span> Estrutura do Banco de Dados e Tratamento Inicial</a></li>
+  <li><a href="#problema-2" id="toc-problema-2" class="nav-link" data-scroll-target="#problema-2"><span class="header-section-number">9.7.3</span> Problema</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -475,9 +481,8 @@ Exemplo: A coluna V12P indica a concentração dos constituintes químicos na am
 </ol>
 <p>Durante a triagem laboratorial inicial, os pesquisadores constataram que algumas placas de teste sofreram contaminação biológica externa (ruído experimental). Esses resultados espúrios foram descartados pela equipe do LabEst, resultando em um banco de dados com tamanhos amostrais ligeiramente diferentes entre os dois grupos.</p>
 </section>
-</section>
-<section id="estrutura-dos-dados-no-r" class="level2" data-number="9.6">
-<h2 data-number="9.6" class="anchored" data-anchor-id="estrutura-dos-dados-no-r"><span class="header-section-number">9.6</span> Estrutura dos Dados no R</h2>
+<section id="estrutura-dos-dados-no-r" class="level3" data-number="9.5.2">
+<h3 data-number="9.5.2" class="anchored" data-anchor-id="estrutura-dos-dados-no-r"><span class="header-section-number">9.5.2</span> Estrutura dos Dados no R</h3>
 <p>As duas séries de dados numéricos resultantes (já limpas e corrigidas após a filtragem de contaminações) são dadas a seguir</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Grupo 1: Apenas Poluente de Controle (n = 8)</span></span>
@@ -487,24 +492,61 @@ Exemplo: A coluna V12P indica a concentração dos constituintes químicos na am
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>pcl_juca <span class="ot">&lt;-</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">6</span> <span class="sc">*</span> <span class="fu">c</span>(<span class="dv">25</span>, <span class="dv">35</span>, <span class="dv">70</span>, <span class="dv">30</span>, <span class="dv">15</span>, <span class="dv">70</span>, <span class="dv">25</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="problema-1" class="level2" data-number="9.7">
-<h2 data-number="9.7" class="anchored" data-anchor-id="problema-1"><span class="header-section-number">9.7</span> Problema</h2>
+<section id="problema-1" class="level3" data-number="9.5.3">
+<h3 data-number="9.5.3" class="anchored" data-anchor-id="problema-1"><span class="header-section-number">9.5.3</span> Problema</h3>
 <p>Os pesquisadores desejam testar a hipótese de que a inclusão do agente de mitigação provocou uma mudança estatisticamente significativa na média das respostas em comparação ao poluente isolado. Realize uma análise explortória e teste a hipótese de pesquisa.</p>
 </section>
-<section id="laboratório-6-sazonalidade-e-modelagem-temporal-em-espécies-de-lauraceae" class="level2" data-number="9.8">
-<h2 data-number="9.8" class="anchored" data-anchor-id="laboratório-6-sazonalidade-e-modelagem-temporal-em-espécies-de-lauraceae"><span class="header-section-number">9.8</span> Laboratório 6: Sazonalidade e Modelagem Temporal em Espécies de Lauraceae</h2>
-<section id="contexto-5" class="level3" data-number="9.8.1">
-<h3 data-number="9.8.1" class="anchored" data-anchor-id="contexto-5"><span class="header-section-number">9.8.1</span> Contexto</h3>
+</section>
+<section id="laboratório-6-análise-de-equidade-na-distribuição-de-bolsas-de-iniciação-científica-pibic" class="level2" data-number="9.6">
+<h2 data-number="9.6" class="anchored" data-anchor-id="laboratório-6-análise-de-equidade-na-distribuição-de-bolsas-de-iniciação-científica-pibic"><span class="header-section-number">9.6</span> Laboratório 6: Análise de Equidade na Distribuição de Bolsas de Iniciação Científica (PIBIC)</h2>
+<section id="contexto-5" class="level3" data-number="9.6.1">
+<h3 data-number="9.6.1" class="anchored" data-anchor-id="contexto-5"><span class="header-section-number">9.6.1</span> Contexto</h3>
+<p>Durante a divulgação do resultado final do processo de distribuição de bolsas do Programa Institucional de Bolsas de Iniciação Científica (PIBIC) da UFAM, emergiram manifestações de insatisfação entre diferentes colegiados. Em particular, diversos pesquisadores e docentes defenderam a tese de que a grande área de Ciências Humanas aparecia com um destaque desproporcional e evidente nas primeiras colocações do ranqueamento geral.</p>
+<p>Para debater esse cenário e buscar esclarecimentos institucionais, representantes do Instituto de Ciências Exatas (ICE) agendaram uma reunião técnica com a Pró-Reitoria de Pesquisa e Pós-Graduação (PROPESP). Contudo, os relatórios descritivos preliminares apresentados por ambas as partes durante o encontro mostraram-se insuficientes para fundamentar qualquer inferência estatística sólida. Neste laboratório, você atuará como responsável por julgar e jogar luz sobre essa controvérsia utilizando o banco de dados oficial unificado.</p>
+</section>
+<section id="estrutura-do-banco-de-dados-1" class="level3" data-number="9.6.2">
+<h3 data-number="9.6.2" class="anchored" data-anchor-id="estrutura-do-banco-de-dados-1"><span class="header-section-number">9.6.2</span> Estrutura do Banco de Dados:</h3>
+<p>O banco de dados contém o registro de todas as propostas submetidas e homologadas no edital. Cada linha representa um projeto submetido, contendo as seguintes colunas de interesse:</p>
+<ul>
+<li><p>N° Sequencial: classificação do projeto</p></li>
+<li><p>Área de Conhecimento: Classificação institucional do projeto, com a seguinte codificação:</p>
+<ul>
+<li>PIB-H Ciências Humanas</li>
+<li>PIB-LLA Linguística, Letras e Artes</li>
+<li>PIB-B Ciências Biológicas</li>
+<li>PIB ENG Engenharias</li>
+<li>PIB-E Ciências Exatas e da Terra</li>
+<li>PIB-MULT Multidisciplinar</li>
+</ul></li>
+<li><p>Status: Variável qualitativa indicando o desfecho da submissão (Aprovado com bolsa ou voluntário).</p></li>
+</ul>
+<p>Para esse análise, os projetos reprovados não foram incluídos. O resultado final foi extraído do pdf disponibilizados pela PROPESQ e processado. O banco de dados final é dado abaixo</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(gsheet)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">'https://docs.google.com/spreadsheets/d/1VuTVbHxZbfTdVVPjb0Ybf7zgRnTBLBx67RSWO4rVV9Y/edit?usp=sharing'</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>dados <span class="ot">&lt;-</span> <span class="fu">gsheet2tbl</span>(url)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="problemas-propostos" class="level3" data-number="9.6.3">
+<h3 data-number="9.6.3" class="anchored" data-anchor-id="problemas-propostos"><span class="header-section-number">9.6.3</span> Problemas Propostos</h3>
+<p><strong>Questão 1</strong>. Verifique se existe favorecimento de bolsas em algumas grandes áreas em detrimento de outras, violando o princípio de equidade do edital.</p>
+<p><strong>Questão 2</strong> Para além do número absoluto de bolsas concedidas, o comitê do ICE argumenta que os critérios de pontuação fazem com que os projetos de Ciências Humanas fiquem sistematicamente “empurrados” para o topo da lista, confiscando as primeiras colocações do ranqueamento. Verifique se o ranqueamento difere de maneira significativa entre as grandes áreas avaliadas.</p>
+</section>
+</section>
+<section id="laboratório-6-sazonalidade-e-modelagem-temporal-em-espécies-de-lauraceae" class="level2" data-number="9.7">
+<h2 data-number="9.7" class="anchored" data-anchor-id="laboratório-6-sazonalidade-e-modelagem-temporal-em-espécies-de-lauraceae"><span class="header-section-number">9.7</span> Laboratório 6: Sazonalidade e Modelagem Temporal em Espécies de Lauraceae</h2>
+<section id="contexto-6" class="level3" data-number="9.7.1">
+<h3 data-number="9.7.1" class="anchored" data-anchor-id="contexto-6"><span class="header-section-number">9.7.1</span> Contexto</h3>
 <p>Pesquisadores do Departamento de Química e do Laboratório de Cromatografia da Universidade Federal do Amazonas (UFAM) submeteram ao LabEst um estudo sobre a variação na composição química do óleo essencial extraído das folhas da espécie Endlicheria bracteolata (da família Lauraceae), uma planta nativa da região amazônica. O objetivo principal do projeto foi mapear como os fatores climáticos e o padrão sazonal da Amazônia (estratificado ao longo dos meses do ano) influenciam a concentração e o rendimento dos constituintes químicos voláteis da planta (como o b-caryophyllene, b-bourbonene, entre outros). Infelizmente, devido a problemas operacionais na coleta, as observações referentes ao mês de outubro foram perdidas, gerando uma lacuna temporal que precisa ser considerada na análise.</p>
 </section>
-<section id="estrutura-do-banco-de-dados-e-tratamento-inicial" class="level3" data-number="9.8.2">
-<h3 data-number="9.8.2" class="anchored" data-anchor-id="estrutura-do-banco-de-dados-e-tratamento-inicial"><span class="header-section-number">9.8.2</span> Estrutura do Banco de Dados e Tratamento Inicial</h3>
+<section id="estrutura-do-banco-de-dados-e-tratamento-inicial" class="level3" data-number="9.7.2">
+<h3 data-number="9.7.2" class="anchored" data-anchor-id="estrutura-do-banco-de-dados-e-tratamento-inicial"><span class="header-section-number">9.7.2</span> Estrutura do Banco de Dados e Tratamento Inicial</h3>
 <p>O banco de dados original possui os 63 tipos de constituintes observados dispostos nas linhas e o acompanhamento de suas concentrações mensais nas colunas. Para que os dados reflitam adequadamente o comportamento multivariado e temporal, realize passos de preparação:</p>
 <p>Filtragem: Identifique e remova do banco de dados os constituintes considerados insignificantes para o estudo da variação sazonal (aqueles que apresentaram valor zero em todos os meses monitorados).</p>
 <p>Padronização: Como compostos majoritários e minoritários possuem ordens de grandeza muito distintas, cada constituinte restante deve ser padronizado (subtraindo a sua respectiva média e dividindo pelo seu desvio padrão).</p>
 </section>
-<section id="problema-2" class="level3" data-number="9.8.3">
-<h3 data-number="9.8.3" class="anchored" data-anchor-id="problema-2"><span class="header-section-number">9.8.3</span> Problema</h3>
+<section id="problema-2" class="level3" data-number="9.7.3">
+<h3 data-number="9.7.3" class="anchored" data-anchor-id="problema-2"><span class="header-section-number">9.7.3</span> Problema</h3>
 <p>Verifique se há evidências de comportamento sazonal.</p>
 
 

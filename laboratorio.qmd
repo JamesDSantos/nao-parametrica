@@ -204,7 +204,7 @@ O experimento foi dividido em duas condições de monitoramento:
 
 Durante a triagem laboratorial inicial, os pesquisadores constataram que algumas placas de teste sofreram contaminação biológica externa (ruído experimental). Esses resultados espúrios foram descartados pela equipe do LabEst, resultando em um banco de dados com tamanhos amostrais ligeiramente diferentes entre os dois grupos.
 
-## Estrutura dos Dados no R
+### Estrutura dos Dados no R
 
 As duas séries de dados numéricos resultantes (já limpas e corrigidas após a filtragem de contaminações) são dadas a seguir
 
@@ -216,9 +216,54 @@ pcl <- 10^6 * c(20, 25, 25, 15, 5, 30, 45, 50)
 pcl_juca <- 10^6 * c(25, 35, 70, 30, 15, 70, 25)
 ```
 
-## Problema
+### Problema
 
 Os pesquisadores desejam testar a hipótese de que a inclusão do agente de mitigação provocou uma mudança estatisticamente significativa na média das respostas em comparação ao poluente isolado. Realize uma análise explortória e teste a hipótese de pesquisa.
+
+
+## Laboratório 6: Análise de Equidade na Distribuição de Bolsas de Iniciação Científica (PIBIC)
+
+
+### Contexto
+
+Durante a divulgação do resultado final do processo de distribuição de bolsas do Programa Institucional de Bolsas de Iniciação Científica (PIBIC) da UFAM, emergiram manifestações de insatisfação entre diferentes colegiados. Em particular, diversos pesquisadores e docentes defenderam a tese de que a grande área de Ciências Humanas aparecia com um destaque desproporcional e evidente nas primeiras colocações do ranqueamento geral.
+
+Para debater esse cenário e buscar esclarecimentos institucionais, representantes do Instituto de Ciências Exatas (ICE) agendaram uma reunião técnica com a Pró-Reitoria de Pesquisa e Pós-Graduação (PROPESP). Contudo, os relatórios descritivos preliminares apresentados por ambas as partes durante o encontro mostraram-se insuficientes para fundamentar qualquer inferência estatística sólida. Neste laboratório, você atuará como responsável por julgar e jogar luz sobre essa controvérsia utilizando o banco de dados oficial unificado.
+
+### Estrutura do Banco de Dados:
+
+O banco de dados contém o registro de todas as propostas submetidas e homologadas no edital. Cada linha representa um projeto submetido, contendo as seguintes colunas de interesse:
+
+* N° Sequencial: classificação do projeto
+
+*  Área de Conhecimento: Classificação institucional do projeto, com a seguinte codificação: 
+
+    * PIB-H	Ciências Humanas
+    * PIB-LLA	Linguística, Letras e Artes
+    * PIB-B	Ciências Biológicas
+    * PIB ENG	Engenharias
+    * PIB-E	Ciências Exatas e da Terra
+    * PIB-MULT	Multidisciplinar
+
+* Status: Variável qualitativa indicando o desfecho da submissão (Aprovado com bolsa ou voluntário). 
+
+Para esse análise, os projetos reprovados não foram incluídos. O resultado final foi extraído do pdf disponibilizados pela PROPESQ e processado. O banco de dados final é dado abaixo
+
+```{r}
+require(gsheet)
+url <- 'https://docs.google.com/spreadsheets/d/1VuTVbHxZbfTdVVPjb0Ybf7zgRnTBLBx67RSWO4rVV9Y/edit?usp=sharing'
+dados <- gsheet2tbl(url)
+
+```
+
+
+### Problemas Propostos
+
+
+**Questão 1**. Verifique se existe favorecimento de bolsas em algumas grandes áreas em detrimento de outras, violando o princípio de equidade do edital.
+
+**Questão 2** Para além do número absoluto de bolsas concedidas, o comitê do ICE argumenta que os critérios de pontuação fazem com que os projetos de Ciências Humanas fiquem sistematicamente "empurrados" para o topo da lista, confiscando as primeiras colocações do ranqueamento. Verifique se o ranqueamento difere de maneira significativa entre as grandes áreas avaliadas.
+
 
 ## Laboratório 6: Sazonalidade e Modelagem Temporal em Espécies de Lauraceae
 
